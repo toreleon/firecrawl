@@ -1,0 +1,44 @@
+name: Browser engine integration
+
+on:
+  pull_request:
+    paths:
+      - 'apps/playwright-service-ts/**'
+      - 'docker-compose.yaml'
+      - '.github/workflows/test-browser-engines.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: browser-engines-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  browser-engines:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: apps/playwright-service-ts
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4
+        with:
+          version: 11.4.0
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: apps/playwright-service-ts/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - name: Install browser dependencies for all three drivers
+        run: |
+          node node_modules/playwright/cli.js install chromium --with-deps
+          node node_modules/patchright/cli.js install chromium
+          node node_modules/rebrowser-playwright/cli.js install chromium
+      - run: pnpm build
+      - run: pnpm test
+      - run: pnpm test:integration
+      - run: pnpm audit --prod

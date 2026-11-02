@@ -77,6 +77,10 @@ The Linux ARM64 image was built and started with `--init`; `/health` reported
 Rebrowser/headful, an HTTPS scrape retrieved Example Domain, and a private
 target was denied. Its receipt is `_local/anti-bot/container-smoke.json`.
 The full Firecrawl API/worker stack was not started in this verification.
+The focused `Browser engine integration` workflow runs these build, helper,
+HTTP-integration, and dependency-audit checks on standard GitHub Ubuntu runners.
+The inherited full server/audit workflows use Blacksmith runners; their status
+is separate from this focused workflow.
 
 ## Limits
 
