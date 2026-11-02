@@ -61,12 +61,16 @@ x-common-env: &common-env
 
 services:
   playwright-service:
+    init: true
     # NOTE: If you don't want to build the service locally,
     # comment out the build: statement and uncomment the image: statement
     # image: ghcr.io/firecrawl/playwright-service:latest
     build: apps/playwright-service-ts
     environment:
       PORT: 3000
+      BROWSER_ENGINE: ${BROWSER_ENGINE:-rebrowser}
+      BROWSER_HEADLESS: ${BROWSER_HEADLESS:-false}
+      BROWSER_CHANNEL: ${BROWSER_CHANNEL:-chromium}
       PROXY_SERVER: ${PROXY_SERVER}
       PROXY_USERNAME: ${PROXY_USERNAME}
       PROXY_PASSWORD: ${PROXY_PASSWORD}

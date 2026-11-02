@@ -7,7 +7,9 @@
     "start": "node dist/api.js",
     "build": "tsc",
     "dev": "tsx api.ts",
-    "test": "node --import tsx --test --test-force-exit helpers/*.spec.ts"
+    "test": "node --import tsx --test --test-force-exit helpers/*.spec.ts",
+    "test:integration": "node --import tsx --test integration/*.spec.ts",
+    "benchmark:bots": "tsx scripts/benchmark-bot-detection.ts"
   },
   "keywords": [],
   "author": "Jeff Pereira",
@@ -19,14 +21,14 @@
     "dotenv": "^16.4.5",
     "express": "^5.2.1",
     "ipaddr.js": "^2.3.0",
+    "patchright": "1.64.2",
     "playwright": "^1.64.1",
     "proxy-chain": "^2.7.1",
-    "user-agents": "^1.1.669"
+    "rebrowser-playwright": "1.64.101"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
     "@types/node": "^22.15.30",
-    "@types/user-agents": "^1.0.4",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"
   },

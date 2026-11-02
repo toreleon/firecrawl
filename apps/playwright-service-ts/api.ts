@@ -1,6 +1,5 @@
 import express, { Request, Response } from 'express';
 import {
-  chromium,
   Browser,
   BrowserContext,
   Route,
@@ -8,12 +7,15 @@ import {
   Page,
 } from 'playwright';
 import dotenv from 'dotenv';
-import UserAgent from 'user-agents';
 import { getError } from './helpers/get_error';
 import { Server } from 'proxy-chain';
 import { isInternalHost, ssrfPrepareRequest } from './helpers/ssrf';
+import { browserConfiguration, launchBrowser } from './helpers/browser';
+import { detectBotChallenge } from './helpers/bot-detection';
+import { isIP } from 'node:net';
 
 dotenv.config();
+const browserConfig = browserConfiguration();
 
 const app = express();
 const port = process.env.PORT || 3003;
@@ -85,10 +87,12 @@ const startSSRFProxy = async (): Promise<number> => {
     }),
   });
   await server.listen();
+  ssrfProxy = server;
   return server.port;
 };
 
 let ssrfProxyPort: number;
+let ssrfProxy: Server;
 
 type ContextSecurityState = {
   blockedNavigationRequestUrl: string | null;
@@ -159,20 +163,16 @@ interface UrlModel {
 }
 
 let browser: Browser;
+let browserLaunch: Promise<Browser> | undefined;
 
 const initializeBrowser = async () => {
-  browser = await chromium.launch({
-    headless: true,
-    args: [
-      '--no-sandbox',
-      '--disable-setuid-sandbox',
-      '--disable-dev-shm-usage',
-      '--disable-accelerated-2d-canvas',
-      '--no-first-run',
-      '--no-zygote',
-      '--disable-gpu',
-    ],
-  });
+  if (browser?.isConnected()) return;
+  browserLaunch ??= launchBrowser(browserConfig);
+  try {
+    browser = await browserLaunch;
+  } finally {
+    browserLaunch = undefined;
+  }
 };
 
 const createContext = async (
@@ -182,15 +182,15 @@ const createContext = async (
   context: BrowserContext;
   securityState: ContextSecurityState;
 }> => {
-  const userAgent = userAgentOverride || new UserAgent().toString();
-  const viewport = { width: 1280, height: 800 };
   const securityState: ContextSecurityState = {
     blockedNavigationRequestUrl: null,
   };
 
   const contextOptions: any = {
-    userAgent,
-    viewport,
+    // Keep the browser's native UA/platform/client hints coherent. A random
+    // mobile or Safari UA on desktop Chromium is itself a detection signal.
+    ...(userAgentOverride ? { userAgent: userAgentOverride } : {}),
+    viewport: null,
     ignoreHTTPSErrors: skipTlsVerification,
     serviceWorkers: 'block',
   };
@@ -337,6 +337,8 @@ app.get('/health', async (req: Request, res: Response) => {
 
     res.status(200).json({
       status: 'healthy',
+      browserEngine: browserConfig.engine,
+      headless: browserConfig.launchOptions.headless,
       maxConcurrentPages: MAX_CONCURRENT_PAGES,
       activePages: MAX_CONCURRENT_PAGES - pageSemaphore.getAvailablePermits(),
     });
@@ -363,7 +365,9 @@ app.post('/scrape', async (req: Request, res: Response) => {
   console.log(`URL: ${url}`);
   console.log(`Wait After Load: ${wait_after_load}`);
   console.log(`Timeout: ${timeout}`);
-  console.log(`Headers: ${headers ? JSON.stringify(headers) : 'None'}`);
+  console.log(
+    `Header names: ${headers ? Object.keys(headers).join(', ') : 'None'}`,
+  );
   console.log(`Check Selector: ${check_selector ? check_selector : 'None'}`);
   console.log(`Skip TLS Verification: ${skip_tls_verification}`);
   console.log(`==================================================`);
@@ -395,7 +399,7 @@ app.post('/scrape', async (req: Request, res: Response) => {
     );
   }
 
-  if (!browser) {
+  if (!browser?.isConnected()) {
     await initializeBrowser();
   }
 
@@ -446,7 +450,12 @@ app.post('/scrape', async (req: Request, res: Response) => {
         try {
           const host = new URL(url).hostname;
           const labels = host.split('.');
-          cookieDomain = labels.length > 2 ? labels.slice(-2).join('.') : host;
+          // IP addresses cannot use a domain cookie (".127.0.0.1" is invalid).
+          cookieDomain = isIP(host.replace(/^\[|\]$/g, ''))
+            ? undefined
+            : labels.length > 2
+              ? labels.slice(-2).join('.')
+              : host;
         } catch {
           cookieDomain = undefined;
         }
@@ -502,8 +511,13 @@ app.post('/scrape', async (req: Request, res: Response) => {
       check_selector,
       securityState,
     );
-    const pageError =
-      result.status !== 200 ? getError(result.status) : undefined;
+    const botDetection = detectBotChallenge(
+      result.content,
+      result.headers ?? {},
+    );
+    const pageError = botDetection
+      ? `Bot protection challenge remains (${botDetection.provider}): ${botDetection.reason}`
+      : (getError(result.status) ?? undefined);
 
     if (!pageError) {
       console.log(`✅ Scrape successful!`);
@@ -518,6 +532,8 @@ app.post('/scrape', async (req: Request, res: Response) => {
       pageStatusCode: result.status,
       contentType: result.contentType,
       url: result.url,
+      browserEngine: browserConfig.engine,
+      ...(botDetection && { botDetection }),
       ...(pageError && { pageError }),
     });
   } catch (error) {
@@ -542,20 +558,27 @@ app.post('/scrape', async (req: Request, res: Response) => {
 const start = async () => {
   ssrfProxyPort = await startSSRFProxy();
   await initializeBrowser();
-  app.listen(port, () => {
+  const server = app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
   });
+  const shutdown = async () => {
+    server.close();
+    await shutdownBrowser();
+    await ssrfProxy.close(true);
+  };
+  for (const signal of ['SIGINT', 'SIGTERM'] as const) {
+    process.once(signal, () => {
+      shutdown().then(
+        () => process.exit(0),
+        (error) => {
+          console.error('Shutdown failed:', error);
+          process.exit(1);
+        },
+      );
+    });
+  }
 };
 start().catch((error) => {
   console.error('Failed to start server:', error);
   process.exit(1);
 });
-
-if (require.main === module) {
-  process.on('SIGINT', () => {
-    shutdownBrowser().then(() => {
-      console.log('Browser closed');
-      process.exit(0);
-    });
-  });
-}
