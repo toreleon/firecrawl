@@ -9,7 +9,8 @@
     "dev": "tsx api.ts",
     "test": "node --import tsx --test --test-force-exit helpers/*.spec.ts",
     "test:integration": "node --import tsx --test integration/*.spec.ts",
-    "benchmark:bots": "tsx scripts/benchmark-bot-detection.ts"
+    "benchmark:bots": "tsx scripts/benchmark-bot-detection.ts",
+    "benchmark:waf": "tsx scripts/benchmark-waf.ts"
   },
   "keywords": [],
   "author": "Jeff Pereira",

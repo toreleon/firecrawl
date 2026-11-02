@@ -105,3 +105,32 @@ counted as passes.
 See [the research and verification record](../../docs/anti-bot-research.md) for
 the selection evidence and limits. These tests do not establish universal WAF
 or CAPTCHA bypass, or a success rate on production target websites.
+
+## Measure this deployment against a fixed target set
+
+The WAF runner measures an already-running browser service through `/scrape`.
+It makes real requests to the pinned 100-target October 30 Frontier set, with no
+commercial API keys or paid-provider calls:
+
+```sh
+pnpm benchmark:waf --service=http://127.0.0.1:3003 --attempts=1 --concurrency=2
+```
+
+One attempt per target is a pilot. Use `--attempts=5` for the published
+benchmark's request count (500 attempts), keeping the same targets, timeout,
+wait and deployment. Other options are `--timeout=90000`, `--wait=2000`,
+`--targets=github,arxiv`, `--out=/absolute/new/receipt-directory`, `--profile=...`
+and `--image-id=...`. Existing output directories are rejected to preserve old
+receipts. Maximum runner concurrency is four; this does not increase the
+service's own page limit.
+
+Outputs include a configuration manifest, an append-only attempt log, a final
+report, and the full service response for each screened failure. The report
+keeps HTTP failures, unknown service errors, rate limits and timeouts separate.
+All attempts remain in the denominator. WAF groups use the publisher's labels.
+
+Two scores are reported: `frontierPass` matches the original 2xx + raw-body
+substring rule; `screenedPass` additionally rejects recognized challenges,
+reported errors, and markers present only in scripts/styles/comments. The
+additional text screen does not establish CSS visibility or field accuracy.
+This measures the browser backend, not the full Firecrawl API/worker stack.
