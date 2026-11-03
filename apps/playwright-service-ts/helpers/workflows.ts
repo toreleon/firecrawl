@@ -324,7 +324,7 @@ export const amazonContinuationAllowed = (
     prompt: boolean;
     shortPage: boolean;
     otherControls: boolean;
-    inputs: { name: string; type: string; empty: boolean }[];
+    inputs: { name: string; type: string }[];
   },
 ) => {
   if (!amazonProductIdentity(current)) return false;
@@ -351,8 +351,7 @@ export const amazonContinuationAllowed = (
     form.inputs.length === 3 &&
     form.inputs.every((input) => input.type === 'hidden') &&
     JSON.stringify(form.inputs.map((input) => input.name).sort()) ===
-      JSON.stringify(['amzn', 'amzn-r', 'field-keywords']) &&
-    form.inputs.find((input) => input.name === 'field-keywords')?.empty === true
+      JSON.stringify(['amzn', 'amzn-r', 'field-keywords'])
   );
 };
 
@@ -397,7 +396,6 @@ export const applyWorkflow = async (
           inputs: Array.from(form.querySelectorAll('input')).map((input) => ({
             name: input.name,
             type: input.type,
-            empty: input.value === '',
           })),
         };
       });

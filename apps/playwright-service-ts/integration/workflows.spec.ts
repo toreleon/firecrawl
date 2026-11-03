@@ -21,7 +21,7 @@ test(
     );
     const target = 'https://www.amazon.com/Test/dp/B000000042';
     const form =
-      '<h4>Click the button below to continue shopping</h4><form method="get" action="/errors_page/validateCaptcha"><input type="hidden" name="amzn" value="opaque"><input type="hidden" name="amzn-r" value="opaque"><input type="hidden" name="field-keywords" value=""><button type="submit">Continue shopping</button></form>';
+      '<h4>Click the button below to continue shopping</h4><form method="get" action="/errors_page/validateCaptcha"><input type="hidden" name="amzn" value="opaque"><input type="hidden" name="amzn-r" value="opaque"><input type="hidden" name="field-keywords" value="server"><button type="submit">Continue shopping</button></form>';
     try {
       const page = await browser.newPage();
       await page.context().setOffline(true);
@@ -32,7 +32,7 @@ test(
         if (url.pathname === '/errors_page/validateCaptcha') {
           submitted++;
           assert.equal(route.request().method(), 'GET');
-          assert.equal(url.searchParams.get('field-keywords'), '');
+          assert.equal(url.searchParams.get('field-keywords'), 'server');
           return route.fulfill({
             contentType: 'text/html',
             headers: {
@@ -91,7 +91,7 @@ test(
     );
     const target = 'https://www.amazon.com/Test/dp/B000000042';
     const form =
-      '<h4>Click the button below to continue shopping</h4><form method="get" action="/errors_page/validateCaptcha"><input type="hidden" name="amzn" value="opaque"><input type="hidden" name="amzn-r" value="opaque"><input type="hidden" name="field-keywords" value=""><button type="submit">Continue shopping</button></form>';
+      '<h4>Click the button below to continue shopping</h4><form method="get" action="/errors_page/validateCaptcha"><input type="hidden" name="amzn" value="opaque"><input type="hidden" name="amzn-r" value="opaque"><input type="hidden" name="field-keywords" value="server"><button type="submit">Continue shopping</button></form>';
     try {
       for (const puzzle of [true, false]) {
         const page = await browser.newPage();
@@ -177,7 +177,7 @@ test(
             contentType: 'text/html',
             body: submitted
               ? '<main>Requested product 42</main><script>setTimeout(()=>location.replace("https://www.amazon.com/Other/dp/B000000043"),100)</script>'
-              : '<h4>Click the button below to continue shopping</h4><form method="get" action="/errors_page/validateCaptcha"><input type="hidden" name="amzn" value="opaque"><input type="hidden" name="amzn-r" value="opaque"><input type="hidden" name="field-keywords" value=""><button type="submit">Continue shopping</button></form>',
+              : '<h4>Click the button below to continue shopping</h4><form method="get" action="/errors_page/validateCaptcha"><input type="hidden" name="amzn" value="opaque"><input type="hidden" name="amzn-r" value="opaque"><input type="hidden" name="field-keywords" value="server"><button type="submit">Continue shopping</button></form>',
           });
         return route.fulfill({
           contentType: 'text/html',

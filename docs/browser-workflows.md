@@ -78,8 +78,8 @@ The current recipes select the original Best Buy product's US destination and
 expand an observed Canada Goose details control. `auto` also scrolls an observed
 CoinMarketCap About section into view to trigger public, viewport-based hydration.
 For Amazon.com product URLs, `auto` can submit the observed one-button GET
-continuation form when it has exactly the three known hidden inputs, an empty
-answer field, and no answer-entry controls or iframe. It submits at most once
+continuation form when it has exactly the three known hidden inputs and no
+answer-entry controls or iframe. Hidden values remain unchanged. It submits at most once
 per browser attempt, keeps the same context, and returns from the storefront to
 the original product. It checks origin and product identity again at capture;
 another product is an explicit `WORKFLOW_NAVIGATION_MISMATCH` failure. Visible

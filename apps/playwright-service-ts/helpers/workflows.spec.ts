@@ -32,9 +32,9 @@ test('Amazon continuation permits only the observed answer-free GET form on the 
     shortPage: true,
     otherControls: false,
     inputs: [
-      { name: 'amzn', type: 'hidden', empty: false },
-      { name: 'amzn-r', type: 'hidden', empty: false },
-      { name: 'field-keywords', type: 'hidden', empty: true },
+      { name: 'amzn', type: 'hidden' },
+      { name: 'amzn-r', type: 'hidden' },
+      { name: 'field-keywords', type: 'hidden' },
     ],
   };
   assert.equal(amazonProductIdentity(url), 'B000000042');
@@ -54,12 +54,6 @@ test('Amazon continuation permits only the observed answer-free GET form on the 
       ...valid,
       inputs: valid.inputs.map((i) =>
         i.name === 'field-keywords' ? { ...i, type: 'text' } : i,
-      ),
-    },
-    {
-      ...valid,
-      inputs: valid.inputs.map((i) =>
-        i.name === 'field-keywords' ? { ...i, empty: false } : i,
       ),
     },
   ])
