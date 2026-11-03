@@ -8,6 +8,7 @@ import {
   apiRequestBody,
   sha256,
   ProfilePacer,
+  ProfileLimiter,
 } from '../helpers/api-benchmark';
 import {
   scoreObservation,
@@ -122,7 +123,7 @@ async function main() {
       timeoutMs,
     ),
     scheduling:
-      'Round-major, target-major; rotate profile order by target and round. At most concurrency HTTP requests in flight.',
+      'Round-major, target-major; rotate profile order by target and round. Global workers and per-profile slots bound HTTP concurrency. Queue and pacing waits are excluded from HTTP latency; lifecycle order records dispatch and response completion.',
     sourceHashes: Object.fromEntries(
       await Promise.all(
         [
@@ -166,10 +167,15 @@ async function main() {
       apiStatus: number;
       providerRateLimited: boolean;
       dispatchWaitMs: number;
+      queueWaitMs: number;
+      dispatchOrder: number;
+      completionOrder: number;
     };
   const rows: Row[] = [];
   const timing = new BenchmarkTiming();
   const pacer = new ProfilePacer();
+  const limiter = new ProfileLimiter();
+  let lifecycleSequence = 0;
   const timer = setInterval(() => timing.sample(), 1000);
   let cursor = 0;
   try {
@@ -180,14 +186,27 @@ async function main() {
           const { target, attempt, profile } = tasks[taskIndex];
           if (delayMs)
             await new Promise((resolve) => setTimeout(resolve, delayMs));
-          const dispatchWaitMs = await pacer.wait(profile);
-          const start = Date.now();
-          const result = await requestApiScrape(
-            profile,
-            target.url,
-            timeoutMs,
-            keys.get(profile.name),
-          );
+          const queuedAt = Date.now();
+          const release = await limiter.acquire(profile);
+          const queueWaitMs = Date.now() - queuedAt;
+          let dispatchWaitMs: number, start: number, latencyMs: number;
+          let dispatchOrder: number, completionOrder: number;
+          let result: Awaited<ReturnType<typeof requestApiScrape>>;
+          try {
+            dispatchWaitMs = await pacer.wait(profile);
+            start = Date.now();
+            dispatchOrder = ++lifecycleSequence;
+            result = await requestApiScrape(
+              profile,
+              target.url,
+              timeoutMs,
+              keys.get(profile.name),
+            );
+            latencyMs = Date.now() - start;
+            completionOrder = ++lifecycleSequence;
+          } finally {
+            release();
+          }
           // Sanitize before hashing, grading, logging or retaining provider data.
           const evidence = JSON.parse(redact(result, secrets));
           const row: Row = {
@@ -197,8 +216,11 @@ async function main() {
             wafLabel: target.antibot ?? 'unclassified',
             attempt,
             startedAt: new Date(start).toISOString(),
-            latencyMs: Date.now() - start,
+            latencyMs,
             dispatchWaitMs,
+            queueWaitMs,
+            dispatchOrder,
+            completionOrder,
             providerRateLimited: evidence.observation.apiStatus === 429,
             ...scoreObservation(target, evidence.observation),
             ...apiOutputMetrics(evidence.payload, target.containsText),

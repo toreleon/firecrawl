@@ -7,6 +7,7 @@ import {
   redact,
   validateProfiles,
   ProfilePacer,
+  ProfileLimiter,
 } from './api-benchmark';
 import { scoreObservation } from './waf-benchmark';
 
@@ -173,4 +174,52 @@ test('all workers share a profile dispatch interval while other profiles remain 
       { name: 'other', baseUrl: 'https://fixture.test' },
     ]),
   );
+});
+
+test('per-profile slots bound concurrency independently and release each reservation once', async () => {
+  const limiter = new ProfileLimiter();
+  const profile = {
+    name: 'hosted',
+    baseUrl: 'https://fixture.test',
+    maxConcurrentRequests: 2,
+  };
+  const first = await limiter.acquire(profile),
+    second = await limiter.acquire(profile);
+  let admitted = false;
+  const third = limiter.acquire(profile).then((release) => {
+    admitted = true;
+    return release;
+  });
+  await new Promise((r) => setImmediate(r));
+  assert.equal(admitted, false);
+  const other = await limiter.acquire({
+    name: 'fork',
+    baseUrl: 'http://127.0.0.1',
+  });
+  first();
+  first();
+  const releaseThird = await third;
+  let fourthAdmitted = false;
+  const fourth = limiter.acquire(profile).then((release) => {
+    fourthAdmitted = true;
+    return release;
+  });
+  await new Promise((r) => setImmediate(r));
+  assert.equal(fourthAdmitted, false);
+  second();
+  const releaseFourth = await fourth;
+  releaseThird();
+  releaseFourth();
+  other();
+  for (const maxConcurrentRequests of [0, 9, 1.5])
+    assert.throws(() =>
+      validateProfiles([
+        profile,
+        {
+          name: 'fork',
+          baseUrl: 'https://fixture.test',
+          maxConcurrentRequests,
+        },
+      ]),
+    );
 });

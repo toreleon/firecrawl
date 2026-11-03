@@ -6,6 +6,7 @@ export type ApiProfile = {
   baseUrl: string;
   apiKeyEnv?: string;
   minIntervalMs?: number;
+  maxConcurrentRequests?: number;
   // Fork-only controls are explicit in the receipt; never sent to Cloud.
   browserControls?: Record<string, unknown>;
 };
@@ -25,6 +26,7 @@ export const validateProfiles = (value: unknown): ApiProfile[] => {
             'baseUrl',
             'apiKeyEnv',
             'minIntervalMs',
+            'maxConcurrentRequests',
             'browserControls',
           ].includes(k),
       ) ||
@@ -41,6 +43,10 @@ export const validateProfiles = (value: unknown): ApiProfile[] => {
         (!Number.isInteger(p.minIntervalMs) ||
           p.minIntervalMs < 0 ||
           p.minIntervalMs > 60000)) ||
+      (p.maxConcurrentRequests !== undefined &&
+        (!Number.isInteger(p.maxConcurrentRequests) ||
+          p.maxConcurrentRequests < 1 ||
+          p.maxConcurrentRequests > 8)) ||
       !['https:', 'http:'].includes(url.protocol) ||
       url.username ||
       url.password ||
@@ -84,6 +90,31 @@ export class ProfilePacer {
     this.tails.set(profile.name, turn);
     await turn;
     return Date.now() - now;
+  }
+}
+
+/** Reserve profile slots independently; release transfers a permit to the next waiter. */
+export class ProfileLimiter {
+  private states = new Map<
+    string,
+    { active: number; waiters: (() => void)[] }
+  >();
+  async acquire(profile: ApiProfile): Promise<() => void> {
+    let state = this.states.get(profile.name);
+    if (!state) {
+      state = { active: 0, waiters: [] };
+      this.states.set(profile.name, state);
+    }
+    if (state.active < (profile.maxConcurrentRequests ?? 8)) state.active++;
+    else await new Promise<void>((resolve) => state!.waiters.push(resolve));
+    let released = false;
+    return () => {
+      if (released) return;
+      released = true;
+      const next = state!.waiters.shift();
+      if (next) next();
+      else state!.active--;
+    };
   }
 }
 

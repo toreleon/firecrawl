@@ -52,6 +52,48 @@ async function main() {
       assert.deepEqual(row[key], value, `${row.profile}/${row.target}/${key}`);
   }
   assert.equal(expected.size, 0);
+  const cappedProfiles = report.profiles.filter(
+    (p: any) => p.maxConcurrentRequests !== undefined,
+  );
+  const hasLifecycle = log.every(
+    (r: any) =>
+      Number.isSafeInteger(r.dispatchOrder) &&
+      r.dispatchOrder > 0 &&
+      Number.isSafeInteger(r.completionOrder) &&
+      r.completionOrder > r.dispatchOrder,
+  );
+  if (cappedProfiles.length)
+    assert.ok(hasLifecycle, 'Missing lifecycle ledger');
+  const peaks: Record<string, number> = {};
+  let peakGlobal = 0;
+  if (hasLifecycle) {
+    const events = log
+      .flatMap((r: any) => [
+        { order: r.dispatchOrder, profile: r.profile, delta: 1 },
+        { order: r.completionOrder, profile: r.profile, delta: -1 },
+      ])
+      .sort((a: any, b: any) => a.order - b.order);
+    assert.equal(new Set(events.map((e: any) => e.order)).size, 2 * log.length);
+    let activeGlobal = 0;
+    const active: Record<string, number> = {};
+    for (const event of events) {
+      activeGlobal += event.delta;
+      active[event.profile] = (active[event.profile] ?? 0) + event.delta;
+      assert.ok(activeGlobal >= 0 && active[event.profile] >= 0);
+      peakGlobal = Math.max(peakGlobal, activeGlobal);
+      peaks[event.profile] = Math.max(
+        peaks[event.profile] ?? 0,
+        active[event.profile],
+      );
+    }
+    assert.equal(activeGlobal, 0);
+    assert.ok(peakGlobal <= report.concurrency);
+    for (const p of cappedProfiles)
+      assert.ok(
+        peaks[p.name] <= p.maxConcurrentRequests,
+        `Profile concurrency exceeded: ${p.name}`,
+      );
+  }
   for (const p of report.profiles) {
     const rows = log.filter((r) => r.profile === p.name);
     const scores = summarizeAttempts(rows);
@@ -72,6 +114,10 @@ async function main() {
     allScoresReplay: true,
     sourceHashesMatch: true,
     networkRequests: 0,
+    lifecycleLedgerVerified: hasLifecycle,
+    profileConcurrencyLimitsChecked: cappedProfiles.length,
+    maxObservedConcurrency: hasLifecycle ? peakGlobal : null,
+    maxObservedConcurrencyByProfile: hasLifecycle ? peaks : null,
   };
   await writeFile(
     path.join(root, 'score-replay-audit.json'),

@@ -59,6 +59,15 @@ an API-level 429 is not a target-site WAF failure. Failed attempts remain in the
 denominator and are not silently retried. A run limited by account quotas must
 not be presented as a retrieval-capability comparison.
 
+Set `maxConcurrentRequests` on a profile to enforce its account limit (integer
+1 through 8). For an account reporting two simultaneous jobs, use
+`"maxConcurrentRequests": 2` alongside `"minIntervalMs": 7000`. Each profile
+has its own slots; the global worker limit still applies. Slot queue wait and
+pacing wait are recorded separately and excluded from HTTP latency. Dispatch
+and response completion carry a monotonic lifecycle order, so the offline
+audit can verify actual overlap without ambiguity from millisecond ties.
+Profiles without this option retain the global concurrency behavior.
+
 This measures retrieval and one expected snippet per target. A Markdown marker
 match does not establish extraction recall, precision, table fidelity, field
 accuracy, crawl discovery or production availability. Those need additional

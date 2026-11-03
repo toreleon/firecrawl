@@ -19,12 +19,19 @@ test(
     let active = 0,
       peak = 0,
       requests = 0;
+    const activeByProfile: Record<string, number> = {},
+      peakByProfile: Record<string, number> = {};
     const received: { profile: string; target: string }[] = [];
     const server = http.createServer(async (req, res) => {
       active++;
       peak = Math.max(peak, active);
       requests++;
       const profile = req.url!.split('/')[1];
+      activeByProfile[profile] = (activeByProfile[profile] ?? 0) + 1;
+      peakByProfile[profile] = Math.max(
+        peakByProfile[profile] ?? 0,
+        activeByProfile[profile],
+      );
       assert.equal(
         req.headers.authorization,
         profile === 'hosted' ? `Bearer ${secret}` : undefined,
@@ -42,6 +49,7 @@ test(
       received.push({ profile, target });
       await new Promise((resolve) => setTimeout(resolve, 250));
       active--;
+      activeByProfile[profile]--;
       res.setHeader('content-type', 'application/json');
       if (target === 'invalid') return res.end('not JSON');
       res.end(
@@ -200,6 +208,44 @@ test(
         8,
         'over-budget invocation must dispatch zero requests',
       );
+      const capped = JSON.parse(await readFile(profilePath, 'utf8')).map(
+        (p: any) => ({ ...p, maxConcurrentRequests: 2 }),
+      );
+      await writeFile(profilePath, JSON.stringify(capped));
+      peak = 0;
+      for (const k of Object.keys(peakByProfile)) peakByProfile[k] = 0;
+      await promisify(execFile)(
+        process.execPath,
+        [
+          ...args.filter((a) => !a.startsWith('--out=')),
+          `--out=${output}-limited`,
+        ],
+        options,
+      );
+      assert.equal(peak, 4);
+      assert.deepEqual(peakByProfile, { fork: 2, hosted: 2 });
+      assert.equal(requests, 16);
+      const limited = JSON.parse(
+        await readFile(path.join(output + '-limited', 'report.json'), 'utf8'),
+      );
+      assert.ok(limited.attempts.some((r: any) => r.queueWaitMs > 100));
+      await promisify(execFile)(
+        process.execPath,
+        [
+          '--import',
+          'tsx',
+          'scripts/audit-api-benchmark.ts',
+          `--run=${output}-limited`,
+        ],
+        options,
+      );
+      const limitedAudit = JSON.parse(
+        await readFile(
+          path.join(output + '-limited', 'score-replay-audit.json'),
+          'utf8',
+        ),
+      );
+      assert.equal(limitedAudit.profileConcurrencyLimitsChecked, 2);
     } finally {
       await closeServer(server);
       await rm(dir, { recursive: true, force: true });
