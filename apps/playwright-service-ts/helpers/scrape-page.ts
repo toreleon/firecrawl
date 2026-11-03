@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import { Deadline, ScrapeFailure } from './scrape-control';
 import {
   detectPageProtection,
+  captureRenderedPage,
   renderedBodyState,
   waitForRenderedBody,
 } from './page-readiness';
@@ -213,44 +214,12 @@ export const scrapePage = async (
     const landedUrl = page.url();
     try {
       const snapshot = await deadline.run(
-        page.evaluate(
-          ({ text, selector, scope }) => {
-            let selectorReady = true;
-            if (selector) {
-              try {
-                const element = document.querySelector(selector);
-                const style = element && getComputedStyle(element);
-                selectorReady =
-                  !!element &&
-                  style?.display !== 'none' &&
-                  style?.visibility !== 'hidden' &&
-                  !!element.getClientRects().length;
-              } catch {
-                selectorReady = true;
-              }
-            }
-            const renderedText = document.body?.innerText ?? '';
-            return {
-              content: document.documentElement?.outerHTML ?? '',
-              renderedText,
-              title: document.title,
-              url: location.href,
-              ready:
-                selectorReady &&
-                (!text ||
-                  (scope === 'title' ? document.title : renderedText)
-                    .toLowerCase()
-                    .replace(/\s+/g, ' ')
-                    .trim()
-                    .includes(text.toLowerCase().replace(/\s+/g, ' ').trim())),
-            };
-          },
-          {
-            text: options.waitForText,
-            selector: options.checkSelector,
-            scope: options.readinessScope,
-          },
-        ),
+        page.evaluate(captureRenderedPage, {
+          text: options.waitForText,
+          selector: options.checkSelector,
+          scope: options.readinessScope,
+          automatic: !!automatic,
+        }),
       );
       const selectorReady =
         !options.checkSelector ||
@@ -291,7 +260,9 @@ export const scrapePage = async (
         automatic && !rawBody
           ? detectPageProtection(snapshot.content, headers)
             ? 'verification'
-            : renderedBodyState(snapshot.renderedText)
+            : snapshot.busyCount
+              ? 'busy'
+              : renderedBodyState(snapshot.renderedText)
           : undefined;
       const readinessSatisfied =
         rawBody && options.waitForText
@@ -321,6 +292,8 @@ export const scrapePage = async (
           ...(automatic && {
             automatic: {
               ...automatic,
+              busyCount: snapshot.busyCount,
+              busyScope: snapshot.busyScope,
               ...(automaticOutcome && { outcome: automaticOutcome }),
             },
           }),

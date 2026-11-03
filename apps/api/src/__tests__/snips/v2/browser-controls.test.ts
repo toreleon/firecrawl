@@ -15,6 +15,13 @@ describe("Self-hosted local browser controls", () => {
         (fixtureRequests.get(req.url ?? "") ?? 0) + 1,
       );
       res.setHeader("content-type", "text/html");
+      if (req.url === "/busy" || req.url === "/busy-forever")
+        return res.end(
+          '<header>Search navigation</header><main><h1>Search results</h1><div id="results" aria-busy="true" style="height:40px;width:300px"></div></main><footer>Site footer</footer>' +
+            (req.url === "/busy"
+              ? '<script>setTimeout(()=>{document.querySelector("#results").innerHTML="<article>Hydrated API results 42</article>";document.querySelector("#results").setAttribute("aria-busy","false")},350)</script>'
+              : ""),
+        );
       if (req.url === "/shell")
         return res.end(
           '<main>Loading...</main><script>setTimeout(()=>document.body.innerHTML="<main>Automatic API content 42</main>",350)</script>',
@@ -118,6 +125,21 @@ describe("Self-hosted local browser controls", () => {
       expect(transitioned.body.data.markdown).toContain(
         "Automatic API content 42",
       );
+      const hydrated = await request("/v2/scrape", {
+        url: `${origin}/busy`,
+        formats: ["rawHtml", "markdown"],
+        maxAge: 0,
+        timeout: scrapeTimeout,
+        browserControls: { workflow: "auto", waitUntil: "domcontentloaded" },
+      });
+      expect(hydrated.status).toBe(200);
+      expect(hydrated.body.data.markdown).toContain("Hydrated API results 42");
+      expect(
+        hydrated.body.data.metadata.browser.readiness.automatic.maxBusyCount,
+      ).toBeGreaterThan(0);
+      expect(hydrated.body.data.metadata.browser.readiness.satisfied).toBe(
+        true,
+      );
       for (const [path, code] of [
         ["/empty", "CONTENT_NOT_READY"],
         ["/verification", "VERIFICATION_REQUIRED"],
@@ -135,6 +157,33 @@ describe("Self-hosted local browser controls", () => {
         expect(failed.body.code).toBe(code);
         expect(fixtureRequests.get(path)).toBe(1);
       }
+    },
+    scrapeTimeout,
+  );
+  itIf(enabled)(
+    "returns captured partial content with unresolved automatic loading metadata",
+    async () => {
+      const partial = await request("/v2/scrape", {
+        url: `${origin}/busy-forever`,
+        formats: ["rawHtml", "markdown"],
+        maxAge: 0,
+        timeout: scrapeTimeout,
+        browserControls: { workflow: "auto", waitUntil: "domcontentloaded" },
+      });
+      expect(partial.status).toBe(200);
+      expect(partial.body.data.markdown).toContain("Search results");
+      expect(partial.body.data.metadata.browser.errorCode).toBe(
+        "CONTENT_NOT_READY",
+      );
+      expect(partial.body.data.metadata.browser.readiness.satisfied).toBe(
+        false,
+      );
+      expect(
+        partial.body.data.metadata.browser.readiness.automatic.outcome,
+      ).toBe("busy");
+      expect(partial.body.data.metadata.browser.interaction.state).toBe(
+        "CONTENT_NOT_READY",
+      );
     },
     scrapeTimeout,
   );
