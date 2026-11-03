@@ -33,6 +33,7 @@ test(
     };
     const page: any = {
       frames: () => [frame],
+      mainFrame: () => ({}),
       exposeBinding: async () => {},
       addInitScript: async () => {},
       once: () => {},

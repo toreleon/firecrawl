@@ -10,12 +10,25 @@ describe("Self-hosted local browser controls", () => {
   let embeddedOrigin: string;
   let origin: string;
   const fixtureRequests = new Map<string, number>();
+  const blockedEmbedded = new Set<string>();
+  const bootstrapResponses = new Map<string, http.ServerResponse>();
   beforeAll(async () => {
     if (enabled) {
-      embedded = http.createServer((_req, res) => {
+      embedded = http.createServer((req, res) => {
+        const url = new URL(req.url!, "http://fixture.test");
+        const caseId = url.searchParams.get("case")!;
+        if (url.pathname === "/block") {
+          blockedEmbedded.add(caseId);
+          bootstrapResponses.get(caseId)?.end("// auxiliary frame is blocked");
+          bootstrapResponses.delete(caseId);
+          const timer = setTimeout(() => res.end("released"), 15000);
+          timer.unref();
+          res.on("close", () => clearTimeout(timer));
+          return;
+        }
         res.setHeader("content-type", "text/html");
         res.end(
-          "<script>const end=Date.now()+4500;while(Date.now()<end){}</script><p>Unresponsive auxiliary frame</p>",
+          `<script>const r=new XMLHttpRequest();r.open("GET","/block?case=${caseId}",false);r.send()</script><p>Unresponsive auxiliary frame</p>`,
         );
       });
       await new Promise<void>(resolve => embedded!.listen(0, "::1", resolve));
@@ -27,10 +40,20 @@ describe("Self-hosted local browser controls", () => {
         (fixtureRequests.get(req.url ?? "") ?? 0) + 1,
       );
       res.setHeader("content-type", "text/html");
+      if (req.url?.startsWith("/consent-bootstrap?")) {
+        const caseId = new URL(req.url, "http://fixture.test").searchParams.get(
+          "case",
+        )!;
+        res.setHeader("content-type", "application/javascript");
+        if (blockedEmbedded.has(caseId))
+          res.end("// auxiliary frame is blocked");
+        else bootstrapResponses.set(caseId, res);
+        return;
+      }
       if (req.url === "/consent-ready" || req.url === "/consent-stalled") {
         const choosing = req.url === "/consent-ready";
         return res.end(
-          `<main id="consent-content" ${choosing ? "hidden" : ""}>Public consent content 42</main>${choosing ? "<div id=\"onetrust-banner-sdk\"><button id=\"onetrust-reject-all-handler\" onclick=\"document.cookie='choice=necessary; path=/';document.querySelector('#consent-content').hidden=false;document.querySelector('#onetrust-banner-sdk').remove()\">Reject All</button></div>" : ""}<iframe src="${embeddedOrigin}/"></iframe><script>const end=Date.now()+150;while(Date.now()<end){}</script>`,
+          `<main id="consent-content" ${choosing ? "hidden" : ""}>Public consent content 42</main>${choosing ? "<div id=\"onetrust-banner-sdk\"><button id=\"onetrust-reject-all-handler\" onclick=\"document.cookie='choice=necessary; path=/';document.querySelector('#consent-content').hidden=false;document.querySelector('#onetrust-banner-sdk').remove()\">Reject All</button></div>" : ""}<iframe src="${embeddedOrigin}/?case=${req.url.slice(1)}"></iframe><script defer src="/consent-bootstrap?case=${req.url.slice(1)}"></script>`,
         );
       }
       if (req.url === "/busy" || req.url === "/busy-forever")
@@ -113,7 +136,9 @@ describe("Self-hosted local browser controls", () => {
         const consent = result.body.data.metadata.browser.interaction.consent;
         expect(consent.outcome).toBe(outcome);
         expect(consent.diagnostics.probeTimeouts).toBe(1);
-        expect(consent.diagnostics.durationMs).toBeLessThan(3000);
+        expect(consent.diagnostics.mainFrameProbeTimeouts).toBe(0);
+        expect(consent.diagnostics.auxiliaryProbeTimeouts).toBe(1);
+        expect(consent.diagnostics.durationMs).toBeLessThan(6000);
       }
     },
     scrapeTimeout,

@@ -79,6 +79,8 @@ type ConsentResult = {
   diagnostics?: {
     framesScanned: number;
     probeTimeouts: number;
+    mainFrameProbeTimeouts: number;
+    auxiliaryProbeTimeouts: number;
     probeErrors: number;
     actionErrors: number;
     limited: boolean;
@@ -267,6 +269,8 @@ export const applyConsent = async (
   const diagnostics = {
     framesScanned: 0,
     probeTimeouts: 0,
+    mainFrameProbeTimeouts: 0,
+    auxiliaryProbeTimeouts: 0,
     probeErrors: 0,
     actionErrors: 0,
     limited: false,
@@ -277,6 +281,7 @@ export const applyConsent = async (
   // that can click later, including after a retained tab enters human handoff.
   const probe = async <T>(
     operation: (budget: Deadline) => Promise<T>,
+    primary: boolean,
   ): Promise<{ value: T } | null> => {
     const remaining = deadline.remaining();
     let left = 0;
@@ -290,13 +295,18 @@ export const applyConsent = async (
       if (result.outcome === 'not_detected') result.outcome = 'unresolved';
       return null;
     }
-    const budget = new Deadline(Math.min(1000, left, remaining - 300));
+    const budget = new Deadline(
+      Math.min(primary ? 3000 : 1000, left, remaining - 300),
+    );
     try {
       return { value: await budget.run(operation(budget)) };
     } catch (error) {
       deadline.remaining(); // Propagate caller expiry/cancellation instead of hiding it.
-      if (errorCode(error) === 'SCRAPE_TIMEOUT') diagnostics.probeTimeouts++;
-      else diagnostics.probeErrors++;
+      if (errorCode(error) === 'SCRAPE_TIMEOUT') {
+        diagnostics.probeTimeouts++;
+        if (primary) diagnostics.mainFrameProbeTimeouts++;
+        else diagnostics.auxiliaryProbeTimeouts++;
+      } else diagnostics.probeErrors++;
       if (result.outcome === 'not_detected') result.outcome = 'unresolved';
       return null;
     }
@@ -333,7 +343,7 @@ export const applyConsent = async (
           const clickable = count === 1 && (await control.isVisible());
           check();
           return { choice, control, clickable };
-        });
+        }, frame === page.mainFrame());
         if (!found?.value) break;
         const { choice, control, clickable } = found.value;
         remaining.splice(remaining.indexOf(choice), 1);
