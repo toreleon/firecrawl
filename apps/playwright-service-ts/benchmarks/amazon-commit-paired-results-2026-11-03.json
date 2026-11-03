@@ -1,0 +1,665 @@
+{
+  "status": "complete",
+  "sourceCommit": "025f01ec118ca369ad46e5fa9d09be20fa4e0106",
+  "requests": 10,
+  "targets": 1,
+  "rounds": 5,
+  "scope": "Matched production Chromium images on one frozen Amazon URL, five fresh attempts per build; not an all-target comparison.",
+  "protocol": {
+    "fixtureSha256": "a886fb57087e842c2857b89a7669e31d2fb7b98d6bd7deb60a2329f29581b76a",
+    "graderSha256": "ffd9f0d2e5996825aa77cb71b600a6667558e166d4471a084c20638bab9171d6",
+    "frozenClassifierSha256": "3111f011045834a040e5497825cd0bf2c698a3fa8ca77a48c8479dddf2348817",
+    "globalHttpConcurrency": 2,
+    "profileConcurrency": 1,
+    "noExpectedTextHint": true,
+    "upstreamProxy": false,
+    "egressCountry": "VN",
+    "limitsPerOwner": {
+      "cpus": 2,
+      "memoryGiB": 3,
+      "pageCapacity": 2
+    }
+  },
+  "profiles": {
+    "baseline": {
+      "overall": {
+        "requests": 5,
+        "uniqueTargets": 1,
+        "frontierPasses": 3,
+        "screenedPasses": 3,
+        "normalizedPasses": 3,
+        "frontierSuccessRate": 0.6,
+        "screenedSuccessRate": 0.6,
+        "normalizedSuccessRate": 0.6,
+        "successfulLatencyP50Ms": 9484,
+        "successfulLatencyP95Ms": 9694,
+        "allAttemptLatencyP95Ms": 9694,
+        "failures": {
+          "network_error": 2
+        }
+      },
+      "byWafLabel": {
+        "aws-waf": {
+          "requests": 5,
+          "uniqueTargets": 1,
+          "frontierPasses": 3,
+          "screenedPasses": 3,
+          "normalizedPasses": 3,
+          "frontierSuccessRate": 0.6,
+          "screenedSuccessRate": 0.6,
+          "normalizedSuccessRate": 0.6,
+          "successfulLatencyP50Ms": 9484,
+          "successfulLatencyP95Ms": 9694,
+          "allAttemptLatencyP95Ms": 9694,
+          "failures": {
+            "network_error": 2
+          }
+        }
+      }
+    },
+    "candidate": {
+      "overall": {
+        "requests": 5,
+        "uniqueTargets": 1,
+        "frontierPasses": 3,
+        "screenedPasses": 3,
+        "normalizedPasses": 3,
+        "frontierSuccessRate": 0.6,
+        "screenedSuccessRate": 0.6,
+        "normalizedSuccessRate": 0.6,
+        "successfulLatencyP50Ms": 8870,
+        "successfulLatencyP95Ms": 10327,
+        "allAttemptLatencyP95Ms": 10327,
+        "failures": {
+          "network_error": 2
+        }
+      },
+      "byWafLabel": {
+        "aws-waf": {
+          "requests": 5,
+          "uniqueTargets": 1,
+          "frontierPasses": 3,
+          "screenedPasses": 3,
+          "normalizedPasses": 3,
+          "frontierSuccessRate": 0.6,
+          "screenedSuccessRate": 0.6,
+          "normalizedSuccessRate": 0.6,
+          "successfulLatencyP50Ms": 8870,
+          "successfulLatencyP95Ms": 10327,
+          "allAttemptLatencyP95Ms": 10327,
+          "failures": {
+            "network_error": 2
+          }
+        }
+      }
+    }
+  },
+  "byTarget": [
+    {
+      "target": "Amazon",
+      "baseline": 3,
+      "candidate": 3
+    }
+  ],
+  "observedStates": [
+    {
+      "target": "Amazon",
+      "profile": "candidate",
+      "round": 1,
+      "normalizedPass": false,
+      "protection": null,
+      "automatic": null,
+      "workflow": null,
+      "errorCode": "NETWORK_ERROR",
+      "document": {
+        "phase": "workflow",
+        "url": "https://www.amazon.com/"
+      }
+    },
+    {
+      "target": "Amazon",
+      "profile": "baseline",
+      "round": 1,
+      "normalizedPass": false,
+      "protection": null,
+      "automatic": null,
+      "workflow": null,
+      "errorCode": "NETWORK_ERROR",
+      "document": {
+        "phase": "workflow",
+        "url": "https://www.amazon.com/"
+      }
+    },
+    {
+      "target": "Amazon",
+      "profile": "baseline",
+      "round": 2,
+      "normalizedPass": true,
+      "state": "CONTENT_READY",
+      "protection": null,
+      "automatic": {
+        "mode": "rendered-body",
+        "outcome": "ready",
+        "waitMs": 111,
+        "timeoutMs": 5000,
+        "busyCount": 0,
+        "ignoredComplementaryBusyCount": 0,
+        "maxBusyCount": 0,
+        "busyScope": "main"
+      },
+      "workflow": {
+        "id": "auto",
+        "steps": [
+          {
+            "type": "amazon-continue@1",
+            "outcome": "submitted-and-returned-to-product"
+          }
+        ],
+        "observations": {
+          "entryHost": "www.amazon.com",
+          "amazonContinuation": {
+            "origin": "https://www.amazon.com",
+            "asin": "B08KCWFMRS",
+            "settleWaitMs": 13
+          }
+        }
+      },
+      "errorCode": null,
+      "document": null
+    },
+    {
+      "target": "Amazon",
+      "profile": "candidate",
+      "round": 2,
+      "normalizedPass": true,
+      "state": "CONTENT_READY",
+      "protection": null,
+      "automatic": {
+        "mode": "rendered-body",
+        "outcome": "ready",
+        "waitMs": 107,
+        "timeoutMs": 5000,
+        "busyCount": 0,
+        "ignoredComplementaryBusyCount": 0,
+        "maxBusyCount": 0,
+        "busyScope": "main"
+      },
+      "workflow": {
+        "id": "auto",
+        "steps": [
+          {
+            "type": "amazon-continue@1",
+            "outcome": "submitted-and-returned-to-product"
+          }
+        ],
+        "observations": {
+          "entryHost": "www.amazon.com",
+          "amazonContinuation": {
+            "origin": "https://www.amazon.com",
+            "asin": "B08KCWFMRS",
+            "settleWaitMs": 2
+          }
+        }
+      },
+      "errorCode": null,
+      "document": null
+    },
+    {
+      "target": "Amazon",
+      "profile": "candidate",
+      "round": 3,
+      "normalizedPass": true,
+      "state": "CONTENT_READY",
+      "protection": null,
+      "automatic": {
+        "mode": "rendered-body",
+        "outcome": "ready",
+        "waitMs": 117,
+        "timeoutMs": 5000,
+        "busyCount": 0,
+        "ignoredComplementaryBusyCount": 0,
+        "maxBusyCount": 0,
+        "busyScope": "main"
+      },
+      "workflow": {
+        "id": "auto",
+        "steps": [
+          {
+            "type": "amazon-continue@1",
+            "outcome": "submitted-and-returned-to-product"
+          }
+        ],
+        "observations": {
+          "entryHost": "www.amazon.com",
+          "amazonContinuation": {
+            "origin": "https://www.amazon.com",
+            "asin": "B08KCWFMRS",
+            "settleWaitMs": 2
+          }
+        }
+      },
+      "errorCode": null,
+      "document": null
+    },
+    {
+      "target": "Amazon",
+      "profile": "baseline",
+      "round": 3,
+      "normalizedPass": true,
+      "state": "CONTENT_READY",
+      "protection": null,
+      "automatic": {
+        "mode": "rendered-body",
+        "outcome": "ready",
+        "waitMs": 105,
+        "timeoutMs": 5000,
+        "busyCount": 0,
+        "ignoredComplementaryBusyCount": 0,
+        "maxBusyCount": 0,
+        "busyScope": "main"
+      },
+      "workflow": {
+        "id": "auto",
+        "steps": [
+          {
+            "type": "amazon-continue@1",
+            "outcome": "submitted-and-returned-to-product"
+          }
+        ],
+        "observations": {
+          "entryHost": "www.amazon.com",
+          "amazonContinuation": {
+            "origin": "https://www.amazon.com",
+            "asin": "B08KCWFMRS",
+            "settleWaitMs": 21
+          }
+        }
+      },
+      "errorCode": null,
+      "document": null
+    },
+    {
+      "target": "Amazon",
+      "profile": "candidate",
+      "round": 4,
+      "normalizedPass": false,
+      "protection": null,
+      "automatic": null,
+      "workflow": null,
+      "errorCode": "NETWORK_ERROR",
+      "document": {
+        "phase": "workflow",
+        "url": "https://www.amazon.com/"
+      }
+    },
+    {
+      "target": "Amazon",
+      "profile": "baseline",
+      "round": 4,
+      "normalizedPass": true,
+      "state": "CONTENT_READY",
+      "protection": null,
+      "automatic": {
+        "mode": "rendered-body",
+        "outcome": "ready",
+        "waitMs": 122,
+        "timeoutMs": 5000,
+        "busyCount": 0,
+        "ignoredComplementaryBusyCount": 0,
+        "maxBusyCount": 0,
+        "busyScope": "main"
+      },
+      "workflow": {
+        "id": "auto",
+        "steps": [
+          {
+            "type": "amazon-continue@1",
+            "outcome": "submitted-and-returned-to-product"
+          }
+        ],
+        "observations": {
+          "entryHost": "www.amazon.com",
+          "amazonContinuation": {
+            "origin": "https://www.amazon.com",
+            "asin": "B08KCWFMRS",
+            "settleWaitMs": 15
+          }
+        }
+      },
+      "errorCode": null,
+      "document": null
+    },
+    {
+      "target": "Amazon",
+      "profile": "baseline",
+      "round": 5,
+      "normalizedPass": false,
+      "protection": null,
+      "automatic": null,
+      "workflow": null,
+      "errorCode": "NETWORK_ERROR",
+      "document": {
+        "phase": "workflow",
+        "url": "https://www.amazon.com/"
+      }
+    },
+    {
+      "target": "Amazon",
+      "profile": "candidate",
+      "round": 5,
+      "normalizedPass": true,
+      "state": "CONTENT_READY",
+      "protection": null,
+      "automatic": {
+        "mode": "rendered-body",
+        "outcome": "ready",
+        "waitMs": 157,
+        "timeoutMs": 5000,
+        "busyCount": 0,
+        "ignoredComplementaryBusyCount": 0,
+        "maxBusyCount": 0,
+        "busyScope": "main"
+      },
+      "workflow": {
+        "id": "auto",
+        "steps": [
+          {
+            "type": "amazon-continue@1",
+            "outcome": "submitted-and-returned-to-product"
+          }
+        ],
+        "observations": {
+          "entryHost": "www.amazon.com",
+          "amazonContinuation": {
+            "origin": "https://www.amazon.com",
+            "asin": "B08KCWFMRS",
+            "settleWaitMs": 1
+          }
+        }
+      },
+      "errorCode": null,
+      "document": null
+    }
+  ],
+  "audit": {
+    "allUniquePairs": true,
+    "allHashesAndScoresReplay": true,
+    "summaryReplay": true,
+    "peakGlobalConcurrency": 2,
+    "peakProfileConcurrency": {
+      "baseline": 1,
+      "candidate": 1
+    },
+    "timing": {
+      "valid": true,
+      "sampleIntervalMs": 1000,
+      "maximumAllowedGapMs": 10000,
+      "maximumObservedGapMs": 1003,
+      "gaps": []
+    },
+    "peakMemoryMiB": {
+      "baseline": 770,
+      "candidate": 731
+    },
+    "resourceEvents": {
+      "baseline": {
+        "memory.events:low": 0,
+        "memory.events:high": 0,
+        "memory.events:max": 0,
+        "memory.events:oom": 0,
+        "memory.events:oom_kill": 0,
+        "memory.events:oom_group_kill": 0,
+        "memory.events:sock_throttled": 0,
+        "pids.events:max": 0
+      },
+      "candidate": {
+        "memory.events:low": 0,
+        "memory.events:high": 0,
+        "memory.events:max": 0,
+        "memory.events:oom": 0,
+        "memory.events:oom_kill": 0,
+        "memory.events:oom_group_kill": 0,
+        "memory.events:sock_throttled": 0,
+        "pids.events:max": 0
+      }
+    },
+    "cleanupVerified": true,
+    "networkRequests": 0
+  },
+  "deployment": {
+    "profiles": [
+      {
+        "name": "baseline",
+        "container": "autogtm-firecrawl-amazon-commit-baseline-20261103",
+        "port": 33185,
+        "image": "sha256:b65d2734ca857d6f068944ed4959b2dc697d493a6bf3d27efcdfe29682c9ba9e",
+        "sourceCommit": "b7da5a8a047896ba1b60526012e823b2e877c7b3",
+        "health": {
+          "status": "healthy",
+          "browserEngine": "rebrowser",
+          "headless": false,
+          "maxConcurrentPages": 2,
+          "activePages": 0,
+          "browserSessions": 0,
+          "blockAds": true,
+          "blockMedia": false,
+          "ownerBootId": "ef8654d5-7c51-4358-90cb-e2f3a3c7bf38",
+          "capabilities": {
+            "version": 1,
+            "readiness": true,
+            "actions": [
+              "click",
+              "wait",
+              "write",
+              "press",
+              "scroll",
+              "scrape"
+            ],
+            "workflows": [
+              "none",
+              "auto",
+              "bestbuy-us@1",
+              "product-details@1"
+            ],
+            "consent": true,
+            "retainedPages": true,
+            "fencedSessions": true,
+            "pageScopedHandoff": true
+          },
+          "serviceWorkers": "block"
+        },
+        "runtimeSourceAndCompiledHashes": {
+          "api.ts": "2563a35dfc084d2fc3ba2133825ccf193c56141eb2afb9da24f05ab956bb1275",
+          "helpers/browser.ts": "0205ad8aa08a05cecefe83adf2b4e257d8af48eca0794e1a8437e946b38cc98a",
+          "helpers/browser-sessions.ts": "d67253bc869f97206083c7fa7c2c2ae9d711005960c8590ad44725fb12ceb41f",
+          "helpers/cookies.ts": "94736b093cf95fe8244f52c6e8ee9925cdd39ea7cd64cf08156be05a45240dcb",
+          "helpers/get_error.ts": "1c15475f5f048c869be847c62dbfb9610cf4130ab93538db2c00dbd567d01aea",
+          "helpers/resource-policy.ts": "7c54984bc6187baf1c0ce2ff18cb50373109c8dcd961edc65b9186d5d2e2e774",
+          "helpers/scrape-control.ts": "228fc82c0663d0cba5d8131a1457915a48f7c17b8860ba6a0bb337eeb66ad874",
+          "helpers/scrape-page.ts": "098c609f899c7513b137048ceb7c0f1a2ca28edbcd95840e071378efe6a378f9",
+          "helpers/ssrf.ts": "78df1d6e5191ca70442af84a28cffebe0751fa12a75d0a11314bf23287a5bca6",
+          "helpers/workflows.ts": "401bd32747d98bebf2fd7d9fc538d1c4c7101d84268c1852c9973ffc17516c88",
+          "helpers/page-readiness.ts": "cd4bda620220220bdc60cb935f3aa8c522251cbda837a9df49599dcbd4e7c790",
+          "helpers/waf-benchmark.ts": "ffd9f0d2e5996825aa77cb71b600a6667558e166d4471a084c20638bab9171d6",
+          "helpers/bot-detection.ts": "3111f011045834a040e5497825cd0bf2c698a3fa8ca77a48c8479dddf2348817",
+          "dist/api.js": "a6216e4a60d0a9ce5b55e1f8eff59aa77fe416148fa98b81286a6fa3689ca990",
+          "dist/helpers/browser.js": "9c927eaf21a636fb7a8a28baa44b8ccacd450af0ad8c99fe9ccc2f8d38af5d71",
+          "dist/helpers/browser-sessions.js": "715e61bf0a2fe9b43de9ab1dc733f5f775e0a92e60c5268dbe6e0b8620f9f549",
+          "dist/helpers/cookies.js": "0d7a5e0f76b861992a1b304b6acf6f70eacaaa7a09f8269d93434dcdbc23bc57",
+          "dist/helpers/get_error.js": "5edbde83afd8bceb2280455d500bdb7c3d62f5318d54c82cc01629c6681cd6a7",
+          "dist/helpers/resource-policy.js": "3c079ef3d980dde1a91090007396929a506962a57ee1cd83a9baa48fc7bce2f1",
+          "dist/helpers/scrape-control.js": "48da74695080f73cea869acc6bbd295876d1ebfbe12c6e4cd09c5ef6dcf3b69d",
+          "dist/helpers/scrape-page.js": "71dd7a38c2d0b4df2639d0cde3a105be2d6f017a290f3c1ace3a093e63778ec8",
+          "dist/helpers/ssrf.js": "452ae1dbec8a6103cba710e56b6d0c5740606021d34c2bc415025a8676a2c68d",
+          "dist/helpers/workflows.js": "058145f080954b490631a5868a0e43e9656084a5aaa80ab3ab107858ec6ba961",
+          "dist/helpers/page-readiness.js": "e5b6db434986745f8b444688f283056b3718c137f123bbe7a76161d493508e0c",
+          "dist/helpers/waf-benchmark.js": "4eea26db4617351a9daa9ad546c8d9d16983d2d736f5a1d435a3159fe7a96f4d",
+          "dist/helpers/bot-detection.js": "77a197cbbe0942b6106db2eb2579fc1af8dc7a167e3e959de51a89f8ed7a746e"
+        },
+        "network": {
+          "country": "VN",
+          "proxyConfigured": false
+        }
+      },
+      {
+        "name": "candidate",
+        "container": "autogtm-firecrawl-amazon-commit-candidate-20261103",
+        "port": 33186,
+        "image": "sha256:a5413c5abd91f8ff3e12fe83e64c5e19936be23e1faa13596b49c51fc139f295",
+        "sourceCommit": "025f01ec118ca369ad46e5fa9d09be20fa4e0106",
+        "health": {
+          "status": "healthy",
+          "browserEngine": "rebrowser",
+          "headless": false,
+          "maxConcurrentPages": 2,
+          "activePages": 0,
+          "browserSessions": 0,
+          "blockAds": true,
+          "blockMedia": false,
+          "ownerBootId": "dfda90be-0015-46b4-a5de-63fb41683aa4",
+          "capabilities": {
+            "version": 1,
+            "readiness": true,
+            "actions": [
+              "click",
+              "wait",
+              "write",
+              "press",
+              "scroll",
+              "scrape"
+            ],
+            "workflows": [
+              "none",
+              "auto",
+              "bestbuy-us@1",
+              "product-details@1"
+            ],
+            "consent": true,
+            "retainedPages": true,
+            "fencedSessions": true,
+            "pageScopedHandoff": true
+          },
+          "serviceWorkers": "block"
+        },
+        "runtimeSourceAndCompiledHashes": {
+          "api.ts": "2563a35dfc084d2fc3ba2133825ccf193c56141eb2afb9da24f05ab956bb1275",
+          "helpers/browser.ts": "0205ad8aa08a05cecefe83adf2b4e257d8af48eca0794e1a8437e946b38cc98a",
+          "helpers/browser-sessions.ts": "d67253bc869f97206083c7fa7c2c2ae9d711005960c8590ad44725fb12ceb41f",
+          "helpers/cookies.ts": "94736b093cf95fe8244f52c6e8ee9925cdd39ea7cd64cf08156be05a45240dcb",
+          "helpers/get_error.ts": "1c15475f5f048c869be847c62dbfb9610cf4130ab93538db2c00dbd567d01aea",
+          "helpers/resource-policy.ts": "7c54984bc6187baf1c0ce2ff18cb50373109c8dcd961edc65b9186d5d2e2e774",
+          "helpers/scrape-control.ts": "5cf450f24b5681803b27485f7122b13ffe42eb172f7b0e601469723de5541f13",
+          "helpers/scrape-page.ts": "098c609f899c7513b137048ceb7c0f1a2ca28edbcd95840e071378efe6a378f9",
+          "helpers/ssrf.ts": "78df1d6e5191ca70442af84a28cffebe0751fa12a75d0a11314bf23287a5bca6",
+          "helpers/workflows.ts": "2f829da96d5525bc05aee2290a3a138dc60d0dc31ff9745ab25c1e647104347a",
+          "helpers/page-readiness.ts": "cd4bda620220220bdc60cb935f3aa8c522251cbda837a9df49599dcbd4e7c790",
+          "helpers/waf-benchmark.ts": "ffd9f0d2e5996825aa77cb71b600a6667558e166d4471a084c20638bab9171d6",
+          "helpers/bot-detection.ts": "3111f011045834a040e5497825cd0bf2c698a3fa8ca77a48c8479dddf2348817",
+          "dist/api.js": "a6216e4a60d0a9ce5b55e1f8eff59aa77fe416148fa98b81286a6fa3689ca990",
+          "dist/helpers/browser.js": "9c927eaf21a636fb7a8a28baa44b8ccacd450af0ad8c99fe9ccc2f8d38af5d71",
+          "dist/helpers/browser-sessions.js": "715e61bf0a2fe9b43de9ab1dc733f5f775e0a92e60c5268dbe6e0b8620f9f549",
+          "dist/helpers/cookies.js": "0d7a5e0f76b861992a1b304b6acf6f70eacaaa7a09f8269d93434dcdbc23bc57",
+          "dist/helpers/get_error.js": "5edbde83afd8bceb2280455d500bdb7c3d62f5318d54c82cc01629c6681cd6a7",
+          "dist/helpers/resource-policy.js": "3c079ef3d980dde1a91090007396929a506962a57ee1cd83a9baa48fc7bce2f1",
+          "dist/helpers/scrape-control.js": "a3d5de04ff50fa32d9561a23a3b784bf690bb4ca92c3a695f7c2f23b42345366",
+          "dist/helpers/scrape-page.js": "71dd7a38c2d0b4df2639d0cde3a105be2d6f017a290f3c1ace3a093e63778ec8",
+          "dist/helpers/ssrf.js": "452ae1dbec8a6103cba710e56b6d0c5740606021d34c2bc415025a8676a2c68d",
+          "dist/helpers/workflows.js": "234e5ac33226c592470408e0c5fa5d6182eae2d689e5ea7519f2e885da26d023",
+          "dist/helpers/page-readiness.js": "e5b6db434986745f8b444688f283056b3718c137f123bbe7a76161d493508e0c",
+          "dist/helpers/waf-benchmark.js": "4eea26db4617351a9daa9ad546c8d9d16983d2d736f5a1d435a3159fe7a96f4d",
+          "dist/helpers/bot-detection.js": "77a197cbbe0942b6106db2eb2579fc1af8dc7a167e3e959de51a89f8ed7a746e"
+        },
+        "network": {
+          "country": "VN",
+          "proxyConfigured": false
+        }
+      }
+    ],
+    "checkedAt": "2026-11-03T15:01:59.743085+00:00",
+    "limitsPerBrowser": {
+      "cpuCount": 2,
+      "memoryGiB": 3,
+      "pageCapacity": 2
+    },
+    "totalClientConcurrency": 2,
+    "sourceCommit": "025f01ec118ca369ad46e5fa9d09be20fa4e0106",
+    "candidateImageId": "sha256:a5413c5abd91f8ff3e12fe83e64c5e19936be23e1faa13596b49c51fc139f295",
+    "scope": "Matched production Chromium images; one frozen Amazon target, five attempts per image. No hosted or proxy calls.",
+    "benchmarkScriptSha256": "c5dd6aea5dd1ce13ddcf83981714700ac362fd540371b6aa8a5a1e2a4fd86d15"
+  },
+  "localEvidence": {
+    "directory": "_local/anti-bot/amazon-commit-paired-2026-11-03",
+    "reportSha256": "b9df629e37683fe4ec767f4273a4d9624dc8e9fab7f2873d861fb2c94987c76e"
+  },
+  "historicalClassificationAudit": {
+    "networkRequests": 0,
+    "normalizedSuccessesChecked": 1037,
+    "newRejections": [],
+    "runs": [
+      {
+        "run": "waf-regression-repair-full-2026-11-03",
+        "normalizedSuccessesChecked": 209,
+        "reportSha256": "824fa447a8c2d47a5358918f9657b82b093713887f8af87a556b178b74da084f"
+      },
+      {
+        "run": "content-readiness-corrected-paired-full-2026-11-03",
+        "normalizedSuccessesChecked": 169,
+        "reportSha256": "90bd7068a13979b313c901cf8d4e1338aef00eb9a4db23439f758eb36a124e4c"
+      },
+      {
+        "run": "primary-busy-ad-corrected-full-2026-11-03",
+        "normalizedSuccessesChecked": 176,
+        "reportSha256": "c3059defb250c55a86ad72258a539c0834297095295fdd3a2f00d3b336e70b10"
+      },
+      {
+        "run": "consent-probe-primary-paired-full-2026-11-03",
+        "normalizedSuccessesChecked": 176,
+        "reportSha256": "f6135896f85bad5e0ebc7e90f3739b503e576156db94b2a7545487680cbc2782"
+      },
+      {
+        "run": "complementary-readiness-paired-full-2026-11-03",
+        "normalizedSuccessesChecked": 85,
+        "reportSha256": "56037a14ece60b674a502605178e3fcb80890d698a9bd329c81aa9aed5dcd86c"
+      },
+      {
+        "run": "api-frontier-2026-11-03",
+        "normalizedSuccessesChecked": 122,
+        "reportSha256": "89fe37d6fb7c9f5007a22a65f826ec41bcd38c851bbf602060aae3c0afb49256"
+      },
+      {
+        "run": "api-engine-fallback-full-corrected-2026-11-03",
+        "normalizedSuccessesChecked": 100,
+        "reportSha256": "8f993f63eb8f5df0b3f02e150f9e5eec3396e9d5a0f394d0d36d61d58b1270f8"
+      }
+    ]
+  },
+  "precedingCurrentImageProbe": {
+    "imageId": "sha256:b65d2734ca857d6f068944ed4959b2dc697d493a6bf3d27efcdfe29682c9ba9e",
+    "sourceCommit": "b7da5a8a047896ba1b60526012e823b2e877c7b3",
+    "requests": 3,
+    "normalizedMatches": 1,
+    "captureIdentityFailures": 2,
+    "scope": "Diagnostic sample, not a matched performance benchmark",
+    "evidenceDirectory": "_local/anti-bot/amazon-continuation-current-probe-2026-11-03",
+    "evidenceHashes": {
+      "final-health.json": "4ddbc07125e5ac734b6f84658eff15e45815c74b8dda82bddf9ab7ccbf487d97",
+      "1.json": "a147217dcdd8ae8630e751d950b4efcaacb41848e3d053ea05375fa5671f24ea",
+      "cleanup.json": "51ab2a538e10f39cd49d0be389eb95ac760856bb3b40ff0a254bf713d57c2c33",
+      "2.json": "d86c5203d0483725be8a3ed8135036ac3dd7b497ca204b1d096a32eeadd311c4",
+      "3.json": "89ee8dcad4e0507b2d7a97c4398bc2c0ce52ff3ea54182aff441ec395f11741a"
+    }
+  },
+  "verification": {
+    "newSource": "025f01ec118ca369ad46e5fa9d09be20fa4e0106",
+    "failureFirst": {
+      "oldImageWorkflowChecksPassed": 14,
+      "oldImageWorkflowChecksFailed": 1,
+      "reason": "WORKFLOW_NAVIGATION_MISMATCH on delayed continuation",
+      "logSha256": "2d34ee6c12b4590825065b32536e66f9ee9000b2c346272e717ca5865eec763f"
+    },
+    "packagedNewChecksPassed": 16,
+    "helpersPassed": 59,
+    "apiHarnessChecksPassed": 8,
+    "browserCI": "https://github.com/toreleon/firecrawl/actions/runs/41659246359"
+  }
+}

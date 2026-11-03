@@ -1441,3 +1441,113 @@ before dispatch because the comparison runner requires two profiles; that
 zero-request validation abort is retained separately. Broader server/SDK CI has
 not passed. The earlier hosted score remains 80/100 on its separately pinned
 comparison, not a current hosted result or proof of parity.
+
+## Amazon navigation commits and Gecko transport failures
+
+The follow-up examined two concrete failures from the 51/100 API run. A new
+three-request Chromium probe of the original Amazon URL on the pinned prior
+image produced one direct product capture and two
+`WORKFLOW_NAVIGATION_MISMATCH` failures. Both failed captures had reached the
+storefront after a submitted continuation; the final identity guard prevented
+that storefront from being reported as the requested product.
+
+The workflow had relied on `waitForLoadState` and read `page.url()` separately
+from an awaited form query. The old document can already satisfy that load
+state, and navigation can occur between the URL read and form observation.
+The repair registers a main-frame navigation listener before clicking the
+observed GET continuation and awaits the commit. A single renderer query then
+observes the URL and verification controls together. A bounded five-second
+settling window handles delayed continuations, inside the original request
+deadline. It preserves the one-submission/one-return limit and the final
+origin/product check. It does not fill verification answers or count a
+storefront as product success.
+
+The [Playwright Page reference](https://playwright.dev/docs/api/class-page)
+documents the frame-navigation event and load-state behavior; controlled
+fixtures provide the causal regression evidence. The new delayed-return
+fixture failed against the old production image with a product-identity
+mismatch, then passed on the repair. Fixtures also keep an over-budget form
+unresolved and reject immediate or late redirects to a different product.
+
+Firefox's `NS_ERROR_NET_RESET` had been reduced to generic `BROWSER_ERROR`.
+The repair retains Gecko transport codes and treats reset, interrupted transfer
+and network timeout as transient only for explicit stateless retries. Unknown
+host and refused connection remain typed network errors without automatic
+transient retries. Native cancellation, certificate and policy failures are
+negative cases. [Mozilla's reset-error investigation](https://bugzilla.mozilla.org/show_bug.cgi?id=2068800)
+also distinguishes HTTPS resets from certificate failures; a reset does not
+justify disabling TLS verification. Default attempts remain one.
+
+A real local TCP-reset fixture reached through the pinned Firefox browser
+verified the raw transport code, one versus two requested browser attempts,
+closed pages and released capacity. The fixture makes no external requests.
+Sixteen packaged browser/workflow checks, 59 helpers and eight real API harness
+checks passed on source `025f01ec118ca369ad46e5fa9d09be20fa4e0106`.
+[Browser CI](https://github.com/toreleon/firecrawl/actions/runs/41659246359)
+passed all 59 helper and 91 integration checks, build and production dependency
+audit. These checks establish lifecycle/classification behavior, not a new
+retrieval success rate for Yahoo Finance.
+
+### Matched Amazon measurement
+
+Five fresh attempts per production Chromium image ran on the single frozen
+Amazon target, interleaving profile order with two workers and one HTTP slot
+per profile. Both used headful Linux ARM64, 2 CPUs/3 GiB/two page capacity,
+direct VN egress, consent rejection, automatic workflow, media enabled and one
+service attempt. No expected marker was sent as a readiness hint.
+
+Both builds matched on 3/5 attempts and each had two transport failures.
+Every successful capture used the one-submit/return workflow and retrieved the
+original product. The earlier capture race did not reproduce in the baseline
+of this matched run, so no live success-rate gain is established. Screened
+success p50 was 9,484→8,870 ms and p95 9,694→10,327 ms; five observations are
+too few for a stable latency conclusion. All ten records, hashes and scores
+replayed offline; timing was valid and both owners finished with zero
+pages/sessions, then were removed. Exact pins and state observations are in the
+[matched receipt](../apps/playwright-service-ts/benchmarks/amazon-commit-paired-results-2026-11-03.json).
+
+### Full API rerun on the repaired source
+
+Source `025f01ec1` completed another 200 fresh requests on all 100 frozen
+targets, with fallback disabled/enabled on the same API. The setup retained
+four global workers, two slots per profile, two primary Chromium owners and
+one optional Firefox owner, 2 CPUs/3 GiB/two page slots each. Browser/service
+hashes and API source/compiled hashes were verified. No proxy, marker hint or
+hosted request was used, and the per-dispatch attempt count stayed one.
+
+| All 100 targets, one request/profile | Without fallback | With fallback |
+| --- | --- | --- |
+| Raw substring | 45 | 53 |
+| Screened marker | 43 | 51 |
+| Normalized marker | 44 | 52 |
+| Screened-success p50 | 3,479 ms | 3,976 ms |
+| Screened-success p95 | 6,844 ms | 8,318 ms |
+| Additional Firefox calls | 0 | 52 |
+
+There were 43 common matches, nine adaptive-only, one baseline-only (eBay),
+and 47 matching neither. Seven adaptive-only matches used confirmed alternate
+recovery; two had successful primary responses. Ten returned backend recoveries
+included nine frozen normalized matches. Five API errors lacked fallback
+metadata, so owner logs account for all 200 primary and 52 alternate calls.
+No alternate target repeated. Among the 43 common matches, p50 was
+3,444→3,810 ms and p95 6,844→7,437 ms. Added coverage still costs browser work
+and time.
+
+The prior adaptive run scored 51/100; the current one scored 52/100. Across
+those unmatched live runs, Louis Vuitton and Yahoo Finance added matches while
+eBay lost one. Yahoo succeeded in both current profiles without alternate
+recovery, so that change cannot be attributed to the Gecko error classification.
+Amazon still failed the final product-identity check in both full API profiles.
+The controlled navigation repair is verified, but it has not resolved every
+live Amazon continuation outcome. The matched Amazon test tied, so no causal
+aggregate code-version improvement is established.
+
+All 200 unique records, hashes and scores replayed offline with valid timing
+and overlap at four globally/two per profile. Peak sampled memory was
+1,352/1,535/1,503 MiB across the two primary owners and Firefox. Memory/process
+limit and OOM counters were zero; Firefox recorded 31 socket-throttling events.
+Owners finished with zero pages/sessions and were removed after preserving
+logs; task infrastructure stopped. The [full receipt](../apps/playwright-service-ts/benchmarks/amazon-gecko-full-api-results-2026-11-03.json)
+records source pins, actual dispatches, remaining Amazon/Yahoo/eBay outcomes,
+unmatched cross-run changes and validation digests. The earlier 80/100 hosted
+score remains separately source-pinned; hosted parity is still unproven.

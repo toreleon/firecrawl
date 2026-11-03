@@ -179,6 +179,13 @@ the original product. It checks origin and product identity again at capture;
 another product is an explicit `WORKFLOW_NAVIGATION_MISMATCH` failure. Visible
 answer fields and other interactive verification remain unresolved for handoff.
 The diagnostic step is `amazon-continue@1`, not a new public workflow value.
+The recipe registers the main-frame navigation listener before its GET click,
+then waits for the submission's navigation commit. It samples the resulting URL
+and unresolved form controls together in one renderer call, allowing up to five
+seconds for a delayed continuation within the original request deadline.
+An unresolved form stays verification; another origin or product stays a
+navigation mismatch. The recipe still submits at most once and returns to the
+original product at most once.
 
 When `auto` has no explicit selector/text readiness condition, it waits up to
 the readiness budget (five seconds by default) for an empty/loading body or a
@@ -242,6 +249,13 @@ budgets preserve requested fixed/readiness waits before dividing the available
 time. A retry requires the previous stateless tab to finish closing; retained
 workflow tabs and commands with actions keep their existing single-attempt rule.
 Diagnostics include each attempt's budget and tab-close observation.
+
+Firefox transport diagnostics retain observed `NS_ERROR_*` network codes.
+Explicit stateless retries recognize reset, interrupted-transfer and timeout
+codes, alongside the existing Chromium transient cases. DNS/refused-connection
+codes remain typed network failures without becoming transient retry candidates.
+Certificate, policy, native cancellation and unknown failures are not promoted
+to transient transport errors. The default attempt count remains one.
 
 A recipe and caller actions
 cannot be combined. Version recipes deliberately as sites change.
