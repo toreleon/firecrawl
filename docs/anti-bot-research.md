@@ -2553,6 +2553,9 @@ its primary did not enter automatic readiness. These observed failures were not
 parser-budget expirations. The source and live epoch differ, so the aggregate
 changes do not isolate a code effect or establish a stable gain.
 
+The subsequent visibility review below found the Cloudflare success label in a
+hidden template. Its presence in HTML/Markdown did not establish clearance.
+
 The two-policy run took 352.3 seconds versus 337.9 previously. Peak sampled
 memory was 1,316/1,137/1,380 MiB, with zero memory-boundary/OOM/PID-limit events.
 One Firefox owner recorded 147 socket-throttling events, separately from OOM.
@@ -2570,3 +2573,115 @@ candidate and its pinned bases were retained. Image accounting remained 28.92 GB
 running services and all 114 volume names were preserved. The [cleanup receipt](../apps/playwright-service-ts/benchmarks/rendered-body-cleanup-results-2026-11-04.json)
 retains inventories and actual stop/removal results, including expected SIGTERM
 exit 143 for explicitly stopped serving owners. No global prune was used.
+
+## Cloudflare visibility, time-zone and native-platform experiments (November 4)
+
+Production implementation stayed at `4c3e920a9`; source/evidence parent was
+`91a817350`. The [combined receipt](../apps/playwright-service-ts/benchmarks/profile-platform-experiments-results-2026-11-04.json)
+records 106 fresh browser-service requests plus a separate four-visit same-tab
+observation. These selected experiments produced no deployment change or new
+full API result. All frozen graders, original denominators and expected-text
+isolation were preserved. No upstream proxies or hosted calls were used.
+
+### A hidden success message is not clearance
+
+The saved Zoopla HTTP 403 page contained a verification-success label inside
+`display: none` markup. Treating that template string as a completed verification
+would be incorrect. Cloudflare's [challenge overview](https://developers.cloudflare.com/cloudflare-challenges/challenge-types/challenge-pages/)
+distinguishes JavaScript-only processing from managed/interactive escalation;
+its [troubleshooting guidance](https://developers.cloudflare.com/cloudflare-challenges/troubleshooting/challenge-solve-issues/)
+also warns that individual challenge-resource responses are not sufficient to
+identify a blocking cause.
+
+Two existing headful browser engines visited Zoopla and GitHub in fresh contexts
+and kept each tab open for follow-ups at approximately zero, one, five and ten
+seconds after capture. Chromium retrieved Zoopla immediately and stayed allowed.
+Firefox stayed on HTTP 403 after more than ten seconds; the success label remained
+hidden. Its challenge resources returned HTTP 200, so resource-download success
+did not establish destination access. No click, answer, reload or cookie transfer
+was performed. Both GitHub controls passed.
+
+The receipt scores four initial and four final direct renderer captures, sharing
+four document visits; these are not eight independent fresh requests or API
+responses. Sixteen follow-ups retain status, visibility and content hashes.
+Missing/blank frame controls do not prove a challenge is noninteractive. No
+blanket Cloudflare wait was added: this observation established no delayed
+recovery and corrected the earlier inference from hidden template text.
+
+### Process/browser time-zone comparison
+
+The default Linux browser reported UTC despite direct VN egress. An owned blank
+page probe verified that `TZ=Asia/Ho_Chi_Minh` changes both main-thread and Web
+Worker offsets from zero to -420 minutes in Chromium and Firefox. Chromium used
+the equivalent `Asia/Saigon` alias. Camoufox documents [GeoIP/time-zone configuration](https://camoufox.com/python/geoip/),
+but this experiment used the OS `TZ` setting with the existing `geoip: false`
+deployment; no location API, locale change or external target was needed for
+the four initial blank-page probes.
+
+Each engine then compared UTC and Vietnam time on the same image, direct egress,
+controls and request budgets, with two rounds over eight selected targets.
+Owners verified main/worker offsets before serving requests. Fresh contexts,
+one page per owner, 2 CPUs/3 GiB per owner and two global workers were used.
+
+| Selected normalized matches, sixteen observations/profile | UTC | Vietnam time |
+| --- | --- | --- |
+| Chromium | 7/16 | 6/16 |
+| Firefox | 5/16 | 4/16 |
+
+GitHub/arXiv controls passed in both rounds for every profile. The Vietnam-time
+profile added no match. UTC's extra matches were intermittent Amazon retrievals;
+this does not establish that UTC is universally preferable or that time zone
+caused any particular denial. All 64 payload hashes and scores replayed with
+valid timing. The production time-zone setting remains unchanged.
+
+### Native macOS Chromium and Google Chrome
+
+The next comparison used the same Rebrowser 1.64.101 driver and scrape source
+across Linux ARM64 bundled Chromium 156.0.8078.4, native macOS ARM64 bundled
+Chromium at that version, and installed Google Chrome 156.0.8078.80. All were
+headful and used the same public egress IP, existing destination filter, fresh
+contexts, consent/workflow controls and 30-second request/navigation budgets.
+The two native workers used fresh temporary user-data directories; personal
+browser profiles were not loaded.
+
+| Fourteen selected targets, one observation/profile | Container Chromium | Native Chromium | Native Google Chrome |
+| --- | --- | --- | --- |
+| Normalized matches | 5/14 | 4/14 | 4/14 |
+| GitHub/arXiv controls | 2/2 | 2/2 | 2/2 |
+| Exclusive native matches | — | 0 | 0 |
+
+All profiles retrieved Zoopla and Amazon in this live round. The container also
+retrieved the public LinkedIn company page; both native profiles failed that
+visit. Roblox timed out on all three. Runtime probes confirmed SwiftShader in
+the container and the actual Apple M4 Pro Metal renderer in both native workers.
+Neither native bundle added selected coverage.
+
+The container had 2 CPUs/3 GiB; native workers had no cgroup cap and their process
+tree RSS was sampled. Those memory measures differ and shared native pages may
+be counted more than once. OS, hardware, browser patch version and network stack
+differ, so the experiment does not isolate GPU or branding and supports no
+equal-resource performance claim. All 42 payload hashes and scores replayed with
+valid timing and at most three global workers, below the user's limit of eight.
+
+### Saved Markdown audit and cleanup
+
+A read-only review replayed 200 saved API payload hashes and output metrics,
+with no new network requests. Of the earlier hosted 81 normalized HTML matches,
+75 also had the supplementary Markdown marker; the current fork had 52 of 55.
+The epochs and deployments differ. This review preserves the frozen HTML score,
+does not establish extraction F1 or CSS visibility, and does not remove the
+substantial observed retrieval gap. Current full API coverage remains 55/100;
+hosted parity is unproven.
+
+The [cleanup receipt](../apps/playwright-service-ts/benchmarks/profile-platform-cleanup-results-2026-11-04.json)
+verifies eleven task containers removed, both native services exited, and both
+temporary native browser profiles removed. No process referenced those owned
+profile directories afterward. No image or build cache was created, so none
+needed pruning. Existing image IDs, 59 cache records, nine unrelated running
+services and all 114 volume names were preserved. No global prune was used.
+
+No production code changed in this iteration; the focused suites and browser CI
+on `4c3e920a9` remain the implementation verification. They were not rerun for
+this evidence/documentation update. The results do not support hard-coding a
+Vietnam time zone, migrating to native browsers or treating a hidden success
+label as clearance.
