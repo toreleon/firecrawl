@@ -920,3 +920,133 @@ common-success latency cohort. Hosted parity remains unproven. The last hosted
 API pilot is still the separately pinned older comparison; these browser results
 are not a refreshed hosted score, extraction F1 or proof of a complete crawl and
 refresh system.
+
+## Bounded consent discovery on stalled auxiliary frames
+
+The historical Ashley Furniture and YouTube failures stopped during consent,
+before automatic readiness. Fresh traces completed normally, so their original
+root cause remains unknown. Source review found a narrower, reproducible risk:
+explicit CMP discovery made four visibility calls on every frame. Playwright
+[documents that the `isVisible` timeout option is ignored](https://playwright.dev/docs/api/class-locator#locator-is-visible).
+A page script that blocks a child renderer can therefore hold up the parent
+workflow while it waits for a browser protocol reply. The controlled blocked
+cross-origin iframe fixture demonstrates this failure class; it does not prove
+what happened on either historical live site.
+
+Source `4a363134f` combines known CMP selectors into one visible-element query,
+preserving utility-world and shadow-root locator behavior. Explicit discovery
+has a three-second primary-frame allowance, one second per auxiliary probe and
+a five-second discovery window within the caller's deadline. Known CMP actions
+remain awaited and bounded. Expired read-only queries cannot proceed to another
+query or an explicit click after their result arrives. This bounds the caller's
+wait; it does not cancel the underlying browser RPC. Ambiguous buttons and
+verification puzzles remain outside this mechanism.
+
+Consent metadata now includes frames scanned, primary/auxiliary probe timeouts,
+probe/action errors, window exhaustion and duration for the latest explicit
+pass. An unknown stalled frame reports unresolved consent while usable primary
+content can still be captured. A successful known primary choice retains its
+receipt if an auxiliary probe later expires; it does not prove that consent
+completed on every embedded origin. The pinned Autoconsent rules remain in use.
+
+An initial one-second primary allowance passed locally but failed the known-CMP
+fixture in CI. That source's live comparison was stopped at 199 completed records
+and audited as partial. Its scores are excluded from the completed comparison.
+The corrected fixture holds a synchronous child request without spinning the
+CPU, then releases the child after consent returns and checks for late clicks.
+The corrected source passed build, 50 helper checks, 71 browser integration checks
+and dependency audit in [browser CI](https://github.com/toreleon/firecrawl/actions/runs/41630769224).
+Six real full-API harness checks passed, including applied primary consent and
+unresolved auxiliary consent with usable content. Extract-worker logged the
+known AMQP closing error during teardown; tests and harness exited zero.
+
+### Complete matched browser comparison
+
+Both images ran all 100 frozen targets twice, using direct Vietnam egress,
+Linux ARM64 headful Chromium, two CPUs/3 GiB/two pages per owner, four global
+workers, media enabled, consent rejection, automatic workflow and one attempt.
+Expected fixture text was not sent to either browser.
+
+| Check | Baseline `38546557c`, 200 requests | Candidate `4a363134f`, 200 requests |
+| --- | --- | --- |
+| Raw substring | 92 (46.0%) | 93 (46.5%) |
+| Screened marker | 85 (42.5%) | 87 (43.5%) |
+| Normalized marker | 87 (43.5%) | 89 (44.5%) |
+| Screened-success p50 | 3,533 ms | 3,552 ms |
+| Screened-success p95 | 7,452 ms | 7,746 ms |
+
+There were 86 common normalized matches, three candidate-only matches and one
+baseline-only match. On the common cohort, nearest-rank p50 was 3,471→3,492 ms
+and p95 was 7,452→7,502 ms. Amazon, Louis Vuitton and TikTok each gained one
+match; Expedia lost one to a target HTTP 429. These few discordant live cases
+cannot establish a causal aggregate improvement.
+
+The candidate returned four auxiliary probe timeouts: Amazon, Target, YouTube
+and Yahoo Finance. All four returned matching content. No returned primary probe
+timed out. These are latest-pass counters on returned responses; baseline
+counters were unavailable and must not be read as zero. Ashley Furniture and
+YouTube passed both rounds on both profiles. The candidate's four full request
+timeouts occurred during navigation on Allegro and Roblox, before consent.
+This change does not repair those navigation failures.
+
+All 400 evidence hashes and scores replayed offline, with unique keys, unchanged
+grader/fallback bytes and valid timing. Sampled memory peaked at 1,502/1,494 MiB;
+resource-limit counters stayed zero. Both owners ended healthy with zero active
+pages/sessions and were stopped. The [compact receipt](../apps/playwright-service-ts/benchmarks/consent-probe-results-2026-11-03.json)
+pins images, sources, audits, latency cohorts and the excluded partial attempt.
+
+### Full API comparison on all 100 targets
+
+The current fork (`4a363134f` API/browser, `6ba3ccc03` benchmark runner) was then
+compared with the actual hosted v2 API on every frozen target, once per profile.
+Both received fresh `rawHtml` plus Markdown requests, no expected-text hint,
+`onlyMainContent: false`, zero explicit wait and an 85-second body timeout.
+The fork additionally used the disclosed automatic browser controls. Four
+client workers shared a per-profile limit of two and a seven-second dispatch
+interval; queue and pacing waits were excluded from HTTP latency. Hosted
+routing, region and internal retries remained provider-controlled, while the
+fork used direct Vietnam egress. This is a product-outcome comparison, not a
+matched proxy/browser experiment.
+
+| Check | Direct fork, 100 requests | Hosted, 100 requests |
+| --- | --- | --- |
+| Raw substring | 45 (45%) | 80 (80%) |
+| Screened marker | 41 (41%) | 79 (79%) |
+| Normalized marker | 42 (42%) | 80 (80%) |
+| Screened-success p50 | 3,016 ms | 5,895 ms |
+| Screened-success p95 | 6,368 ms | 22,062 ms |
+
+There were 34 common normalized matches, 46 hosted-only matches, eight fork-only
+matches and 12 matching neither. The 34 common matches had nearest-rank p50
+2,833/5,444 ms and p95 5,049/16,723 ms for fork/hosted. Faster successful fork
+requests do not compensate for its substantially lower coverage. The old
+selected 20-target pilot is a different workload and source, not a baseline for
+attributing a percentage-point change.
+
+Among the 46 hosted-only matches, fork failures were 18 verification pages,
+17 HTTP 403 responses, three target rate limits, two network errors, two
+timeouts, HTTP 417 and 405 once each, one content-readiness failure and one
+missing marker. The latter was an explicit unavailable-region response on
+Allmenus. These observations do not identify the underlying reason each site
+blocked access. Adding workers would not resolve those responses.
+
+Hosted explicitly refused ten sites under the account used; eight were
+fork-only matches. Provider refusals remain in the original denominator and are
+separate from target-site WAF failures. No API-level quota 429 occurred. The
+lifecycle ledger verified four simultaneous HTTP requests globally and two per
+profile, and every observed per-profile dispatch interval was at least 7,000 ms.
+All 200 unique records, payload hashes, scores and source hashes replayed offline.
+Timing was valid; sampled browser memory peaked at 1,091 MiB with zero resource
+limit events. The browser ended with zero pages/sessions, all task infrastructure
+stopped and the temporary hosted credential was deleted. The account balance
+decreased by 114 credits over 100 hosted dispatches; balance changes can include
+other account usage and are not an exact per-request invoice.
+
+A supplementary offline Canada Goose audit found changed product-description
+wording in both retrieved bodies while the frozen expected sentence remained in
+metadata. Both still fail the unchanged marker rubric. This limits what the
+score says about actual product content; normalized text checks also do not
+establish CSS visibility or extraction F1. The [full API receipt](../apps/playwright-service-ts/benchmarks/full-api-frontier-results-2026-11-03.json)
+contains the original 100-target denominator, per-target outcomes, provider
+refusals, marker-quality evidence and source/credit/audit pins. Hosted parity is
+not established.

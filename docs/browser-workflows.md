@@ -90,6 +90,24 @@ racing a human handoff. Consent diagnostics report applied/unresolved/not-detect
 and available self-test results. This is not universal CMP coverage or proof of a
 site's stored choice.
 
+Explicit consent discovery uses one combined visible-container query on frames
+without a known CMP, rather than four separate visibility calls. It reserves up
+to three seconds for a cold main frame, one second per auxiliary-frame probe,
+and five seconds for the discovery window, all within the scrape deadline.
+Known choice clicks and hidden-overlay waits keep their respective 1.5/1 second
+bounds. These are separate from `readiness.timeoutMs`.
+
+Only read-only discovery is raced against these probe budgets. An expired result
+is discarded, with deadline checks before subsequent queries and before any
+click. An unresponsive embedded frame can therefore be skipped without leaving
+a late choice queued for a retained page or human handoff. This bounds waiting;
+it does not claim that the browser cancelled the underlying read-only RPC.
+The latest explicit pass reports frame counts, main/auxiliary probe timeouts,
+probe/action errors, scan-limit exhaustion and duration under
+`interaction.consent.diagnostics`. Incomplete discovery is reported unresolved
+when no choice was applied. Neither a successful scrape nor one applied CMP
+choice proves consent completion across every embedded origin.
+
 `workflow` is `none` (default), `auto`, `bestbuy-us@1` or `product-details@1`.
 The current recipes select the original Best Buy product's US destination and
 expand an observed Canada Goose details control. `auto` also scrolls an observed
