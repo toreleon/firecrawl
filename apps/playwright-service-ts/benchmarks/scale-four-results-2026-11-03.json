@@ -1,0 +1,406 @@
+{
+  "measuredAt": {
+    "startedAt": "2026-11-03T07:55:30.871Z",
+    "finishedAt": "2026-11-03T08:09:20.697Z"
+  },
+  "scope": "Browser backend throughput profile, not the full Firecrawl API",
+  "runtimeCommit": "f47d7085ce6a07be1ce38fc523a10533648b9f36",
+  "imageId": "sha256:9a97a3c48ff12f8ec20518f769f620d31516262daa2a3636ba679ae87695d94d",
+  "fixtureSha256": "a886fb57087e842c2857b89a7669e31d2fb7b98d6bd7deb60a2329f29581b76a",
+  "graderSha256": "ffd9f0d2e5996825aa77cb71b600a6667558e166d4471a084c20638bab9171d6",
+  "configuration": {
+    "targets": 100,
+    "attemptsPerTarget": 5,
+    "runnerConcurrency": 4,
+    "browserPageCapacity": 4,
+    "cpuCount": 4,
+    "memoryGiB": 4,
+    "directEgressCountry": "VN",
+    "upstreamProxy": false,
+    "serviceMaxAttempts": 1,
+    "readiness": "expected body text, 5000 ms",
+    "consent": "rejectNonEssential",
+    "workflow": "auto"
+  },
+  "prior": {
+    "overall": {
+      "requests": 500,
+      "uniqueTargets": 100,
+      "frontierPasses": 230,
+      "screenedPasses": 204,
+      "normalizedPasses": 209,
+      "frontierSuccessRate": 0.46,
+      "screenedSuccessRate": 0.408,
+      "normalizedSuccessRate": 0.418,
+      "successfulLatencyP50Ms": 3172,
+      "successfulLatencyP95Ms": 5543,
+      "allAttemptLatencyP95Ms": 8676,
+      "failures": {
+        "content_not_ready": 32,
+        "challenge": 109,
+        "target_status_403": 81,
+        "network_error": 19,
+        "target_status_400": 5,
+        "rate_limited": 22,
+        "timeout": 9,
+        "target_status_511": 5,
+        "target_status_417": 4,
+        "target_status_405": 5,
+        "missing_expected_marker": 5
+      }
+    },
+    "durationSeconds": 1641.008,
+    "concurrency": 2,
+    "cpuCount": 2,
+    "memoryGiB": 4
+  },
+  "current": {
+    "overall": {
+      "requests": 500,
+      "uniqueTargets": 100,
+      "frontierPasses": 238,
+      "screenedPasses": 210,
+      "normalizedPasses": 215,
+      "frontierSuccessRate": 0.476,
+      "screenedSuccessRate": 0.42,
+      "normalizedSuccessRate": 0.43,
+      "successfulLatencyP50Ms": 3275,
+      "successfulLatencyP95Ms": 7390,
+      "allAttemptLatencyP95Ms": 8890,
+      "failures": {
+        "challenge": 113,
+        "content_not_ready": 39,
+        "target_status_403": 77,
+        "network_error": 13,
+        "rate_limited": 19,
+        "target_status_511": 5,
+        "target_status_417": 5,
+        "target_status_405": 5,
+        "missing_expected_marker": 5,
+        "target_status_400": 4,
+        "timeout": 5
+      }
+    },
+    "durationSeconds": 829.826,
+    "concurrency": 4,
+    "cpuCount": 4,
+    "memoryGiB": 4
+  },
+  "wallTimeSpeedup": 1.9775326393725914,
+  "attemptsPerMinute": 36.15215719922008,
+  "normalizedMatchesPerMinute": 15.545427595664632,
+  "byWafLabel": {
+    "akamai": {
+      "requests": 100,
+      "uniqueTargets": 20,
+      "frontierPasses": 29,
+      "screenedPasses": 29,
+      "normalizedPasses": 29,
+      "frontierSuccessRate": 0.29,
+      "screenedSuccessRate": 0.29,
+      "normalizedSuccessRate": 0.29,
+      "successfulLatencyP50Ms": 3483,
+      "successfulLatencyP95Ms": 7043,
+      "allAttemptLatencyP95Ms": 7839,
+      "failures": {
+        "target_status_403": 57,
+        "rate_limited": 4,
+        "target_status_417": 5,
+        "target_status_400": 4,
+        "challenge": 1
+      }
+    },
+    "aws-waf": {
+      "requests": 35,
+      "uniqueTargets": 7,
+      "frontierPasses": 14,
+      "screenedPasses": 14,
+      "normalizedPasses": 14,
+      "frontierSuccessRate": 0.4,
+      "screenedSuccessRate": 0.4,
+      "normalizedSuccessRate": 0.4,
+      "successfulLatencyP50Ms": 6623,
+      "successfulLatencyP95Ms": 8359,
+      "allAttemptLatencyP95Ms": 9359,
+      "failures": {
+        "content_not_ready": 6,
+        "target_status_511": 5,
+        "rate_limited": 5,
+        "target_status_405": 5
+      }
+    },
+    "cloudflare": {
+      "requests": 75,
+      "uniqueTargets": 15,
+      "frontierPasses": 35,
+      "screenedPasses": 32,
+      "normalizedPasses": 32,
+      "frontierSuccessRate": 0.4666666666666667,
+      "screenedSuccessRate": 0.4266666666666667,
+      "normalizedSuccessRate": 0.4266666666666667,
+      "successfulLatencyP50Ms": 2818,
+      "successfulLatencyP95Ms": 9429,
+      "allAttemptLatencyP95Ms": 9429,
+      "failures": {
+        "challenge": 40,
+        "content_not_ready": 3
+      }
+    },
+    "custom": {
+      "requests": 45,
+      "uniqueTargets": 9,
+      "frontierPasses": 36,
+      "screenedPasses": 31,
+      "normalizedPasses": 31,
+      "frontierSuccessRate": 0.8,
+      "screenedSuccessRate": 0.6888888888888889,
+      "normalizedSuccessRate": 0.6888888888888889,
+      "successfulLatencyP50Ms": 2683,
+      "successfulLatencyP95Ms": 5249,
+      "allAttemptLatencyP95Ms": 6254,
+      "failures": {
+        "rate_limited": 5,
+        "challenge": 5,
+        "network_error": 4
+      }
+    },
+    "datadome": {
+      "requests": 100,
+      "uniqueTargets": 20,
+      "frontierPasses": 25,
+      "screenedPasses": 20,
+      "normalizedPasses": 20,
+      "frontierSuccessRate": 0.25,
+      "screenedSuccessRate": 0.2,
+      "normalizedSuccessRate": 0.2,
+      "successfulLatencyP50Ms": 3357,
+      "successfulLatencyP95Ms": 6301,
+      "allAttemptLatencyP95Ms": 7848,
+      "failures": {
+        "challenge": 57,
+        "network_error": 8,
+        "target_status_403": 10,
+        "content_not_ready": 5
+      }
+    },
+    "fastly": {
+      "requests": 5,
+      "uniqueTargets": 1,
+      "frontierPasses": 0,
+      "screenedPasses": 0,
+      "normalizedPasses": 0,
+      "frontierSuccessRate": 0,
+      "screenedSuccessRate": 0,
+      "normalizedSuccessRate": 0,
+      "successfulLatencyP50Ms": null,
+      "successfulLatencyP95Ms": null,
+      "allAttemptLatencyP95Ms": 85043,
+      "failures": {
+        "timeout": 5
+      }
+    },
+    "incapsula": {
+      "requests": 5,
+      "uniqueTargets": 1,
+      "frontierPasses": 0,
+      "screenedPasses": 0,
+      "normalizedPasses": 0,
+      "frontierSuccessRate": 0,
+      "screenedSuccessRate": 0,
+      "normalizedSuccessRate": 0,
+      "successfulLatencyP50Ms": null,
+      "successfulLatencyP95Ms": null,
+      "allAttemptLatencyP95Ms": 5966,
+      "failures": {
+        "target_status_403": 5
+      }
+    },
+    "kasada": {
+      "requests": 15,
+      "uniqueTargets": 3,
+      "frontierPasses": 10,
+      "screenedPasses": 5,
+      "normalizedPasses": 5,
+      "frontierSuccessRate": 0.6666666666666666,
+      "screenedSuccessRate": 0.3333333333333333,
+      "normalizedSuccessRate": 0.3333333333333333,
+      "successfulLatencyP50Ms": 2073,
+      "successfulLatencyP95Ms": 2909,
+      "allAttemptLatencyP95Ms": 10082,
+      "failures": {
+        "content_not_ready": 5,
+        "rate_limited": 5
+      }
+    },
+    "perimeterx": {
+      "requests": 45,
+      "uniqueTargets": 9,
+      "frontierPasses": 35,
+      "screenedPasses": 30,
+      "normalizedPasses": 30,
+      "frontierSuccessRate": 0.7777777777777778,
+      "screenedSuccessRate": 0.6666666666666666,
+      "normalizedSuccessRate": 0.6666666666666666,
+      "successfulLatencyP50Ms": 3346,
+      "successfulLatencyP95Ms": 6454,
+      "allAttemptLatencyP95Ms": 8998,
+      "failures": {
+        "content_not_ready": 5,
+        "challenge": 10
+      }
+    },
+    "temu": {
+      "requests": 5,
+      "uniqueTargets": 1,
+      "frontierPasses": 0,
+      "screenedPasses": 0,
+      "normalizedPasses": 0,
+      "frontierSuccessRate": 0,
+      "screenedSuccessRate": 0,
+      "normalizedSuccessRate": 0,
+      "successfulLatencyP50Ms": null,
+      "successfulLatencyP95Ms": null,
+      "allAttemptLatencyP95Ms": 6882,
+      "failures": {
+        "content_not_ready": 5
+      }
+    },
+    "ticketmaster": {
+      "requests": 5,
+      "uniqueTargets": 1,
+      "frontierPasses": 5,
+      "screenedPasses": 5,
+      "normalizedPasses": 5,
+      "frontierSuccessRate": 1,
+      "screenedSuccessRate": 1,
+      "normalizedSuccessRate": 1,
+      "successfulLatencyP50Ms": 5911,
+      "successfulLatencyP95Ms": 7390,
+      "allAttemptLatencyP95Ms": 7390,
+      "failures": {}
+    },
+    "unclassified": {
+      "requests": 65,
+      "uniqueTargets": 13,
+      "frontierPasses": 49,
+      "screenedPasses": 44,
+      "normalizedPasses": 49,
+      "frontierSuccessRate": 0.7538461538461538,
+      "screenedSuccessRate": 0.676923076923077,
+      "normalizedSuccessRate": 0.7538461538461538,
+      "successfulLatencyP50Ms": 3192,
+      "successfulLatencyP95Ms": 7633,
+      "allAttemptLatencyP95Ms": 7030,
+      "failures": {
+        "content_not_ready": 10,
+        "missing_expected_marker": 5,
+        "target_status_403": 5,
+        "network_error": 1
+      }
+    }
+  },
+  "normalizedTargetChanges": [
+    {
+      "target": "Amazon",
+      "prior": 4,
+      "current": 0
+    },
+    {
+      "target": "Best Buy",
+      "prior": 3,
+      "current": 5
+    },
+    {
+      "target": "LinkedIn",
+      "prior": 0,
+      "current": 1
+    },
+    {
+      "target": "Trustpilot",
+      "prior": 5,
+      "current": 4
+    },
+    {
+      "target": "Yahoo Finance",
+      "prior": 5,
+      "current": 4
+    },
+    {
+      "target": "Zoopla",
+      "prior": 4,
+      "current": 5
+    },
+    {
+      "target": "ashleyfurniture",
+      "prior": 3,
+      "current": 5
+    },
+    {
+      "target": "bloomberg",
+      "prior": 3,
+      "current": 5
+    },
+    {
+      "target": "ebay",
+      "prior": 0,
+      "current": 1
+    },
+    {
+      "target": "expedia",
+      "prior": 3,
+      "current": 1
+    },
+    {
+      "target": "louisvuitton",
+      "prior": 0,
+      "current": 1
+    },
+    {
+      "target": "lululemon",
+      "prior": 0,
+      "current": 1
+    },
+    {
+      "target": "stackoverflow",
+      "prior": 4,
+      "current": 2
+    },
+    {
+      "target": "target",
+      "prior": 0,
+      "current": 5
+    }
+  ],
+  "validation": {
+    "uniqueTargetAttemptPairs": true,
+    "fiveAttemptsPerTarget": true,
+    "allContentHashesMatch": true,
+    "allScoresReplay": true,
+    "allSummaryMetricsReplay": true,
+    "runtimeImageSameAsPrior": true,
+    "timingIntegrity": {
+      "valid": true,
+      "sampleIntervalMs": 1000,
+      "maximumAllowedGapMs": 10000,
+      "maximumObservedGapMs": 1004,
+      "gaps": []
+    },
+    "resourceSamples": 57,
+    "peakSampledMemoryMiB": 2794,
+    "resourceLimitEvents": 0,
+    "finalActivePages": 0,
+    "finalSessions": 0,
+    "cleanup": {
+      "containerStopped": true,
+      "OOMKilled": false,
+      "exitCode": 143
+    }
+  },
+  "limits": [
+    "Serial live-site observations with shared host and egress; not a randomized scaling experiment.",
+    "Both runner concurrency and service page capacity doubled, and CPU allocation increased from 2 to 4; improvement cannot be attributed solely to concurrency.",
+    "Same image, fixture and grader; not a runtime code change or proof of WAF-bypass improvement.",
+    "Browser backend only, distinct from full /v2/scrape API comparisons."
+  ],
+  "localEvidence": "_local/anti-bot/waf-scale-four-full-2026-11-03/"
+}

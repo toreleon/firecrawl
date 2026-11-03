@@ -2,6 +2,7 @@
   {
     "name": "fork",
     "baseUrl": "http://127.0.0.1:3002",
+    "minIntervalMs": 7000,
     "browserControls": {
       "waitUntil": "domcontentloaded",
       "consent": "rejectNonEssential",
@@ -12,6 +13,7 @@
   {
     "name": "hosted",
     "baseUrl": "https://api.firecrawl.dev",
+    "minIntervalMs": 7000,
     "apiKeyEnv": "HOSTED_FIRECRAWL_API_KEY"
   }
 ]

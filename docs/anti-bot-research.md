@@ -499,3 +499,103 @@ This comparison stayed at two workers. Four-worker runs are a separate
 throughput profile: increase both the runner's `--concurrency` and the service's
 `MAX_CONCURRENT_PAGES`, budget CPU/memory accordingly, and measure changes in
 throttling and success instead of mixing concurrency levels within one run.
+
+### Four-worker throughput profile
+
+The next 500-attempt run reused the repaired runtime image, fixture, grader and
+request settings. Runner concurrency and browser capacity increased from two
+to four, and the CPU allocation increased from two to four. Memory remained
+4 GiB and egress remained direct Vietnam, with no upstream proxy.
+
+| Metric | Two workers, two CPUs | Four workers, four CPUs |
+| --- | --- | --- |
+| Wall time | 27m21s | 13m50s |
+| Raw substring | 230/500 (46.0%) | 238/500 (47.6%) |
+| Screened marker | 204/500 (40.8%) | 210/500 (42.0%) |
+| Normalized marker | 209/500 (41.8%) | 215/500 (43.0%) |
+| Screened-success p50 | 3,172 ms | 3,275 ms |
+| Screened-success p95 | 5,543 ms | 7,390 ms |
+
+The combined capacity change gave **1.98 times the throughput**, while the
+latency tail of successful requests increased. This is a serial live-site
+comparison, not proof that concurrency improved retrieval or that scaling is
+linear. Cloudflare-labelled normalized matches were 32/75, DataDome 20/100 and
+Akamai 29/100. Live-site variation still applies.
+
+All 500 target/attempt pairs, content hashes and replayed scores matched. Timing
+integrity passed; sampled peak memory was 2,794 MiB, with zero cgroup memory,
+OOM or process-limit events. The service ended healthy with no active pages or
+sessions and was stopped. The [compact scaling receipt](../apps/playwright-service-ts/benchmarks/scale-four-results-2026-11-03.json)
+records resource limits, per-target changes and evidence locations. Eight
+workers are now accepted by the benchmark CLI and covered by controlled runner
+checks; this live result measured four workers.
+
+### Fresh full-API comparison
+
+The new [paired API runner](../apps/playwright-service-ts/benchmarks/API-BENCHMARK.md)
+calls both deployments through `/v2/scrape`, requests fresh `rawHtml` and
+`markdown`, and sends no expected marker as a readiness hint. Fork-only controls
+and each deployment's rate pacing are explicit in the manifest. This separates
+ordinary API output from the earlier browser benchmark's marker-aware wait.
+Cloud's internal routing and retries remain provider-controlled; the fork
+continues to use direct egress.
+
+An initial 20-target pilot made 20 hosted and 20 fork requests. Both returned
+nine normalized matches, but **ten hosted requests received account-level HTTP
+429 responses**, and one exhausted its scraping engines. It is not a valid
+retrieval-capability tie. The account reported a ten-request-per-minute limit.
+The runner now supports a shared per-profile dispatch interval across workers,
+records provider rate limits separately, and leaves failed attempts in the
+denominator. The original pilot and its complete offline audit are retained in
+`_local/anti-bot/api-hosted-pilot-2026-11-03/`; the observed credit balance fell
+by nine, matching the nine hosted responses reporting one credit each. A balance
+delta can include concurrent account activity.
+
+The paced pilot then repeated the same 20 targets once per deployment, with a
+7,000 ms minimum dispatch interval for **both** profiles and at most four HTTP
+requests in flight. The measured minimum interval was 7,000 ms for each profile;
+there were **zero provider HTTP 429s**. Both APIs received identical fresh
+HTML/Markdown options; only the fork received its explicit browser controls.
+
+| API output check | Direct fork | Hosted Firecrawl |
+| --- | --- | --- |
+| Raw substring | 8/20 (40%) | 13/20 (65%) |
+| Screened marker | 8/20 (40%) | 13/20 (65%) |
+| Normalized marker | 9/20 (45%) | 14/20 (70%) |
+| Markdown marker | 9/20 | 14/20 |
+| Screened-success p50 | 2,080 ms | 6,664 ms |
+| Screened-success p95 | 4,059 ms | 11,688 ms |
+
+Five targets passed on both deployments, nine only on hosted, four only on the
+fork, and two on neither. Hosted-only matches were Amazon, Indeed, Louis
+Vuitton, Mouser, Tripadvisor, eBay, CarGurus, Crunchbase and Stack Overflow.
+Fork-only matches were Google Search, Best Buy, Facebook and CoinMarketCap.
+Hosted returned explicit unsupported-site API responses for Facebook and
+Reddit, exhausted its engines on Lowe's and Google Search, missed Best Buy's
+marker, and returned no usable HTML/target status for CoinMarketCap. Those all
+remain failures under the same rule. Shorter fork success latency compares
+different successful target sets and does not prove matched-target superiority.
+
+The [full-API pilot receipt](../apps/playwright-service-ts/benchmarks/hosted-api-pilot-results-2026-11-03.json)
+records every paired outcome and retained evidence hashes. All 40 unique
+deployment/target pairs, payload hashes, scores and summary metrics passed
+offline replay. Build, 42 helper checks, 55 integration checks and the production
+dependency audit passed in [browser CI](https://github.com/toreleon/firecrawl/actions/runs/41602196803).
+The API and SDK implementations were unchanged; these browser/runner checks are
+not a new full API regression-suite result. The paced run's observed hosted
+credit balance decrease was 16 versus 15 credits reported in responses; missing
+usage is unknown, and concurrent account activity or settlement timing is not
+excluded. Across both pilots, the observed balance decrease was 25 credits.
+Task services were stopped and the temporary hosted credential file removed.
+
+Hosted comparability remains **unproven**. This deliberately selected pilot
+contains previously reliable, variable and blocked pages, with only one attempt
+per deployment and target. It does not replace the 100-target repeated browser
+benchmark, measure extraction F1, or establish production availability. The
+next runtime investigation should examine ordinary navigation/empty-content
+states and preserve informative engine failures: the fork reported
+`CONTENT_READY` for an Amazon continuation page and an empty rendered Louis
+Vuitton response, and Reddit's browser failure became a generic API error.
+Recovering content, clearer failure reporting and throughput must be measured
+separately; Cloud's infrastructure differs from the proxy-free fork, so this
+comparison alone does not identify the cause of its retrieval advantage.
