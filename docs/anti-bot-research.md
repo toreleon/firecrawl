@@ -1269,8 +1269,10 @@ Backend logs account for exactly 200 primary dispatches, 100 per owner, plus 48
 alternate calls with no target sent to the alternate twice. Returned fallback
 metadata exists on 97 adaptive responses: 46 report an attempted alternate,
 13 report backend recovery, and nine of those meet the frozen normalized marker.
-Canada Goose, American Airlines, eBay and Skyscanner returned usable alternate
-content without the expected marker and remain failures. Three API errors have
+Canada Goose, American Airlines, eBay and Skyscanner were labeled recovered by
+the backend without the expected marker and remain failures. The later shell
+audit below found eBay and Skyscanner were verification pages, not usable target
+content; those runtime classifications were corrected. Three API errors have
 no returned fallback diagnostics; their secondary-dispatch state is not inferred
 from that absence. Owner logs provide total dispatch accounting.
 
@@ -1310,3 +1312,132 @@ not proof that its host VM disk file shrank by that amount. The current compact
 image and small stopped test infrastructure remain available. Unrelated running
 services, images and data volumes were not pruned. Shared build cache and
 unidentified volumes are retained; no global prune was used.
+
+## Passive continuation timing and unrendered verification shells
+
+The next investigation used the retained 45 failures from the full API fallback
+run. Canada Goose and American Airlines had substantive body content with the
+frozen expected sentence only in metadata; Canada Goose used different current
+product wording. Their original scores remain unchanged. eBay and Skyscanner
+were more serious runtime errors: both were labeled `CONTENT_READY` and selected
+as recovered alternates while still on verification documents. Temu's body
+contained only zero-width format characters. Redfin's AWS CAPTCHA (HTTP 405)
+and eMAG's custom AWS CAPTCHA (HTTP 511) also had `CONTENT_READY` state.
+
+[AWS documents](https://docs.aws.amazon.com/waf/latest/developerguide/waf-captcha-and-challenge-actions.html)
+the `x-amzn-waf-action` header, a passive HTTP 202 challenge and interactive
+HTTP 405 CAPTCHA. Its CAPTCHA is distinct from an ordinary embedded SDK widget.
+[HUMAN documents](https://docs.humansecurity.com/applications/advanced-blocking-response)
+custom and embedded challenge containers; `px-captcha` alone cannot establish
+that every ordinary page containing it is blocked. The runtime therefore uses
+combined header, script, interstitial-structure and dedicated-route evidence.
+Commented examples, inline script strings, similarly named untrusted hosts and
+normal contact-form SDK embeds are negative test cases. The frozen grader and
+fallback classifier are unchanged.
+
+The observed eBay document had its continuation form, browser-check message and
+first-party challenge script, but had not redirected yet. Automatic readiness
+now waits passively for that document to finish within the existing budget,
+without clicking or submitting a form. [Playwright's navigation documentation](https://playwright.dev/docs/navigations)
+explains why DOM-content-loaded or even load cannot establish completion of
+later client activity. Controlled fixtures demonstrate both delayed successful
+redirects and bounded unresolved shells, without using an expected-text hint.
+Format-only text no longer satisfies readiness; ordinary text and emoji still do.
+
+### Matched Firefox experiment
+
+Production source `6ed6b1024342b4734098f6ca76f0c47710a01e47` ran against the
+prior production Firefox image on 20 selected targets, twice per profile:
+80 fresh browser-service requests, four global workers, two slots per profile,
+2 CPUs/3 GiB per owner, headful Linux ARM64, direct VN egress, media enabled,
+consent rejection and automatic readiness with no marker hint. This is a
+selected-target experiment, not an all-target API or hosted comparison.
+
+| Selected 40 requests/profile | Previous build | Shell/readiness repair |
+| --- | --- | --- |
+| Raw substring | 22 | 21 |
+| Screened marker | 21 | 21 |
+| Normalized marker | 23 | 23 |
+| eBay normalized matches | 0/2 | 2/2 |
+| Screened-success p50 | 5,695 ms | 5,472 ms |
+| Screened-success p95 | 10,184 ms | 11,207 ms |
+
+The overall normalized count tied. Louis Vuitton and Capterra each lost one
+match while eBay added two. The first eBay success waited about three seconds
+for the passive check before capturing product content. Redfin and eMAG were
+correctly identified as interactive verification instead of ready content.
+Temu waited for visible content rather than accepting a format-only shell; it
+still did not match the frozen discontinued-product marker. These findings
+support the targeted repair and more faithful outcomes, not an aggregate gain.
+
+All 80 unique records, hashes, scores and summary metrics replayed offline.
+Actual overlap stayed at four globally/two per profile. Timing was valid,
+memory/process-limit and OOM events were zero, and socket-throttling counters
+were retained separately. Peak memory was 2,175/2,024 MiB. Both owners finished
+with zero pages/sessions and were removed after archiving logs. The
+[paired receipt](../apps/playwright-service-ts/benchmarks/runtime-shells-paired-results-2026-11-03.json)
+includes target changes and exact image/source/runtime hashes. A separate
+offline classification audit checked 1,037 successful captures from seven
+earlier browser/API runs and found zero new rejections; this includes retained
+hosted HTML, not new hosted requests.
+
+The live test also showed that a loaded HUMAN press-and-hold page reached the
+older detector before the new dedicated-route detector. Source
+`b7da5a8a047896ba1b60526012e823b2e877c7b3` annotates those already recognized
+interactive providers consistently, avoiding a futile passive wait. It passed
+58 helper checks, 11 packaged Chromium/Firefox contract checks and eight real
+full API harness checks. The eight-check API harness passed on both source
+versions; the initial Unicode fixture was corrected to declare UTF-8 explicitly.
+The prototype fixture failure is not reported as a production runtime failure.
+
+### Fresh full API result on the final runtime
+
+The completed rerun on `b7da5a8a0` made 200 fresh API requests: all 100 targets
+with fallback disabled and enabled, four global workers and two slots per
+profile. Both used the final production browser image, two primary Chromium
+owners and one optional Firefox owner, with 2 CPUs/3 GiB/two pages per owner.
+No expected text hint, upstream proxy or hosted request was used.
+
+| Final runtime, 100 requests/profile | Without fallback | With fallback |
+| --- | --- | --- |
+| Raw substring | 43 | 52 |
+| Screened marker | 41 | 50 |
+| Normalized marker | 42 | 51 |
+| Screened-success p50 | 3,113 ms | 3,270 ms |
+| Screened-success p95 | 6,509 ms | 6,881 ms |
+| Extra Firefox calls | 0 | 50 |
+
+There were 42 common matches, nine adaptive-only and no baseline-only matches.
+Eight additions used confirmed alternate recovery; eBay passed in the adaptive
+profile's primary Chromium attempt. All eight returned backend recoveries also
+matched the frozen normalized marker in this run. Five API errors had no returned
+fallback diagnostics; owner logs still account for all 200 primary and 50
+alternate calls, with no alternate target repeated. The 42 common matches had
+p50 3,075→2,651 ms and p95 6,509→6,443 ms. Different successful cohorts and live
+variation prevent a causal aggregate latency claim.
+
+The new adaptive total, 51/100, is below the earlier 55/100; its primary-only
+comparison also fell from 45/100 to 42/100. Across the unmatched adaptive runs,
+eBay added a match while Amazon, Yahoo Finance, Louis Vuitton, Zoopla and
+Apartments.com lost matches. Amazon triggered the existing final product-identity
+guard after continuation, so a different document was never promoted as the
+requested product. Yahoo's primary failed with `net::ERR_EMPTY_RESPONSE` and
+Firefox failed with `NS_ERROR_NET_RESET`. The other three returned HTTP 403 or
+verification in both engines. These observations identify concrete remaining
+failures; they do not establish that all differences were caused by the repair.
+Firefox reset classification and Amazon continuation stability remain follow-up
+work. The overall change does not establish an aggregate success-rate increase.
+
+The [full API receipt](../apps/playwright-service-ts/benchmarks/runtime-shells-full-api-results-2026-11-03.json)
+records all 200 replayed hashes/scores, cross-run changes, error diagnoses,
+exact source/image pins and [browser CI](https://github.com/toreleon/firecrawl/actions/runs/41655505422)
+(58 helper checks, 90 integration checks, build and dependency audit passed).
+Eight real API checks passed on this final source. Timing was valid, primary
+owners peaked at 1,336/960 MiB and Firefox at 1,669 MiB. Memory/process-limit
+and OOM counters were zero; Firefox reported 132 socket-throttling events.
+All owners finished with zero pages/sessions and were removed after archiving
+logs; task infrastructure was stopped. A one-profile configuration was rejected
+before dispatch because the comparison runner requires two profiles; that
+zero-request validation abort is retained separately. Broader server/SDK CI has
+not passed. The earlier hosted score remains 80/100 on its separately pinned
+comparison, not a current hosted result or proof of parity.

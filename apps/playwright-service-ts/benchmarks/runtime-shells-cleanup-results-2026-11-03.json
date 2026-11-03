@@ -1,0 +1,28 @@
+{
+  "checkedAt": "2026-11-03T14:49:18.870993+00:00",
+  "createdBrowserContainersRemoved": true,
+  "obsoleteIntermediateImageRemoved": "autogtm/firecrawl-browser:runtime-shells-2026-11-03",
+  "retainedCurrentImage": "autogtm/firecrawl-browser:runtime-shells-final-2026-11-03",
+  "remainingTaskContainers": [
+    {
+      "name": "autogtm-firecrawl-workflows-rabbit-20261103",
+      "state": "exited"
+    },
+    {
+      "name": "autogtm-firecrawl-workflows-redis-20261103",
+      "state": "exited"
+    },
+    {
+      "name": "autogtm-firecrawl-workflows-pg-20261103",
+      "state": "exited"
+    }
+  ],
+  "unrelatedRunningServicesUntouched": 9,
+  "globalPruneUsed": false,
+  "volumesRemoved": 0,
+  "reportedImageUsage": "28.92GB",
+  "reportedWritableContainerUsage": "360.4kB",
+  "summary": "TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE\nImages          53        10        28.92GB   11.32GB (39%)\nContainers      13        9         360.4kB   28.67kB (7%)\nLocal Volumes   114       5         6.307GB   6.151GB (97%)\nBuild Cache     48        0         5.287GB   53.2MB\n",
+  "hostVmFileShrinkVerified": false,
+  "temporaryHostedKeyAbsent": true
+}

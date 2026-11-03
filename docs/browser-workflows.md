@@ -225,6 +225,16 @@ Recognized Google unusual-traffic forms remain verification states, and are not
 automatically retried as ordinary HTTP 429 responses. They require explicit
 verification handling rather than an automatic form submission.
 
+Automatic readiness also recognizes the observed eBay passive browser-check
+shell and waits for its own redirect within the configured readiness budget.
+It does not submit the continuation form. AWS WAF action headers distinguish
+passive challenges from interactive CAPTCHA responses; known small AWS CAPTCHA
+documents and HUMAN containers on dedicated verification routes remain explicit
+verification states. Interactive detections report `HUMAN_REQUIRED` without
+clicking or answering a challenge. Ordinary pages embedding SDK widgets are not
+classified from the SDK alone. Unicode format characters alone cannot satisfy
+body readiness; real text must appear or the bounded wait stays unresolved.
+
 `maxAttempts` defaults to one. Opt-in retries recognize coded phase deadlines
 and transient connection/HTTP2 errors, while cancellation, session errors,
 workflow identity mismatches and hard status failures remain terminal. Attempt
