@@ -2276,3 +2276,118 @@ accounting remains 28.92 GB and host free space was 126 GiB. No global prune was
 used. The [cleanup receipt](../apps/playwright-service-ts/benchmarks/navigation-timeout-cleanup-results-2026-11-04.json)
 preserves preflight inventories and actual prune results without claiming all
 shared cache was deleted or independently measuring physical bytes freed.
+
+## Driver, request-interception and consent-policy experiments (November 4)
+
+The next investigation kept production source unchanged at the contents of
+`f93fbdb601d0974d64e3ea2095dfedc645f45a31` and tested three remaining browser
+hypotheses. No hosted calls or upstream proxies were used. The maximum HTTP
+concurrency was two, below the user's ceiling of eight. The [combined receipt](../apps/playwright-service-ts/benchmarks/driver-policy-experiments-results-2026-11-04.json)
+retains all 76 completed observations, replayed hashes/scores, request/context
+completion receipts, configurations and resource samples.
+
+### Pydoll on the same Chromium binary
+
+[Pydoll](https://github.com/autoscrape-labs/pydoll) offers a direct CDP controller
+and a Python Playwright-compatible API. The experiment pinned the published
+`pydoll-python==3.0.0` wheel, SHA-256
+`9a78c597cdb5de2db17c6646253c97d74a705d5571231a3cc529b1d5fcc85435`,
+and verified its included MIT license. The [published package metadata](https://pypi.org/pypi/pydoll-python/3.0.0/json)
+and [upstream setup documentation](https://pydoll.tech/docs/getting-started/)
+were consulted before inspecting the installed implementation.
+
+Two experimental HTTP owners ran Rebrowser and Pydoll against the identical
+Chromium executable hash/version in the same Linux ARM64 image, headful display,
+2 CPUs/3 GiB per owner, one request per owner, fresh contexts and direct VN
+egress. Both used the existing pinned-DNS filtering proxy, the same DOM capture
+function and runtime protection classifier, and a five-second post-load delay.
+The prototype deliberately allowed service workers and advertising on both
+profiles and performed no consent or workflow actions. Its launch arguments
+were captured; this compares driver/launcher bundles, not one isolated CDP call.
+
+| Eight selected targets, two rounds each | Rebrowser | Pydoll |
+| --- | --- | --- |
+| Frozen normalized HTML marker matches | 5/16 | 5/16 |
+| Exclusive matches | 0 | 0 |
+| GitHub and arXiv controls | 4/4 | 4/4 |
+
+Both retrieved Lowe's only in round one and failed it in round two. The complete
+frozen expected phrase appeared in HTML but not captured rendered body text;
+the displayed product heading was shorter. That supplementary distinction does
+not change the frozen grader. StockX, WSJ, G2, Neiman Marcus and LinkedIn added no
+match. Two Pydoll G2 captures encountered a 403 navigation but could not establish
+a stable capture URL; those remain adapter errors, not a different inferred WAF
+rule. There is no demonstrated selected-site coverage benefit from the new driver.
+
+The inspected Pydoll compatibility context accepts `service_workers` without
+implementing blocking. Other production consent, workflow, session and fencing
+contracts were not ported into this prototype. It therefore cannot replace the
+production worker on these results. Both owners passed a real browser loopback
+navigation denial through the existing proxy. Peak sampled memory was 633/979
+MiB, all observed memory-boundary/OOM/PID and socket-throttling counters were zero,
+and both containers were removed. Prototype health counts active commands rather
+than every browser tab; per-request context-close receipts and container removal
+are recorded separately.
+
+### Proxy scope and guarded interception
+
+The transient Lowe's result prompted a separate two-by-two Rebrowser experiment.
+It varied browser-global versus per-context filtering proxy configuration and
+guarded request interception versus no interception. The proxy continued to
+reject private addresses in every cell. Service workers were blocked in every
+cell; advertising and consent automation were off. Four Lowe's rounds per cell
+used counterbalanced interception order, followed by one GitHub control per cell.
+Two owners shared the same Chromium binary/version and used one request each.
+
+| Rebrowser configuration | Lowe's | GitHub control |
+| --- | --- | --- |
+| Global proxy, guarded interception | 0/4 | 1/1 |
+| Global proxy, no interception | 0/4 | 1/1 |
+| Context proxy, guarded interception | 0/4 | 1/1 |
+| Context proxy, no interception | 0/4 | 1/1 |
+
+All twenty completed observations replayed with valid timing. No cell established
+a recovery, so the experiment does not justify removing the production guard or
+changing proxy scope. The earlier runner had a string-quoting parse error before
+any scored target request; that zero-record attempt and its two-container cleanup
+remain separate from the corrected twenty-record measurement. Both corrected
+owners passed loopback-denial controls, peaked at 560/565 MiB, recorded zero
+memory/PID-limit and socket events, and were removed after evidence was saved.
+
+### Consent bridge enabled versus disabled
+
+Production installs the consent bridge before navigation when a consent policy
+is enabled. To test whether that accounted for the remaining failures, the
+unchanged production Rebrowser service compared `consent: "off"` with
+`"rejectNonEssential"`. Two rounds on Lowe's, StockX, WSJ, G2, Neiman Marcus and
+GitHub used fresh contexts, automatic readiness, no fixed wait and one request
+per policy, sharing a two-page owner capped at 2 CPUs/3 GiB.
+
+Each policy matched 2/12, all GitHub controls. None of the five persistent failures
+recovered. All twenty-four hashes/scores replayed with valid timing; the owner
+peaked at 569 MiB with zero memory-boundary/OOM/PID or socket events. This result
+does not justify disabling consent handling or changing its injection lifecycle.
+The production driver, guarded routing and consent defaults remain unchanged.
+
+### Cleanup and remaining gap
+
+Seven browser containers were removed across these experiments, including the
+unscored bootstrap attempt. The two remaining prototype images were removed;
+two superseded prototype build outputs were already absent. Twenty exact task
+cache records were pruned, with Docker reporting 143 MB. The baseline production
+and unrelated image IDs were restored, including the current browser image and
+its pinned base. Image accounting returned to 28.92 GB. Fifty-nine baseline
+image-shared cache records remain, with 0 B reported reclaimable cache.
+
+Nine unrelated services and all 114 volumes were preserved; the three task
+infrastructure services remained stopped. No global prune was used. The
+[cleanup receipt](../apps/playwright-service-ts/benchmarks/driver-policy-cleanup-results-2026-11-04.json)
+retains image/build-cache preflights, actual removals and volume inventories.
+
+These are selected browser experiments, not a new full API result. The latest
+source-pinned full run remains 55/100 with fallback, and the earlier hosted
+comparison remains 81/100 on its own source and deployment. Parity is unproven.
+A remaining untested transport question is the fork's HTTP fetch engine, which
+currently uses Undici: an HTTP-client comparison would be a separate experiment
+and must preserve redirect/private-address checks and requested browser-control
+semantics. No HTTP transport change or coverage claim was made here.
