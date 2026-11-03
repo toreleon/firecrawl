@@ -55,7 +55,7 @@ async function main() {
   )
     throw new Error('Unknown --targets name');
   const attemptsPerTarget = positive('attempts', '1', 20);
-  const concurrency = positive('concurrency', '2', 4);
+  const concurrency = positive('concurrency', '2', 8);
   const timeoutMs = positive('timeout', '90000', 120000);
   const waitMs = Number(argument('wait', '2000'));
   if (!Number.isInteger(waitMs) || waitMs < 0 || waitMs >= timeoutMs / 2)

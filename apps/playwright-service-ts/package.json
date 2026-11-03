@@ -11,6 +11,8 @@
     "test:integration": "node --import tsx --test integration/*.spec.ts",
     "benchmark:bots": "tsx scripts/benchmark-bot-detection.ts",
     "benchmark:waf": "tsx scripts/benchmark-waf.ts",
+    "benchmark:api": "tsx scripts/benchmark-api.ts",
+    "benchmark:api:audit": "tsx scripts/audit-api-benchmark.ts",
     "benchmark:reliability": "tsx scripts/benchmark-reliability.ts"
   },
   "keywords": [],

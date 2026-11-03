@@ -79,7 +79,7 @@ test(
           `--service=http://127.0.0.1:${port}`,
           '--timeout=1000',
           '--wait=0',
-          '--concurrency=2',
+          '--concurrency=8',
         ],
         { cwd: root, timeout: 10000 },
       );
@@ -87,6 +87,7 @@ test(
         await readFile(path.join(output, 'report.json'), 'utf8'),
       );
       assert.equal(report.status, 'complete');
+      assert.equal(report.concurrency, 8);
       assert.equal(report.timingIntegrity.valid, true);
       assert.deepEqual(report.timingIntegrity.gaps, []);
       assert.equal(report.timingIntegrity.maximumAllowedGapMs, 10000);

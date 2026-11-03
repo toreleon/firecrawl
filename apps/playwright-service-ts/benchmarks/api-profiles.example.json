@@ -1,0 +1,17 @@
+[
+  {
+    "name": "fork",
+    "baseUrl": "http://127.0.0.1:3002",
+    "browserControls": {
+      "waitUntil": "domcontentloaded",
+      "consent": "rejectNonEssential",
+      "workflow": "auto",
+      "maxAttempts": 1
+    }
+  },
+  {
+    "name": "hosted",
+    "baseUrl": "https://api.firecrawl.dev",
+    "apiKeyEnv": "HOSTED_FIRECRAWL_API_KEY"
+  }
+]
