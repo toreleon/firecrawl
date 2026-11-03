@@ -207,6 +207,7 @@ export const inspectBrowserOwner = async (base: string): Promise<Owner> => {
 };
 
 let statelessOwnerCursor = randomInt(1_000_000);
+let fallbackOwnerCursor = randomInt(1_000_000);
 const discoveryError = (cancelled: boolean) =>
   new LocalBrowserError(
     cancelled ? "SCRAPE_CANCELLED" : "SCRAPE_TIMEOUT",
@@ -614,7 +615,12 @@ export const scrapeLocalBrowser = async (
     );
     if (until - Date.now() < minimum) return stop("insufficient_budget");
     let alternate: Owner | undefined;
-    for (const base of fallbackOwners()) {
+    const candidates = fallbackOwners();
+    const first = candidates.length
+      ? fallbackOwnerCursor++ % candidates.length
+      : 0;
+    for (let offset = 0; offset < candidates.length; offset++) {
+      const base = candidates[(first + offset) % candidates.length];
       if (base === owner.base) continue;
       try {
         const candidate = await inspectWithinDeadline(

@@ -323,6 +323,43 @@ describe("Explicit stateless browser-engine fallback", () => {
     expect((await request({ controls: {} })).pageStatusCode).toBe(403);
     expect(pair.fallback.calls.health).toBe(0);
   });
+  it("shares stateless fallback requests between configured healthy alternate owners", async () => {
+    const primary = await owner({ status: 403 });
+    const first = await owner({ engine: "camoufox" });
+    const second = await owner({ engine: "camoufox" });
+    config.LOCAL_BROWSER_OWNER_URLS = primary.base;
+    config.LOCAL_BROWSER_FALLBACK_OWNER_URLS = `${first.base},${second.base}`;
+    const responses = await Promise.all(
+      Array.from({ length: 8 }, () => request()),
+    );
+    expect(
+      responses.every(
+        response => response.diagnostics.engineFallback.recovered,
+      ),
+    ).toBe(true);
+    expect(primary.calls.scrape).toBe(8);
+    expect([first.calls.scrape, second.calls.scrape]).toEqual([4, 4]);
+    expect(
+      new Set(
+        responses.map(
+          response =>
+            response.diagnostics.engineFallback.attempts[1].ownerBootId,
+        ),
+      ).size,
+    ).toBe(2);
+  });
+  it("does not try another pool member after an alternate response is lost", async () => {
+    const primary = await owner({ status: 403 });
+    const first = await owner({ engine: "camoufox", lost: true });
+    const second = await owner({ engine: "camoufox", lost: true });
+    config.LOCAL_BROWSER_OWNER_URLS = primary.base;
+    config.LOCAL_BROWSER_FALLBACK_OWNER_URLS = `${first.base},${second.base}`;
+    await expect(request()).rejects.toMatchObject({
+      code: "BROWSER_OUTCOME_UNKNOWN",
+    });
+    expect(primary.calls.scrape).toBe(1);
+    expect(first.calls.scrape + second.calls.scrape).toBe(1);
+  });
   it("does not replay a lost response, unclosed page or wrong-owner result", async () => {
     for (const options of [
       { lost: true },
