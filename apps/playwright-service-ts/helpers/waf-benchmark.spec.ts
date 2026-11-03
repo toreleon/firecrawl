@@ -126,6 +126,30 @@ test('text screening removes non-content markup without executing it', () => {
   );
 });
 
+test('normalized content is independent of raw HTML, preserving the published score', () => {
+  const score = scoreObservation(
+    { ...target, containsText: 'Science > Language' },
+    observation('<main>Science &gt; <strong>Language</strong></main>'),
+  );
+  assert.equal(score.frontierPass, false);
+  assert.equal(score.screenedPass, false);
+  assert.equal(score.normalizedPass, true);
+  assert.equal(score.failureReason, 'missing_expected_marker');
+});
+
+test('server timeouts and transport failures remain distinguishable from unknown service errors', () => {
+  for (const [code, reason] of [
+    ['SCRAPE_TIMEOUT', 'timeout'],
+    ['NETWORK_ERROR', 'network_error'],
+  ]) {
+    assert.equal(
+      scoreObservation(target, { apiStatus: 500, body: { errorCode: code } })
+        .failureReason,
+      reason,
+    );
+  }
+});
+
 test('summary retains failures in the denominator and keeps timeout latency out of successful latency', () => {
   const make = (
     content: string,

@@ -137,3 +137,50 @@ The measurement runner and timing monitor passed the
 build, 23 helper tests, 34 HTTP/integration tests, and production dependency audit.
 The inherited server/audit workflows require separate runner infrastructure;
 this result is not a claim that the whole monorepo test suite passed.
+
+## Reliability research and implementation, November 3
+
+The retained run exposed failure modes beyond egress reputation. The following
+primary sources guided the changes; these documents describe mechanisms, not
+evidence that this fork defeats a vendor's protection:
+
+| Source | Finding and implementation decision |
+| --- | --- |
+| [Playwright navigation lifecycle](https://playwright.dev/docs/navigations) | Modern pages can populate content after `load`. Add explicit text/selector readiness within one deadline and track later main-document responses. |
+| [Cloudflare challenge response detection](https://developers.cloudflare.com/cloudflare-challenges/challenge-types/challenge-pages/detect-response/) | `cf-mitigated: challenge` identifies challenge responses. Use the current document's headers rather than headers retained from a superseded navigation. |
+| [DataDome response pages](https://docs.datadome.co/docs/response-pages) | Device checks, CAPTCHAs and hard blocks are different response types, with customizable templates. Extend detection with bootstrap/interstitial evidence rather than relying on a fixed title or a vendor script alone. |
+| [Zyte session mechanisms](https://docs.zyte.com/zyte-api/usage/features.html#sessions) | IP, cookies and network identity can matter together. Add bounded, origin/profile-bound browser sessions with exclusive leases; this service still has one configured egress path. |
+| [HTTP Retry-After](https://www.rfc-editor.org/rfc/rfc9110.html#name-retry-after) | Accept delta-seconds or HTTP dates, fit delays and retries inside the request deadline, and retain attempt counts. Do not blindly retry denials or challenges. |
+| [Playwright service workers](https://playwright.dev/docs/service-workers) | Disabling workers can affect behavior, and workers complicate interception. Preserve the current worker restriction while testing ad-filter compatibility separately; do not remove SSRF controls. |
+| [tldts public-suffix parsing](https://github.com/remusao/tldts) | Last-two-label cookie scoping mishandles multi-label/private suffixes. Pin tldts 7.4.19 and use the private-domain-aware registrable domain. |
+
+Implemented regressions exercise delayed redirects in both directions (including
+stale challenge headers), hydration and missing content, session cookies and
+isolation, token secrecy, origin/profile mismatch, concurrent use, expiry and
+capacity, retry counts and server backoff, queued-request deadlines, and late
+browser-allocation disposal. Existing three-driver and SSRF checks remain part
+of the focused CI workflow.
+
+The scorer keeps the raw published assertion and adds an independent normalized
+text assertion. In the archived observations all five arXiv pages contained the
+expected normalized text but failed the raw substring; Reddit's five challenges
+passed the raw marker while failing the screen. Retained failure bodies can be
+replayed without a network request. Successful bodies were not retained in that
+older run, so a replay cannot establish a newly verified full-run success rate.
+The new controlled runner retains every response for that reason.
+
+`benchmark:reliability` compares five profiles on 12 explicitly selected sites,
+with two rounds and rotated profile order. Runtime/browser binaries are held
+fixed by overlaying the revised application on the original pinned Linux image.
+All three services use the same CPU/memory limits and host egress. The comparison
+separates compatible behavior, readiness, ad-filter removal and cold/reused
+sessions. First-attempt settings remain fixed; recovery behavior is verified
+with controlled fixtures rather than silently increasing the live request budget.
+The test has shared-IP interference and a short observation window, and cannot
+estimate general WAF coverage or causal effects outside these selected cases.
+
+Remaining deployment work includes proxy/region experiments, site-specific
+consent/navigation flows, browser-fingerprint investigations, full API-adapter
+integration of optional session/readiness controls, and distributed scheduling
+or session ownership for multiple browser-service instances. Interactive
+verification remains an explicit failure; no CAPTCHA solver is implemented.

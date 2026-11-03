@@ -69,12 +69,18 @@ export const scoreObservation = (
   let failureReason: string | undefined;
   if (observation.transportError)
     failureReason = observation.timedOut ? 'timeout' : 'transport_error';
+  else if (observation.body.errorCode === 'SCRAPE_TIMEOUT')
+    failureReason = 'timeout';
+  else if (observation.body.errorCode === 'NETWORK_ERROR')
+    failureReason = 'network_error';
   else if (!apiOk) failureReason = 'service_error';
   else if (challenge) failureReason = 'challenge';
   else if (pageStatus === 429) failureReason = 'rate_limited';
   else if (pageStatus === 404 || pageStatus === 410)
     failureReason = 'target_unavailable';
   else if (!pageOk) failureReason = `target_status_${pageStatus ?? 'missing'}`;
+  else if (observation.body.errorCode === 'CONTENT_NOT_READY')
+    failureReason = 'content_not_ready';
   else if (pageError) failureReason = 'page_error';
   else if (!rawMarkerPresent) failureReason = 'missing_expected_marker';
   else if (!textMarkerPresent)
@@ -82,6 +88,23 @@ export const scoreObservation = (
   return {
     frontierPass,
     screenedPass: frontierPass && !failureReason,
+    // Independent of the legacy raw-HTML assertion. Keep all three metrics;
+    // this does not establish CSS visibility or full-page correctness.
+    normalizedPass:
+      apiOk &&
+      pageOk &&
+      textMarkerPresent &&
+      !observation.transportError &&
+      !challenge &&
+      !pageError &&
+      !observation.body.errorCode,
+    serviceAttemptCount: Array.isArray(
+      (observation.body.diagnostics as Record<string, unknown> | undefined)
+        ?.attempts,
+    )
+      ? (observation.body.diagnostics as { attempts: unknown[] }).attempts
+          .length
+      : undefined,
     failureReason,
     apiStatus: observation.apiStatus,
     pageStatus,
@@ -121,11 +144,15 @@ export const summarizeAttempts = (attempts: WafAttempt[]) => {
     uniqueTargets: new Set(rows.map((row) => row.target)).size,
     frontierPasses: rows.filter((row) => row.frontierPass).length,
     screenedPasses: rows.filter((row) => row.screenedPass).length,
+    normalizedPasses: rows.filter((row) => row.normalizedPass).length,
     frontierSuccessRate: rows.length
       ? rows.filter((row) => row.frontierPass).length / rows.length
       : null,
     screenedSuccessRate: rows.length
       ? rows.filter((row) => row.screenedPass).length / rows.length
+      : null,
+    normalizedSuccessRate: rows.length
+      ? rows.filter((row) => row.normalizedPass).length / rows.length
       : null,
     successfulLatencyP50Ms: percentile(
       rows.filter((row) => row.screenedPass).map((row) => row.latencyMs),
@@ -163,6 +190,8 @@ export const requestScrape = async (
   target: WafTarget,
   timeoutMs: number,
   waitMs: number,
+  options: Record<string, unknown> = {},
+  serviceTimeoutMs?: number,
 ): Promise<ScrapeObservation> => {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
@@ -172,11 +201,11 @@ export const requestScrape = async (
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({
+        ...options,
         url: target.url,
-        timeout: Math.max(
-          1,
-          timeoutMs - waitMs - Math.min(5000, timeoutMs / 10),
-        ),
+        timeout:
+          serviceTimeoutMs ??
+          Math.max(1, timeoutMs - waitMs - Math.min(5000, timeoutMs / 10)),
         wait_after_load: waitMs,
       }),
       signal: controller.signal,

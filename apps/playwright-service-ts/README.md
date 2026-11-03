@@ -148,3 +148,73 @@ substring rule; `screenedPass` additionally rejects recognized challenges,
 reported errors, and markers present only in scripts/styles/comments. The
 additional text screen does not establish CSS visibility or field accuracy.
 This measures the browser backend, not the full Firecrawl API/worker stack.
+
+## Readiness, recovery and workflow sessions
+
+The service tracks the final main-document response, including delayed
+JavaScript navigations. HTML, status, content type and challenge headers are
+captured from that document. Diagnostics include document navigations, failed
+request counts, resource-block counts and each recovery attempt. Errors expose
+`errorCode` and, when available, `networkErrorCode`; they do not turn an unknown
+network failure into a claimed WAF detection.
+
+Optional `/scrape` fields:
+
+| Field | Default | Contract |
+| --- | --- | --- |
+| `wait_until` | `load` | `load` or `domcontentloaded` |
+| `wait_for_text` | absent | Wait for normalized text in `document.body.innerText` |
+| `readiness_timeout` | `5000` | Maximum readiness wait, capped by the request deadline |
+| `max_attempts` | `1` | 1–3 service attempts within one request deadline |
+| `create_session` | `false` | Create a temporary browser context and return its opaque `sessionId` |
+| `session_id` | absent | Reuse the context identified by that capability token |
+
+`timeout` is one budget for capacity waits, browser allocation, navigation,
+readiness and retries. A missing text marker retains the page with
+`readiness.satisfied=false`, `errorCode=CONTENT_NOT_READY` and `pageError`.
+Missing required selectors retain the existing HTTP 500 failure behavior.
+Recovery retries selected transient network failures and HTTP 429/502/503/504;
+it respects `Retry-After`, stops when the budget is insufficient, and does not
+retry recognized challenges or HTTP 401/403 denials. The default is one attempt.
+Page/context cleanup can add a small amount of time after the request budget.
+
+Sessions are opt-in capabilities for this internal service. Keep their tokens
+private. They are bound to the initial origin, user-agent override and TLS
+configuration, permit one active request at a time, and keep cookies/storage
+while closing each request's page. They do not share state with stateless
+requests or other tokens. Defaults: eight contexts and a fixed five-minute
+lifetime; `MAX_BROWSER_SESSIONS` is capped at 128 and `BROWSER_SESSION_TTL_MS` at
+30 minutes. Expired idle contexts are removed automatically. Use
+`DELETE /sessions/<token>` for early disposal. Sessions do not change the fixed
+upstream proxy, persist across restarts, or provide tenant authentication.
+The standard Firecrawl API adapter does not yet forward these optional fields.
+
+Cookie-header seeding uses the public suffix list, including private suffixes,
+instead of guessing a registrable domain from the last two labels. IP and
+single-label hosts keep host-only cookies.
+
+`BLOCK_ADS=false` disables the optional ad-domain filter for compatibility
+experiments. SSRF filtering and pinned DNS remain enabled. Service workers
+remain blocked: enabling them requires separate validation of their egress and
+request-interception behavior.
+
+The WAF runner also accepts `--readiness=text`, `--readiness-timeout=5000`,
+`--wait-until=domcontentloaded`, `--max-attempts=1` and `--evidence=all`.
+`normalizedPass` checks the normalized text marker independently of the raw-HTML
+assertion, rejecting known errors/challenges. Keep `frontierPass` for the
+published comparison and preserve old reports. Normalized text is not a CSS
+visibility or field-accuracy proof.
+
+`pnpm benchmark:reliability` runs a diagnostic subset through five interleaved
+profiles: the original service, the revised service with compatible waits,
+text readiness, disabled ad blocking, and session reuse. Supply three running
+services with `--legacy=...`, `--revised=...` and `--unfiltered=...`; configure
+the latter with `BLOCK_ADS=false`, enough session capacity for the selected
+targets, and a lifetime longer than the experiment. The default 12 targets,
+two rounds, 30-second client deadlines and common 24-second service timeout
+produce 120 requests at concurrency two. The original service interprets its
+timeout as navigation time; the revised service applies an overall budget.
+The session profile is cold on round one and reused on round two. All response
+bodies are retained with session capability tokens omitted. This diagnostic
+subset is not a new 100-site coverage estimate. On macOS run it under
+`caffeinate -i` to prevent idle sleep.

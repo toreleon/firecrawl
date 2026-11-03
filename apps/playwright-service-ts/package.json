@@ -10,7 +10,8 @@
     "test": "node --import tsx --test --test-force-exit helpers/*.spec.ts",
     "test:integration": "node --import tsx --test integration/*.spec.ts",
     "benchmark:bots": "tsx scripts/benchmark-bot-detection.ts",
-    "benchmark:waf": "tsx scripts/benchmark-waf.ts"
+    "benchmark:waf": "tsx scripts/benchmark-waf.ts",
+    "benchmark:reliability": "tsx scripts/benchmark-reliability.ts"
   },
   "keywords": [],
   "author": "Jeff Pereira",
@@ -25,7 +26,8 @@
     "patchright": "1.64.2",
     "playwright": "^1.64.1",
     "proxy-chain": "^2.7.1",
-    "rebrowser-playwright": "1.64.101"
+    "rebrowser-playwright": "1.64.101",
+    "tldts": "7.4.19"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
