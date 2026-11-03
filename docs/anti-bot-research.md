@@ -1654,3 +1654,135 @@ stopped. The [full receipt](../apps/playwright-service-ts/benchmarks/identity-fa
 includes missing-versus-returned diagnostics, dispatch accounting, source/image
 pins and unmatched prior-run changes. Hosted parity is still unproven; the
 earlier 80/100 hosted result was not refreshed for this source.
+
+## Waiting for a passive connection page across HTTP 403
+
+The retained failures exposed a lifecycle gap: automatic body readiness ran only
+after 2xx responses. Trustpilot returned a small HTTP 403 `Verifying Connection`
+document with an AWS edge challenge script and its own interstitial script, so
+the browser captured it while those scripts were still running. AWS documents
+that its native challenge scripts can obtain a token and resubmit the original
+request; waiting for that browser-owned flow is different from accepting the
+interstitial as requested content. See [AWS action behavior](https://docs.aws.amazon.com/waf/latest/developerguide/waf-captcha-and-challenge-actions.html).
+
+Cloudflare's [response documentation](https://developers.cloudflare.com/cloudflare-challenges/challenge-types/challenge-pages/detect-response/)
+says its challenge header covers all challenge types. Its [challenge overview](https://developers.cloudflare.com/cloudflare-challenges/challenge-types/challenge-pages/)
+also describes passive JavaScript completion and possible interactive escalation.
+The header alone therefore does not establish that waiting will retrieve the
+requested content. An exploratory eight-second fixed-wait probe returned 26 of
+36 planned responses before its resource guard stopped the run. Trustpilot
+passed with the delay and failed without it in both browser engines; completed
+Cloudflare observations remained challenged. The failing resource sample was
+not persisted before the guard raised. The exact event is unknown, and no
+complete-run success rate or final health claim is made for that probe.
+
+Source `02f47b315` adds a narrow runtime recognition rule for the observed AWS
+connection document: its title, live HTTPS AWS edge SDK script, local bootstrap,
+loading/status containers and waiting or verified-redirecting text must agree.
+Automatic workflows may then wait within the existing readiness budget even
+when the initial response is 403. Once identified, that verification document
+cannot become ready merely by changing a status label; a successful response
+must arrive. Explicit readiness, workflow opt-out, ordinary denials and
+interactive CAPTCHA retain their own behavior. Frozen grading is unchanged.
+
+The first implementation still captured the intermediate `Verified!
+Redirecting...` label before navigation, producing 0/5 Trustpilot matches in
+both browser-runtime profiles. A second failure-first fixture reproduced that
+specific transition. The final fixture covers successful return, unresolved
+waiting, verified-but-stuck and unknown-but-stuck labels, workflow opt-out,
+ordinary denial and interactive CAPTCHA. Sixty helper checks and the native
+integration suite passed (83 checks, three configuration skips). Thirteen
+packaged readiness/product/verification checks passed with Chromium and Firefox.
+[Browser CI](https://github.com/toreleon/firecrawl/actions/runs/41670175837) on
+the final source passed build, 60 helper checks, 97 integration checks and the
+production dependency audit.
+
+### Five-round browser-runtime comparison
+
+The old image (`8215f48b9`) and revised image (`02f47b315`) each captured five
+fresh requests for the affected Trustpilot URL and two controls. Both used
+headful Linux ARM64 Chromium, direct VN egress, 2 CPUs/3 GiB/one page slot per
+owner, no fixed wait, a five-second readiness allowance, consent rejection and
+the automatic workflow. Requests ran as rotating, coupled profile pairs with
+two global workers. No expected marker or hosted request was used.
+
+| Frozen target, five requests/profile | Prior runtime | Revised runtime |
+| --- | --- | --- |
+| Trustpilot Amazon reviews | 0/5 | 5/5 |
+| GitHub React repository | 5/5 | 5/5 |
+| StockX Cloudflare control | 0/5 | 0/5 |
+
+All thirty responses were captured. The original post-run verifier rejected
+Trustpilot's canonical `/review/amazon.com` → `/review/www.amazon.com` redirect,
+so the runner exited before persisting its report/timing diagnostics and the
+launcher did not collect final health. A corrected offline verifier explicitly
+allows only those two review paths, checks the Amazon Reviews title and rendered
+review text, and replays every original score/hash without new network requests.
+The revised captures contained over 1,000 rendered characters and retained the
+review identity; their automatic wait was 2,588–4,494 ms. Per-response closed-page
+and owner proofs, recorded zero resource-event counters and removed-container
+receipts were checked separately. No uninterrupted-clock or final-health claim
+is inferred from the failed post-run validator.
+
+The [experiment receipt](../apps/playwright-service-ts/benchmarks/passive-verification-paired-results-2026-11-03.json)
+preserves all three stages: the interrupted 26-response probe, the first
+30-response implementation with no gain, and the revised 30-response measurement.
+All 86 returned observations replayed. This selected five-round comparison
+supports the specific lifecycle repair; it does not establish an all-target
+gain, extraction F1 or hosted parity.
+
+### Full API result after passive connection readiness
+
+Source `02f47b315` then completed a fresh full API deployment and all 200
+requests on the frozen 100-target set, one request per policy per target.
+Four global workers/two per profile, direct VN egress, fresh contexts,
+rawHTML/Markdown, enabled media and no expected-text hint were retained.
+Both primary Chromium owners and the optional Firefox owner used image
+`sha256:4cf1c1eb4550e82504a0f11af5817e2a95143bc96e3b83f081400764e51a8244`
+with 2 CPUs/3 GiB/two page slots each. The API source and compiled hashes were
+unchanged during the run; browser source/compiled hashes matched preflight.
+
+| All 100 targets, one request/profile | Without fallback | With fallback |
+| --- | --- | --- |
+| Raw substring | 45 | 57 |
+| Screened marker | 44 | 55 |
+| Normalized marker | 45 | 56 |
+| Screened-success p50 | 3,106 ms | 3,357 ms |
+| Screened-success p95 | 6,384 ms | 7,103 ms |
+| Additional Firefox calls | 0 | 50 |
+
+All 45 baseline matches also matched in the adaptive profile. Eleven targets
+matched only with the adaptive policy and 44 matched neither. Nine adaptive-only
+matches used confirmed alternate recovery; Amazon and Zoopla had successful
+primary responses. Of eleven reported backend recoveries, ten matched the
+frozen normalized marker; American Airlines remained a marker failure. Three
+API errors lacked returned fallback diagnostics. Owner logs account for all
+200 primary and 50 alternate dispatches, with no alternate target repeated.
+Common-success p50 was 3,106→2,942 ms and p95 6,384→6,860 ms. The extra browser
+work remains explicit; these live cohorts do not establish stable latency gains.
+
+Trustpilot passed through primary Chromium in both profiles (7,379/5,441 ms),
+so the full API path exercised the repaired readiness behavior without using
+the alternate browser for that target. Compared with the preceding unmatched
+53/100 adaptive run, WSJ, Google Search, TikTok and Trustpilot added matches,
+while Apartments.com lost one. The current 56/100 is not a causal three-point
+code-version gain; the selected runtime comparison supplies the direct evidence
+for the Trustpilot fix.
+
+All 200 payload/content hashes, scores, summaries, source pins and lifecycle
+bounds replayed. Observed HTTP concurrency stayed at four globally/two per
+profile and timing was valid. Peak sampled owner memory was
+1,056/1,082/1,997 MiB. Memory/PID limit and OOM counters were zero; the separate
+Firefox socket-throttling counter reached 116. Owners finished healthy with
+zero pages/sessions and were removed after logs were preserved. Test
+infrastructure stopped. The harness and replay exited zero; the extract worker
+again logged AMQP closing during teardown. API/SDK code was unchanged, so its
+earlier eight-test browser API harness is identified as inherited evidence,
+separately from these current 200 real API records.
+
+The [full API receipt](../apps/playwright-service-ts/benchmarks/passive-verification-full-api-results-2026-11-03.json)
+records the diagnostic gaps, actual dispatch accounting and current-source CI.
+Hosted was not refreshed: its earlier 80/100 result remains source-pinned to
+the older comparison. Hosted parity is unproven. The [cleanup receipt](../apps/playwright-service-ts/benchmarks/passive-verification-cleanup-results-2026-11-03.json)
+records removal of prototype/obsolete task image tags while retaining the
+current image, stopped test infrastructure and all unrelated data volumes.

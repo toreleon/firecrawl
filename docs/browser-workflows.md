@@ -209,6 +209,15 @@ shells remain verification states. Short real text is accepted. Explicit
 readiness and JSON/plain-text response handling keep their separate contracts.
 This is a text-readiness check, not proof that every field or lazy section loaded.
 
+Automatic readiness also recognizes the observed small AWS connection
+interstitial served with HTTP 403: the `Verifying Connection` title, AWS edge
+challenge script, local interstitial script, loading/status containers and
+waiting or verified-redirecting message must agree. Its own scripts may finish
+within the existing readiness allowance. Once recognized, changing the status
+label does not make that error document ready; a successful response must arrive.
+An unresolved page retains verification/readiness failure. This does not add a
+fixed delay to ordinary denials or change explicit selector/text waits.
+
 Automatic readiness also waits for visible `aria-busy="true"` regions inside a
 visible `main` or `[role="main"]`, including a busy ancestor of that main region.
 If there is no visible main region, it checks the body. Hidden, inert,
