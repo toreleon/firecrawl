@@ -1,6 +1,11 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { Deadline, retryAfterMs, boundedClose } from './scrape-control';
+import {
+  Deadline,
+  retryAfterMs,
+  boundedClose,
+  networkErrorCode,
+} from './scrape-control';
 
 test('a timed-out allocation disposes its late result rather than leaking it', async () => {
   let disposed = false;
@@ -28,4 +33,20 @@ test('Retry-After supports delta seconds and HTTP dates without inventing a dela
 test('a stuck browser close cannot indefinitely hold its request permit', async () => {
   assert.equal(await boundedClose(new Promise(() => {}), 20), false);
   assert.equal(await boundedClose(Promise.resolve(), 20), true);
+});
+
+test('network diagnostics preserve numeric Chromium protocol names', () => {
+  assert.equal(
+    networkErrorCode(
+      new Error(
+        'page.goto: net::ERR_HTTP2_PROTOCOL_ERROR at https://example.com',
+      ),
+    ),
+    'ERR_HTTP2_PROTOCOL_ERROR',
+  );
+  assert.equal(
+    networkErrorCode('net::ERR_CONNECTION_RESET'),
+    'ERR_CONNECTION_RESET',
+  );
+  assert.equal(networkErrorCode(new Error('unexpected page error')), undefined);
 });

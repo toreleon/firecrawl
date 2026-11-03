@@ -12,6 +12,7 @@ test(
       const url = new URL(req.url ?? '/', 'http://fixture.test');
       const key = url.pathname + url.search;
       counts.set(key, (counts.get(key) ?? 0) + 1);
+      if (url.pathname === '/stall') return;
       res.setHeader('content-type', 'text/html');
       if (url.pathname === '/redirect-late') {
         if (url.searchParams.has('from-challenge'))
@@ -58,6 +59,21 @@ test(
       BROWSER_SESSION_TTL_MS: '3000',
     });
     try {
+      await t.test(
+        'timed-out navigation retains its phase and network observations',
+        async () => {
+          const failed = await scrape(service.baseUrl, `${origin}/stall`, {
+            timeout: 1000,
+            wait_after_load: 0,
+            max_attempts: 1,
+          });
+          assert.equal(failed.body.errorCode, 'SCRAPE_TIMEOUT');
+          assert.equal(failed.body.diagnostics.attempts.length, 1);
+          const attempt = failed.body.diagnostics.attempts[0];
+          assert.equal(attempt.document.phase, 'navigation');
+          assert.ok(Array.isArray(attempt.document.recentFailedRequests));
+        },
+      );
       await t.test(
         'delayed client redirects retain the final status and challenge headers',
         async () => {

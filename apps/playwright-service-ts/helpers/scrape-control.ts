@@ -153,3 +153,6 @@ export const errorCode = (error: unknown) => {
     return 'NETWORK_ERROR';
   return 'BROWSER_ERROR';
 };
+
+export const networkErrorCode = (error: unknown) =>
+  String(error).match(/net::(ERR_[A-Z0-9_]+)/)?.[1];

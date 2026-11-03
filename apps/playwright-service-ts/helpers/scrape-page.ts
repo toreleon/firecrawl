@@ -29,12 +29,19 @@ type DocumentState = {
   revision: number;
   navigations: { url: string; status: number }[];
   failed: string[];
+  phase: string;
 };
 const documents = new WeakMap<Page, DocumentState>();
 const trackDocument = (page: Page) => {
   let state = documents.get(page);
   if (state) return state;
-  state = { response: null, revision: 0, navigations: [], failed: [] };
+  state = {
+    response: null,
+    revision: 0,
+    navigations: [],
+    failed: [],
+    phase: 'prepare',
+  };
   documents.set(page, state);
   page.on('response', (response) => {
     const request = response.request();
@@ -57,6 +64,21 @@ const trackDocument = (page: Page) => {
   return state;
 };
 
+// Error paths cannot rely on evaluating a responsive renderer. Retain bounded
+// network observations even when navigation fails before a DOM capture exists.
+export const documentDiagnostics = (page: Page) => {
+  const state = documents.get(page);
+  return state
+    ? {
+        phase: state.phase,
+        url: page.url(),
+        lastResponseStatus: state.response?.status() ?? null,
+        recentNavigations: state.navigations.slice(-20),
+        recentFailedRequests: state.failed.slice(-30),
+      }
+    : undefined;
+};
+
 export const scrapePage = async (
   page: Page,
   url: string,
@@ -69,23 +91,61 @@ export const scrapePage = async (
   // Retained tabs use discovery-only injection; awaited explicit CMP controls
   // cannot leave a background consent click racing a later human handoff.
   await prepareConsent(page, options.consent ?? 'off', !options.retained);
+  state.phase = 'navigation';
   if (!options.continueSession)
     await page.goto(url, {
       waitUntil: options.waitUntil,
       timeout: deadline.remaining(),
     });
+  state.phase = 'consent';
   const consent = await deadline.run(
     applyConsent(page, options.consent ?? 'off', deadline),
   );
+  state.phase = 'workflow';
   const workflow = await deadline.run(
     applyWorkflow(page, options.workflow ?? 'none', deadline),
   );
+  state.phase = 'actions';
   const actions = await deadline.run(
     runActions(page, options.actions ?? [], deadline),
   );
   if (options.actions?.length || workflow.steps.length)
     await deadline.run(applyConsent(page, options.consent ?? 'off', deadline));
   if (options.waitAfterLoad > 0) await deadline.sleep(options.waitAfterLoad);
+  state.phase = 'readiness';
+  let staticHttpError = false;
+  const response = state.response;
+  if (
+    response &&
+    response.status() >= 400 &&
+    (options.checkSelector || options.waitForText)
+  ) {
+    const headers = response.headers();
+    const length = headers['content-length'];
+    const smallDocument = await deadline
+      .run(
+        page.evaluate(
+          () => (document.documentElement?.outerHTML.length ?? 0) <= 16384,
+        ),
+      )
+      .catch(() => false);
+    if (
+      !headers.refresh &&
+      smallDocument &&
+      (length === undefined || (Number(length) > 0 && Number(length) <= 16384))
+    ) {
+      const source = await deadline.run(response.body()).catch(() => null);
+      // Inspect the original response, not a DOM from which a script may have
+      // removed itself. Active error documents retain their readiness window.
+      staticHttpError =
+        !!source &&
+        source.length <= 16384 &&
+        !/<(?:script|iframe|frame|object|embed)\b|\bon[a-z]+\s*=|<meta[^>]+http-equiv\s*=\s*["']?refresh/i.test(
+          source.toString('utf8'),
+        ) &&
+        response === state.response;
+    }
+  }
   const predicate = async () => {
     if (
       options.checkSelector &&
@@ -110,7 +170,7 @@ export const scrapePage = async (
     }
     return true;
   };
-  if (options.checkSelector || options.waitForText) {
+  if ((options.checkSelector || options.waitForText) && !staticHttpError) {
     const end =
       Date.now() +
       Math.min(
@@ -129,6 +189,7 @@ export const scrapePage = async (
       await deadline.sleep(Math.min(100, Math.max(1, end - Date.now())));
     }
   }
+  state.phase = 'capture';
   for (let attempt = 0; attempt < 5; attempt++) {
     deadline.remaining();
     const current = state.response;
@@ -222,6 +283,7 @@ export const scrapePage = async (
         },
         interaction: { consent: { ...consent }, workflow },
         diagnostics: {
+          ...(staticHttpError && { readinessWaitSkipped: 'static_http_error' }),
           navigations: state.navigations.slice(navStart),
           failedRequests: state.failed
             .slice(failStart)

@@ -5,6 +5,103 @@ import { listen, closeServer, startService, scrape } from './support';
 import { browserConfiguration, launchBrowser } from '../helpers/browser';
 import { applyWorkflow } from '../helpers/workflows';
 import { Deadline } from '../helpers/scrape-control';
+import { shouldBlockAdRequest } from '../helpers/resource-policy';
+
+test(
+  'coin overview recipe hydrates public content by scrolling it into view',
+  { timeout: 15000 },
+  async () => {
+    const browser = await launchBrowser(
+      browserConfiguration({
+        BROWSER_ENGINE: 'rebrowser',
+        BROWSER_CHANNEL: 'chromium',
+        BROWSER_HEADLESS: 'true',
+      }),
+    );
+    try {
+      const page = await browser.newPage();
+      await page.route('**/*', (route) =>
+        route.fulfill({
+          contentType: 'text/html',
+          body: '<main style="height:5000px">Overview</main><section id="section-coin-about" data-test="section-about" style="height:400px"><p id="details" hidden>Coin overview details 42</p></section><script>new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting))document.querySelector("#details").hidden=false}).observe(document.querySelector("#section-coin-about"))</script>',
+        }),
+      );
+      await page.goto('https://coinmarketcap.com/currencies/bitcoin/', {
+        waitUntil: 'domcontentloaded',
+      });
+      assert.equal(await page.locator('#details').isVisible(), false);
+      const result = await applyWorkflow(page, 'auto', new Deadline(5000));
+      await page
+        .locator('#details')
+        .waitFor({ state: 'visible', timeout: 1000 });
+      assert.match(
+        await page.locator('body').innerText(),
+        /Coin overview details 42/,
+      );
+      assert.equal(result.steps[0]?.type, 'coin-about@1');
+      assert.equal(result.steps[0]?.outcome, 'scrolled-into-view');
+    } finally {
+      await browser.close();
+    }
+  },
+);
+
+test(
+  'Facebook application CDN loads while third-party ads remain blocked',
+  { timeout: 15000 },
+  async () => {
+    const browser = await launchBrowser(
+      browserConfiguration({
+        BROWSER_ENGINE: 'rebrowser',
+        BROWSER_CHANNEL: 'chromium',
+        BROWSER_HEADLESS: 'true',
+      }),
+    );
+    try {
+      const page = await browser.newPage();
+      let ads = 0;
+      let cdn = 0;
+      await page.route('**/*', async (route) => {
+        const request = route.request();
+        if (
+          shouldBlockAdRequest(
+            request.url(),
+            page.url(),
+            request.isNavigationRequest() &&
+              request.frame().parentFrame() === null,
+          )
+        ) {
+          ads++;
+          return route.abort();
+        }
+        if (request.url() === 'https://www.facebook.com/NASA')
+          return route.fulfill({
+            contentType: 'text/html',
+            body: '<main>Loading</main><script defer src="https://static.xx.fbcdn.net/rsrc.php/app.js"></script><script defer src="https://ad.doubleclick.net/ad.js"></script>',
+          });
+        if (request.url() === 'https://static.xx.fbcdn.net/rsrc.php/app.js') {
+          cdn++;
+          return route.fulfill({
+            contentType: 'application/javascript',
+            body: 'document.querySelector("main").textContent="NASA application ready";',
+          });
+        }
+        return route.abort();
+      });
+      await page.goto('https://www.facebook.com/NASA', {
+        waitUntil: 'domcontentloaded',
+      });
+      assert.equal(
+        await page.locator('main').innerText(),
+        'NASA application ready',
+      );
+      assert.equal(cdn, 1);
+      assert.equal(ads, 1);
+    } finally {
+      await browser.close();
+    }
+  },
+);
 
 test(
   'late country controls navigate to the original product without a public request',
@@ -60,6 +157,23 @@ test(
   async (t) => {
     const fixture = http.createServer((req, res) => {
       res.setHeader('content-type', 'text/html');
+      if (req.url?.startsWith('/static-denial')) {
+        res.statusCode = 403;
+        if (req.url.endsWith('-chunked')) {
+          res.write('<title>Access denied</title><main>Access denied</main>');
+          return res.end();
+        }
+        return res.end(
+          '<title>Access denied</title><main>Access denied</main>',
+        );
+      }
+      if (req.url === '/active-error') {
+        res.statusCode = 403;
+        return res.end(
+          '<main>Loading</main><script>setTimeout(()=>location.href="/ready",400)</script>',
+        );
+      }
+      if (req.url === '/ready') return res.end('<main>Ready product 42</main>');
       if (req.url === '/consent')
         return res.end(
           `<title>Product</title><main hidden id="product">Product 42</main><div id="onetrust-banner-sdk"><button id="onetrust-reject-all-handler" onclick="document.cookie='choice=necessary';document.querySelector('#product').hidden=false;document.querySelector('#onetrust-banner-sdk').remove()">Reject All</button></div>`,
@@ -78,6 +192,38 @@ test(
     const origin = `http://127.0.0.1:${port}`;
     const service = await startService({ BROWSER_ENGINE: 'rebrowser' });
     try {
+      await t.test(
+        'static HTTP denials skip futile readiness while active error redirects can finish',
+        async () => {
+          for (const path of ['/static-denial', '/static-denial-chunked']) {
+            const denied = await scrape(service.baseUrl, `${origin}${path}`, {
+              wait_for_text: 'Ready product 42',
+              wait_until: 'domcontentloaded',
+              wait_after_load: 0,
+              readiness_timeout: 3000,
+            });
+            assert.equal(denied.body.pageStatusCode, 403);
+            assert.equal(denied.body.readiness.satisfied, false);
+            assert.equal(
+              denied.body.diagnostics.readinessWaitSkipped,
+              'static_http_error',
+            );
+          }
+          const active = await scrape(
+            service.baseUrl,
+            `${origin}/active-error`,
+            {
+              wait_for_text: 'Ready product 42',
+              wait_until: 'domcontentloaded',
+              wait_after_load: 0,
+              readiness_timeout: 3000,
+            },
+          );
+          assert.equal(active.body.pageStatusCode, 200);
+          assert.equal(active.body.readiness.satisfied, true);
+          assert.equal(active.body.diagnostics.readinessWaitSkipped, undefined);
+        },
+      );
       await t.test(
         'consent applies a choice and unlocks content rather than hiding it',
         async () => {

@@ -376,6 +376,23 @@ export const applyWorkflow = async (
       }
     }
   }
+  if (
+    workflow === 'auto' &&
+    ['coinmarketcap.com', 'www.coinmarketcap.com'].includes(url.hostname) &&
+    /^\/currencies\/[^/]+\/?$/.test(url.pathname)
+  ) {
+    // This section hydrates on intersection. A real scroll exposes the public
+    // overview; copying its hidden SSR text would not establish body readiness.
+    const about = page.locator(
+      '#section-coin-about[data-test="section-about"]',
+    );
+    if ((await about.count()) === 1 && (await about.isVisible())) {
+      await about.scrollIntoViewIfNeeded({
+        timeout: Math.min(2000, deadline.remaining()),
+      });
+      steps.push({ type: 'coin-about@1', outcome: 'scrolled-into-view' });
+    }
+  }
   return { id: workflow, steps, observations };
 };
 

@@ -13,6 +13,7 @@ import { isInternalHost, ssrfPrepareRequest } from './helpers/ssrf';
 import { browserConfiguration, launchBrowser } from './helpers/browser';
 import { detectBotChallenge } from './helpers/bot-detection';
 import { cookieScope } from './helpers/cookies';
+import { shouldBlockAdRequest } from './helpers/resource-policy';
 import {
   Deadline,
   Semaphore,
@@ -20,8 +21,9 @@ import {
   errorCode,
   retryAfterMs,
   boundedClose,
+  networkErrorCode,
 } from './helpers/scrape-control';
-import { scrapePage } from './helpers/scrape-page';
+import { scrapePage, documentDiagnostics } from './helpers/scrape-page';
 import { BrowserSessions } from './helpers/browser-sessions';
 import { randomUUID, timingSafeEqual } from 'node:crypto';
 import {
@@ -142,24 +144,9 @@ let ssrfProxy: Server;
 type ContextSecurityState = {
   blockedNavigationRequestUrl: string | null;
   blockedRequests: { ads: number; media: number; private: number };
+  blockedAdHosts: Record<string, number>;
 };
 const pageSemaphore = new Semaphore(MAX_CONCURRENT_PAGES);
-
-const AD_SERVING_DOMAINS = [
-  'doubleclick.net',
-  'adservice.google.com',
-  'googlesyndication.com',
-  'googletagservices.com',
-  'googletagmanager.com',
-  'google-analytics.com',
-  'adsystem.com',
-  'adservice.com',
-  'adnxs.com',
-  'ads-twitter.com',
-  'facebook.net',
-  'fbcdn.net',
-  'amazon-adsystem.com',
-];
 
 interface UrlModel {
   url: string;
@@ -210,6 +197,7 @@ const createContext = async (
   const securityState: ContextSecurityState = {
     blockedNavigationRequestUrl: null,
     blockedRequests: { ads: 0, media: 0, private: 0 },
+    blockedAdHosts: {},
   };
 
   const contextOptions: any = {
@@ -271,12 +259,21 @@ const createContext = async (
 
       if (
         blockAds &&
-        AD_SERVING_DOMAINS.some(
-          (domain) => hostname === domain || hostname.endsWith(`.${domain}`),
+        shouldBlockAdRequest(
+          requestUrlString,
+          request.frame().page().url(),
+          request.isNavigationRequest() &&
+            request.frame().parentFrame() === null,
         )
       ) {
         securityState.blockedRequests.ads++;
-        console.log(hostname);
+        const key =
+          hostname in securityState.blockedAdHosts ||
+          Object.keys(securityState.blockedAdHosts).length < 32
+            ? hostname
+            : 'other';
+        securityState.blockedAdHosts[key] =
+          (securityState.blockedAdHosts[key] ?? 0) + 1;
         return route.abort();
       }
       return route.continue();
@@ -644,6 +641,7 @@ app.post('/scrape', async (req: Request, res: Response) => {
     securityState = contextBundle.securityState;
     securityState.blockedNavigationRequestUrl = null;
     securityState.blockedRequests = { ads: 0, media: 0, private: 0 };
+    securityState.blockedAdHosts = {};
     const filteredHeaders = headers
       ? Object.fromEntries(
           Object.entries(headers).filter(
@@ -763,6 +761,8 @@ app.post('/scrape', async (req: Request, res: Response) => {
             250 * 2 ** (attempt - 1);
       } catch (error) {
         entry.errorCode = errorCode(error);
+        entry.networkErrorCode = networkErrorCode(error);
+        if (page) entry.document = documentDiagnostics(page);
         entry.durationMs = Date.now() - started;
         if (securityState.blockedNavigationRequestUrl)
           throw new InsecureConnectionError(
@@ -841,6 +841,7 @@ app.post('/scrape', async (req: Request, res: Response) => {
         ...result.diagnostics,
         attempts,
         blockedRequests: securityState.blockedRequests,
+        blockedAdHosts: securityState.blockedAdHosts,
         durationMs: Date.now() - requestStarted,
       },
       ...(sessionToken && { sessionId: sessionToken, sessionExpiresAt }),
@@ -866,7 +867,7 @@ app.post('/scrape', async (req: Request, res: Response) => {
           ? error.message
           : 'An error occurred while fetching the page.',
       errorCode: code,
-      networkErrorCode: String(error).match(/net::(ERR_[A-Z_]+)/)?.[1],
+      networkErrorCode: networkErrorCode(error),
       diagnostics: { attempts },
     });
   } finally {
