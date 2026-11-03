@@ -130,7 +130,11 @@ describe("Self-hosted local browser controls", () => {
         formats: ["rawHtml", "markdown"],
         maxAge: 0,
         timeout: scrapeTimeout,
-        browserControls: { workflow: "auto", waitUntil: "domcontentloaded" },
+        browserControls: {
+          workflow: "auto",
+          waitUntil: "domcontentloaded",
+          readiness: { timeoutMs: 1200 },
+        },
       });
       expect(hydrated.status).toBe(200);
       expect(hydrated.body.data.markdown).toContain("Hydrated API results 42");
@@ -140,6 +144,12 @@ describe("Self-hosted local browser controls", () => {
       expect(hydrated.body.data.metadata.browser.readiness.satisfied).toBe(
         true,
       );
+      expect(hydrated.body.data.metadata.browser.readiness.requested).toBe(
+        false,
+      );
+      expect(
+        hydrated.body.data.metadata.browser.readiness.automatic.timeoutMs,
+      ).toBe(1200);
       for (const [path, code] of [
         ["/empty", "CONTENT_NOT_READY"],
         ["/verification", "VERIFICATION_REQUIRED"],
@@ -168,7 +178,11 @@ describe("Self-hosted local browser controls", () => {
         formats: ["rawHtml", "markdown"],
         maxAge: 0,
         timeout: scrapeTimeout,
-        browserControls: { workflow: "auto", waitUntil: "domcontentloaded" },
+        browserControls: {
+          workflow: "auto",
+          waitUntil: "domcontentloaded",
+          readiness: { timeoutMs: 250 },
+        },
       });
       expect(partial.status).toBe(200);
       expect(partial.body.data.markdown).toContain("Search results");
@@ -181,6 +195,9 @@ describe("Self-hosted local browser controls", () => {
       expect(
         partial.body.data.metadata.browser.readiness.automatic.outcome,
       ).toBe("busy");
+      expect(
+        partial.body.data.metadata.browser.readiness.automatic.timeoutMs,
+      ).toBe(250);
       expect(partial.body.data.metadata.browser.interaction.state).toBe(
         "CONTENT_NOT_READY",
       );
@@ -212,6 +229,12 @@ describe("Self-hosted local browser controls", () => {
         browserControls: { workflow: "unknown@1" },
       });
       expect(unsupported.status).toBe(400);
+      const budgetWithoutAuto = await request("/v2/scrape", {
+        url: `${origin}/budget-rejected`,
+        browserControls: { readiness: { timeoutMs: 250 } },
+      });
+      expect(budgetWithoutAuto.status).toBe(400);
+      expect(fixtureRequests.get("/budget-rejected")).toBe(undefined);
     },
     scrapeTimeout,
   );

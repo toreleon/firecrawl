@@ -7,8 +7,30 @@ import {
 } from "../../controllers/v2/types";
 import { hasCustomRequestContext } from "../../scraper/scrapeURL/lib/request-context";
 import { redactRequestBodyForLog } from "../../scraper/scrapeURL/lib/fetch";
+import { mapBrowserControls } from "./client";
 
 describe("Local browser API contract boundaries", () => {
+  it("permits an explicit automatic body budget without an oracle predicate", () => {
+    const controls = scrapeRequestSchema.parse({
+      url: "https://example.com",
+      browserControls: { workflow: "auto", readiness: { timeoutMs: 750 } },
+    }).browserControls;
+    expect(mapBrowserControls(controls)).toEqual({
+      workflow: "auto",
+      readiness_timeout: 750,
+    });
+    for (const browserControls of [
+      { readiness: { timeoutMs: 750 } },
+      { workflow: "auto", readiness: {} },
+      { workflow: "auto", readiness: { timeoutMs: 750, scope: "title" } },
+    ])
+      expect(
+        scrapeRequestSchema.safeParse({
+          url: "https://example.com",
+          browserControls,
+        }).success,
+      ).toBe(false);
+  });
   it("requires live execution and keeps TLS defaults coherent for retained sessions", () => {
     const request = scrapeRequestSchema.parse({
       url: "https://example.com",

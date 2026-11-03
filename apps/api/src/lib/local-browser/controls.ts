@@ -10,10 +10,6 @@ export const browserControlsSchema = z
         scope: z.enum(["body", "title"]).optional(),
         timeoutMs: z.int().min(1).max(120000).optional(),
       })
-      .refine(
-        value => !!(value.selector || value.text),
-        "Readiness needs a selector or text",
-      )
       .optional(),
     consent: z.enum(["off", "rejectNonEssential", "acceptAll"]).optional(),
     workflow: z
@@ -23,6 +19,15 @@ export const browserControlsSchema = z
     sessionId: z.uuid().optional(),
     continueSession: z.boolean().optional(),
   })
+  .refine(
+    value =>
+      !value.readiness ||
+      !!(value.readiness.selector || value.readiness.text) ||
+      (value.workflow === "auto" &&
+        value.readiness.timeoutMs !== undefined &&
+        value.readiness.scope !== "title"),
+    "Readiness needs a selector/text, or an explicit timeout for an automatic body workflow",
+  )
   .refine(
     value => !value.continueSession || !!value.sessionId,
     "Continuing requires a sessionId",
