@@ -2012,3 +2012,141 @@ its API measurements. Docker image usage remains 28.92 GB; no browser image
 rebuild was needed for the API-only fix. Nine unrelated running services and
 all data volumes were preserved. The temporary hosted key/directory were
 deleted and retained artifacts passed credential-redaction checks.
+
+## Stateless alternate-owner capacity and bounded scaling (November 4)
+
+Source `c65d3df2ff0b6a13c2b4d5c4fd09f75271059463` fixes a separate capacity
+problem: alternate health discovery always began with the first configured
+owner, so a healthy first owner received every fallback request. The API now
+rotates the starting candidate independently in each process. Discovery still
+skips unhealthy or ineligible owners and requires a different engine and boot
+identity. There is still at most one alternate dispatch within the original
+deadline. A failed or lost alternate response never tries a third owner, and
+retained sessions keep their original owner. This is per-process distribution;
+it does not implement distributed capacity admission.
+
+### Controlled API capacity model
+
+A real API/queue/worker test supplied a primary 403 fixture and two HTTP browser
+protocol fixtures, each modeling one alternate page slot with 400 ms of work.
+The same eight-job test was run before and after the fix:
+
+| Controlled model, eight concurrent API jobs | Before | After |
+| --- | --- | --- |
+| Successful API responses | 8 | 8 |
+| Alternate calls by owner | 8 / 0 | 4 / 4 |
+| Maximum simultaneous alternate owners | 1 | 2 |
+| Batch elapsed | 3,258 ms | 1,654 ms |
+
+The failure-first test correctly failed its distribution assertion; its separate
+lost-response case passed. After the fix, both API cases passed, including proof
+that a lost alternate response makes only one alternate dispatch. The production
+API build and 29 focused client/contract checks passed. [Browser CI](https://github.com/toreleon/firecrawl/actions/runs/41686748267)
+passed 60 helper checks, 97 integration checks, build and production dependency
+audit on this source. Broader server/SDK CI was queued when checked. The capacity
+model establishes functional concurrency on controlled protocol fixtures; its
+timings do not establish public-site throughput or coverage improvements.
+
+### Two independently launched Firefox owners
+
+The unchanged Linux ARM64 browser image was tested on eight selected remaining
+failures and recovery controls, two rounds each, against Chromium and two Firefox
+owners. Each had one active test request, 2 CPUs/3 GiB, fresh contexts, no proxy,
+automatic workflows and recognized consent rejection. No expected marker was sent.
+
+The first run stopped at 27 of 48 observations because its guard treated any
+`memory.events:max` increment as fatal. That owner recorded 131 boundary events
+and zero OOM events; all three containers were removed. Its 27 completed payloads
+and scores replayed, but it remains a partial run. Kernel documentation
+distinguishes memory-boundary reclaim pressure from allocation failure and OOM
+kills. A separate run retained pressure counters and stopped on allocation/OOM
+or PID-limit failures instead. [Linux cgroup v2 documentation](https://www.kernel.org/doc/html/latest/admin-guide/cgroup-v2.html)
+
+The separate run completed and replayed all 48 observations with valid timing.
+Chromium matched 3/16; each Firefox owner matched 7/16. Capterra, SeatGeek and
+GitHub matched in both Firefox rounds; Google Search varied between owners and
+rounds. Lowe's, Louis Vuitton, WSJ and StockX failed in both rounds on all owners.
+Generated browser identity and live-site timing were not isolated, so no causal
+fingerprint or added-owner coverage gain is inferred. Peak sampled memory was
+702/2,196/1,388 MiB. Memory-boundary, OOM and PID-limit counters were zero in this
+completed run; socket-throttling counters were separately 478/791/95. Owners
+ended healthy with zero pages/sessions and were removed after logs were saved.
+The [pool probe receipt](../apps/playwright-service-ts/benchmarks/fallback-pool-probes-results-2026-11-04.json)
+contains the controlled model and both browser runs without combining their rates.
+
+### Eight-worker resource failure
+
+A subsequent full API run configured eight global HTTP workers/four per policy,
+two primary owners with 2 page slots/1.5 GiB each and two alternate owners with
+1 page slot/1.75 GiB each. The aggregate browser memory cap was 6.5 GiB inside the
+7.75-GiB Docker VM. This allocation proved insufficient for a primary owner:
+it recorded 18 OOM events and three OOM kills, and Docker reported `OOMKilled`.
+The guard stopped the run after 172 of 200 responses. All 172 completed payload
+hashes and scores replayed offline, but this is not a completed benchmark rate
+or a valid speed comparison. All four browser containers were removed and the
+three task infrastructure services stopped. This failure is distinct from the
+earlier pressure-only probe.
+
+A fresh run reduced concurrency to four global HTTP workers/two per policy and
+used one 2.5-GiB primary owner with two page slots plus two 2-GiB alternate owners
+with one slot each. Its aggregate browser cap remained 6.5 GiB. The different
+topology and memory allocations prevent an equal-resource speed claim against
+earlier deployments. No hosted calls or proxy rerouting were used.
+
+### Completed four-worker API rerun
+
+The bounded deployment completed all 200 requests and replayed every payload
+hash, score, summary and lifecycle bound. Timing was valid, with at most four
+HTTP requests globally and two per profile.
+
+| All 100 targets, one request/profile | Without fallback | With fallback |
+| --- | --- | --- |
+| Raw substring | 48 | 56 |
+| Screened marker | 46 | 54 |
+| Normalized marker | 47 | 55 |
+| Screened-success p50 | 4,873 ms | 4,939 ms |
+| Screened-success p95 | 9,378 ms | 10,102 ms |
+| Additional Firefox calls | 0 | 49 |
+
+All 47 baseline matches also matched with fallback; eight were adaptive-only
+and 45 matched neither. Logs account for 200 primary and 49 alternate calls,
+distributed 24/25 across the Firefox owners, with no original target dispatched
+more than once to an alternate. Returned diagnostics reported nine recoveries,
+all nine matching the frozen marker; eight were adaptive-only. Five API errors
+lacked fallback diagnostics and remain unknown in that returned-metadata ledger.
+Common-success p50 was 4,873/4,393 ms and p95 9,378/10,102 ms; this run does not
+establish a stable latency improvement.
+
+Relative to the preceding 58/100 deployment, eBay no longer matched because the
+API returned `CONTENT_NOT_READY` with no usable rendered text; Google Search
+returned verification/rate-limit 429, including on its alternate receipt; and
+Apartments.com returned 403 on both engines. No new adaptive matches were added.
+These observations explain the three lost matches in this sample. Changed live
+timing, browser identities, owner topology and memory budgets prevent assigning
+them causally to the pool-routing code.
+
+Peak sampled memory was 1,324/2,044/1,371 MiB. The first Firefox owner recorded
+3,178 memory-boundary events; allocation/OOM, OOM-kill and PID-limit counters
+remained zero for every owner. Pressure therefore remains an operational limit,
+even though this deployment completed. Owners ended healthy with zero active
+pages/sessions and were removed after evidence was saved. The
+[full API receipt](../apps/playwright-service-ts/benchmarks/fallback-pool-full-api-results-2026-11-04.json)
+also retains the separate 172-record OOM stop. The last actual hosted result is
+still 81/100 from its earlier source-pinned comparison; it was not refreshed for
+this source. Hosted parity and an added-owner coverage gain remain unproven.
+
+### Scoped Docker cleanup
+
+Across these four browser deployments, thirteen task browser containers were
+removed and three task infrastructure containers stopped. Three unreferenced
+historical benchmark image tags were removed; the current image and raw evidence
+were retained. Sixty-five reclaimable cache records were traced to the exclusive
+eight Firecrawl browser-build window and pruned by exact IDs. Docker's reported
+build cache fell from 5.29 GB to zero; this is not an independently measured
+physical-byte saving. Image accounting remains 28.92 GB. Host free space was
+126 GiB at final inspection.
+
+Nine unrelated services remained running, all 114 data volumes were retained,
+and no global prune was used. The [cleanup receipt](../apps/playwright-service-ts/benchmarks/fallback-pool-cleanup-results-2026-11-04.json)
+records these checks. No browser image rebuild or hosted credential was needed
+for this API-only routing change.

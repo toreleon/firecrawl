@@ -71,7 +71,7 @@ Configure a separate internal owner pool on the API and workers:
 
 ```dotenv
 LOCAL_BROWSER_OWNER_URLS=http://chromium-a:3003,http://chromium-b:3003
-LOCAL_BROWSER_FALLBACK_OWNER_URLS=http://firefox-a:3003
+LOCAL_BROWSER_FALLBACK_OWNER_URLS=http://firefox-a:3003,http://firefox-b:3003
 ```
 
 Opt in on an individual scrape:
@@ -115,7 +115,14 @@ causes a third dispatch. This is a URL-identity check, not field-level extractio
 proof; returned content must still be evaluated for the caller's purpose.
 
 At most one healthy owner with a different boot identity **and** browser engine
-can run the second attempt. Both attempts and owner discovery share the original
+can run the second attempt. Each API process rotates the starting candidate in
+the configured alternate list, skipping unhealthy or ineligible owners during
+discovery. This shares stateless fallback requests across eligible owners; it
+does not coordinate load or admission across API processes. Once an alternate
+request is dispatched, its failure or lost response cannot select another pool
+member. Retained sessions keep their recorded owner.
+
+Both attempts and owner discovery share the original
 deadline; the alternate needs enough remaining time for the requested wait and
 readiness budget. Known primary failure content is preserved if the alternate
 also fails. `metadata.browser.diagnostics.engineFallback` reports attempted,
