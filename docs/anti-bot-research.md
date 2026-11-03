@@ -224,3 +224,37 @@ fix at `cdde87d6f` bounds page/context closure after expired requests. The
 passed the build, 32 helper tests, 42 HTTP/CLI integration tests and production
 dependency audit. The experimental results are not relabeled as measurements
 of the subsequent commit.
+
+### Deployment-specific fingerprint check
+
+The earlier native-Mac diagnostic result did not describe the Linux benchmark
+worker. The final application image at `5c9fae005` was checked through its real
+HTTP endpoint, then compared with the same application using native macOS
+Google Chrome 156.0.8078.80 and the Apple M4 Pro GPU:
+
+| Environment | Triggered Rebrowser checks | Sannysoft WebGL renderer |
+| --- | --- | --- |
+| Linux ARM64 bundled Chromium under Xvfb | 14 green, 1 red, 1 yellow | SwiftShader software renderer, flagged |
+| Native macOS stable Chrome | 16 green | Apple M4 Pro, passed |
+
+Each run also had four untriggered Rebrowser API probes, excluded from pass
+counts. The Linux red check concerned the absence of a Google Chrome brand in
+client hints; the warning included software-rendering signals. The
+[diagnostic source](https://github.com/rebrowser/rebrowser-bot-detector/blob/main/index.js)
+describes those heuristics. A diagnostic flag is not proof of the reason a
+commercial target blocked a request. The existing `BROWSER_CHANNEL=chrome`
+option can use an installed real Chrome; a container's graphics environment
+remains a separate deployment concern.
+
+A further interleaved comparison used eight difficult targets, two attempts
+per target/environment and the same readiness policy: Linux retrieved the
+normalized marker on 3/16 attempts and native Chrome on 4/16. The extra match
+was one TikTok visit; Booking.com passed twice in both environments. The other
+six targets failed in both. The OS, browser build, graphics and resource limits
+changed together, so the small difference is inconclusive. Passing all public
+diagnostic checks did not establish broad target access in this test.
+
+Receipts are `_local/anti-bot/reliability-linux-diagnostics-2026-11-03/` and
+`_local/anti-bot/native-vs-linux-2026-11-03/`. All 32 response hashes and unique
+target/profile/round pairs were audited with no timing gaps. The temporary
+native browser service and Linux diagnostic container were stopped afterward.
