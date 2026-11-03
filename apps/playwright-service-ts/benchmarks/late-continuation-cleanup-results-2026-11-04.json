@@ -1,0 +1,188 @@
+{
+  "checkedAt": "2026-11-03T23:14:13.896320+00:00",
+  "sourceCommit": "0c2c07695c54110865b0b869c100a8b0bcec5dd4",
+  "scope": "Remove all seven owned test/aborted-preflight/benchmark containers and only new task build-cache IDs. Preserve new verified production image, pinned bases, pre-existing images/cache, unrelated services, all volumes and raw evidence. No global prune.",
+  "taskContainersRemoved": 7,
+  "containerCleanup": [
+    {
+      "receipt": "_local/anti-bot/late-continuation-linux-tests-2026-11-04/cleanup.json",
+      "name": "autogtm-firecrawl-late-continuation-tests-20261104",
+      "image": "sha256:ba13d7322dae83619d53640b4785ad2eb0fc66a6cac3af86e4101fbb307fb396",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 143,
+        "Error": "",
+        "StartedAt": "2026-11-03T22:57:50.611329176Z",
+        "FinishedAt": "2026-11-03T22:58:18.080460341Z"
+      },
+      "removed": true
+    },
+    {
+      "receipt": "_local/anti-bot/late-continuation-profile-config-rejected-2026-11-04/cleanup.json",
+      "image": "sha256:ba13d7322dae83619d53640b4785ad2eb0fc66a6cac3af86e4101fbb307fb396",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 143,
+        "Error": "",
+        "StartedAt": "2026-11-03T22:59:16.021326799Z",
+        "FinishedAt": "2026-11-03T22:59:40.935924213Z"
+      },
+      "cpuNano": 2000000000,
+      "memoryBytes": 2684354560,
+      "containerRemovedAfterReceipt": true
+    },
+    {
+      "receipt": "_local/anti-bot/late-continuation-profile-config-rejected-2026-11-04/cleanup.json",
+      "image": "sha256:ba13d7322dae83619d53640b4785ad2eb0fc66a6cac3af86e4101fbb307fb396",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 143,
+        "Error": "",
+        "StartedAt": "2026-11-03T22:59:17.749653675Z",
+        "FinishedAt": "2026-11-03T22:59:41.158851963Z"
+      },
+      "cpuNano": 2000000000,
+      "memoryBytes": 2147483648,
+      "containerRemovedAfterReceipt": true
+    },
+    {
+      "receipt": "_local/anti-bot/late-continuation-profile-config-rejected-2026-11-04/cleanup.json",
+      "image": "sha256:ba13d7322dae83619d53640b4785ad2eb0fc66a6cac3af86e4101fbb307fb396",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 143,
+        "Error": "",
+        "StartedAt": "2026-11-03T22:59:21.692395343Z",
+        "FinishedAt": "2026-11-03T22:59:41.373777713Z"
+      },
+      "cpuNano": 2000000000,
+      "memoryBytes": 2147483648,
+      "containerRemovedAfterReceipt": true
+    },
+    {
+      "receipt": "_local/anti-bot/late-continuation-full-api-harness-2026-11-04/cleanup.json",
+      "image": "sha256:ba13d7322dae83619d53640b4785ad2eb0fc66a6cac3af86e4101fbb307fb396",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 143,
+        "Error": "",
+        "StartedAt": "2026-11-03T23:00:38.850346587Z",
+        "FinishedAt": "2026-11-03T23:13:12.005147963Z"
+      },
+      "cpuNano": 2000000000,
+      "memoryBytes": 2684354560,
+      "containerRemovedAfterReceipt": true
+    },
+    {
+      "receipt": "_local/anti-bot/late-continuation-full-api-harness-2026-11-04/cleanup.json",
+      "image": "sha256:ba13d7322dae83619d53640b4785ad2eb0fc66a6cac3af86e4101fbb307fb396",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 143,
+        "Error": "",
+        "StartedAt": "2026-11-03T23:00:40.541289671Z",
+        "FinishedAt": "2026-11-03T23:13:12.222468505Z"
+      },
+      "cpuNano": 2000000000,
+      "memoryBytes": 2147483648,
+      "containerRemovedAfterReceipt": true
+    },
+    {
+      "receipt": "_local/anti-bot/late-continuation-full-api-harness-2026-11-04/cleanup.json",
+      "image": "sha256:ba13d7322dae83619d53640b4785ad2eb0fc66a6cac3af86e4101fbb307fb396",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 143,
+        "Error": "",
+        "StartedAt": "2026-11-03T23:00:44.495738631Z",
+        "FinishedAt": "2026-11-03T23:13:12.448890797Z"
+      },
+      "cpuNano": 2000000000,
+      "memoryBytes": 2147483648,
+      "containerRemovedAfterReceipt": true
+    }
+  ],
+  "newProductionImageRetained": "sha256:ba13d7322dae83619d53640b4785ad2eb0fc66a6cac3af86e4101fbb307fb396",
+  "preExistingImageIdsPreserved": true,
+  "cache": {
+    "taskRecordsRemoved": 11,
+    "baseline59RecordsPreserved": true,
+    "remainingRecords": 59,
+    "pruneReportedTotal": [
+      "Total:\t628.5kB"
+    ],
+    "physicalBytesFreedNotMeasured": true
+  },
+  "taskInfrastructureStopped": [
+    "autogtm-firecrawl-workflows-pg-20261103",
+    "autogtm-firecrawl-workflows-redis-20261103",
+    "autogtm-firecrawl-workflows-rabbit-20261103"
+  ],
+  "unrelatedRunningServicesPreserved": [
+    "lead-data-postgres",
+    "lead-data-redis",
+    "lead-data-web",
+    "opengtm-agent-runtime-1",
+    "opengtm-agent-test-pg",
+    "opengtm-api-go-1",
+    "opengtm-browser-1",
+    "opengtm-scheduler-go-1",
+    "opengtm-worker-go-1"
+  ],
+  "dataVolumesDeleted": 0,
+  "dataVolumeCountAfter": 114,
+  "volumeNamesUnchanged": true,
+  "globalPruneUsed": false,
+  "dockerSystemDfAfter": "TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE\nImages          54        10        28.92GB   11.29GB (39%)\nContainers      13        9         360.4kB   28.67kB (7%)\nLocal Volumes   114       5         6.326GB   6.151GB (97%)\nBuild Cache     59        0         2.132GB   0B\n",
+  "hostDiskAfter": "Filesystem      Size    Used   Avail Capacity iused ifree %iused  Mounted on\n/dev/disk3s5   460Gi   312Gi   124Gi    72%    5.4M  1.3G    0%   /System/Volumes/Data\n",
+  "rawEvidencePreserved": true,
+  "evidenceHashes": {
+    "_local/anti-bot/late-continuation-linux-tests-2026-11-04/cleanup.json": "2e04707847c33aeb4436b76a4d0999e4473826be675de3bc6bc0b39a2a10c1bd",
+    "_local/anti-bot/late-continuation-profile-config-rejected-2026-11-04/cleanup.json": "ecf467223d37fba7bf09f3f6ce8b3c351191339d9c2816e8973234466e94c9b8",
+    "_local/anti-bot/late-continuation-full-api-harness-2026-11-04/cleanup.json": "5be90875ac0f8aa16f019e9d479bd2c25f704aa00550ef99e94c1e8612351758",
+    "_local/anti-bot/late-continuation-cleanup-2026-11-04/preflight.json": "f2a12edfa1721b50173cc0c518efa3e09d05ba73b84f725eeff5da94ae8158a7",
+    "_local/anti-bot/late-continuation-cleanup-2026-11-04/cache-result.json": "d32add4ea70f733aa6cff96debcd0016cc9d30f41dd2ea6a8f41dee9621beced"
+  }
+}

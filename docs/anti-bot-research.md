@@ -2764,3 +2764,98 @@ No image or build cache was created. Existing image/cache IDs, nine unrelated
 running services and all 114 volume names were preserved. No global prune was
 used. Production code was unchanged, so focused source suites were not repeated
 for this live-comparison/evidence update.
+
+## Late answer-free continuation repair and proxy-free rerun (November 4)
+
+The earlier Amazon failure returned a supported continuation form with no
+workflow step. That observation suggested a timing gap, without proving the
+cause of that live failure. An owned, offline browser fixture reproduced a
+specific defect: a loading shell inserts the strict answer-free GET form after
+800 ms, after the initial workflow probe has already finished. Automatic
+readiness then recognizes verification and returns without applying the recipe.
+Three functional expectations failed before the repair; the other five cases
+already passed. The failing parent brings the original test report to four
+failures among nine checks.
+
+Playwright documents that [dynamic content can arrive after navigation events](https://playwright.dev/docs/navigations)
+and that [click actionability checks](https://playwright.dev/docs/actionability)
+apply when a click is actually requested. Here the earlier empty form probe
+prevented the existing click recipe from being requested at all.
+
+Production source `0c2c07695` now checks the same recipe once when automatic
+readiness discovers verification on the original Amazon product. It requires
+no earlier workflow step, no caller actions, no retained/continuing session and
+remaining readiness allowance. All existing form, origin and ASIN restrictions
+remain. It never answers a puzzle or submits the same form twice. Resumed
+readiness uses the remaining original polling allowance; the recipe's existing
+navigation/settle work stays under the original scrape deadline. Explicit
+readiness does not request this late interaction. No default timeout, retry
+count, upstream proxy or other site's workflow changed.
+
+The new regression and related workflows/readiness contracts passed 38 focused
+native checks. Linux Chromium/Firefox each passed all nine new checks, with
+runtime/compiled hashes matching the candidate. Tests include successful late
+continuation, visible answer fields, a different-product redirect, an unresolved
+form, caller actions, retained tabs, disabled workflows and an exhausted
+readiness allowance. [Browser CI](https://github.com/toreleon/firecrawl/actions/runs/41735378161)
+passed build, 60 helper checks, 124 integration checks and the production
+dependency audit. Broader server/SDK jobs remain separate. No API source changed;
+the earlier API snips are historical verification, not new tests of this repair.
+
+The [fresh full API receipt](../apps/playwright-service-ts/benchmarks/late-continuation-full-api-results-2026-11-04.json)
+records all 100 frozen targets once per primary-only/fallback policy, 200 requests
+for fresh rawHTML/Markdown, four global HTTP workers/two per policy and
+seven-second per-policy dispatch pacing. Both policies use direct VN egress,
+no expected-text hint, no client retries, a 30-second initial-navigation cap and
+the original 85-second scrape deadline. There were no hosted requests. The
+existing one-primary/two-alternate topology retained its 6.5 GiB aggregate
+browser limit. Image `ba13d7322` contains the candidate source/compiled repair.
+The first single-profile configuration was rejected before target dispatch;
+its three browser containers were removed before the supported paired run.
+
+| Full v2 API, 100 targets/policy | Primary only | Opt-in fallback |
+| --- | --- | --- |
+| Raw HTML substring matches | 48 | 54 |
+| Screened matches | 46 | 53 |
+| Normalized matches | 47 | 54 |
+| Normalized matches also containing the supplementary Markdown marker | 44 | 51 |
+
+There were 46 common normalized matches, eight fallback-only, one primary-only
+and 45 matching neither. All 200 payload hashes, scores, output metrics and
+lifecycle/concurrency records replayed. Owner logs account for 200 primary and
+50 alternate calls, split 25/25. Returned fallback metadata covers 98 records;
+LinkedIn and Roblox omitted it. Forty-eight returned records report an alternate
+attempt, with seven recoveries and seven normalized matches. Missing returned
+metadata is not inferred from a successful or failed score.
+
+Both Amazon policies submitted the answer-free continuation once, returned to
+the original ASIN and retrieved matching product Markdown. The live step does
+not distinguish initial versus late application, so this live success cannot
+be attributed specifically to the new timing path. The controlled fixture is
+the proof of that repair.
+
+The new fallback score is 54/100 versus 56/100 in the preceding actual comparison.
+Zoopla gained a match; Indeed returned a challenge, Louis Vuitton returned HTTP
+403 and LinkedIn lost its match with connection errors. Owner logs record
+Chromium `ERR_CONNECTION_CLOSED` and Firefox `NS_ERROR_NET_RESET` for LinkedIn.
+Only the Amazon recipe changed. Source/live epoch and the added primary-only
+traffic differ, so the aggregate drop is not a controlled estimate of a code
+regression. Against the earlier 45/55 paired run, the new result is 47/54;
+Amazon/Zoopla gained and Indeed/Expedia/eBay lost fallback matches. That run had
+different dispatch pacing as well.
+
+The run took 727.6 seconds. On the 46 common normalized successes, primary
+p50/p95 was 3.35/7.36 seconds and fallback 3.37/7.77 seconds. Memory peaked at
+1,262/1,064/1,131 MiB. All observed memory-boundary/OOM/PID/socket-throttling
+counters stayed zero, and all owners ended healthy with zero pages/sessions.
+These are measured deployment observations, not an equal-resource speed claim.
+The last actual hosted reference remains 82/100 on the preceding source; it was
+not rerun for this candidate. Hosted coverage parity remains unproven.
+
+The [cleanup receipt](../apps/playwright-service-ts/benchmarks/late-continuation-cleanup-results-2026-11-04.json)
+verifies seven task containers removed across the Linux tests, rejected
+configuration and full run. Eleven exact new cache records were pruned
+(Docker-reported 628.5 kB). The verified image and all pre-existing images and
+59 cache records were retained. Task infrastructure is stopped; nine unrelated
+running services, all 114 volumes and raw evidence were preserved. No global
+prune was used. Focused tests were not repeated for the subsequent evidence edit.
