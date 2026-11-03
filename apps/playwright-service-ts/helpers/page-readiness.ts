@@ -111,6 +111,11 @@ export function captureRenderedPage({
       )
         continue;
       if (element.closest('[aria-hidden="true"],[inert]')) continue;
+      // Explicit ad placeholders may remain busy because advertising is blocked.
+      // They do not describe loading of the requested editorial/product content.
+      const ad = element.closest('[data-ad-status][role="region"][aria-label]');
+      if (ad && /\badvertisement$/i.test(ad.getAttribute('aria-label') ?? ''))
+        continue;
       const style = getComputedStyle(element);
       if (style.display === 'none' || style.visibility === 'hidden') continue;
       // Lazy offscreen widgets must not keep otherwise ready visible content busy.

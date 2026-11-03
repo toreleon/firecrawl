@@ -17,7 +17,7 @@ describe("Self-hosted local browser controls", () => {
       res.setHeader("content-type", "text/html");
       if (req.url === "/busy" || req.url === "/busy-forever")
         return res.end(
-          '<header>Search navigation</header><main><h1>Search results</h1><div id="results" aria-busy="true" style="height:40px;width:300px"></div></main><footer>Site footer</footer>' +
+          '<header>Search navigation</header><main><h1>Search results</h1><div role="region" aria-label="Leaderboard advertisement" data-ad-status="rendering" aria-busy="true" style="height:40px;width:300px"></div><div id="results" aria-busy="true" style="height:40px;width:300px"></div></main><footer>Site footer</footer>' +
             (req.url === "/busy"
               ? '<script>setTimeout(()=>{document.querySelector("#results").innerHTML="<article>Hydrated API results 42</article>";document.querySelector("#results").setAttribute("aria-busy","false")},350)</script>'
               : ""),

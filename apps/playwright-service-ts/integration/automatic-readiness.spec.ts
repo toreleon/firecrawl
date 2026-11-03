@@ -20,7 +20,7 @@ test(
       }
       if (name === '/ignored')
         return res.end(
-          '<header aria-busy="true">Background navigation</header><main>Actual content 42<div aria-busy="true" hidden>Hidden</div><div aria-hidden="true"><div aria-busy="true">Ignored</div></div><div aria-busy="true" style="position:absolute;top:5000px">Below viewport</div></main>',
+          '<header aria-busy="true">Background navigation</header><main>Actual content 42<div role="region" aria-label="Leaderboard advertisement" data-ad-status="rendering" aria-busy="true" style="height:40px;width:300px"></div><div aria-busy="true" hidden>Hidden</div><div aria-hidden="true"><div aria-busy="true">Ignored</div></div><div aria-busy="true" style="position:absolute;top:5000px">Below viewport</div></main>',
         );
       const bodyScope = name === '/body';
       res.end(
@@ -77,7 +77,7 @@ test(
         },
       );
       await t.test(
-        'hidden, offscreen and non-primary busy regions do not delay ready main content',
+        'hidden, offscreen, advertising and non-primary busy regions do not delay ready main content',
         async () => {
           const result = await scrape(
             service.baseUrl,
