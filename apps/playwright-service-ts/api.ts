@@ -22,6 +22,8 @@ import {
   retryAfterMs,
   boundedClose,
   networkErrorCode,
+  isRetryableScrapeError,
+  attemptBudgetMs,
 } from './helpers/scrape-control';
 import { scrapePage, documentDiagnostics } from './helpers/scrape-page';
 import { BrowserSessions } from './helpers/browser-sessions';
@@ -215,16 +217,6 @@ const createContext = async (
 
   const newContext = await browser.newContext(contextOptions);
 
-  if (BLOCK_MEDIA) {
-    await newContext.route(
-      '**/*.{png,jpg,jpeg,gif,svg,mp3,mp4,avi,flac,ogg,wav,webm}',
-      async (route: Route, request: PlaywrightRequest) => {
-        securityState.blockedRequests.media++;
-        await route.abort();
-      },
-    );
-  }
-
   // Intercept all requests to avoid loading ads
   await newContext.route(
     '**/*',
@@ -275,6 +267,10 @@ const createContext = async (
         securityState.blockedAdHosts[key] =
           (securityState.blockedAdHosts[key] ?? 0) + 1;
         return route.abort();
+      }
+      if (BLOCK_MEDIA && ['image', 'media'].includes(request.resourceType())) {
+        securityState.blockedRequests.media++;
+        return route.abort('blockedbyclient');
       }
       return route.continue();
     },
@@ -436,6 +432,7 @@ app.get('/health', async (req: Request, res: Response) => {
       activePages: MAX_CONCURRENT_PAGES - pageSemaphore.getAvailablePermits(),
       browserSessions: sessions.size,
       blockAds: BLOCK_ADS,
+      blockMedia: BLOCK_MEDIA,
       ownerBootId,
       capabilities: {
         version: 1,
@@ -724,13 +721,16 @@ app.post('/scrape', async (req: Request, res: Response) => {
               );
         if (session_mode === 'workflow') contextBundle.workflowPage = page;
         await page.setExtraHTTPHeaders(filteredHeaders);
-        const attemptDeadline = new Deadline(
-          Math.max(
-            1,
-            Math.floor(deadline.remaining() / (max_attempts - attempt + 1)),
-          ),
-          cancellation.signal,
+        const budget = attemptBudgetMs(
+          deadline.remaining(),
+          max_attempts - attempt + 1,
+          wait_after_load,
+          check_selector || wait_for_text || workflow === 'auto'
+            ? readiness_timeout
+            : 0,
         );
+        entry.budgetMs = budget;
+        const attemptDeadline = new Deadline(budget, cancellation.signal);
         result = await scrapePage(
           page,
           url,
@@ -769,22 +769,24 @@ app.post('/scrape', async (req: Request, res: Response) => {
             securityState.blockedNavigationRequestUrl,
             'navigation to private/internal resource is not allowed',
           );
-        if (
-          attempt >= max_attempts ||
-          !/net::ERR_(?:CONNECTION_(?:CLOSED|RESET)|EMPTY_RESPONSE|TIMED_OUT)|Timeout/i.test(
-            String(error),
-          )
-        )
+        if (attempt >= max_attempts || !isRetryableScrapeError(error))
           throw error;
         result = undefined;
         delay = 250 * 2 ** (attempt - 1);
       } finally {
         if (page && session_mode !== 'workflow') {
-          cleanupHealthy = (await boundedClose(page.close())) && cleanupHealthy;
+          const closeFinished = await boundedClose(page.close());
+          entry.pageClosed = page.isClosed();
+          cleanupHealthy = closeFinished && page.isClosed() && cleanupHealthy;
           page = null;
         }
       }
       if (delay === null) break;
+      if (!cleanupHealthy)
+        throw new ScrapeFailure(
+          'BROWSER_CLEANUP_FAILED',
+          'Previous tab did not close; the scrape was not retried',
+        );
       if (delay >= deadline.remaining()) {
         if (result) break;
         throw new ScrapeFailure('SCRAPE_TIMEOUT', 'No budget left for retry');
@@ -839,6 +841,7 @@ app.post('/scrape', async (req: Request, res: Response) => {
       },
       diagnostics: {
         ...result.diagnostics,
+        ownerBootId,
         attempts,
         blockedRequests: securityState.blockedRequests,
         blockedAdHosts: securityState.blockedAdHosts,
@@ -868,7 +871,7 @@ app.post('/scrape', async (req: Request, res: Response) => {
           : 'An error occurred while fetching the page.',
       errorCode: code,
       networkErrorCode: networkErrorCode(error),
-      diagnostics: { attempts },
+      diagnostics: { ownerBootId, attempts },
     });
   } finally {
     res.off('close', disconnected);

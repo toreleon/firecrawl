@@ -5,6 +5,9 @@ import {
   retryAfterMs,
   boundedClose,
   networkErrorCode,
+  isRetryableScrapeError,
+  attemptBudgetMs,
+  ScrapeFailure,
 } from './scrape-control';
 
 test('a timed-out allocation disposes its late result rather than leaking it', async () => {
@@ -22,6 +25,55 @@ test('a timed-out allocation disposes its late result rather than leaking it', a
   );
   await new Promise((resolve) => setTimeout(resolve, 40));
   assert.equal(disposed, true);
+});
+
+test('typed phase deadlines can recover while cancellation, session loss and hard status failures cannot', async () => {
+  const expired = await new Deadline(10)
+    .run(new Promise(() => {}))
+    .catch((e) => e);
+  assert.equal(expired.code, 'SCRAPE_TIMEOUT');
+  assert.equal(isRetryableScrapeError(expired), true);
+  assert.equal(
+    isRetryableScrapeError(
+      new Error('page.goto: net::ERR_HTTP2_PROTOCOL_ERROR'),
+    ),
+    true,
+  );
+  assert.equal(
+    isRetryableScrapeError(new Error('page.goto: net::ERR_CONNECTION_RESET')),
+    true,
+  );
+  assert.equal(
+    isRetryableScrapeError(
+      new Error('page.goto: net::ERR_HTTP_RESPONSE_CODE_FAILURE'),
+    ),
+    false,
+  );
+  assert.equal(
+    isRetryableScrapeError(
+      new ScrapeFailure('SCRAPE_CANCELLED', 'Timeout while cancelling'),
+    ),
+    false,
+  );
+  assert.equal(
+    isRetryableScrapeError(
+      new ScrapeFailure('SESSION_LOST', 'Timeout waiting for owner'),
+    ),
+    false,
+  );
+  assert.equal(
+    isRetryableScrapeError(
+      new ScrapeFailure('WORKFLOW_NAVIGATION_MISMATCH', 'Wrong product'),
+    ),
+    false,
+  );
+});
+
+test('retry planning preserves fixed/readiness waits when a short deadline cannot fit all attempts', () => {
+  assert.equal(attemptBudgetMs(1800, 2, 1000, 0), 1800);
+  assert.equal(attemptBudgetMs(4800, 3, 0, 5000), 4800);
+  assert.equal(attemptBudgetMs(84000, 3, 0, 5000), 28000);
+  assert.equal(attemptBudgetMs(4000, 2, 0, 0), 2000);
 });
 
 test('Retry-After supports delta seconds and HTTP dates without inventing a delay for malformed values', () => {

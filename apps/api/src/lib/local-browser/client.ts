@@ -115,13 +115,73 @@ export const inspectBrowserOwner = async (base: string): Promise<Owner> => {
       capabilities: result.capabilities,
     };
   });
-  health.set(base, { until: Date.now() + 2000, promise });
+  // Deduplicate probes while pending; the freshness window starts on success.
+  const entry = { until: Infinity, promise };
+  health.set(base, entry);
   try {
-    return await promise;
+    const result = await promise;
+    if (health.get(base) === entry) entry.until = Date.now() + 2000;
+    return result;
   } catch (error) {
-    health.delete(base);
+    if (health.get(base) === entry) health.delete(base);
     throw error;
   }
+};
+
+let statelessOwnerCursor = randomInt(1_000_000);
+const discoveryError = (cancelled: boolean) =>
+  new LocalBrowserError(
+    cancelled ? "SCRAPE_CANCELLED" : "SCRAPE_TIMEOUT",
+    cancelled
+      ? "Browser request cancelled"
+      : "Browser discovery deadline exceeded",
+    cancelled ? 499 : 408,
+  );
+const inspectWithinDeadline = (
+  base: string,
+  until: number,
+  signal?: AbortSignal,
+): Promise<Owner> => {
+  if (signal?.aborted) return Promise.reject(discoveryError(true));
+  if (until <= Date.now()) return Promise.reject(discoveryError(false));
+  return new Promise((resolve, reject) => {
+    const finish = (error?: unknown, owner?: Owner) => {
+      clearTimeout(timer);
+      signal?.removeEventListener("abort", aborted);
+      if (error) reject(error);
+      else resolve(owner!);
+    };
+    const aborted = () => finish(discoveryError(true));
+    const timer = setTimeout(
+      () => finish(discoveryError(false)),
+      until - Date.now(),
+    );
+    signal?.addEventListener("abort", aborted, { once: true });
+    // A caller's cancellation must not cancel a probe shared by other requests.
+    inspectBrowserOwner(base).then(owner => finish(undefined, owner), finish);
+  });
+};
+const selectStatelessOwner = async (until: number, signal?: AbortSignal) => {
+  const candidates = owners();
+  const first = statelessOwnerCursor++ % candidates.length;
+  for (let offset = 0; offset < candidates.length; offset++) {
+    try {
+      return await inspectWithinDeadline(
+        candidates[(first + offset) % candidates.length],
+        until,
+        signal,
+      );
+    } catch (error) {
+      if (signal?.aborted) throw discoveryError(true);
+      if (Date.now() >= until) throw discoveryError(false);
+      if (offset === candidates.length - 1) throw error;
+    }
+  }
+  throw new LocalBrowserError(
+    "BROWSER_UNAVAILABLE",
+    "No browser owner is available",
+    503,
+  );
 };
 export const mapBrowserControls = (controls: BrowserControls | undefined) => ({
   ...(controls?.waitUntil ? { wait_until: controls.waitUntil } : {}),
@@ -338,7 +398,8 @@ export const scrapeLocalBrowser = async (
     ...mapBrowserControls(input.controls),
   };
   if (!input.controls.sessionId) {
-    const owner = await inspectBrowserOwner(owners()[0]);
+    const until = Date.now() + input.timeout;
+    const owner = await selectStatelessOwner(until, input.signal);
     for (const action of input.actions ?? [])
       if (!owner.capabilities.actions.includes((action as any).type))
         throw new LocalBrowserError(
@@ -346,10 +407,14 @@ export const scrapeLocalBrowser = async (
           "Browser action is unsupported",
           400,
         );
+    if (input.signal?.aborted) throw discoveryError(true);
+    const remaining = until - Date.now();
+    if (remaining < 100) throw discoveryError(false);
+    body.timeout = Math.min(120000, Math.max(100, remaining - 500));
     return validateResponse(
       await browserRpc(owner.base, "/scrape", body, {
         boot: owner.boot,
-        timeout: input.timeout,
+        timeout: remaining,
         signal: input.signal,
       }),
     );

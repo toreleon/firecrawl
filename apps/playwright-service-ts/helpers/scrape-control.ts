@@ -156,3 +156,32 @@ export const errorCode = (error: unknown) => {
 
 export const networkErrorCode = (error: unknown) =>
   String(error).match(/net::(ERR_[A-Z0-9_]+)/)?.[1];
+
+export const isRetryableScrapeError = (error: unknown) => {
+  if (error instanceof ScrapeFailure) return error.code === 'SCRAPE_TIMEOUT';
+  const network = networkErrorCode(error);
+  if (network)
+    return [
+      'ERR_CONNECTION_CLOSED',
+      'ERR_CONNECTION_RESET',
+      'ERR_EMPTY_RESPONSE',
+      'ERR_TIMED_OUT',
+      'ERR_HTTP2_PROTOCOL_ERROR',
+    ].includes(network);
+  return errorCode(error) === 'SCRAPE_TIMEOUT';
+};
+
+/** maxAttempts is a ceiling; preserve requested waits before splitting the budget. */
+export const attemptBudgetMs = (
+  remainingMs: number,
+  attemptsLeft: number,
+  postLoadWaitMs: number,
+  readinessMs: number,
+) => {
+  const minimum = postLoadWaitMs + readinessMs + 300;
+  const slots = Math.min(
+    attemptsLeft,
+    Math.max(1, Math.floor((remainingMs + 250) / (minimum + 250))),
+  );
+  return Math.max(1, Math.floor(remainingMs / slots));
+};

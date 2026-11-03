@@ -59,6 +59,33 @@ describe("Self-hosted local browser controls", () => {
     };
   };
   const enabled = TEST_SELF_HOST && !!config.PLAYWRIGHT_MICROSERVICE_URL;
+  itIf(enabled && config.LOCAL_BROWSER_OWNER_URLS?.split(",").length === 2)(
+    "uses both configured owners for stateless scrapes through the full API",
+    async () => {
+      const results = await Promise.all(
+        Array.from({ length: 6 }, (_, i) =>
+          request("/v2/scrape", {
+            url: `${origin}/pool/${i}`,
+            formats: ["rawHtml"],
+            maxAge: 0,
+            timeout: scrapeTimeout,
+            waitFor: 200,
+            browserControls: { waitUntil: "domcontentloaded" },
+          }),
+        ),
+      );
+      const counts = new Map<string, number>();
+      for (const result of results) {
+        expect(result.status).toBe(200);
+        expect(result.body.data.rawHtml).toContain("Initial content");
+        const boot = result.body.data.metadata.browser.diagnostics.ownerBootId;
+        expect(boot).toMatch(/^[a-f0-9-]{36}$/);
+        counts.set(boot, (counts.get(boot) ?? 0) + 1);
+      }
+      expect([...counts.values()].sort()).toEqual([3, 3]);
+    },
+    scrapeTimeout,
+  );
   itIf(enabled)(
     "waits for ordinary rendered content without a marker hint and preserves typed empty/verification failures",
     async () => {
@@ -177,6 +204,9 @@ describe("Self-hosted local browser controls", () => {
         });
         expect(second.body.data.rawHtml).toContain("API retained tab 42");
         expect(second.body.data.metadata.browser.sessionId).toBe(id);
+        expect(second.body.data.metadata.browser.diagnostics.ownerBootId).toBe(
+          first.body.data.metadata.browser.diagnostics.ownerBootId,
+        );
         const handoff = await request(`/v2/browser/sessions/${id}/handoff`, {});
         expect(handoff.status).toBe(200);
         const ticket = handoff.body.viewPath.split("#")[1];

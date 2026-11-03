@@ -48,6 +48,11 @@ test(
       }
       if (url.pathname === '/slow')
         return setTimeout(() => res.end('<main>Slow content</main>'), 800);
+      if (url.pathname === '/slow-first' && counts.get(key) === 1)
+        return setTimeout(
+          () => res.end('<main>First response was too late</main>'),
+          2500,
+        );
       res.end('<main>Expected company</main>');
     });
     const port = await listen(server);
@@ -238,6 +243,34 @@ test(
             wait_after_load: 0,
           });
           assert.equal(denied.body.diagnostics.attempts.length, 1);
+        },
+      );
+      await t.test(
+        'retry budgets preserve configured waits and recover a slow first navigation within the shared deadline',
+        async () => {
+          const waited = await scrape(
+            service.baseUrl,
+            `${origin}/wait-budget`,
+            { timeout: 2200, max_attempts: 2, wait_after_load: 1100 },
+          );
+          assert.equal(waited.body.pageStatusCode, 200);
+          assert.equal(waited.body.diagnostics.attempts.length, 1);
+          assert.equal(counts.get('/wait-budget'), 1);
+          const start = Date.now();
+          const retried = await scrape(
+            service.baseUrl,
+            `${origin}/slow-first`,
+            { timeout: 4000, max_attempts: 2, wait_after_load: 0 },
+          );
+          assert.equal(retried.body.pageStatusCode, 200);
+          assert.equal(retried.body.diagnostics.attempts.length, 2);
+          assert.equal(
+            retried.body.diagnostics.attempts[0].errorCode,
+            'SCRAPE_TIMEOUT',
+          );
+          assert.equal(retried.body.diagnostics.attempts[0].pageClosed, true);
+          assert.equal(counts.get('/slow-first'), 2);
+          assert.ok(Date.now() - start < 5000);
         },
       );
       await t.test(
