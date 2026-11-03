@@ -29,7 +29,7 @@ function makeClient(apiKey: string) {
 describe("v2.scrape unit", () => {
   test("forwards an explicit stateless engine fallback policy", async () => {
     const {client,sent}=makeClient("fc-test");
-    const browserControls={workflow:"auto" as const,engineFallback:true,maxAttempts:1 as const};
+    const browserControls={workflow:"auto" as const,engineFallback:true,maxAttempts:1 as const,navigationTimeout:30000};
     await client.scrape("https://example.com",{browserControls});
     expect((sent[0]!.body as any).browserControls).toEqual(browserControls);
   });

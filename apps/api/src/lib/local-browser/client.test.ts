@@ -23,6 +23,7 @@ describe("Stateless local browser owner selection", () => {
       failedScrape?: boolean;
       lostResponse?: boolean;
       healthDelay?: number;
+      navigationTimeout?: boolean;
     } = {},
   ) => {
     const calls = { health: 0, scrape: 0 };
@@ -39,7 +40,11 @@ describe("Stateless local browser owner selection", () => {
           JSON.stringify({
             status: "healthy",
             ownerBootId: "fixture",
-            capabilities: { version: 1, actions: [] },
+            capabilities: {
+              version: 1,
+              actions: [],
+              navigationTimeout: options.navigationTimeout,
+            },
           }),
         );
       }
@@ -74,6 +79,28 @@ describe("Stateless local browser owner selection", () => {
     await Promise.all(Array.from({ length: 8 }, () => scrape()));
     expect([a.calls.scrape, b.calls.scrape]).toEqual([4, 4]);
     expect([a.calls.health, b.calls.health]).toEqual([1, 1]);
+  });
+  it("skips old owners before dispatch when the requested navigation cap is unsupported", async () => {
+    const old = await owner(),
+      supported = await owner({ navigationTimeout: true });
+    config.LOCAL_BROWSER_OWNER_URLS = `${old.base},${supported.base}`;
+    for (let i = 0; i < 2; i++)
+      await scrapeLocalBrowser(null, "fixture", {
+        url: "https://example.com",
+        timeout: 2000,
+        controls: { navigationTimeout: 300 },
+      });
+    expect(old.calls.scrape).toBe(0);
+    expect(supported.calls.scrape).toBe(2);
+    config.LOCAL_BROWSER_OWNER_URLS = old.base;
+    await expect(
+      scrapeLocalBrowser(null, "fixture", {
+        url: "https://example.com",
+        timeout: 2000,
+        controls: { navigationTimeout: 300 },
+      }),
+    ).rejects.toMatchObject({ code: "BROWSER_CAPABILITY_MISSING" });
+    expect(old.calls.scrape).toBe(0);
   });
   it("falls back only before dispatch when an owner's health fails", async () => {
     const a = await owner({ unhealthy: true }),

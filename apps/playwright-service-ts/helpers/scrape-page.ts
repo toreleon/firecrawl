@@ -20,6 +20,7 @@ import {
 
 export type ReadinessOptions = {
   waitUntil: 'load' | 'domcontentloaded';
+  navigationTimeout?: number;
   waitAfterLoad: number;
   checkSelector?: string;
   waitForText?: string;
@@ -103,7 +104,7 @@ export const scrapePage = async (
   if (!options.continueSession)
     await page.goto(url, {
       waitUntil: options.waitUntil,
-      timeout: deadline.remaining(),
+      timeout: Math.min(deadline.remaining(), options.navigationTimeout ?? Infinity),
     });
   const originalProduct = requestedAmazon ? {
     asin: requestedAmazon,

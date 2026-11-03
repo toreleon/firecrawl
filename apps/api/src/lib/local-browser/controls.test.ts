@@ -10,6 +10,35 @@ import { redactRequestBodyForLog } from "../../scraper/scrapeURL/lib/fetch";
 import { mapBrowserControls } from "./client";
 
 describe("Local browser API contract boundaries", () => {
+  it("maps a bounded initial navigation cap through scrape, batch and crawl options", () => {
+    const browserControls = { navigationTimeout: 30000 };
+    const parsed = scrapeRequestSchema.parse({
+      url: "https://example.com",
+      browserControls,
+    });
+    expect(mapBrowserControls(parsed.browserControls)).toEqual({
+      navigation_timeout: 30000,
+    });
+    expect(
+      batchScrapeRequestSchema.parse({
+        urls: ["https://example.com"],
+        browserControls,
+      }).browserControls,
+    ).toEqual(browserControls);
+    expect(
+      crawlRequestSchema.parse({
+        url: "https://example.com",
+        scrapeOptions: { browserControls },
+      }).scrapeOptions?.browserControls,
+    ).toEqual(browserControls);
+    for (const navigationTimeout of [0, 99, 120001, 1.5, "30000"])
+      expect(
+        scrapeRequestSchema.safeParse({
+          url: "https://example.com",
+          browserControls: { navigationTimeout },
+        }).success,
+      ).toBe(false);
+  });
   it("permits an explicit automatic body budget without an oracle predicate", () => {
     const controls = scrapeRequestSchema.parse({
       url: "https://example.com",

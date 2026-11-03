@@ -18,7 +18,11 @@ type Owner = {
   base: string;
   boot: string;
   engine?: string;
-  capabilities: { version: number; actions: string[] };
+  capabilities: {
+    version: number;
+    actions: string[];
+    navigationTimeout?: boolean;
+  };
 };
 type CompletedReceipt = {
   engine: string;
@@ -240,16 +244,36 @@ const inspectWithinDeadline = (
     inspectBrowserOwner(base).then(owner => finish(undefined, owner), finish);
   });
 };
-const selectStatelessOwner = async (until: number, signal?: AbortSignal) => {
+const requireControlCapabilities = (
+  owner: Owner,
+  controls?: BrowserControls,
+) => {
+  if (
+    controls?.navigationTimeout !== undefined &&
+    owner.capabilities.navigationTimeout !== true
+  )
+    throw new LocalBrowserError(
+      "BROWSER_CAPABILITY_MISSING",
+      "Upgrade the browser owner to use an initial navigation timeout",
+      503,
+    );
+};
+const selectStatelessOwner = async (
+  until: number,
+  signal?: AbortSignal,
+  controls?: BrowserControls,
+) => {
   const candidates = owners();
   const first = statelessOwnerCursor++ % candidates.length;
   for (let offset = 0; offset < candidates.length; offset++) {
     try {
-      return await inspectWithinDeadline(
+      const owner = await inspectWithinDeadline(
         candidates[(first + offset) % candidates.length],
         until,
         signal,
       );
+      requireControlCapabilities(owner, controls);
+      return owner;
     } catch (error) {
       if (signal?.aborted) throw discoveryError(true);
       if (Date.now() >= until) throw discoveryError(false);
@@ -264,6 +288,9 @@ const selectStatelessOwner = async (until: number, signal?: AbortSignal) => {
 };
 export const mapBrowserControls = (controls: BrowserControls | undefined) => ({
   ...(controls?.waitUntil ? { wait_until: controls.waitUntil } : {}),
+  ...(controls?.navigationTimeout !== undefined
+    ? { navigation_timeout: controls.navigationTimeout }
+    : {}),
   ...(controls?.readiness?.selector
     ? { check_selector: controls.readiness.selector }
     : {}),
@@ -365,6 +392,7 @@ export const createLocalBrowser = async (
   const owner = await inspectBrowserOwner(
     candidates[randomInt(candidates.length)],
   );
+  requireControlCapabilities(owner, input.controls);
   let id: string;
   try {
     id = await reserveLocalSession(
@@ -504,7 +532,11 @@ export const scrapeLocalBrowser = async (
   };
   if (!input.controls.sessionId) {
     const until = Date.now() + input.timeout;
-    const owner = await selectStatelessOwner(until, input.signal);
+    const owner = await selectStatelessOwner(
+      until,
+      input.signal,
+      input.controls,
+    );
     for (const action of input.actions ?? [])
       if (!owner.capabilities.actions.includes((action as any).type))
         throw new LocalBrowserError(
@@ -628,6 +660,7 @@ export const scrapeLocalBrowser = async (
           until,
           input.signal,
         );
+        requireControlCapabilities(candidate, input.controls);
         if (
           candidate.boot !== owner.boot &&
           candidate.engine &&
@@ -699,9 +732,24 @@ export const scrapeLocalBrowser = async (
   if (new URL(input.url).origin !== record.origin)
     throw new LocalBrowserError("SESSION_MISMATCH", "Session origin differs");
   const saved = unseal<SessionPrivate>(record.private_data);
+  const sessionControls = { ...saved.controls, ...input.controls };
+  if (sessionControls.navigationTimeout !== undefined) {
+    const owner = await inspectWithinDeadline(
+      record.owner_url,
+      Date.now() + input.timeout,
+      input.signal,
+    );
+    requireControlCapabilities(owner, sessionControls);
+    if (owner.boot !== record.owner_boot)
+      throw new LocalBrowserError(
+        "SESSION_LOST",
+        "Browser owner restarted; create a new session",
+        409,
+      );
+  }
   const sessionBody = {
     ...body,
-    ...mapBrowserControls({ ...saved.controls, ...input.controls }),
+    ...mapBrowserControls(sessionControls),
     headers: input.headers ?? saved.headers,
     block_ads: input.blockAds ?? saved.blockAds,
     skip_tls_verification:

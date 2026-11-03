@@ -891,6 +891,7 @@ class BrowserReadiness(BaseModel):
 
 class BrowserControls(BaseModel):
     wait_until: Optional[Literal["load", "domcontentloaded"]] = Field(default=None, alias="waitUntil")
+    navigation_timeout: Optional[int] = Field(default=None, alias="navigationTimeout", ge=100, le=120000)
     readiness: Optional[BrowserReadiness] = None
     consent: Optional[Literal["off", "rejectNonEssential", "acceptAll"]] = None
     workflow: Optional[Literal["none", "auto", "bestbuy-us@1", "product-details@1"]] = None

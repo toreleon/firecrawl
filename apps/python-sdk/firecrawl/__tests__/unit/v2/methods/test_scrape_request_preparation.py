@@ -42,12 +42,14 @@ class TestScrapeRequestPreparation:
     def test_stateless_engine_fallback_alias(self):
         from firecrawl.v2.types import BrowserControls
         options = ScrapeOptions(browser_controls=BrowserControls(
-            workflow="auto", engine_fallback=True, max_attempts=1,
+            workflow="auto", engine_fallback=True, max_attempts=1, navigation_timeout=30000,
         ))
         data = _prepare_scrape_request("https://example.com", options)
         assert data["browserControls"]["engineFallback"] is True
         assert data["browserControls"]["maxAttempts"] == 1
         assert "engine_fallback" not in data["browserControls"]
+        assert data["browserControls"]["navigationTimeout"] == 30000
+        assert "navigation_timeout" not in data["browserControls"]
 
     def test_local_browser_controls_nested_aliases(self):
         from firecrawl.v2.types import BrowserControls, BrowserReadiness

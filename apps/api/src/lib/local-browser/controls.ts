@@ -3,6 +3,7 @@ import { z } from "zod";
 export const browserControlsSchema = z
   .strictObject({
     waitUntil: z.enum(["load", "domcontentloaded"]).optional(),
+    navigationTimeout: z.int().min(100).max(120000).optional(),
     readiness: z
       .strictObject({
         selector: z.string().trim().min(1).max(2048).optional(),

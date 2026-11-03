@@ -34,6 +34,7 @@ describe("Explicit stateless browser-engine fallback", () => {
       unhealthy?: boolean;
       wrongBoot?: boolean;
       url?: string;
+      navigationTimeout?: boolean;
     } = {},
   ) => {
     const boot = randomUUID();
@@ -48,7 +49,11 @@ describe("Explicit stateless browser-engine fallback", () => {
             status: "healthy",
             ownerBootId: boot,
             browserEngine: options.engine ?? "rebrowser",
-            capabilities: { version: 1, actions: ["wait"] },
+            capabilities: {
+              version: 1,
+              actions: ["wait"],
+              navigationTimeout: options.navigationTimeout,
+            },
           }),
         );
       }
@@ -108,6 +113,27 @@ describe("Explicit stateless browser-engine fallback", () => {
     config.LOCAL_BROWSER_FALLBACK_OWNER_URLS = fallback.base;
     return { primary, fallback };
   };
+  it("forwards the navigation cap to both capable engines and skips an older alternate", async () => {
+    const { primary, fallback } = await configure(
+      { status: 403, navigationTimeout: true },
+      { navigationTimeout: true },
+    );
+    const result = await request({
+      controls: { engineFallback: true, navigationTimeout: 300 },
+    });
+    expect(result.diagnostics.engineFallback.recovered).toBe(true);
+    expect(primary.calls.bodies[0].navigation_timeout).toBe(300);
+    expect(fallback.calls.bodies[0].navigation_timeout).toBe(300);
+    const old = await owner({ engine: "camoufox" });
+    config.LOCAL_BROWSER_FALLBACK_OWNER_URLS = old.base;
+    const skipped = await request({
+      controls: { engineFallback: true, navigationTimeout: 300 },
+    });
+    expect(skipped.diagnostics.engineFallback.skipped).toBe(
+      "no_distinct_healthy_backend",
+    );
+    expect(old.calls.scrape).toBe(0);
+  });
   it("accepts the policy without forwarding it as a browser operation, and rejects interactive combinations", () => {
     expect(
       scrapeRequestSchema.parse({

@@ -158,6 +158,7 @@ interface UrlModel {
   check_selector?: string;
   skip_tls_verification?: boolean;
   wait_until?: 'load' | 'domcontentloaded';
+  navigation_timeout?: number;
   wait_for_text?: string;
   readiness_timeout?: number;
   max_attempts?: number;
@@ -437,6 +438,7 @@ app.get('/health', async (req: Request, res: Response) => {
       capabilities: {
         version: 1,
         readiness: true,
+        navigationTimeout: true,
         actions: actionTypes,
         workflows: workflowIds,
         consent: true,
@@ -464,6 +466,7 @@ app.post('/scrape', async (req: Request, res: Response) => {
     check_selector,
     skip_tls_verification = false,
     wait_until = 'load',
+    navigation_timeout,
     wait_for_text,
     readiness_timeout = 5000,
     max_attempts = 1,
@@ -504,6 +507,8 @@ app.post('/scrape', async (req: Request, res: Response) => {
     max_attempts < 1 ||
     max_attempts > 3 ||
     !['load', 'domcontentloaded'].includes(wait_until) ||
+    (navigation_timeout !== undefined &&
+      (!Number.isInteger(navigation_timeout) || navigation_timeout < 100 || navigation_timeout > 120000)) ||
     typeof skip_tls_verification !== 'boolean' ||
     typeof create_session !== 'boolean' ||
     (wait_for_text !== undefined &&
@@ -754,6 +759,7 @@ app.post('/scrape', async (req: Request, res: Response) => {
           url,
           {
             waitUntil: wait_until,
+            navigationTimeout: navigation_timeout,
             waitAfterLoad: wait_after_load,
             checkSelector: check_selector,
             waitForText: wait_for_text,

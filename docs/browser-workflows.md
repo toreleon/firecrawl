@@ -84,6 +84,7 @@ Opt in on an individual scrape:
   "browserControls": {
     "workflow": "auto",
     "consent": "rejectNonEssential",
+    "navigationTimeout": 30000,
     "maxAttempts": 1,
     "engineFallback": true
   }
@@ -131,6 +132,23 @@ usedSecondary, recovered, skipped and completed attempt receipts when available.
 fallback diagnostics; use owner logs to account for those dispatches. No CAPTCHA
 answers are generated or submitted. A browser change cannot promise access or
 content completeness, and an additional owner consumes additional resources.
+
+`browserControls.navigationTimeout` optionally caps the initial navigation in
+milliseconds (100–120,000), including HTTP redirects until the chosen `waitUntil`
+event. The overall scrape deadline still bounds the request. Consent, readiness,
+post-load waits and later workflow/action navigation keep their existing budgets;
+continuing a retained tab performs no initial navigation. A deliberately short
+cap can fail a slow document even when the overall deadline has time left. Omit
+the control to preserve the existing navigation budget.
+
+With `engineFallback: true`, each engine receives the same navigation cap. A
+confirmed closed-page navigation timeout can therefore leave time for one
+alternate engine, subject to the existing shared deadline and completion guards.
+Owners advertise `capabilities.navigationTimeout: true`; the API skips older
+stateless owners before dispatch and checks retained ownership before using this
+control. It fails explicitly when no compatible primary owner is available.
+JavaScript uses `navigationTimeout`; Python accepts `navigation_timeout` and
+serializes the same API field.
 
 ## Scrape controls
 

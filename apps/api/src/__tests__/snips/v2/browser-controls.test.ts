@@ -41,6 +41,22 @@ describe("Self-hosted local browser controls", () => {
         (fixtureRequests.get(req.url ?? "") ?? 0) + 1,
       );
       res.setHeader("content-type", "text/html");
+      if (
+        req.url === "/navigation-slow" ||
+        req.url === "/navigation-fallback"
+      ) {
+        if (
+          req.url === "/navigation-fallback" &&
+          /Firefox\//.test(req.headers["user-agent"] ?? "")
+        )
+          return res.end("<main>Navigation fallback content 42</main>");
+        const timer = setTimeout(
+          () => res.end("<main>Slow navigation content 42</main>"),
+          2500,
+        );
+        res.once("close", () => clearTimeout(timer));
+        return;
+      }
       if (req.url === "/passive-api") {
         res.setHeader("content-security-policy", "script-src 'nonce-fixture'");
         return res.end(
@@ -146,6 +162,124 @@ describe("Self-hosted local browser controls", () => {
     };
   };
   const enabled = TEST_SELF_HOST && !!config.PLAYWRIGHT_MICROSERVICE_URL;
+  itIf(enabled && !!config.LOCAL_BROWSER_FALLBACK_OWNER_URLS)(
+    "recovers a navigation-phase timeout on one distinct backend within the original API budget",
+    async () => {
+      const result = await request("/v2/scrape", {
+        url: origin + "/navigation-fallback",
+        formats: ["rawHtml", "markdown"],
+        maxAge: 0,
+        timeout: scrapeTimeout,
+        browserControls: {
+          waitUntil: "domcontentloaded",
+          navigationTimeout: 300,
+          workflow: "auto",
+          engineFallback: true,
+          maxAttempts: 1,
+        },
+      });
+      expect(result.status).toBe(200);
+      expect(result.body.data.markdown).toContain(
+        "Navigation fallback content 42",
+      );
+      const fallback =
+        result.body.data.metadata.browser.diagnostics.engineFallback;
+      expect(fallback.recovered).toBe(true);
+      expect(fallback.attempts).toHaveLength(2);
+      expect(fallback.attempts[0].errorCode).toBe("SCRAPE_TIMEOUT");
+      expect(fallback.attempts[0].engine).toBe("rebrowser");
+      expect(fallback.attempts[1].engine).toBe("camoufox");
+      expect(fallback.attempts.every((a: any) => a.pageClosed)).toBe(true);
+      expect(fixtureRequests.get("/navigation-fallback")).toBe(2);
+    },
+    scrapeTimeout,
+  );
+  itIf(enabled)(
+    "caps stalled initial navigation through the API and rejects invalid phase budgets",
+    async () => {
+      const result = await request("/v2/scrape", {
+        url: origin + "/navigation-slow",
+        formats: ["rawHtml", "markdown"],
+        maxAge: 0,
+        timeout: scrapeTimeout,
+        browserControls: { navigationTimeout: 300, maxAttempts: 1 },
+      });
+      expect(result.status).toBe(500);
+      expect(result.body.code).toBe("SCRAPE_TIMEOUT");
+      expect(fixtureRequests.get("/navigation-slow")).toBe(1);
+      const invalid = await request("/v2/scrape", {
+        url: origin + "/invalid-budget",
+        browserControls: { navigationTimeout: 0 },
+      });
+      expect(invalid.status).toBe(400);
+      expect(fixtureRequests.get("/invalid-budget")).toBeUndefined();
+    },
+    scrapeTimeout,
+  );
+  itIf(enabled)(
+    "preserves the readiness budget after a capped initial navigation commits",
+    async () => {
+      const result = await request("/v2/scrape", {
+        url: origin + "/late",
+        formats: ["rawHtml", "markdown"],
+        maxAge: 0,
+        timeout: scrapeTimeout,
+        browserControls: {
+          waitUntil: "domcontentloaded",
+          navigationTimeout: 300,
+          readiness: { text: "API late content 42", timeoutMs: 1500 },
+        },
+      });
+      expect(result.status).toBe(200);
+      expect(result.body.data.markdown).toContain("API late content 42");
+      expect(result.body.data.metadata.browser.readiness.satisfied).toBe(true);
+      expect(
+        result.body.data.metadata.browser.diagnostics.attempts,
+      ).toHaveLength(1);
+      const uncapped = await request("/v2/scrape", {
+        url: origin + "/navigation-slow",
+        formats: ["rawHtml", "markdown"],
+        maxAge: 0,
+        timeout: scrapeTimeout,
+        browserControls: {},
+      });
+      expect(uncapped.status).toBe(200);
+      expect(uncapped.body.data.markdown).toContain(
+        "Slow navigation content 42",
+      );
+      const session = await request("/v2/browser/sessions", {
+        url: origin + "/late",
+        timeout: scrapeTimeout,
+        browserControls: {
+          navigationTimeout: 300,
+          readiness: { text: "API late content 42", timeoutMs: 1500 },
+        },
+      });
+      expect(session.status).toBe(201);
+      try {
+        const continued = await request("/v2/scrape", {
+          url: origin + "/late",
+          formats: ["rawHtml", "markdown"],
+          maxAge: 0,
+          timeout: scrapeTimeout,
+          browserControls: {
+            sessionId: session.body.id,
+            continueSession: true,
+          },
+        });
+        expect(continued.status).toBe(200);
+        expect(continued.body.data.markdown).toContain("API late content 42");
+      } finally {
+        const closed = await request(
+          `/v2/browser/sessions/${session.body.id}`,
+          undefined,
+          "DELETE",
+        );
+        expect(closed.status).toBe(204);
+      }
+    },
+    scrapeTimeout,
+  );
   itIf(enabled)(
     "waits for passive redirects and invisible hydration while preserving interactive verification",
     async () => {
