@@ -1,0 +1,379 @@
+{
+  "status": "complete",
+  "sourceCommit": "8215f48b98cc48560070259d870b3f241ef6aa23",
+  "scope": "One frozen Amazon URL, five fresh full API requests per policy; not an all-target or hosted parity measurement.",
+  "protocol": {
+    "requests": 10,
+    "targets": 1,
+    "attemptsPerTargetPerPolicy": 5,
+    "globalHttpConcurrency": 2,
+    "profileConcurrency": 1,
+    "upstreamProxy": false,
+    "egressCountry": "VN",
+    "limitsPerOwner": {
+      "cpus": 2,
+      "memoryGiB": 3,
+      "pageCapacity": 2
+    },
+    "fixtureSha256": "a886fb57087e842c2857b89a7669e31d2fb7b98d6bd7deb60a2329f29581b76a",
+    "requestProfiles": [
+      {
+        "name": "baseline",
+        "baseUrl": "http://127.0.0.1:33150",
+        "apiKeyEnv": "TEST_API_KEY",
+        "browserControls": {
+          "waitUntil": "domcontentloaded",
+          "consent": "rejectNonEssential",
+          "workflow": "auto",
+          "maxAttempts": 1,
+          "engineFallback": false
+        },
+        "maxConcurrentRequests": 1,
+        "minIntervalMs": 1000
+      },
+      {
+        "name": "adaptive",
+        "baseUrl": "http://127.0.0.1:33150",
+        "apiKeyEnv": "TEST_API_KEY",
+        "browserControls": {
+          "waitUntil": "domcontentloaded",
+          "consent": "rejectNonEssential",
+          "workflow": "auto",
+          "maxAttempts": 1,
+          "engineFallback": true
+        },
+        "maxConcurrentRequests": 1,
+        "minIntervalMs": 1000
+      }
+    ],
+    "expectedTextSent": false,
+    "imageId": "sha256:065d98c06caa445fe963c082cfcd8c1516b65f70e64bf24f0505bf1ac3b2a906"
+  },
+  "profiles": {
+    "baseline": {
+      "overall": {
+        "requests": 5,
+        "uniqueTargets": 1,
+        "frontierPasses": 1,
+        "screenedPasses": 1,
+        "normalizedPasses": 1,
+        "frontierSuccessRate": 0.2,
+        "screenedSuccessRate": 0.2,
+        "normalizedSuccessRate": 0.2,
+        "successfulLatencyP50Ms": 11043,
+        "successfulLatencyP95Ms": 11043,
+        "allAttemptLatencyP95Ms": 11043,
+        "failures": {
+          "service_error": 4
+        }
+      },
+      "byWafLabel": {
+        "aws-waf": {
+          "requests": 5,
+          "uniqueTargets": 1,
+          "frontierPasses": 1,
+          "screenedPasses": 1,
+          "normalizedPasses": 1,
+          "frontierSuccessRate": 0.2,
+          "screenedSuccessRate": 0.2,
+          "normalizedSuccessRate": 0.2,
+          "successfulLatencyP50Ms": 11043,
+          "successfulLatencyP95Ms": 11043,
+          "allAttemptLatencyP95Ms": 11043,
+          "failures": {
+            "service_error": 4
+          }
+        }
+      },
+      "apiSuccesses": 1,
+      "providerRateLimits": 0,
+      "markdownMarkerPasses": 1,
+      "returnedCreditsUsed": 1,
+      "unknownCreditsCount": 4,
+      "cacheStateCounts": {
+        "not_reported": 5
+      }
+    },
+    "adaptive": {
+      "overall": {
+        "requests": 5,
+        "uniqueTargets": 1,
+        "frontierPasses": 5,
+        "screenedPasses": 5,
+        "normalizedPasses": 5,
+        "frontierSuccessRate": 1,
+        "screenedSuccessRate": 1,
+        "normalizedSuccessRate": 1,
+        "successfulLatencyP50Ms": 16016,
+        "successfulLatencyP95Ms": 17212,
+        "allAttemptLatencyP95Ms": 17212,
+        "failures": {}
+      },
+      "byWafLabel": {
+        "aws-waf": {
+          "requests": 5,
+          "uniqueTargets": 1,
+          "frontierPasses": 5,
+          "screenedPasses": 5,
+          "normalizedPasses": 5,
+          "frontierSuccessRate": 1,
+          "screenedSuccessRate": 1,
+          "normalizedSuccessRate": 1,
+          "successfulLatencyP50Ms": 16016,
+          "successfulLatencyP95Ms": 17212,
+          "allAttemptLatencyP95Ms": 17212,
+          "failures": {}
+        }
+      },
+      "apiSuccesses": 5,
+      "providerRateLimits": 0,
+      "markdownMarkerPasses": 5,
+      "returnedCreditsUsed": 5,
+      "unknownCreditsCount": 0,
+      "cacheStateCounts": {
+        "not_reported": 5
+      }
+    }
+  },
+  "confirmedOriginalProductRecoveries": 4,
+  "cases": [
+    {
+      "profile": "baseline",
+      "round": 1,
+      "normalizedPass": false,
+      "apiErrorCode": "WORKFLOW_NAVIGATION_MISMATCH",
+      "landedUrl": null,
+      "fallback": null
+    },
+    {
+      "profile": "adaptive",
+      "round": 1,
+      "normalizedPass": true,
+      "apiErrorCode": null,
+      "landedUrl": "https://www.amazon.com/Combination-Lock-Shackle-Security-Mounting-Bicycle-Secure/dp/B08KCWFMRS",
+      "fallback": {
+        "attempted": true,
+        "usedSecondary": true,
+        "recovered": true,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "a2f7787f-9eff-4a97-ad6b-d8919f671566",
+            "pageClosed": true,
+            "errorCode": "WORKFLOW_NAVIGATION_MISMATCH"
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "edc61a82-276a-41cc-b7ca-970040dc7fcc",
+            "pageClosed": true,
+            "pageStatusCode": 200
+          }
+        ]
+      }
+    },
+    {
+      "profile": "baseline",
+      "round": 2,
+      "normalizedPass": false,
+      "apiErrorCode": "WORKFLOW_NAVIGATION_MISMATCH",
+      "landedUrl": null,
+      "fallback": null
+    },
+    {
+      "profile": "adaptive",
+      "round": 2,
+      "normalizedPass": true,
+      "apiErrorCode": null,
+      "landedUrl": "https://www.amazon.com/Combination-Lock-Shackle-Security-Mounting-Bicycle-Secure/dp/B08KCWFMRS",
+      "fallback": {
+        "attempted": true,
+        "usedSecondary": true,
+        "recovered": true,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "35be8b63-50de-4007-919a-76cf717d067a",
+            "pageClosed": true,
+            "errorCode": "WORKFLOW_NAVIGATION_MISMATCH"
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "edc61a82-276a-41cc-b7ca-970040dc7fcc",
+            "pageClosed": true,
+            "pageStatusCode": 200
+          }
+        ]
+      }
+    },
+    {
+      "profile": "baseline",
+      "round": 3,
+      "normalizedPass": false,
+      "apiErrorCode": "WORKFLOW_NAVIGATION_MISMATCH",
+      "landedUrl": null,
+      "fallback": null
+    },
+    {
+      "profile": "adaptive",
+      "round": 3,
+      "normalizedPass": true,
+      "apiErrorCode": null,
+      "landedUrl": "https://www.amazon.com/Combination-Lock-Shackle-Security-Mounting-Bicycle-Secure/dp/B08KCWFMRS",
+      "fallback": {
+        "attempted": true,
+        "usedSecondary": true,
+        "recovered": true,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "a2f7787f-9eff-4a97-ad6b-d8919f671566",
+            "pageClosed": true,
+            "errorCode": "WORKFLOW_NAVIGATION_MISMATCH"
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "edc61a82-276a-41cc-b7ca-970040dc7fcc",
+            "pageClosed": true,
+            "pageStatusCode": 200
+          }
+        ]
+      }
+    },
+    {
+      "profile": "baseline",
+      "round": 4,
+      "normalizedPass": false,
+      "apiErrorCode": "WORKFLOW_NAVIGATION_MISMATCH",
+      "landedUrl": null,
+      "fallback": null
+    },
+    {
+      "profile": "adaptive",
+      "round": 4,
+      "normalizedPass": true,
+      "apiErrorCode": null,
+      "landedUrl": "https://www.amazon.com/Combination-Lock-Shackle-Security-Mounting-Bicycle-Secure/dp/B08KCWFMRS",
+      "fallback": {
+        "attempted": true,
+        "usedSecondary": true,
+        "recovered": true,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "35be8b63-50de-4007-919a-76cf717d067a",
+            "pageClosed": true,
+            "errorCode": "WORKFLOW_NAVIGATION_MISMATCH"
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "edc61a82-276a-41cc-b7ca-970040dc7fcc",
+            "pageClosed": true,
+            "pageStatusCode": 200
+          }
+        ]
+      }
+    },
+    {
+      "profile": "baseline",
+      "round": 5,
+      "normalizedPass": true,
+      "apiErrorCode": null,
+      "landedUrl": "https://www.amazon.com/Combination-Lock-Shackle-Security-Mounting-Bicycle-Secure/dp/B08KCWFMRS",
+      "fallback": null
+    },
+    {
+      "profile": "adaptive",
+      "round": 5,
+      "normalizedPass": true,
+      "apiErrorCode": null,
+      "landedUrl": "https://www.amazon.com/Combination-Lock-Shackle-Security-Mounting-Bicycle-Secure/dp/B08KCWFMRS",
+      "fallback": {
+        "attempted": false,
+        "usedSecondary": false,
+        "skipped": "not_needed",
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "a2f7787f-9eff-4a97-ad6b-d8919f671566",
+            "pageClosed": true,
+            "pageStatusCode": 200
+          }
+        ]
+      }
+    }
+  ],
+  "backendDispatchCounts": {
+    "primary-a": 5,
+    "primary-b": 5,
+    "fallback": 4
+  },
+  "scoreReplayAudit": {
+    "status": "complete",
+    "attempts": 10,
+    "uniquePairs": true,
+    "allEvidenceHashesMatch": true,
+    "allScoresReplay": true,
+    "sourceHashesMatch": true,
+    "networkRequests": 0,
+    "lifecycleLedgerVerified": true,
+    "profileConcurrencyLimitsChecked": 2,
+    "maxObservedConcurrency": 2,
+    "maxObservedConcurrencyByProfile": {
+      "baseline": 1,
+      "adaptive": 1
+    }
+  },
+  "timingIntegrity": {
+    "valid": true,
+    "sampleIntervalMs": 1000,
+    "maximumAllowedGapMs": 10000,
+    "maximumObservedGapMs": 1013,
+    "gaps": []
+  },
+  "cleanupVerified": true,
+  "verification": {
+    "apiClientContractChecksPassed": 25,
+    "realBrowserApiHarnessChecksPassed": 8,
+    "browserProtocolApiHarness": {
+      "vitestTestsPassed": 1,
+      "fixtureModes": 7,
+      "scope": "Real API, queues and workers with controlled HTTP browser-protocol responses, not real browser retrieval.",
+      "sourcePins": {
+        "sourceFiles": {
+          "apps/api/src/config.ts": "ff0125914ec73e0ef0d49e1d3e09777f71e43f1a62fae7b9cb1c209724ddba4e",
+          "apps/api/src/controllers/v2/types.ts": "8412c9b8e28d55f2ee8819b4ce53323e1cded94402e0bf2a2365d95f25de03b7",
+          "apps/api/src/controllers/v2/local-browser.ts": "a39de56910d964c19fe56b5bb01badb9341907969da72b29746f12b56cce30a0",
+          "apps/api/src/lib/local-browser/client.ts": "4b6618186188f7d807aa3148de71a94554dc91143e2e099873a378c18335ae03",
+          "apps/api/src/lib/local-browser/controls.ts": "f80ee6e0f9d1251e40a82a22f7c4c2763d5d5acc688670ac976cf8fdcbbf6d28",
+          "apps/api/src/lib/local-browser/controls.test.ts": "bb499cdad7c2e029cec0a2911406d0f3e6038be97ee08a7073e7599305b18b31",
+          "apps/api/src/lib/local-browser/fallback.test.ts": "b1c55d9b512cc7848c0cc2cbdfdead7956639a801e158b7c127b21ed697ad617",
+          "apps/api/src/__tests__/snips/v2/browser-controls.test.ts": "d5f024b9708d7434a253c3b85777fce4ad7f4440f6cf2d165e39b4ba6f328420",
+          "apps/playwright-service-ts/api.ts": "2563a35dfc084d2fc3ba2133825ccf193c56141eb2afb9da24f05ab956bb1275",
+          "apps/playwright-service-ts/helpers/page-readiness.ts": "cd4bda620220220bdc60cb935f3aa8c522251cbda837a9df49599dcbd4e7c790",
+          "apps/playwright-service-ts/helpers/scrape-page.ts": "b420208c4bb8e2c00fb31bdf9e6cf24ee886df1b431c5301b8d7ad378ac8932c",
+          "apps/playwright-service-ts/helpers/workflows.ts": "2f829da96d5525bc05aee2290a3a138dc60d0dc31ff9745ab25c1e647104347a",
+          "apps/playwright-service-ts/helpers/scrape-control.ts": "5cf450f24b5681803b27485f7122b13ffe42eb172f7b0e601469723de5541f13",
+          "apps/api/src/__tests__/snips/v2/browser-identity-fallback.test.ts": "1886236568ba1906c62d63599b60cd19d3bb919acdf483bbf5746039dcb45554"
+        },
+        "compiledClientSha256": "e70e8b7ecf5de1e5a4b0bf3ec3de176fe406de365e8f4563999f7ce005762a3b"
+      },
+      "logSha256": "0141c76394b8ac369536edd9950bda5862f7fa7200f192a35ac99fa765f00c42"
+    },
+    "packagedBrowserChecksPassed": 18,
+    "browserCI": "https://github.com/toreleon/firecrawl/actions/runs/41664075243",
+    "helperChecksPassed": 59,
+    "integrationChecksPassed": 94,
+    "ciLogSha256": "597ea8b7ca5a7be7eabe101bc67ae533d1ce683e6ebec80fbb689fb23a110ac2"
+  },
+  "localEvidence": {
+    "runDirectory": "_local/anti-bot/identity-fallback-amazon-api-2026-11-03",
+    "harnessDirectory": "_local/anti-bot/identity-fallback-amazon-api-harness-2026-11-03",
+    "hashes": {
+      "_local/anti-bot/identity-fallback-amazon-api-2026-11-03/report.json": "e705252a4b85f1e77cbb8cbe00525687e7a9819d708305ff2fddcd53e118f808",
+      "_local/anti-bot/identity-fallback-amazon-api-2026-11-03/score-replay-audit.json": "6c8d01bd5249edf1871d29dfee880b99510affcf6ffbf3d66c786d3486e7dd81",
+      "_local/anti-bot/identity-fallback-amazon-api-harness-2026-11-03/deployment.json": "5e0c4cc0b103036fd17e24d0aeeca482b8153aff8c725cadb7e058f63b9e8102",
+      "_local/anti-bot/identity-fallback-amazon-api-harness-2026-11-03/cleanup.json": "4849428923716ab03b94cfcfe3d5f7dee4baff4c7c5051c46092a969761fb65c"
+    }
+  },
+  "conclusion": "With fallback the original product matched 5/5 versus 1/5 without. Four primary identity failures were followed by confirmed Firefox captures of the same original product. This selected small cohort does not establish aggregate hosted parity."
+}

@@ -1551,3 +1551,106 @@ logs; task infrastructure stopped. The [full receipt](../apps/playwright-service
 records source pins, actual dispatches, remaining Amazon/Yahoo/eBay outcomes,
 unmatched cross-run changes and validation digests. The earlier 80/100 hosted
 score remains separately source-pinned; hosted parity is still unproven.
+
+## Recovering a confirmed product-identity failure on another engine
+
+The previous full API run still failed Amazon before the alternate engine was
+considered: `WORKFLOW_NAVIGATION_MISMATCH` was terminal even after the stateless
+page had closed. Earlier Firefox captures showed the requested product could be
+retrieved through a different browser. Source `8215f48b9` therefore adds one
+narrow eligibility case: an explicitly opted-in Amazon product request using
+the automatic workflow may fetch the original URL on a distinct engine after
+confirmed identity-error cleanup. Lost responses, wrong owner identity, failed
+page cleanup, retained sessions, actions and additional retries remain ineligible.
+
+The identity guard was strengthened at the same time. Browser captures must
+retain the original requested ASIN even when there was no continuation form.
+The API independently validates successful primary and alternate landed URLs,
+including responses from older owners. A wrong product, foreign host, missing
+URL, nonstandard port or credential-bearing URL cannot establish recovery.
+Failed HTTP/protection captures retain their explicit failure states; a failed
+alternate is never counted as a successful product. No third dispatch is made.
+The checks identify a product by its recognized URL, not a complete semantic
+attestation of every field in its body.
+
+Twenty-five focused API client/contract checks passed. A full API harness with
+controlled HTTP browser-protocol fixtures exercised seven modes: primary
+identity error, an old owner's wrong-document success, a wrong-product alternate,
+missing alternate URL, unclosed primary page, wrong primary boot ID and opt-out.
+It tested the real API/queue/worker path but is not real-browser evidence.
+Separately, eight API checks used real browser owners and eighteen packaged
+browser/workflow checks passed. Offline browser fixtures reject wrong products
+without a continuation form while allowing explicit failed HTTP/protection
+captures. The old production image failed the new wrong-product fixture.
+[Browser CI](https://github.com/toreleon/firecrawl/actions/runs/41664075243)
+passed build, 59 helpers, 94 integration checks and dependency audit.
+
+### Five-round full API Amazon comparison
+
+The current API ran five fresh requests per policy against the single frozen
+Amazon URL: two global workers, one slot per profile, one-second profile pacing,
+rotating profile order, two primary Chromium owners and one optional Firefox
+owner. Each owner had 2 CPUs/3 GiB/two page slots. Direct VN egress, enabled media,
+consent rejection, automatic workflow, original deadlines and the frozen grader
+were retained; no expected marker, proxy or hosted request was used.
+
+Without fallback, the marker matched on **1/5** requests. With fallback it matched
+on **5/5**. Four adaptive requests first returned a closed-page Chromium identity
+failure, then captured the original ASIN with Firefox and the expected marker.
+The fifth succeeded in primary Chromium. The corresponding baseline's first
+four requests failed the identity guard; its fifth succeeded. Logs account for
+ten primary calls and four alternate calls. This shows the new recovery path
+working on real requests, not a skipped guard or a storefront accepted as a
+product. It remains a selected five-attempt cohort, not an all-target rate.
+
+Successful p50/p95 was 11,043/11,043 ms for the sole baseline match and
+16,016/17,212 ms for the adaptive matches. Different cohorts and one baseline
+success prevent a general latency conclusion; the extra browser work is explicit.
+All ten unique records, hashes, scores and lifecycle bounds replayed offline.
+Owners finished with zero pages/sessions and were removed after archiving logs.
+The [targeted API receipt](../apps/playwright-service-ts/benchmarks/identity-fallback-amazon-api-results-2026-11-03.json)
+records the closed-page proof, original landed URL, source/image hashes and
+the separate real-browser versus protocol-fixture validation.
+
+### Full API result after identity-failure recovery
+
+The same source completed a fresh deployment and all 200 requests on the frozen
+100-target set, one per policy per target. It used four global workers, two slots
+per profile, the same owner resource limits and no upstream proxy or hosted call.
+
+| All 100 targets, one request/profile | Without fallback | With fallback |
+| --- | --- | --- |
+| Raw substring | 45 | 55 |
+| Screened marker | 43 | 52 |
+| Normalized marker | 44 | 53 |
+| Screened-success p50 | 3,855 ms | 4,020 ms |
+| Screened-success p95 | 7,762 ms | 10,017 ms |
+| Additional Firefox calls | 0 | 52 |
+
+There were 43 common matches, ten adaptive-only, one baseline-only (TikTok) and
+46 matching neither. Eight adaptive-only matches used confirmed alternate
+recovery; Zoopla and Yellow Pages succeeded through primary responses.
+Ten returned backend recoveries all matched the frozen normalized marker in
+this run. Three API errors lacked returned fallback diagnostics. Owner logs
+account for all 200 primary calls and 52 alternate calls, with no alternate
+target repeated. Common-success p50 was 3,671→3,645 ms and p95
+7,762→10,017 ms; these small live cohorts do not establish stable latency gains.
+
+Amazon succeeded in primary Chromium in both full-run profiles, so this run
+does not itself exercise the new identity-error branch. The separate five-round
+API measurement provides that direct evidence. Compared with the prior,
+unmatched 52/100 adaptive run, Amazon, eBay, Apartments.com and Zoopla added
+matches, while Louis Vuitton, Google Search and TikTok lost matches. The current
+53/100 does not establish a causal aggregate code-version gain. The unchanged
+primary-only total was 44/100 in both runs.
+
+All 200 unique payload/content hashes, scores, summaries and source pins
+replayed. Actual overlap stayed at four globally/two per profile, and timing
+was valid. Peak sampled memory was 965/1,013/1,960 MiB for the two primary
+owners and Firefox. Memory/process-limit and OOM counters were zero; separate
+socket-throttling counters were 0/126/301. Every owner finished healthy with
+zero pages/sessions and was removed after preserving logs; test infrastructure
+stopped. The [full receipt](../apps/playwright-service-ts/benchmarks/identity-fallback-full-api-results-2026-11-03.json)
+includes missing-versus-returned diagnostics, dispatch accounting, source/image
+pins and unmatched prior-run changes. Hosted parity is still unproven; the
+earlier 80/100 hosted result was not refreshed for this source.

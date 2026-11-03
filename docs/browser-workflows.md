@@ -100,6 +100,18 @@ Before another dispatch the API requires one completed primary attempt,
 `pageClosed: true` and matching owner boot identity. An ambiguous response,
 transport loss, failed cleanup, or exhausted budget is never replayed.
 
+For a recognized HTTPS Amazon product URL with `workflow: "auto"`, a confirmed
+`WORKFLOW_NAVIGATION_MISMATCH` may also trigger this opt-in alternate request.
+It fetches the original URL in a fresh context on the other engine; the failed
+document is never promoted. Other workflow/domain identity errors stay terminal.
+Successful captures must retain the requested ASIN on an accepted Amazon HTTPS
+host, including when no continuation form appeared. The API checks the returned
+URL too, so an older owner cannot promote another product or omit the landed URL
+and claim recovery. Foreign hosts, nonstandard ports and credential-bearing
+URLs do not establish that identity. A failed or wrong-product alternate never
+causes a third dispatch. This is a URL-identity check, not field-level extraction
+proof; returned content must still be evaluated for the caller's purpose.
+
 At most one healthy owner with a different boot identity **and** browser engine
 can run the second attempt. Both attempts and owner discovery share the original
 deadline; the alternate needs enough remaining time for the requested wait and
