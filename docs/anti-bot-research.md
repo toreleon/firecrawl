@@ -1786,3 +1786,229 @@ Hosted was not refreshed: its earlier 80/100 result remains source-pinned to
 the older comparison. Hosted parity is unproven. The [cleanup receipt](../apps/playwright-service-ts/benchmarks/passive-verification-cleanup-results-2026-11-03.json)
 records removal of prototype/obsolete task image tags while retaining the
 current image, stopped test infrastructure and all unrelated data volumes.
+
+## Testing remaining timeout, driver and session hypotheses
+
+The next investigation kept production source unchanged and separated three
+failure classes before changing the fallback policy. A saved Canada Goose
+timeout came from a two-second product-details click intercepted by OneTrust,
+not the total navigation deadline. Playwright's [actionability contract](https://playwright.dev/docs/actionability)
+checks whether another element receives the pointer event; the observed call
+log identified the consent overlay. In fresh probes both browser engines
+expanded the product details, but the current rendered description differed
+from the frozen expected sentence, which appeared only in metadata. Those
+observations remain marker failures; forcing a click or changing the grader
+would not establish retrieval of that expected body text.
+
+That transport/consent probe returned four of eight planned observations before
+its resource guard stopped it. The retained Firefox sample recorded
+`memory.events:max=196`, with zero OOM/OOM-kill and PID-limit counters. It had
+reached the 3 GiB memory boundary; the exact event is preserved, unlike the
+earlier fixed-wait probe whose failing sample was missing. Both created
+containers were stopped and removed. Unfinished cases are not counted as
+observed failures.
+
+### Existing driver portfolio
+
+Thirty-four current adaptive failures that matched in the earlier hosted run,
+plus GitHub and arXiv controls, were fetched once with Rebrowser and Patchright
+using the same pinned image. A fresh Firefox owner separately tested Roblox and
+GitHub without first loading the memory-heavy Canada Goose page. All owners
+used headful Linux ARM64, direct VN egress, 2 CPUs/3 GiB/one page slot, a
+30-second service deadline, automatic workflows, consent rejection and no
+expected-text hint. Three global workers ran 74 browser-service requests.
+
+| Selected observations | Rebrowser | Patchright | Firefox |
+| --- | --- | --- | --- |
+| Normalized marker matches | 3/36 | 3/36 | 1/2 |
+| Matching targets | Verizon, GitHub, arXiv | Verizon, GitHub, arXiv | GitHub |
+| Roblox | Navigation timeout | Navigation timeout | Navigation timeout |
+
+Patchright added no exclusive match. Verizon passing in both Chromium profiles,
+after failing the prior full run, illustrates live variability. All three
+Roblox failures occurred before the destination document committed; retained
+diagnostics showed its initial 301 and no successful destination response.
+This probe does not show that reserving time for a second engine will recover
+Roblox, nor does a thirty-second observation prove a permanent outage or its
+network/access-policy cause. No default driver or deadline-splitting change was
+made on this evidence.
+
+### Same-origin retained-tab warm-up
+
+DataDome documents its [browser JavaScript tag](https://docs.datadome.co/docs/javascript-tag)
+and [cookie/session storage](https://docs.datadome.co/docs/cookie-session-storage)
+as parts of protection and session handling. That made homepage initialization
+a testable hypothesis, not a guarantee that it would permit a protected URL.
+Six selected targets compared a fresh direct visit with a same-origin homepage
+visit, three seconds for its scripts, then the original URL in the same retained,
+origin-fenced tab. Both profiles used Rebrowser and two global workers.
+
+The direct and warm-up profiles each matched only GitHub (1/6). Lowe's and
+Crunchbase homepages returned 200, but their requested product/organization
+pages still returned 403. G2, Macy's and Home Depot also remained failures.
+All six returned session capabilities were reused on the same owner, then
+explicitly deleted with HTTP 204. No cookie values or capabilities are published.
+The experiment made eighteen browser-service scrapes for twelve target records.
+Extra requests/time and retained-tab consent behavior differ, so this is not
+a cookie-only experiment. It does not justify a blanket homepage warm-up.
+
+The [alternative-probe receipt](../apps/playwright-service-ts/benchmarks/no-proxy-alternatives-results-2026-11-03.json)
+records ninety-six scored target observations and hashes for 102 RPC payloads,
+including six homepage responses and the six follow-up HTTP-400 driver probes
+described below. Complete runs retained valid timing and ended
+healthy with zero page/session counts; all created containers were removed.
+These selected negative results narrow the remaining work without relabeling
+the earlier full API rate or claiming that all software-only approaches are
+exhausted. A fresh actual hosted comparison is recorded separately below.
+
+## Refreshed actual hosted comparison before the HTTP-400 repair
+
+The unchanged `da4bb50c9` fork API (browser image/source `02f47b315`) was compared
+again with the actual hosted API on all 100 frozen targets, one request per
+profile. The fork explicitly enabled engine fallback. Four global workers,
+two slots per profile and seven-second per-profile dispatch pacing bounded
+the 200 requests. Both profiles requested fresh rawHTML/Markdown with no
+expected marker; the fork used direct VN egress and no upstream proxy.
+Hosted routing, resources and internal attempts remained provider controlled.
+
+| Full API outcomes, 100 targets/profile | Fork with fallback | Hosted |
+| --- | --- | --- |
+| Raw substring | 55 | 81 |
+| Screened marker | 53 | 80 |
+| Normalized marker | 54 | 81 |
+| Screened-success p50 | 2,967 ms | 5,663 ms |
+| Screened-success p95 | 6,013 ms | 14,565 ms |
+
+There were 44 common matches, 37 hosted-only, ten fork-only and nine matching
+neither. Ten explicit hosted unsupported-site responses remain failures in
+the original denominator. No API-level HTTP 429 occurred; target-page rate
+limits remain separate failures. Among hosted-only cases the fork had fifteen
+recognized verification pages, thirteen other HTTP 403 responses, three target
+rate limits, one each of target HTTP 400/405/406, one network error, one timeout
+and one missing marker. AllMenus explicitly reported regional unavailability.
+These are observed outcomes, not proof that one cause explains every denial.
+
+Owner logs account for 100 original fork calls and 49 alternate calls. Four
+fork API errors lacked returned fallback diagnostics. Of nine reported backend
+recoveries, seven matched the frozen normalized marker. For the 44 common
+matches, fork p50/p95 was 2,967/5,954 ms versus hosted 5,155/14,565 ms. Different
+infrastructure and the selected successful cohort prevent a causal speed claim.
+
+The hosted account balance decreased by 116 credits; 86 responses reported
+115 credits in total. Missing per-request credits are unknown. Balance changes
+can include other account activity and are not an exact invoice for this run.
+Only 100 hosted requests were dispatched, with no client retry. The temporary
+key and private directory were removed, and retained artifacts passed credential
+redaction checks.
+
+All 200 payload/content hashes, scores, source pins and lifecycle bounds
+replayed. Timing was valid and overlap stayed within four globally/two per
+profile. Peak sampled fork memory was 907/719/2,032 MiB, with zero memory/PID
+limit or OOM events; the separate Firefox socket-throttling counter reached 288.
+Owners ended healthy with zero page/session counts, were removed after logs
+were preserved, and test infrastructure stopped.
+
+The earlier 56/100 fork-only measurement used a different live epoch and
+per-profile pacing. This unchanged code matched 54/100 here: WSJ, eBay, Google
+Search and Zoopla lost matches, while Verizon and Apartments.com added them.
+The difference does not establish a code regression. The [fresh comparison
+receipt](../apps/playwright-service-ts/benchmarks/current-hosted-api-results-2026-11-03.json)
+keeps this measurement distinct from the older 42/100 versus 80/100 comparison.
+The current self-hosted coverage gap remained substantial.
+
+## Opt-in recovery of a completed target HTTP 400
+
+The fresh hosted comparison supplied a new actionable case: lululemon matched
+with hosted but the fork returned a small target JSON HTTP 400 (`GE401001`).
+Its confirmed closed-page receipt was available, but HTTP 400 was not eligible
+for the explicit alternate-engine policy. A separate three-engine probe returned
+400 in Rebrowser and Patchright while Firefox retrieved the requested product
+through its observed canonical catalog redirect. GitHub controls passed in all
+three engines. No meaning is inferred from the undocumented vendor error code.
+
+API source `ffcb8b45e` adds target HTTP 400 to the opted-in eligibility set.
+The existing same-deadline, single distinct alternate, original-URL, owner-boot
+and page-closure guards remain. Browser-service request-validation errors stay
+terminal; a failed alternate preserves the known primary failure. Sessions,
+interactive actions and internal retries still cannot be combined with this
+policy. Browser code, image and API/SDK control fields did not change.
+
+The new full API fixture failed before the change by returning 400 instead of
+the expected recovery. It then passed six modes: target-400 recovery, opt-out,
+unclosed page, wrong boot identity, browser-service validation rejection and a
+failed alternate. This is one Vitest test with controlled HTTP browser-protocol
+fixtures through the API/queue/worker path, distinct from real browsers.
+Twenty-seven focused API client/contract checks passed. [Browser CI](https://github.com/toreleon/firecrawl/actions/runs/41680717955)
+passed 60 helpers, 97 integration checks, build and dependency audit on the new
+commit. Broader server/SDK CI is not reported as passed.
+
+### Five-round real API lululemon comparison
+
+The current API made five fresh requests per policy on the original frozen URL.
+Two global workers, one slot per profile, one-second pacing, the unchanged
+Linux ARM64 browser image, 2 CPUs/3 GiB/two page slots per owner, consent
+rejection and automatic workflows were retained. No marker or proxy was supplied.
+
+Without fallback, all five captures returned target 400 and failed the marker.
+With fallback, all five matched after confirmed closed-page Chromium 400 results
+and Firefox 200 responses. All original backend requests used the original URL;
+the observed canonical product destination and body marker were checked. Logs
+account for ten primary and five alternate calls. Adaptive successful p50/p95
+was 4,408/4,707 ms; baseline successful latency is undefined because none matched.
+This improves selected retrieval at an explicit extra browser cost.
+
+All ten records, hashes, scores and lifecycle bounds replayed. Peak sampled
+memory was 460/428/1,227 MiB, with zero memory/PID-limit and OOM events. Owners
+ended healthy with zero page/session counts and were removed after preserving
+logs. The [targeted API receipt](../apps/playwright-service-ts/benchmarks/target400-lululemon-api-results-2026-11-04.json)
+distinguishes this real-browser result from the controlled protocol fixture.
+This selected policy comparison does not establish an all-target code-version
+gain, extraction F1 or hosted parity.
+
+### Full API result after target-400 eligibility
+
+The same API source completed a fresh 200-request deployment on all 100 frozen
+targets, one request per policy per target. Four global workers/two per profile,
+the unchanged browser image and owner resources, direct VN egress, fresh
+rawHTML/Markdown and no marker hint were retained. No hosted calls were made.
+
+| All 100 targets, one request/profile | Without fallback | With fallback |
+| --- | --- | --- |
+| Raw substring | 48 | 59 |
+| Screened marker | 46 | 57 |
+| Normalized marker | 47 | 58 |
+| Screened-success p50 | 3,360 ms | 3,522 ms |
+| Screened-success p95 | 7,114 ms | 7,527 ms |
+| Additional Firefox calls | 0 | 49 |
+
+All 47 baseline matches also matched in the adaptive profile. Eleven targets
+were adaptive-only and 42 matched neither. Ten adaptive-only matches used
+confirmed alternate recovery; Expedia succeeded in primary Chromium. Eleven
+reported backend recoveries produced ten frozen-marker matches. Two API errors
+lacked returned fallback diagnostics. Logs account for 200 primary and 49
+alternate calls, with no alternate target repeated. Common-success p50 was
+3,360→3,218 ms and p95 7,114→6,061 ms; this selected live cohort does not
+establish a stable latency improvement.
+
+Lululemon returned 400 in the baseline and matched after alternate recovery
+(760/4,701 ms). Compared with the preceding, differently paced 54/100 fork run,
+lululemon, eBay, Google Search and Zoopla added matches. The current 58/100 does
+not establish a causal four-point code-version gain. The five-round real API
+comparison supplies direct evidence for the repaired target-400 eligibility.
+
+All 200 records, payload/content hashes, summaries, source pins and lifecycle
+bounds replayed; timing was valid and overlap stayed within four globally/two
+per profile. Peak sampled memory was 1,052/1,047/2,150 MiB. Memory/PID-limit and
+OOM events were zero; Firefox's separate socket-throttling counter reached 526.
+All owners ended healthy with zero page/session counts and were removed after
+logs were preserved; test infrastructure stopped. The [full API receipt](../apps/playwright-service-ts/benchmarks/target400-full-api-results-2026-11-04.json)
+keeps its current API source distinct from the unchanged browser image and
+the pre-repair 54/100 versus 81/100 actual hosted comparison. No further hosted
+calls were made after that comparison; current hosted parity is unproven.
+
+The [cleanup receipt](../apps/playwright-service-ts/benchmarks/target400-cleanup-results-2026-11-04.json)
+verifies removal of nineteen browser containers across this investigation and
+its API measurements. Docker image usage remains 28.92 GB; no browser image
+rebuild was needed for the API-only fix. Nine unrelated running services and
+all data volumes were preserved. The temporary hosted key/directory were
+deleted and retained artifacts passed credential-redaction checks.

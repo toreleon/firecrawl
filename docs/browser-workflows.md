@@ -94,11 +94,13 @@ Fallback requires a stateless request without actions and `maxAttempts: 1`.
 Session creation and session scrapes reject it. Missing alternate configuration
 fails before primary dispatch. A successful primary response uses no alternate.
 Eligible failures are recognized verification/loading states, selected HTTP
-denials/transient statuses (403, 406, 417, 429, 502, 503, 504), the filtering
+denials/transient statuses (400, 403, 406, 417, 429, 502, 503, 504), the filtering
 proxy's connection-reset status 595, or a structured network/timeout error.
 Before another dispatch the API requires one completed primary attempt,
 `pageClosed: true` and matching owner boot identity. An ambiguous response,
 transport loss, failed cleanup, or exhausted budget is never replayed.
+Here HTTP 400 means the retrieved target page's status. A browser-service
+request-validation error stays terminal; it does not authorize another fetch.
 
 For a recognized HTTPS Amazon product URL with `workflow: "auto"`, a confirmed
 `WORKFLOW_NAVIGATION_MISMATCH` may also trigger this opt-in alternate request.

@@ -1,0 +1,2072 @@
+{
+  "status": "completed_alternative_probes_and_partial_investigation_replayed",
+  "productionSourceUnchangedDuringTheseExperiments": true,
+  "sourceCommit": "da4bb50c979e628f8aa32116790704a79bbe3bbc",
+  "browserRuntimeSourceCommit": "02f47b3151e2b19b910ca5994ebc73c0f1d462cc",
+  "scoredTargetObservationsReplayed": 96,
+  "capturedRpcPayloadHashesVerified": 102,
+  "networkRequestsDuringAudit": 0,
+  "hostedCalls": 0,
+  "upstreamProxy": false,
+  "enginePortfolio": {
+    "rebrowser": {
+      "requests": 36,
+      "matches": [
+        "arxiv",
+        "github",
+        "verizon"
+      ]
+    },
+    "patchright": {
+      "requests": 36,
+      "matches": [
+        "arxiv",
+        "github",
+        "verizon"
+      ]
+    },
+    "camoufox": {
+      "requests": 2,
+      "matches": [
+        "github"
+      ]
+    }
+  },
+  "originWarmupMatches": {
+    "direct": [
+      "github"
+    ],
+    "warmup": [
+      "github"
+    ]
+  },
+  "target400Probe": [
+    {
+      "target": "lululemon",
+      "profile": "patchright",
+      "attempt": 1,
+      "normalizedPass": false,
+      "failureReason": "target_status_400",
+      "apiStatus": 200,
+      "pageStatus": 400,
+      "latencyMs": 545,
+      "evidenceFile": "evidence/002.json",
+      "evidenceSha256": "f47200a853f91aa2ba6872a22ee7d21392cef8e4b4308e6aa8da952c886794fd"
+    },
+    {
+      "target": "lululemon",
+      "profile": "rebrowser",
+      "attempt": 1,
+      "normalizedPass": false,
+      "failureReason": "target_status_400",
+      "apiStatus": 200,
+      "pageStatus": 400,
+      "latencyMs": 860,
+      "evidenceFile": "evidence/001.json",
+      "evidenceSha256": "efb8e326d5a9e1857020291185163e4e474272f71ff188aa5f8e0c7e8d2910de"
+    },
+    {
+      "target": "github",
+      "profile": "rebrowser",
+      "attempt": 1,
+      "normalizedPass": true,
+      "apiStatus": 200,
+      "pageStatus": 200,
+      "latencyMs": 1834,
+      "evidenceFile": "evidence/005.json",
+      "evidenceSha256": "3505df674026843170db2b7e42e2ca8c70ce7ad95070af1ea98d19a85bda2c0b"
+    },
+    {
+      "target": "github",
+      "profile": "patchright",
+      "attempt": 1,
+      "normalizedPass": true,
+      "apiStatus": 200,
+      "pageStatus": 200,
+      "latencyMs": 2128,
+      "evidenceFile": "evidence/004.json",
+      "evidenceSha256": "be2ffa192765e0f2661d1d130a38f8cfe4ecc3c42f93a3f95c9ffc11ffd51804"
+    },
+    {
+      "target": "lululemon",
+      "profile": "camoufox",
+      "attempt": 1,
+      "normalizedPass": true,
+      "apiStatus": 200,
+      "pageStatus": 200,
+      "latencyMs": 3931,
+      "evidenceFile": "evidence/003.json",
+      "evidenceSha256": "4e1abaa3511e3ba976b03f5f06a0ab549a7f060f7fd2cc448ae14c904e315415"
+    },
+    {
+      "target": "github",
+      "profile": "camoufox",
+      "attempt": 1,
+      "normalizedPass": true,
+      "apiStatus": 200,
+      "pageStatus": 200,
+      "latencyMs": 1556,
+      "evidenceFile": "evidence/006.json",
+      "evidenceSha256": "bef955bbd664edc042f744c0457882e884df1027b3703dea2c9a37f42a762f83"
+    }
+  ],
+  "experiments": [
+    {
+      "name": "transport-consent-probe-2026-11-03",
+      "status": "resource_guard_interrupted_returned_records_replayed",
+      "scope": "Selected two-engine browser-service diagnostic; Canada Goose workflow/consent comparison and a 30-second Roblox navigation probe, plus a normal-page control. Not a full API or all-target rate.",
+      "plannedTargetObservations": 8,
+      "returnedTargetObservations": 4,
+      "globalConcurrency": 2,
+      "sourceCommit": "da4bb50c979e628f8aa32116790704a79bbe3bbc",
+      "imageId": "sha256:4cf1c1eb4550e82504a0f11af5817e2a95143bc96e3b83f081400764e51a8244",
+      "allReturnedScoresAndHashesReplay": true,
+      "cases": [
+        {
+          "target": "canadagoose",
+          "profile": "rebrowser",
+          "workflow": "auto",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "marker_only_in_noncontent_markup",
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "latencyMs": 4506,
+          "evidenceFile": "evidence/001.json",
+          "evidenceSha256": "984ef1b802985c02170c06abdfd7b6f75aabfce8ea6e8c0a2d63361791b0ef64",
+          "contentReview": {
+            "detailsExpanded": true,
+            "consentOutcome": "unresolved",
+            "rawMarkerPresent": true,
+            "expectedPhraseInRenderedText": false,
+            "renderedTextChars": 4332
+          }
+        },
+        {
+          "target": "canadagoose",
+          "profile": "camoufox",
+          "workflow": "auto",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "marker_only_in_noncontent_markup",
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "latencyMs": 9447,
+          "evidenceFile": "evidence/002.json",
+          "evidenceSha256": "19ede0a9e113e895ca4869b033c0ad736705c7dae2ddce5c24db155e77a28955",
+          "contentReview": {
+            "detailsExpanded": true,
+            "consentOutcome": "unresolved",
+            "rawMarkerPresent": true,
+            "expectedPhraseInRenderedText": false,
+            "renderedTextChars": 4570
+          }
+        },
+        {
+          "target": "canadagoose",
+          "profile": "rebrowser",
+          "workflow": "none",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "marker_only_in_noncontent_markup",
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "latencyMs": 6521,
+          "evidenceFile": "evidence/003.json",
+          "evidenceSha256": "674a77c4a40c09ee111523edad3ae758d2e3d1e7af78fb8534a98df0110441c8",
+          "contentReview": {
+            "detailsExpanded": false,
+            "consentOutcome": "unresolved",
+            "rawMarkerPresent": true,
+            "expectedPhraseInRenderedText": false,
+            "renderedTextChars": 3061
+          }
+        },
+        {
+          "target": "github",
+          "profile": "rebrowser",
+          "workflow": "auto",
+          "attempt": 1,
+          "normalizedPass": true,
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "latencyMs": 1863,
+          "evidenceFile": "evidence/005.json",
+          "evidenceSha256": "e1a807173d2f4cdfd6f6b19ae861412ce2e1d920ed7a834338a1fc735e5d7706"
+        }
+      ],
+      "resourceAudit": {
+        "peakSampledMemoryBytes": {
+          "rebrowser": 704491520,
+          "camoufox": 3091292160
+        },
+        "maximumObservedCounters": {
+          "rebrowser": {
+            "memory.events:low": 0,
+            "memory.events:high": 0,
+            "memory.events:max": 0,
+            "memory.events:oom": 0,
+            "memory.events:oom_kill": 0,
+            "memory.events:oom_group_kill": 0,
+            "memory.events:sock_throttled": 0,
+            "pids.events:max": 0
+          },
+          "camoufox": {
+            "memory.events:low": 0,
+            "memory.events:high": 0,
+            "memory.events:max": 196,
+            "memory.events:oom": 0,
+            "memory.events:oom_kill": 0,
+            "memory.events:oom_group_kill": 0,
+            "memory.events:sock_throttled": 118,
+            "pids.events:max": 0
+          }
+        }
+      },
+      "cleanup": {
+        "rebrowser": {
+          "image": "sha256:4cf1c1eb4550e82504a0f11af5817e2a95143bc96e3b83f081400764e51a8244",
+          "state": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 143,
+            "Error": "",
+            "StartedAt": "2026-11-03T16:17:12.931582008Z",
+            "FinishedAt": "2026-11-03T16:17:33.842240545Z"
+          },
+          "removed": true
+        },
+        "camoufox": {
+          "image": "sha256:4cf1c1eb4550e82504a0f11af5817e2a95143bc96e3b83f081400764e51a8244",
+          "state": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 143,
+            "Error": "",
+            "StartedAt": "2026-11-03T16:17:14.712017008Z",
+            "FinishedAt": "2026-11-03T16:17:34.06296517Z"
+          },
+          "removed": true
+        }
+      },
+      "hashes": {
+        "manifest.json": "da44ef9b02ea7d7867963941fb47d3cb2df79d514ab9a9108baa230c7241d5b9",
+        "attempts.jsonl": "d76e213b894997cffc5ddd8bd41fc20de8089b37050df60a302373689d5ca46c",
+        "deployment.json": "de84a16adafeb2bdae50981c676d6cecd26a99358d57765e5521623920027094",
+        "cleanup.json": "af97c12389ed6f02f5a27c7e265e756f5fe4125f4fd2eb6cb035b8b0ae6c6465",
+        "resource-samples.jsonl": "e83b8e7a5c836197efcb333ecb11d556f762169d17bb68a5668574f2253d31cc",
+        "latest-resource-sample.json": "4431968abe22796505b7a0bddfdc2b8347df2c0c8dbed4e94015972e9e4284a9",
+        "runner.log": "b8d2c0a68917126ef04bc21e2697641162eccc309b5f393a873ce6bc001c36ff"
+      }
+    },
+    {
+      "name": "engine-portfolio-2026-11-03",
+      "status": "complete_replayed",
+      "scope": "Selected browser-service driver comparison on the same current image. One observation per engine/target, not a full API, all-target, repeated-round or updated hosted comparison.",
+      "plannedTargetObservations": 74,
+      "returnedTargetObservations": 74,
+      "globalConcurrency": 3,
+      "sourceCommit": "da4bb50c979e628f8aa32116790704a79bbe3bbc",
+      "imageId": "sha256:4cf1c1eb4550e82504a0f11af5817e2a95143bc96e3b83f081400764e51a8244",
+      "allReturnedScoresAndHashesReplay": true,
+      "cases": [
+        {
+          "target": "allegro",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 1688,
+          "evidenceFile": "evidence/001.json",
+          "evidenceSha256": "dd40eae89ae382a0dfcc4b2e3ef3453cc3b1b3ae5e5a982f3048cd1bd02eaf0e"
+        },
+        {
+          "target": "lowes",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 1041,
+          "evidenceFile": "evidence/004.json",
+          "evidenceSha256": "26d8e5078a856e1819fdf98573501fd528189972e5e85769e9053e1e440fcda9"
+        },
+        {
+          "target": "safeway",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 490,
+          "evidenceFile": "evidence/005.json",
+          "evidenceSha256": "213cc50a6b0a6a06d42722353e072365c4e06b267ed9c305e88db3391dcb86bf"
+        },
+        {
+          "target": "saksfifthavenue",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 1523,
+          "evidenceFile": "evidence/006.json",
+          "evidenceSha256": "ac8269ed5dab3e524875973784d10cbeb32283544410bb0203f0196d8346670c"
+        },
+        {
+          "target": "neimanmarcus",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 1093,
+          "evidenceFile": "evidence/007.json",
+          "evidenceSha256": "8acc165df8a760f15f726d9ad0bde796128036c2de398804bfccb6c765a50790"
+        },
+        {
+          "target": "g2",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 1645,
+          "evidenceFile": "evidence/008.json",
+          "evidenceSha256": "2e151152199bb1921d0b289ab3ba26b7dbda159b5bcf89451eca632f1951b75b"
+        },
+        {
+          "target": "hyatt",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "rate_limited",
+          "apiStatus": 200,
+          "pageStatus": 429,
+          "latencyMs": 2775,
+          "evidenceFile": "evidence/009.json",
+          "evidenceSha256": "76393bb174b5b4f78615d40f37ca05ea9d04376ba826c7c185ce89d7e1ffbcc0"
+        },
+        {
+          "target": "macys",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 1875,
+          "evidenceFile": "evidence/010.json",
+          "evidenceSha256": "034e5081a5a57832c5847d9a67e4e76237064209e13a99f6f7bc39e9e375e19c"
+        },
+        {
+          "target": "louisvuitton",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 2403,
+          "evidenceFile": "evidence/011.json",
+          "evidenceSha256": "bbabd123a5fc747146f4bf9314defcde1032867cecbbaa5ffb339b00569aedf0"
+        },
+        {
+          "target": "autozone",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 687,
+          "evidenceFile": "evidence/012.json",
+          "evidenceSha256": "56a8dddbb1906fb03155f211593a73ae3e61feb2779819ae136e8fadbc00da5d"
+        },
+        {
+          "target": "homedepot",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 803,
+          "evidenceFile": "evidence/013.json",
+          "evidenceSha256": "4525eeec778f1c613b33766222da1fd2063068ee1123952ed185902afa4b2959"
+        },
+        {
+          "target": "monster",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 1550,
+          "evidenceFile": "evidence/014.json",
+          "evidenceSha256": "01a249f7c86b57611d5a3985f928f246fed7fe6f026edc0ded4853df94368643"
+        },
+        {
+          "target": "mouser",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 1007,
+          "evidenceFile": "evidence/015.json",
+          "evidenceSha256": "aedd8ea19fa5415d36b6c7241ac8f084ebefbc2c6fb24066b774e7284e5f0f61"
+        },
+        {
+          "target": "realtor",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "rate_limited",
+          "apiStatus": 200,
+          "pageStatus": 429,
+          "latencyMs": 1793,
+          "evidenceFile": "evidence/016.json",
+          "evidenceSha256": "a30c1805e3dbcf6c80dc23cb8a52c49e4615ee41fb9b936fbf551a2ad8577260"
+        },
+        {
+          "target": "tripadvisor",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 1258,
+          "evidenceFile": "evidence/017.json",
+          "evidenceSha256": "655e7e4f2814abbc6bc7c656d07f9903e846cdf01db2346a0ce03a42a421102a"
+        },
+        {
+          "target": "allegro",
+          "profile": "patchright",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "timeout",
+          "apiStatus": 500,
+          "pageStatus": null,
+          "latencyMs": 30022,
+          "evidenceFile": "evidence/002.json",
+          "evidenceSha256": "93cda216ce8a5810d5e6a17ba737a55d6db5d5c272c66b9e17a083fe727a2c93"
+        },
+        {
+          "target": "roblox",
+          "profile": "camoufox",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "timeout",
+          "apiStatus": 500,
+          "pageStatus": null,
+          "latencyMs": 30135,
+          "evidenceFile": "evidence/003.json",
+          "evidenceSha256": "afcdc2d96680e578758e043880d753f8924433101766c81bc8e750cd6dbe05ef",
+          "documentFailure": {
+            "phase": "navigation",
+            "url": "about:blank",
+            "lastResponseStatus": null,
+            "recentNavigations": [
+              {
+                "url": "https://www.roblox.com/discover",
+                "status": 301
+              }
+            ],
+            "recentFailedRequests": []
+          }
+        },
+        {
+          "target": "coupang",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 1108,
+          "evidenceFile": "evidence/018.json",
+          "evidenceSha256": "5abc4d98e05451bfa2924d817193a6e52663296cda368a103a91e90bef9815bc"
+        },
+        {
+          "target": "cargurus",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "network_error",
+          "apiStatus": 500,
+          "pageStatus": null,
+          "latencyMs": 290,
+          "evidenceFile": "evidence/021.json",
+          "evidenceSha256": "7b1437904a2ab7f86b9b76f91805251c722d25f2bf40e8a34693298f49077b98"
+        },
+        {
+          "target": "lowes",
+          "profile": "patchright",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 834,
+          "evidenceFile": "evidence/019.json",
+          "evidenceSha256": "13c430ca37735d8ac154495dd818865ac866c713ebae69b6238da561ee8373da"
+        },
+        {
+          "target": "safeway",
+          "profile": "patchright",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 218,
+          "evidenceFile": "evidence/023.json",
+          "evidenceSha256": "37b5d73aa09cecea0f6a9196de4d1619f98e199797d796e6efeb09764cef4287"
+        },
+        {
+          "target": "cars.com",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 808,
+          "evidenceFile": "evidence/022.json",
+          "evidenceSha256": "a860e11c5f2e6f288dc8d5b48fb1ca670df64c51889469b5da93776cb17f64f1"
+        },
+        {
+          "target": "github",
+          "profile": "camoufox",
+          "attempt": 1,
+          "normalizedPass": true,
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "latencyMs": 2610,
+          "evidenceFile": "evidence/020.json",
+          "evidenceSha256": "32b5132e1c73a07dd1e7fc0fc6f13a268a11c81a70820d755b6edf7babfcb7ea"
+        },
+        {
+          "target": "saksfifthavenue",
+          "profile": "patchright",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 972,
+          "evidenceFile": "evidence/024.json",
+          "evidenceSha256": "5290824f169d0e708e4ae404bb4ad43fc04efb8e22d76a7d5717aa7871eb97ee"
+        },
+        {
+          "target": "crunchbase",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 722,
+          "evidenceFile": "evidence/025.json",
+          "evidenceSha256": "39b939603464237105e7817afbe3501de58076c6b28e4877ff50e290911c9c58"
+        },
+        {
+          "target": "neimanmarcus",
+          "profile": "patchright",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 1685,
+          "evidenceFile": "evidence/026.json",
+          "evidenceSha256": "440ec3725185067daf62354076a30ff7d6b040660e0f0f7386ecf1f5e5be5b77"
+        },
+        {
+          "target": "verizon",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "normalizedPass": true,
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "latencyMs": 2025,
+          "evidenceFile": "evidence/027.json",
+          "evidenceSha256": "8155ac0e2adf63f7cb46d1b25452f9e497a6344d773262391907e5c20783c021"
+        },
+        {
+          "target": "g2",
+          "profile": "patchright",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 534,
+          "evidenceFile": "evidence/028.json",
+          "evidenceSha256": "677bb7f918f27e991907875e296c42bf70f4d0c9e86dcc43b13b2074e646f1cf"
+        },
+        {
+          "target": "att",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 732,
+          "evidenceFile": "evidence/029.json",
+          "evidenceSha256": "65d50f7cac43be2a31667da63ebbfe899468161dc81f8fb83fe46021dce273e4"
+        },
+        {
+          "target": "goodrx",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 798,
+          "evidenceFile": "evidence/031.json",
+          "evidenceSha256": "2cb19ffe3b55017b597635e61b5b41f90312c03a06766ae52abd0a17f16ea86a"
+        },
+        {
+          "target": "hyatt",
+          "profile": "patchright",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "rate_limited",
+          "apiStatus": 200,
+          "pageStatus": 429,
+          "latencyMs": 1977,
+          "evidenceFile": "evidence/030.json",
+          "evidenceSha256": "47bb9b9d71b6ce1e6a3532af9e5ad6f09500cccff6d7f267a11d196de5185133"
+        },
+        {
+          "target": "Redfin",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 405,
+          "latencyMs": 1512,
+          "evidenceFile": "evidence/032.json",
+          "evidenceSha256": "970db48626fde5eb28b8c4ab94f3689050ddf7c4d2f16fb757f0944536e5a1c6"
+        },
+        {
+          "target": "macys",
+          "profile": "patchright",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 1680,
+          "evidenceFile": "evidence/033.json",
+          "evidenceSha256": "83fa306b709f85d0fe9bffb74fc9c8bc01d869b684aa2a039c1e3f1ddf12fd1d"
+        },
+        {
+          "target": "ZipRecruiter",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 644,
+          "evidenceFile": "evidence/034.json",
+          "evidenceSha256": "fc66feae320b62de20470d98a1845b306a06f4c1f7a7d3dea234e5f70f8bcf6e"
+        },
+        {
+          "target": "Idealista",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 1131,
+          "evidenceFile": "evidence/036.json",
+          "evidenceSha256": "9f9697cdac84848a8411de590288111cf4d3ed26b18e7e7ec374504b9a468631"
+        },
+        {
+          "target": "louisvuitton",
+          "profile": "patchright",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 1821,
+          "evidenceFile": "evidence/035.json",
+          "evidenceSha256": "26e62036a356178cd8c4e174854f64c2cf86dc269d12546b7e7b5199a50a3659"
+        },
+        {
+          "target": "autozone",
+          "profile": "patchright",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 320,
+          "evidenceFile": "evidence/038.json",
+          "evidenceSha256": "c6ae9bbed93a2bff96870d80bd9eb639d91546a65ac677c76a20a636bcb5f9c2"
+        },
+        {
+          "target": "Skyscanner",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "latencyMs": 1004,
+          "evidenceFile": "evidence/037.json",
+          "evidenceSha256": "bb6373443e06d64f0b3584079a1dacfdf066b366cf3879fdf10e6a712b265822"
+        },
+        {
+          "target": "homedepot",
+          "profile": "patchright",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 487,
+          "evidenceFile": "evidence/039.json",
+          "evidenceSha256": "e5cae363eb3a6d6c293b67873a19504c05fde2b08318e7838028722c80c5b060"
+        },
+        {
+          "target": "Congress.gov",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 792,
+          "evidenceFile": "evidence/040.json",
+          "evidenceSha256": "1e8c1dd46d30579626ce5b4c5b870ceb4496ce58d2a968bd87ca4411921ecf6f"
+        },
+        {
+          "target": "monster",
+          "profile": "patchright",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 255,
+          "evidenceFile": "evidence/041.json",
+          "evidenceSha256": "e4adf5192f5bd49cfbd8d25eccd7208699807109df910ab738de710ecd21b23d"
+        },
+        {
+          "target": "Apartments.com",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 813,
+          "evidenceFile": "evidence/042.json",
+          "evidenceSha256": "2891051d5a6d15719fc7b83d5f34aa37a1178964da5cc05fe8fe9c95255604ec"
+        },
+        {
+          "target": "mouser",
+          "profile": "patchright",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 753,
+          "evidenceFile": "evidence/043.json",
+          "evidenceSha256": "86d569f11a142bb7666c41d87ee66f43a7b2730e7be8bc40baf13b785f3d0bdf"
+        },
+        {
+          "target": "Allmenus",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "missing_expected_marker",
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "latencyMs": 584,
+          "evidenceFile": "evidence/044.json",
+          "evidenceSha256": "218d83f7ef7496318ee6aa91d7e5ba2c49ddb0bee29c6ff5b6db5b9c5675d22f"
+        },
+        {
+          "target": "axs",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 794,
+          "evidenceFile": "evidence/046.json",
+          "evidenceSha256": "cc25934df207a6872acf2f5c5ada86da30f15f1ea1351b935a734ff65d4c20c8"
+        },
+        {
+          "target": "realtor",
+          "profile": "patchright",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "rate_limited",
+          "apiStatus": 200,
+          "pageStatus": 429,
+          "latencyMs": 4213,
+          "evidenceFile": "evidence/045.json",
+          "evidenceSha256": "8509d0f4bb940ca8e9841896c6eb5792e9068492d2e9fd6a7325d6fabf707967"
+        },
+        {
+          "target": "tripadvisor",
+          "profile": "patchright",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 1211,
+          "evidenceFile": "evidence/048.json",
+          "evidenceSha256": "5a73c4995d7107e3eb1ac7eb6ae7d0418129c47035b3d106f2a633f9df35e6de"
+        },
+        {
+          "target": "coupang",
+          "profile": "patchright",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 843,
+          "evidenceFile": "evidence/049.json",
+          "evidenceSha256": "38138fb1690c6ee03b5472f2ad7c612cc7a15d762961a18e8d0b3075fec6198c"
+        },
+        {
+          "target": "cargurus",
+          "profile": "patchright",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "network_error",
+          "apiStatus": 500,
+          "pageStatus": null,
+          "latencyMs": 260,
+          "evidenceFile": "evidence/050.json",
+          "evidenceSha256": "a16b14086b2051534ddfb828b58c698982ffee46d7030e26322f4cb383e36c98"
+        },
+        {
+          "target": "cars.com",
+          "profile": "patchright",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 329,
+          "evidenceFile": "evidence/051.json",
+          "evidenceSha256": "c7413dbb5dac3ec7dbf8f45455c6d90c0af98b312200dee6e7fd9b3bc2028706"
+        },
+        {
+          "target": "crunchbase",
+          "profile": "patchright",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 392,
+          "evidenceFile": "evidence/052.json",
+          "evidenceSha256": "18236ef6a372d9490b3bb5caad1c6b9bc9f329abfebbb5047d7c00ff5128338f"
+        },
+        {
+          "target": "verizon",
+          "profile": "patchright",
+          "attempt": 1,
+          "normalizedPass": true,
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "latencyMs": 2987,
+          "evidenceFile": "evidence/053.json",
+          "evidenceSha256": "c2e5dbe5e41e683c820505b80b44e23e92d832b50d9e85e5f1a673bb387bb589"
+        },
+        {
+          "target": "att",
+          "profile": "patchright",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 350,
+          "evidenceFile": "evidence/054.json",
+          "evidenceSha256": "b0e234c55d586719319f92d8b2bfdfc676151730a22129483bfc942111797db3"
+        },
+        {
+          "target": "goodrx",
+          "profile": "patchright",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 347,
+          "evidenceFile": "evidence/055.json",
+          "evidenceSha256": "0c99beb45e80280bb34a56691887f0e9ffce709a8b942f465105b990c8d1a404"
+        },
+        {
+          "target": "Redfin",
+          "profile": "patchright",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 405,
+          "latencyMs": 2923,
+          "evidenceFile": "evidence/056.json",
+          "evidenceSha256": "0b2ec7f30e751348bf4902488c680c97f02b66bdc56a45d3df96019b80d43d51"
+        },
+        {
+          "target": "ZipRecruiter",
+          "profile": "patchright",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 276,
+          "evidenceFile": "evidence/057.json",
+          "evidenceSha256": "c48e09c483698eeceeb7b52e8d21107c210e976ac0a5821de3cc674ddf5a446f"
+        },
+        {
+          "target": "Idealista",
+          "profile": "patchright",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 966,
+          "evidenceFile": "evidence/058.json",
+          "evidenceSha256": "695421c19104ca0903577905e46005242c5e3d2fc8a4dd7cf68629223df04a06"
+        },
+        {
+          "target": "Skyscanner",
+          "profile": "patchright",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "latencyMs": 651,
+          "evidenceFile": "evidence/059.json",
+          "evidenceSha256": "fe747d20490e33b9efcbf0119403f19995429a011e7ba82256a0a05336df417a"
+        },
+        {
+          "target": "Congress.gov",
+          "profile": "patchright",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 340,
+          "evidenceFile": "evidence/060.json",
+          "evidenceSha256": "dc02d46fd737ad229710cc1c48c53e63042f0dce9e980e3da2066c236db65c77"
+        },
+        {
+          "target": "Apartments.com",
+          "profile": "patchright",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 762,
+          "evidenceFile": "evidence/061.json",
+          "evidenceSha256": "3e198ea25cb513d489d6c01bcf1688e4766132872f417936994c969e469dc019"
+        },
+        {
+          "target": "Allmenus",
+          "profile": "patchright",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "missing_expected_marker",
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "latencyMs": 235,
+          "evidenceFile": "evidence/062.json",
+          "evidenceSha256": "4d7a11842b5ca0498e08dd2fb127e472e62afaa9b45348ddb87da5d3adc4b54d"
+        },
+        {
+          "target": "axs",
+          "profile": "patchright",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 383,
+          "evidenceFile": "evidence/063.json",
+          "evidenceSha256": "6880b8283bd62d12a0db90467159efe105524f0127a88444968e1f35d6697c63"
+        },
+        {
+          "target": "roblox",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "timeout",
+          "apiStatus": 500,
+          "pageStatus": null,
+          "latencyMs": 30020,
+          "evidenceFile": "evidence/047.json",
+          "evidenceSha256": "8f95b0568cf3319dc01753d238b5393a10e770607496f8975a4b75098ac50a8c",
+          "documentFailure": {
+            "phase": "navigation",
+            "url": "about:blank",
+            "lastResponseStatus": null,
+            "recentNavigations": [
+              {
+                "url": "https://www.roblox.com/discover",
+                "status": 301
+              }
+            ],
+            "recentFailedRequests": []
+          }
+        },
+        {
+          "target": "draftkings",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 727,
+          "evidenceFile": "evidence/065.json",
+          "evidenceSha256": "f808deae76d8e2de39559b0ce2a913bd6ce544e2a2cd6f33b2554965aa78cb46"
+        },
+        {
+          "target": "github",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "normalizedPass": true,
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "latencyMs": 1970,
+          "evidenceFile": "evidence/066.json",
+          "evidenceSha256": "4f922fefc0a9444d1f1529d36b082ae11ba21bbec73d75ec5f78963c3a941e18"
+        },
+        {
+          "target": "stackoverflow",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 674,
+          "evidenceFile": "evidence/067.json",
+          "evidenceSha256": "1e4686fb5db52603fe471f7c1174b5ff8fefc039ecdee49e8f3eae66862bfe5d"
+        },
+        {
+          "target": "arxiv",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "normalizedPass": true,
+          "failureReason": "missing_expected_marker",
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "latencyMs": 756,
+          "evidenceFile": "evidence/068.json",
+          "evidenceSha256": "71ec88670949a1414c03daf84073cd98015aa252dd9fde3c4d122620e681161f"
+        },
+        {
+          "target": "buybuybaby",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 786,
+          "evidenceFile": "evidence/069.json",
+          "evidenceSha256": "b28532743454079b3d19b9f21b75e0db041de62aec5789e8421b2cd0cc1b42cc"
+        },
+        {
+          "target": "roblox",
+          "profile": "patchright",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "timeout",
+          "apiStatus": 500,
+          "pageStatus": null,
+          "latencyMs": 30022,
+          "evidenceFile": "evidence/064.json",
+          "evidenceSha256": "cc8043a1b3a9b0c9e134226d0be7d040e538bb87f004adef8e93cd0f230df573",
+          "documentFailure": {
+            "phase": "navigation",
+            "url": "about:blank",
+            "lastResponseStatus": null,
+            "recentNavigations": [
+              {
+                "url": "https://www.roblox.com/discover",
+                "status": 301
+              }
+            ],
+            "recentFailedRequests": []
+          }
+        },
+        {
+          "target": "draftkings",
+          "profile": "patchright",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 365,
+          "evidenceFile": "evidence/070.json",
+          "evidenceSha256": "129fa3003c100126b3ccc308173f7b84533e508c153183f9e5c24d91856ab60c"
+        },
+        {
+          "target": "github",
+          "profile": "patchright",
+          "attempt": 1,
+          "normalizedPass": true,
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "latencyMs": 1086,
+          "evidenceFile": "evidence/071.json",
+          "evidenceSha256": "c5ff04991075e59e95b14b43951e86f2ea6741864e89f3e45ab207e27ffde2ec"
+        },
+        {
+          "target": "stackoverflow",
+          "profile": "patchright",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 278,
+          "evidenceFile": "evidence/072.json",
+          "evidenceSha256": "fd3dd7f15b40f92b0d1389955933cdd9b160981dabaa18b81a94831e1c7f3c38"
+        },
+        {
+          "target": "arxiv",
+          "profile": "patchright",
+          "attempt": 1,
+          "normalizedPass": true,
+          "failureReason": "missing_expected_marker",
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "latencyMs": 575,
+          "evidenceFile": "evidence/073.json",
+          "evidenceSha256": "009915bb8c4653a797870d31fd725c89ba75f9b8f8f55afaf3d3c24004f1c56f"
+        },
+        {
+          "target": "buybuybaby",
+          "profile": "patchright",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 690,
+          "evidenceFile": "evidence/074.json",
+          "evidenceSha256": "240480e9431bb82233d1ea5518271e536f9c5aeff4a3cd85b7ed3e66665faeb5"
+        }
+      ],
+      "resourceAudit": {
+        "peakSampledMemoryBytes": {
+          "rebrowser": 710627328,
+          "patchright": 626016256,
+          "camoufox": 1032994816
+        },
+        "maximumObservedCounters": {
+          "rebrowser": {
+            "memory.events:low": 0,
+            "memory.events:high": 0,
+            "memory.events:max": 0,
+            "memory.events:oom": 0,
+            "memory.events:oom_kill": 0,
+            "memory.events:oom_group_kill": 0,
+            "memory.events:sock_throttled": 0,
+            "pids.events:max": 0
+          },
+          "patchright": {
+            "memory.events:low": 0,
+            "memory.events:high": 0,
+            "memory.events:max": 0,
+            "memory.events:oom": 0,
+            "memory.events:oom_kill": 0,
+            "memory.events:oom_group_kill": 0,
+            "memory.events:sock_throttled": 0,
+            "pids.events:max": 0
+          },
+          "camoufox": {
+            "memory.events:low": 0,
+            "memory.events:high": 0,
+            "memory.events:max": 0,
+            "memory.events:oom": 0,
+            "memory.events:oom_kill": 0,
+            "memory.events:oom_group_kill": 0,
+            "memory.events:sock_throttled": 0,
+            "pids.events:max": 0
+          }
+        }
+      },
+      "finalHealth": {
+        "rebrowser": {
+          "status": "healthy",
+          "browserEngine": "rebrowser",
+          "headless": false,
+          "maxConcurrentPages": 1,
+          "activePages": 0,
+          "browserSessions": 0,
+          "blockAds": true,
+          "blockMedia": false,
+          "ownerBootId": "89ea94d3-60c4-4cc5-a079-2fa519ac512b",
+          "capabilities": {
+            "version": 1,
+            "readiness": true,
+            "actions": [
+              "click",
+              "wait",
+              "write",
+              "press",
+              "scroll",
+              "scrape"
+            ],
+            "workflows": [
+              "none",
+              "auto",
+              "bestbuy-us@1",
+              "product-details@1"
+            ],
+            "consent": true,
+            "retainedPages": true,
+            "fencedSessions": true,
+            "pageScopedHandoff": true
+          },
+          "serviceWorkers": "block"
+        },
+        "patchright": {
+          "status": "healthy",
+          "browserEngine": "patchright",
+          "headless": false,
+          "maxConcurrentPages": 1,
+          "activePages": 0,
+          "browserSessions": 0,
+          "blockAds": true,
+          "blockMedia": false,
+          "ownerBootId": "256a549d-6a5b-4be6-8075-96eafec7d713",
+          "capabilities": {
+            "version": 1,
+            "readiness": true,
+            "actions": [
+              "click",
+              "wait",
+              "write",
+              "press",
+              "scroll",
+              "scrape"
+            ],
+            "workflows": [
+              "none",
+              "auto",
+              "bestbuy-us@1",
+              "product-details@1"
+            ],
+            "consent": true,
+            "retainedPages": true,
+            "fencedSessions": true,
+            "pageScopedHandoff": true
+          },
+          "serviceWorkers": "block"
+        },
+        "camoufox": {
+          "status": "healthy",
+          "browserEngine": "camoufox",
+          "headless": false,
+          "maxConcurrentPages": 1,
+          "activePages": 0,
+          "browserSessions": 0,
+          "blockAds": true,
+          "blockMedia": false,
+          "ownerBootId": "e31cb21b-8b25-47b6-97a9-19bc0db09222",
+          "capabilities": {
+            "version": 1,
+            "readiness": true,
+            "actions": [
+              "click",
+              "wait",
+              "write",
+              "press",
+              "scroll",
+              "scrape"
+            ],
+            "workflows": [
+              "none",
+              "auto",
+              "bestbuy-us@1",
+              "product-details@1"
+            ],
+            "consent": true,
+            "retainedPages": true,
+            "fencedSessions": true,
+            "pageScopedHandoff": true
+          },
+          "serviceWorkers": "block"
+        }
+      },
+      "timingIntegrity": {
+        "valid": true,
+        "sampleIntervalMs": 1000,
+        "maximumAllowedGapMs": 10000,
+        "maximumObservedGapMs": 1003,
+        "gaps": []
+      },
+      "cleanup": {
+        "rebrowser": {
+          "image": "sha256:4cf1c1eb4550e82504a0f11af5817e2a95143bc96e3b83f081400764e51a8244",
+          "state": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 143,
+            "Error": "",
+            "StartedAt": "2026-11-03T16:21:43.113854258Z",
+            "FinishedAt": "2026-11-03T16:23:53.347876679Z"
+          },
+          "removed": true
+        },
+        "patchright": {
+          "image": "sha256:4cf1c1eb4550e82504a0f11af5817e2a95143bc96e3b83f081400764e51a8244",
+          "state": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 143,
+            "Error": "",
+            "StartedAt": "2026-11-03T16:21:45.459609759Z",
+            "FinishedAt": "2026-11-03T16:23:53.551910888Z"
+          },
+          "removed": true
+        },
+        "camoufox": {
+          "image": "sha256:4cf1c1eb4550e82504a0f11af5817e2a95143bc96e3b83f081400764e51a8244",
+          "state": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 143,
+            "Error": "",
+            "StartedAt": "2026-11-03T16:21:47.818670635Z",
+            "FinishedAt": "2026-11-03T16:23:53.755753138Z"
+          },
+          "removed": true
+        }
+      },
+      "hashes": {
+        "manifest.json": "fb5aed969a41167db097bd4a848e2ebbce02f58a17e7c8c55086e43af45e4f26",
+        "attempts.jsonl": "4c514822ba5b7941feafbbc06a995c3562de2e189e50a2ee1c72ea7edfa1c931",
+        "deployment.json": "4227d631e7ff48d2e853234deb50c6ea7c5240805c0ac77ee219768147b7c320",
+        "cleanup.json": "69a3b7fa0aa9263f902da70b110f61c660a941354d5a6fb8236bb162c4a4fef7",
+        "resource-samples.jsonl": "e83725a2855daf94274d432896bd9d492cd4d00eac84c1344f87ba93e17e7ef6",
+        "latest-resource-sample.json": "1156e001a2d4bc931c6e030d3bd0b146511606e0f1dbe0e8eae8ea03e59f3c74",
+        "runner.log": "49a1a2dc07fa786057410ff3c99d385d8316d4993263b9d399da832f43d15e32"
+      }
+    },
+    {
+      "name": "origin-warmup-2026-11-03",
+      "status": "complete_replayed",
+      "scope": "Selected browser-service policy probe: fresh direct visit versus same-origin homepage and original target in a retained tab. Extra request/time and retained-consent behavior differ; not a causal cookie-only or full API comparison.",
+      "plannedTargetObservations": 12,
+      "returnedTargetObservations": 12,
+      "globalConcurrency": 2,
+      "sourceCommit": "da4bb50c979e628f8aa32116790704a79bbe3bbc",
+      "imageId": "sha256:4cf1c1eb4550e82504a0f11af5817e2a95143bc96e3b83f081400764e51a8244",
+      "allReturnedScoresAndHashesReplay": true,
+      "cases": [
+        {
+          "target": "lowes",
+          "profile": "direct",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 1342,
+          "evidenceFile": "evidence/001-target.json",
+          "evidenceSha256": "54521f3bce77dfbdd2c6f15191fb30a69508377bc80993c522685c41de88e41e"
+        },
+        {
+          "target": "lowes",
+          "profile": "warmup",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 6373,
+          "evidenceFile": "evidence/002-target.json",
+          "evidenceSha256": "1f2fafccb7f9bdbd0ec76d59e7ed1d39e4cfaa0229187de34925f36879f60808",
+          "warmup": {
+            "pageStatus": 200,
+            "sessionReused": true,
+            "sameOwnerBoot": true,
+            "sessionClosedStatus": 204,
+            "evidenceFile": "evidence/002-warmup.json",
+            "evidenceSha256": "bb3815b8c9acfada494138f9557e0b75cacfb59edf687b5d720cd2dbd31eb581"
+          }
+        },
+        {
+          "target": "g2",
+          "profile": "direct",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 990,
+          "evidenceFile": "evidence/004-target.json",
+          "evidenceSha256": "5812b87b08803e8443eac90c285c7b397ceb5209e6c93d29a5729c3b68fb8bac"
+        },
+        {
+          "target": "g2",
+          "profile": "warmup",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 4358,
+          "evidenceFile": "evidence/003-target.json",
+          "evidenceSha256": "2dd5c72ab10fd30a26dec1027c14a65bdb19a5ce14bafe3daef2c65abe2f4403",
+          "warmup": {
+            "pageStatus": 403,
+            "sessionReused": true,
+            "sameOwnerBoot": true,
+            "sessionClosedStatus": 204,
+            "evidenceFile": "evidence/003-warmup.json",
+            "evidenceSha256": "c2d04c94029a8f2a8a08fe63a60d92f46098f3a2da570e22366096b40b885cd9"
+          }
+        },
+        {
+          "target": "macys",
+          "profile": "direct",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 1612,
+          "evidenceFile": "evidence/005-target.json",
+          "evidenceSha256": "0140152267e5e42c9230c1b1f33308f6f44a8ac233eb5eaddc1ab615272090ef"
+        },
+        {
+          "target": "macys",
+          "profile": "warmup",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 6265,
+          "evidenceFile": "evidence/006-target.json",
+          "evidenceSha256": "692394104eaea602f6c7147e7131b655c4fe1ae772d0faf1ee571647b9df26e3",
+          "warmup": {
+            "pageStatus": 403,
+            "sessionReused": true,
+            "sameOwnerBoot": true,
+            "sessionClosedStatus": 204,
+            "evidenceFile": "evidence/006-warmup.json",
+            "evidenceSha256": "95c20d3c22369ca892aabdcd44c681139dc3d94bd0147ba0bd86f23d27177ea1"
+          }
+        },
+        {
+          "target": "homedepot",
+          "profile": "direct",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 709,
+          "evidenceFile": "evidence/008-target.json",
+          "evidenceSha256": "4b9e48a3eaebc1cdcd1ddbf074898e31030c53d50ec745129a2580db2133eedc"
+        },
+        {
+          "target": "homedepot",
+          "profile": "warmup",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 3848,
+          "evidenceFile": "evidence/007-target.json",
+          "evidenceSha256": "ee4deaf871b74195c31d5825f50fc55636ff065917d16228e050eda79ba67011",
+          "warmup": {
+            "pageStatus": 403,
+            "sessionReused": true,
+            "sameOwnerBoot": true,
+            "sessionClosedStatus": 204,
+            "evidenceFile": "evidence/007-warmup.json",
+            "evidenceSha256": "5346b1f3972fc0dbdad337b8c6d0ebf8756fba7faa610bd0429101cda18c983f"
+          }
+        },
+        {
+          "target": "crunchbase",
+          "profile": "direct",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 830,
+          "evidenceFile": "evidence/009-target.json",
+          "evidenceSha256": "254e219fdd96759c3d2daafa1a1f22990b7c5f4dd08c5474cae68dbb9c27f844"
+        },
+        {
+          "target": "crunchbase",
+          "profile": "warmup",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "latencyMs": 4419,
+          "evidenceFile": "evidence/010-target.json",
+          "evidenceSha256": "c85a331e3a827353683e9fae0b354130aa204db41d61c1907cc2b792935789a6",
+          "warmup": {
+            "pageStatus": 200,
+            "sessionReused": true,
+            "sameOwnerBoot": true,
+            "sessionClosedStatus": 204,
+            "evidenceFile": "evidence/010-warmup.json",
+            "evidenceSha256": "a334accb8cddfa6c3546acdfdbf9362b68728a994a27902d66bff3e208406c64"
+          }
+        },
+        {
+          "target": "github",
+          "profile": "direct",
+          "attempt": 1,
+          "normalizedPass": true,
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "latencyMs": 1961,
+          "evidenceFile": "evidence/012-target.json",
+          "evidenceSha256": "173ab8db8b44053fd8b91e1b6abd8f4941790db5a4ed5aea4c2f17d94ef5a030"
+        },
+        {
+          "target": "github",
+          "profile": "warmup",
+          "attempt": 1,
+          "normalizedPass": true,
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "latencyMs": 8517,
+          "evidenceFile": "evidence/011-target.json",
+          "evidenceSha256": "8ab5776a57820ec7bc77946d1b9372cd977dcf7c05defd79e9ee65dc0a9efbd6",
+          "warmup": {
+            "pageStatus": 200,
+            "sessionReused": true,
+            "sameOwnerBoot": true,
+            "sessionClosedStatus": 204,
+            "evidenceFile": "evidence/011-warmup.json",
+            "evidenceSha256": "8ec630eac25b0f96a526fc872be696ee95bff875cd119ef6e1d26650c4822f6d"
+          }
+        }
+      ],
+      "resourceAudit": {
+        "peakSampledMemoryBytes": {
+          "autogtm-firecrawl-warmup-direct-20261103": 621416448,
+          "autogtm-firecrawl-warmup-retained-20261103": 822661120
+        },
+        "maximumObservedCounters": {
+          "autogtm-firecrawl-warmup-direct-20261103": {
+            "memory.events:low": 0,
+            "memory.events:high": 0,
+            "memory.events:max": 0,
+            "memory.events:oom": 0,
+            "memory.events:oom_kill": 0,
+            "memory.events:oom_group_kill": 0,
+            "memory.events:sock_throttled": 0,
+            "pids.events:max": 0
+          },
+          "autogtm-firecrawl-warmup-retained-20261103": {
+            "memory.events:low": 0,
+            "memory.events:high": 0,
+            "memory.events:max": 0,
+            "memory.events:oom": 0,
+            "memory.events:oom_kill": 0,
+            "memory.events:oom_group_kill": 0,
+            "memory.events:sock_throttled": 0,
+            "pids.events:max": 0
+          }
+        }
+      },
+      "finalHealth": {
+        "autogtm-firecrawl-warmup-direct-20261103": {
+          "status": "healthy",
+          "browserEngine": "rebrowser",
+          "headless": false,
+          "maxConcurrentPages": 1,
+          "activePages": 0,
+          "browserSessions": 0,
+          "blockAds": true,
+          "blockMedia": false,
+          "ownerBootId": "2a42d87c-f619-4775-9334-1dd6d98641aa",
+          "capabilities": {
+            "version": 1,
+            "readiness": true,
+            "actions": [
+              "click",
+              "wait",
+              "write",
+              "press",
+              "scroll",
+              "scrape"
+            ],
+            "workflows": [
+              "none",
+              "auto",
+              "bestbuy-us@1",
+              "product-details@1"
+            ],
+            "consent": true,
+            "retainedPages": true,
+            "fencedSessions": true,
+            "pageScopedHandoff": true
+          },
+          "serviceWorkers": "block"
+        },
+        "autogtm-firecrawl-warmup-retained-20261103": {
+          "status": "healthy",
+          "browserEngine": "rebrowser",
+          "headless": false,
+          "maxConcurrentPages": 1,
+          "activePages": 0,
+          "browserSessions": 0,
+          "blockAds": true,
+          "blockMedia": false,
+          "ownerBootId": "32541cbe-8a5f-4183-a075-48e26774b9b2",
+          "capabilities": {
+            "version": 1,
+            "readiness": true,
+            "actions": [
+              "click",
+              "wait",
+              "write",
+              "press",
+              "scroll",
+              "scrape"
+            ],
+            "workflows": [
+              "none",
+              "auto",
+              "bestbuy-us@1",
+              "product-details@1"
+            ],
+            "consent": true,
+            "retainedPages": true,
+            "fencedSessions": true,
+            "pageScopedHandoff": true
+          },
+          "serviceWorkers": "block"
+        }
+      },
+      "timingIntegrity": {
+        "valid": true,
+        "sampleIntervalMs": 1000,
+        "maximumAllowedGapMs": 10000,
+        "maximumObservedGapMs": 1003,
+        "gaps": []
+      },
+      "cleanup": {
+        "autogtm-firecrawl-warmup-direct-20261103": {
+          "image": "sha256:4cf1c1eb4550e82504a0f11af5817e2a95143bc96e3b83f081400764e51a8244",
+          "state": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 143,
+            "Error": "",
+            "StartedAt": "2026-11-03T16:29:52.422632554Z",
+            "FinishedAt": "2026-11-03T16:30:41.401200132Z"
+          },
+          "removed": true
+        },
+        "autogtm-firecrawl-warmup-retained-20261103": {
+          "image": "sha256:4cf1c1eb4550e82504a0f11af5817e2a95143bc96e3b83f081400764e51a8244",
+          "state": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 143,
+            "Error": "",
+            "StartedAt": "2026-11-03T16:29:54.12917368Z",
+            "FinishedAt": "2026-11-03T16:30:41.604213465Z"
+          },
+          "removed": true
+        }
+      },
+      "hashes": {
+        "manifest.json": "3883cbaca419b6142239fde6f12741e0e3b4ccd4d084ee23e9a16e968f6a3260",
+        "attempts.jsonl": "c9c2188f57e21145cdfd2e6dc97926746749842445f14caf82a437a8ddb47f5e",
+        "deployment.json": "81adc6d34895c8cdce43f0f6d74d6fceffc66e86d5c203b668df3fc04f5fdc50",
+        "cleanup.json": "89bb2caf7684dbbd7fae477e4b28e8bde3f28d05d79417a02952038bbfc9a8be",
+        "resource-samples.jsonl": "b14b654bb194396b42bc4f38c5e8b7988c2100a65a71edbe50736cc185793325",
+        "latest-resource-sample.json": "089d17c4fe1e7166e3870cb4ec9a5a0b6ae508575c4966ac25d63e6b40f33a4d",
+        "runner.log": "437e5384a8d27f822c9933753830749399bb03cb999b3c73be6913b555917ae2"
+      }
+    },
+    {
+      "name": "edge-400-probe-2026-11-03",
+      "status": "complete_replayed",
+      "scope": "Selected three-engine HTTP-400 diagnostic on the same current image, one attempt per target/engine. Not a full API or repeated-round result.",
+      "plannedTargetObservations": 6,
+      "returnedTargetObservations": 6,
+      "globalConcurrency": 3,
+      "sourceCommit": "da4bb50c979e628f8aa32116790704a79bbe3bbc",
+      "imageId": "sha256:4cf1c1eb4550e82504a0f11af5817e2a95143bc96e3b83f081400764e51a8244",
+      "allReturnedScoresAndHashesReplay": true,
+      "cases": [
+        {
+          "target": "lululemon",
+          "profile": "patchright",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_400",
+          "apiStatus": 200,
+          "pageStatus": 400,
+          "latencyMs": 545,
+          "evidenceFile": "evidence/002.json",
+          "evidenceSha256": "f47200a853f91aa2ba6872a22ee7d21392cef8e4b4308e6aa8da952c886794fd"
+        },
+        {
+          "target": "lululemon",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_400",
+          "apiStatus": 200,
+          "pageStatus": 400,
+          "latencyMs": 860,
+          "evidenceFile": "evidence/001.json",
+          "evidenceSha256": "efb8e326d5a9e1857020291185163e4e474272f71ff188aa5f8e0c7e8d2910de"
+        },
+        {
+          "target": "github",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "normalizedPass": true,
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "latencyMs": 1834,
+          "evidenceFile": "evidence/005.json",
+          "evidenceSha256": "3505df674026843170db2b7e42e2ca8c70ce7ad95070af1ea98d19a85bda2c0b"
+        },
+        {
+          "target": "github",
+          "profile": "patchright",
+          "attempt": 1,
+          "normalizedPass": true,
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "latencyMs": 2128,
+          "evidenceFile": "evidence/004.json",
+          "evidenceSha256": "be2ffa192765e0f2661d1d130a38f8cfe4ecc3c42f93a3f95c9ffc11ffd51804"
+        },
+        {
+          "target": "lululemon",
+          "profile": "camoufox",
+          "attempt": 1,
+          "normalizedPass": true,
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "latencyMs": 3931,
+          "evidenceFile": "evidence/003.json",
+          "evidenceSha256": "4e1abaa3511e3ba976b03f5f06a0ab549a7f060f7fd2cc448ae14c904e315415"
+        },
+        {
+          "target": "github",
+          "profile": "camoufox",
+          "attempt": 1,
+          "normalizedPass": true,
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "latencyMs": 1556,
+          "evidenceFile": "evidence/006.json",
+          "evidenceSha256": "bef955bbd664edc042f744c0457882e884df1027b3703dea2c9a37f42a762f83"
+        }
+      ],
+      "resourceAudit": {
+        "peakSampledMemoryBytes": {
+          "rebrowser": 458719232,
+          "patchright": 357543936,
+          "camoufox": 1508667392
+        },
+        "maximumObservedCounters": {
+          "rebrowser": {
+            "memory.events:low": 0,
+            "memory.events:high": 0,
+            "memory.events:max": 0,
+            "memory.events:oom": 0,
+            "memory.events:oom_kill": 0,
+            "memory.events:oom_group_kill": 0,
+            "memory.events:sock_throttled": 0,
+            "pids.events:max": 0
+          },
+          "patchright": {
+            "memory.events:low": 0,
+            "memory.events:high": 0,
+            "memory.events:max": 0,
+            "memory.events:oom": 0,
+            "memory.events:oom_kill": 0,
+            "memory.events:oom_group_kill": 0,
+            "memory.events:sock_throttled": 0,
+            "pids.events:max": 0
+          },
+          "camoufox": {
+            "memory.events:low": 0,
+            "memory.events:high": 0,
+            "memory.events:max": 0,
+            "memory.events:oom": 0,
+            "memory.events:oom_kill": 0,
+            "memory.events:oom_group_kill": 0,
+            "memory.events:sock_throttled": 0,
+            "pids.events:max": 0
+          }
+        }
+      },
+      "finalHealth": {
+        "rebrowser": {
+          "status": "healthy",
+          "browserEngine": "rebrowser",
+          "headless": false,
+          "maxConcurrentPages": 1,
+          "activePages": 0,
+          "browserSessions": 0,
+          "blockAds": true,
+          "blockMedia": false,
+          "ownerBootId": "87d90498-13e7-47d0-a879-c66d6e23a50c",
+          "capabilities": {
+            "version": 1,
+            "readiness": true,
+            "actions": [
+              "click",
+              "wait",
+              "write",
+              "press",
+              "scroll",
+              "scrape"
+            ],
+            "workflows": [
+              "none",
+              "auto",
+              "bestbuy-us@1",
+              "product-details@1"
+            ],
+            "consent": true,
+            "retainedPages": true,
+            "fencedSessions": true,
+            "pageScopedHandoff": true
+          },
+          "serviceWorkers": "block"
+        },
+        "patchright": {
+          "status": "healthy",
+          "browserEngine": "patchright",
+          "headless": false,
+          "maxConcurrentPages": 1,
+          "activePages": 0,
+          "browserSessions": 0,
+          "blockAds": true,
+          "blockMedia": false,
+          "ownerBootId": "d236377d-0af0-415a-a989-e35ae40976ff",
+          "capabilities": {
+            "version": 1,
+            "readiness": true,
+            "actions": [
+              "click",
+              "wait",
+              "write",
+              "press",
+              "scroll",
+              "scrape"
+            ],
+            "workflows": [
+              "none",
+              "auto",
+              "bestbuy-us@1",
+              "product-details@1"
+            ],
+            "consent": true,
+            "retainedPages": true,
+            "fencedSessions": true,
+            "pageScopedHandoff": true
+          },
+          "serviceWorkers": "block"
+        },
+        "camoufox": {
+          "status": "healthy",
+          "browserEngine": "camoufox",
+          "headless": false,
+          "maxConcurrentPages": 1,
+          "activePages": 0,
+          "browserSessions": 0,
+          "blockAds": true,
+          "blockMedia": false,
+          "ownerBootId": "b849ea0f-35a0-49c2-8cb6-40b91d61f6dc",
+          "capabilities": {
+            "version": 1,
+            "readiness": true,
+            "actions": [
+              "click",
+              "wait",
+              "write",
+              "press",
+              "scroll",
+              "scrape"
+            ],
+            "workflows": [
+              "none",
+              "auto",
+              "bestbuy-us@1",
+              "product-details@1"
+            ],
+            "consent": true,
+            "retainedPages": true,
+            "fencedSessions": true,
+            "pageScopedHandoff": true
+          },
+          "serviceWorkers": "block"
+        }
+      },
+      "timingIntegrity": {
+        "valid": true,
+        "sampleIntervalMs": 1000,
+        "maximumAllowedGapMs": 10000,
+        "maximumObservedGapMs": 1003,
+        "gaps": []
+      },
+      "cleanup": {
+        "rebrowser": {
+          "image": "sha256:4cf1c1eb4550e82504a0f11af5817e2a95143bc96e3b83f081400764e51a8244",
+          "state": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 143,
+            "Error": "",
+            "StartedAt": "2026-11-03T16:57:11.894271049Z",
+            "FinishedAt": "2026-11-03T16:57:34.697936587Z"
+          },
+          "removed": true
+        },
+        "patchright": {
+          "image": "sha256:4cf1c1eb4550e82504a0f11af5817e2a95143bc96e3b83f081400764e51a8244",
+          "state": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 143,
+            "Error": "",
+            "StartedAt": "2026-11-03T16:57:13.627876549Z",
+            "FinishedAt": "2026-11-03T16:57:34.907224795Z"
+          },
+          "removed": true
+        },
+        "camoufox": {
+          "image": "sha256:4cf1c1eb4550e82504a0f11af5817e2a95143bc96e3b83f081400764e51a8244",
+          "state": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 143,
+            "Error": "",
+            "StartedAt": "2026-11-03T16:57:15.310600759Z",
+            "FinishedAt": "2026-11-03T16:57:35.099311962Z"
+          },
+          "removed": true
+        }
+      },
+      "hashes": {
+        "manifest.json": "52a8c938a81230705414cfd9e3bbfcd83161851d1e72450caa897bb23ef8d8cb",
+        "attempts.jsonl": "dc11e48d455caabb05e89374f14703e301a377dcc737952ae3f20b6a25595ea6",
+        "deployment.json": "7f73c2279dcf7312bf7f3b0af461d46096ae22569c80c8d3b00a450dd4297b39",
+        "cleanup.json": "9b95075bdab16e32957fbcba8a18c5dd6c4c07b0eccbb59fd39df733bd264b35",
+        "resource-samples.jsonl": "81daa409e110885879767d60e66236c7696db1fea0b1a99c65122a4d8e8f243e",
+        "latest-resource-sample.json": "538474a35c97b1d5704f792c009c3b853b3c9aabad164ba1de54e553d960d9f3",
+        "runner.log": "874608811c2d3eefbede9586be7ee3972b9ba3d1dff37d39cf69188c75dd8037"
+      }
+    }
+  ],
+  "conclusion": "The initial driver portfolio and retained-homepage warm-up added no exclusive coverage. All three engines timed out before the Roblox destination committed. The later newly-hosted lululemon HTTP-400 probe did find a Firefox marker match where both Chromium drivers returned 400, motivating a separately measured API eligibility repair. The Canada Goose metadata-only marker remains a failure; no default engine, blanket warm-up or Roblox deadline-splitting change was justified.",
+  "limits": [
+    "The consent/transport probe returned four of eight planned observations before Firefox memory.events:max reached 196. OOM and OOM-kill counters remained zero. The guard stopped the experiment and all created containers were removed; incomplete cases are not inferred as observed failures.",
+    "One selected observation per engine/target or warm-up policy is not stable availability or proof that a technique can never work.",
+    "Driver comparisons use the same image and egress, while browser protocol implementations differ. WAF labels are publisher categories, not proof of an active commercial rule.",
+    "Warm-up adds a homepage request and three-second delay, uses a retained origin-fenced tab and disables automatic consent-library actions for that retained tab. It is not a cookie-only experiment. All six retained sessions were explicitly removed.",
+    "A 30-second pre-commit timeout does not prove a permanent outage or identify whether network, route, server or access policy is responsible.",
+    "Raw session capabilities stay in private local artifacts; this receipt contains no session tokens or cookie values."
+  ]
+}
