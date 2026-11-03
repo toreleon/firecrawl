@@ -25,7 +25,9 @@ lock; provision them before restricting the application's DDL permission. The
 schema is exported as `localBrowserSchema` in `src/lib/local-browser/store.ts`.
 
 Set `BROWSER_SERVICE_AUTH_TOKEN` on every browser owner too. Keep owner URLs on
-the internal network. Each owner advertises a unique process boot ID and its
+the internal network and use a separate address for each owner. An address that
+can switch between browser processes will fail the boot-identity check. Each
+owner advertises a unique process boot ID and its
 capabilities; commands addressed to an old process fail. Existing Firecrawl API
 authentication supplies the team identity. Authentication-disabled installations
 have the existing single `bypass` identity and must remain on a trusted network.
@@ -145,7 +147,10 @@ session; a completed operation whose large result was not retained returns
 `OPERATION_RESULT_UNAVAILABLE` on replay rather than rerunning. Explicit delete
 revokes routing immediately; failed browser cleanup remains pending for the
 reconciler. Closed directory records expire after one day; result/capability data
-is removed when closed. The secret currently has no key-rotation/migration API.
+is removed when closed. A capability returned after creation was closed is never
+published and receives a direct cleanup attempt; if that attempt fails, the
+browser owner's TTL bounds its lifetime. The secret currently has no
+key-rotation/migration API.
 
 `GET /v2/browser/sessions/:id` reads public status. `DELETE` closes it. A single
 mutable session ID is rejected in batch/crawl; stateless controls/recipes can be
@@ -185,3 +190,10 @@ and handoff path have separate harness acceptance tests. Preserve the frozen raw
 screened and normalized graders. Run on an awake host and retain image/source,
 full response evidence, hashes, timing and resource receipts. Do not treat a
 title/body predicate correction as a new WAF bypass.
+
+The [November 3 workflow rerun](anti-bot-research.md#browser-workflows-and-distributed-ownership)
+completed all 500 attempts with no upstream proxy. Normalized marker matches
+were 199/500 (39.8%), compared with 213/500 (42.6%) in the earlier full run.
+Best Buy's country recipe retrieved the product on 2/5 attempts; the aggregate
+unattended rate did not improve. The report records limits and separate API,
+ownership and handoff validation.

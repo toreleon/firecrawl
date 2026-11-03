@@ -179,11 +179,13 @@ with controlled fixtures rather than silently increasing the live request budget
 The test has shared-IP interference and a short observation window, and cannot
 estimate general WAF coverage or causal effects outside these selected cases.
 
-Remaining deployment work includes proxy/region experiments, site-specific
-consent/navigation flows, browser-fingerprint investigations, full API-adapter
-integration of optional session/readiness controls, and distributed scheduling
-or session ownership for multiple browser-service instances. Interactive
-verification remains an explicit failure; no CAPTCHA solver is implemented.
+At this stage, remaining deployment work included proxy/region experiments,
+site-specific consent/navigation flows, browser-fingerprint investigations,
+API-adapter controls and distributed session ownership. The subsequent
+[local browser workflows](browser-workflows.md) change implements consent and
+navigation controls, the v2 adapter, fixed browser ownership and page-scoped human
+handoff. Proxy/region experiments remain separate. Interactive verification is
+not automatically solved; human-assisted outcomes must be measured separately.
 
 ### Observed results
 
@@ -258,3 +260,77 @@ Receipts are `_local/anti-bot/reliability-linux-diagnostics-2026-11-03/` and
 `_local/anti-bot/native-vs-linux-2026-11-03/`. All 32 response hashes and unique
 target/profile/round pairs were audited with no timing gaps. The temporary
 native browser service and Linux diagnostic container were stopped afterward.
+
+### Browser workflows and distributed ownership
+
+The [local browser workflow implementation](browser-workflows.md) adds recognized
+consent handling, bounded actions, initial Best Buy/Canada Goose recipes, retained
+tabs and page-scoped human handoff. The v2 API and JS/Python SDKs forward the new
+controls. PostgreSQL records the tenant, exact browser owner and boot identity;
+revision fences and operation journals serialize commands and return recorded
+results without repeating known completed actions. Unknown outcomes end the
+session. A concurrent close also wins over a late creation response.
+
+The completed rerun used browser runtime `5eecbf75553d55957e8614695ba97377ca7b1329`
+and image `sha256:54c4c69e2e01ac8ad3f3f4eef75febdd4566a7fc31a3222c39ff73ead9e842ef`.
+It ran from **06:09:45 to 06:38:46 UTC on November 3, 2026**: 100 frozen targets,
+five attempts each, two concurrent requests, fresh contexts, one service attempt,
+90-second client / 85-second service deadlines, DOM-content-loaded navigation,
+five-second body-text readiness and no post-load sleep. The worker had two CPUs,
+4 GiB, direct Vietnam egress and no configured upstream proxy. Consent rejection
+and automatic navigation recipes were enabled. Human handoffs and paid scraping,
+CAPTCHA or model services were excluded.
+
+| Marker check | Previous full run | Workflow run | Change |
+| --- | --- | --- | --- |
+| Raw published substring | 246/500 (49.2%) | 232/500 (46.4%) | -2.8 pp |
+| Screened marker | 208/500 (41.6%) | 194/500 (38.8%) | -2.8 pp |
+| Normalized marker | 213/500 (42.6%) | 199/500 (39.8%) | -2.8 pp |
+
+| Publisher WAF label | Previous normalized matches | Workflow normalized matches |
+| --- | --- | --- |
+| Cloudflare | 33/75 (44.0%) | 30/75 (40.0%) |
+| DataDome | 20/100 (20.0%) | 20/100 (20.0%) |
+| Akamai | 39/100 (39.0%) | 26/100 (26.0%) |
+
+The overall unattended marker rate did not improve in this observation. Best Buy
+improved from 0/5 to 2/5 normalized matches: both successful attempts recorded
+navigation to the original product after the country selection. Its other three
+attempts failed before navigation with network errors. The delayed country prompt
+and asynchronously rewritten product link have controlled browser regressions.
+Canada Goose expanded details on all five attempts but still failed body-text
+readiness; expansion alone did not establish retrieval of the expected text.
+Consent diagnostics recorded 11 applied choices, six unresolved choices, 455
+not-detected outcomes and 28 responses without interaction diagnostics.
+
+The largest failure classes were recognized challenges (111), HTTP 403 (82),
+content not ready (43), network errors (20), HTTP 429 (16) and timeouts (8).
+Screened-success latency p50 changed from 2,630 to 3,222 ms and p95 from 7,040 to
+6,740 ms. These are serial observations at different times, rather than a
+randomized paired experiment: live-site and network changes prevent attributing
+the overall difference to the implementation. WAF labels do not verify active
+live vendor rules, and marker presence does not establish field completeness or
+CSS visibility.
+
+All 500 unique target/attempt pairs, response content hashes and replayed scores
+were verified. The grader source is byte-identical to the previous run. No timing
+gaps over ten seconds, memory/OOM or PID-limit events occurred; the largest timing
+sample gap was 1,010 ms. Source and compiled runtime hashes matched the checkout,
+the browser owner boot identity stayed fixed, and the service ended healthy with
+zero active pages or sessions. All task-owned services were stopped afterward.
+Two earlier partial runs, stopped while fixing navigation timing, remain separate
+diagnostics and are excluded from these totals.
+
+Validation: API build and 171 focused checks passed through `pnpm harness`,
+including real API/browser requests, PostgreSQL exclusion across processes,
+creation/close races and page handoff. The unchanged browser runtime passed its
+[CI build, 34 helper checks, 49 integration checks and dependency audit](https://github.com/toreleon/firecrawl/actions/runs/41587930882).
+JS serialization had four passing checks; Python request preparation had 15.
+The live benchmark calls the browser backend; it is not a load benchmark of the
+full API, multiple workers or human-assisted retrieval.
+
+A [compact result receipt](../apps/playwright-service-ts/benchmarks/workflows-results-2026-11-03.json)
+is tracked without response bodies. Full local evidence, timing/resource receipts,
+score replay and per-target comparison are retained in
+`_local/anti-bot/waf-workflows-navigation-full-2026-11-03/`. API receipts are in
+`_local/anti-bot/api-workflow-harness-2026-11-03-creation-close/`.

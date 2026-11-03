@@ -1,0 +1,466 @@
+{
+  "status": "complete",
+  "startedAt": "2026-11-03T06:09:45.921Z",
+  "finishedAt": "2026-11-03T06:38:46.963Z",
+  "browserRuntimeCommit": "5eecbf75553d55957e8614695ba97377ca7b1329",
+  "imageId": "sha256:54c4c69e2e01ac8ad3f3f4eef75febdd4566a7fc31a3222c39ff73ead9e842ef",
+  "fixtureSha256": "a886fb57087e842c2857b89a7669e31d2fb7b98d6bd7deb60a2329f29581b76a",
+  "sourceBenchmark": "https://github.com/usestring/web-data-frontier-benchmark/blob/1ae0cf5fa11f6a80587fdba57cac3efbb75836df/src/tests.const.ts",
+  "scope": "Browser backend, fresh context per request, unattended; API ownership and handoff validated separately.",
+  "setup": {
+    "country": "VN",
+    "upstreamProxy": false,
+    "paidScrapingOrCaptchaOrModelApis": false,
+    "targets": 100,
+    "attemptsPerTarget": 5,
+    "concurrency": 2,
+    "clientTimeoutMs": 90000,
+    "serviceTimeoutMs": 85000,
+    "waitUntil": "domcontentloaded",
+    "readinessScope": "body",
+    "readinessTimeoutMs": 5000,
+    "postLoadWaitMs": 0,
+    "serviceMaxAttempts": 1,
+    "consent": "rejectNonEssential",
+    "workflow": "auto",
+    "cpuCount": 2,
+    "memoryBytes": 4294967296
+  },
+  "prior": {
+    "startedAt": "2026-11-03T03:37:24.052Z",
+    "overall": {
+      "requests": 500,
+      "uniqueTargets": 100,
+      "frontierPasses": 246,
+      "screenedPasses": 208,
+      "normalizedPasses": 213,
+      "frontierSuccessRate": 0.492,
+      "screenedSuccessRate": 0.416,
+      "normalizedSuccessRate": 0.426,
+      "successfulLatencyP50Ms": 2630,
+      "successfulLatencyP95Ms": 7040,
+      "allAttemptLatencyP95Ms": 7735,
+      "failures": {
+        "content_not_ready": 49,
+        "challenge": 115,
+        "target_status_403": 67,
+        "rate_limited": 20,
+        "timeout": 8,
+        "target_status_511": 5,
+        "network_error": 12,
+        "target_status_417": 5,
+        "target_status_405": 5,
+        "missing_expected_marker": 5,
+        "target_status_400": 1
+      }
+    },
+    "byWafLabel": {
+      "cloudflare": {
+        "requests": 75,
+        "uniqueTargets": 15,
+        "frontierPasses": 35,
+        "screenedPasses": 33,
+        "normalizedPasses": 33,
+        "frontierSuccessRate": 0.4666666666666667,
+        "screenedSuccessRate": 0.44,
+        "normalizedSuccessRate": 0.44,
+        "successfulLatencyP50Ms": 2423,
+        "successfulLatencyP95Ms": 11326,
+        "allAttemptLatencyP95Ms": 9448,
+        "failures": {
+          "challenge": 40,
+          "content_not_ready": 2
+        }
+      },
+      "datadome": {
+        "requests": 100,
+        "uniqueTargets": 20,
+        "frontierPasses": 25,
+        "screenedPasses": 20,
+        "normalizedPasses": 20,
+        "frontierSuccessRate": 0.25,
+        "screenedSuccessRate": 0.2,
+        "normalizedSuccessRate": 0.2,
+        "successfulLatencyP50Ms": 2499,
+        "successfulLatencyP95Ms": 4603,
+        "allAttemptLatencyP95Ms": 7039,
+        "failures": {
+          "challenge": 55,
+          "timeout": 3,
+          "target_status_403": 10,
+          "content_not_ready": 5,
+          "network_error": 7
+        }
+      },
+      "akamai": {
+        "requests": 100,
+        "uniqueTargets": 20,
+        "frontierPasses": 39,
+        "screenedPasses": 39,
+        "normalizedPasses": 39,
+        "frontierSuccessRate": 0.39,
+        "screenedSuccessRate": 0.39,
+        "normalizedSuccessRate": 0.39,
+        "successfulLatencyP50Ms": 2756,
+        "successfulLatencyP95Ms": 4233,
+        "allAttemptLatencyP95Ms": 6938,
+        "failures": {
+          "target_status_403": 45,
+          "target_status_417": 5,
+          "content_not_ready": 5,
+          "rate_limited": 3,
+          "target_status_400": 1,
+          "challenge": 2
+        }
+      }
+    }
+  },
+  "current": {
+    "overall": {
+      "requests": 500,
+      "uniqueTargets": 100,
+      "frontierPasses": 232,
+      "screenedPasses": 194,
+      "normalizedPasses": 199,
+      "frontierSuccessRate": 0.464,
+      "screenedSuccessRate": 0.388,
+      "normalizedSuccessRate": 0.398,
+      "successfulLatencyP50Ms": 3222,
+      "successfulLatencyP95Ms": 6740,
+      "allAttemptLatencyP95Ms": 8830,
+      "failures": {
+        "content_not_ready": 43,
+        "challenge": 111,
+        "target_status_403": 82,
+        "timeout": 8,
+        "target_status_400": 5,
+        "rate_limited": 16,
+        "target_status_511": 5,
+        "network_error": 20,
+        "target_status_417": 5,
+        "target_status_405": 5,
+        "missing_expected_marker": 5,
+        "target_status_503": 1
+      }
+    },
+    "byWafLabel": {
+      "cloudflare": {
+        "requests": 75,
+        "uniqueTargets": 15,
+        "frontierPasses": 32,
+        "screenedPasses": 30,
+        "normalizedPasses": 30,
+        "frontierSuccessRate": 0.4266666666666667,
+        "screenedSuccessRate": 0.4,
+        "normalizedSuccessRate": 0.4,
+        "successfulLatencyP50Ms": 2519,
+        "successfulLatencyP95Ms": 5768,
+        "allAttemptLatencyP95Ms": 6892,
+        "failures": {
+          "challenge": 42,
+          "content_not_ready": 2,
+          "target_status_503": 1
+        }
+      },
+      "datadome": {
+        "requests": 100,
+        "uniqueTargets": 20,
+        "frontierPasses": 25,
+        "screenedPasses": 20,
+        "normalizedPasses": 20,
+        "frontierSuccessRate": 0.25,
+        "screenedSuccessRate": 0.2,
+        "normalizedSuccessRate": 0.2,
+        "successfulLatencyP50Ms": 3427,
+        "successfulLatencyP95Ms": 6159,
+        "allAttemptLatencyP95Ms": 9651,
+        "failures": {
+          "challenge": 52,
+          "timeout": 3,
+          "target_status_403": 10,
+          "content_not_ready": 5,
+          "network_error": 10
+        }
+      },
+      "akamai": {
+        "requests": 100,
+        "uniqueTargets": 20,
+        "frontierPasses": 26,
+        "screenedPasses": 26,
+        "normalizedPasses": 26,
+        "frontierSuccessRate": 0.26,
+        "screenedSuccessRate": 0.26,
+        "normalizedSuccessRate": 0.26,
+        "successfulLatencyP50Ms": 3602,
+        "successfulLatencyP95Ms": 5468,
+        "allAttemptLatencyP95Ms": 7400,
+        "failures": {
+          "target_status_403": 60,
+          "target_status_400": 5,
+          "rate_limited": 1,
+          "target_status_417": 5,
+          "network_error": 3
+        }
+      }
+    }
+  },
+  "deltaPercentagePoints": {
+    "raw": -2.8,
+    "screened": -2.8,
+    "normalized": -2.8
+  },
+  "consentOutcomes": {
+    "not_detected": 455,
+    "applied": 11,
+    "not_recorded": 28,
+    "unresolved": 6
+  },
+  "workflowSteps": {
+    "product-details:expanded": 5,
+    "country-selection:navigated-original-product": 2
+  },
+  "normalizedTargetChanges": [
+    {
+      "target": "Apartments.com",
+      "prior": {
+        "frontierPass": 2,
+        "screenedPass": 2,
+        "normalizedPass": 2
+      },
+      "current": {
+        "frontierPass": 0,
+        "screenedPass": 0,
+        "normalizedPass": 0
+      }
+    },
+    {
+      "target": "Best Buy",
+      "prior": {
+        "frontierPass": 0,
+        "screenedPass": 0,
+        "normalizedPass": 0
+      },
+      "current": {
+        "frontierPass": 2,
+        "screenedPass": 2,
+        "normalizedPass": 2
+      }
+    },
+    {
+      "target": "Instagram",
+      "prior": {
+        "frontierPass": 5,
+        "screenedPass": 4,
+        "normalizedPass": 4
+      },
+      "current": {
+        "frontierPass": 5,
+        "screenedPass": 5,
+        "normalizedPass": 5
+      }
+    },
+    {
+      "target": "LinkedIn",
+      "prior": {
+        "frontierPass": 0,
+        "screenedPass": 0,
+        "normalizedPass": 0
+      },
+      "current": {
+        "frontierPass": 1,
+        "screenedPass": 1,
+        "normalizedPass": 1
+      }
+    },
+    {
+      "target": "TikTok",
+      "prior": {
+        "frontierPass": 5,
+        "screenedPass": 5,
+        "normalizedPass": 5
+      },
+      "current": {
+        "frontierPass": 5,
+        "screenedPass": 4,
+        "normalizedPass": 4
+      }
+    },
+    {
+      "target": "Yahoo Finance",
+      "prior": {
+        "frontierPass": 5,
+        "screenedPass": 5,
+        "normalizedPass": 5
+      },
+      "current": {
+        "frontierPass": 2,
+        "screenedPass": 2,
+        "normalizedPass": 2
+      }
+    },
+    {
+      "target": "Yellow Pages",
+      "prior": {
+        "frontierPass": 5,
+        "screenedPass": 5,
+        "normalizedPass": 5
+      },
+      "current": {
+        "frontierPass": 4,
+        "screenedPass": 4,
+        "normalizedPass": 4
+      }
+    },
+    {
+      "target": "Zoopla",
+      "prior": {
+        "frontierPass": 5,
+        "screenedPass": 5,
+        "normalizedPass": 5
+      },
+      "current": {
+        "frontierPass": 3,
+        "screenedPass": 3,
+        "normalizedPass": 3
+      }
+    },
+    {
+      "target": "ashleyfurniture",
+      "prior": {
+        "frontierPass": 3,
+        "screenedPass": 3,
+        "normalizedPass": 3
+      },
+      "current": {
+        "frontierPass": 4,
+        "screenedPass": 4,
+        "normalizedPass": 4
+      }
+    },
+    {
+      "target": "bloomberg",
+      "prior": {
+        "frontierPass": 2,
+        "screenedPass": 2,
+        "normalizedPass": 2
+      },
+      "current": {
+        "frontierPass": 3,
+        "screenedPass": 3,
+        "normalizedPass": 3
+      }
+    },
+    {
+      "target": "ebay",
+      "prior": {
+        "frontierPass": 4,
+        "screenedPass": 4,
+        "normalizedPass": 4
+      },
+      "current": {
+        "frontierPass": 0,
+        "screenedPass": 0,
+        "normalizedPass": 0
+      }
+    },
+    {
+      "target": "expedia",
+      "prior": {
+        "frontierPass": 2,
+        "screenedPass": 2,
+        "normalizedPass": 2
+      },
+      "current": {
+        "frontierPass": 4,
+        "screenedPass": 4,
+        "normalizedPass": 4
+      }
+    },
+    {
+      "target": "louisvuitton",
+      "prior": {
+        "frontierPass": 5,
+        "screenedPass": 5,
+        "normalizedPass": 5
+      },
+      "current": {
+        "frontierPass": 0,
+        "screenedPass": 0,
+        "normalizedPass": 0
+      }
+    },
+    {
+      "target": "lululemon",
+      "prior": {
+        "frontierPass": 4,
+        "screenedPass": 4,
+        "normalizedPass": 4
+      },
+      "current": {
+        "frontierPass": 0,
+        "screenedPass": 0,
+        "normalizedPass": 0
+      }
+    },
+    {
+      "target": "mouser",
+      "prior": {
+        "frontierPass": 2,
+        "screenedPass": 2,
+        "normalizedPass": 2
+      },
+      "current": {
+        "frontierPass": 0,
+        "screenedPass": 0,
+        "normalizedPass": 0
+      }
+    },
+    {
+      "target": "target",
+      "prior": {
+        "frontierPass": 3,
+        "screenedPass": 3,
+        "normalizedPass": 3
+      },
+      "current": {
+        "frontierPass": 5,
+        "screenedPass": 5,
+        "normalizedPass": 5
+      }
+    }
+  ],
+  "validation": {
+    "apiBuild": true,
+    "focusedApiHarnessTests": 171,
+    "browserHelperTests": 34,
+    "browserIntegrationTests": 49,
+    "jsSdkSerializationTests": 4,
+    "pythonSdkRequestPreparationTests": 15,
+    "browserCi": "https://github.com/toreleon/firecrawl/actions/runs/41587930882",
+    "contentHashesVerified": 500,
+    "replayedScoresVerified": 500,
+    "timing": {
+      "valid": true,
+      "sampleIntervalMs": 1000,
+      "maximumAllowedGapMs": 10000,
+      "maximumObservedGapMs": 1010,
+      "gaps": []
+    },
+    "kernelMemoryOrPidLimitEvents": 0,
+    "finalBrowserHealthy": true,
+    "finalActivePages": 0,
+    "finalBrowserSessions": 0,
+    "taskContainersStopped": true
+  },
+  "localReceipts": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/",
+  "caveats": [
+    "Historical comparison at different observation times, not a randomized paired control.",
+    "Both runs use the same frozen targets and graders, body-text readiness, direct Vietnam egress and one service attempt.",
+    "The current run additionally enables CMP consent rejection and automatic navigation recipes; capture behavior also changed.",
+    "Browser backend benchmark only; full API/ownership/handoff has separate controlled harness validation.",
+    "Publisher WAF labels do not verify active live vendor rules.",
+    "Raw or normalized marker presence is not field completeness or CSS visibility.",
+    "Two earlier partial workflow runs are diagnostics, excluded from this completed 500-attempt run.",
+    "The runner manifest has a legacy one-attempt pilot caveat; this run explicitly has five attempts per target and 500 audited unique pairs."
+  ]
+}
