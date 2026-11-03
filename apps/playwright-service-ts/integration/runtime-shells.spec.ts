@@ -39,7 +39,7 @@ test(
       }
       if (route === '/sttc/px/captcha-v2/index.html')
         return res.end(
-          '<title>Travel</title><div id="app_main"><div id="px-captcha"></div><p>c4edbd88-d790-11f1-acc3-9f65e4b607cd</p></div>',
+        '<title>Travel</title><div id="app_main"><div id="px-captcha">Press &amp; Hold to confirm</div><p>c4edbd88-d790-11f1-acc3-9f65e4b607cd</p></div>',
         );
       if (route === '/format' || route === '/format-forever')
         return res.end(

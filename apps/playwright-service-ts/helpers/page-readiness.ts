@@ -18,7 +18,10 @@ export const detectPageProtection = (
       ...(awsAction === 'captcha' && { interactive: true as const }),
     };
   const known = detectBotChallenge(html, headers);
-  if (known) return known;
+  if (known)
+    return ['perimeterx', 'captcha', 'reddit'].includes(known.provider)
+      ? { ...known, interactive: true }
+      : known;
   if (html.length > 65536) return;
   const markup = html.replace(
     /<!--[\s\S]*?-->|<(script|style|noscript)\b[^>]*>[\s\S]*?<\/\1\s*>/gi,

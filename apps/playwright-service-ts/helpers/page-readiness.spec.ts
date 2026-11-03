@@ -113,6 +113,12 @@ test('an empty HUMAN shell on a CAPTCHA route is verification, not UUID content'
   );
 });
 
+test('a known HUMAN press-and-hold interstitial is interactive even after its text loads', () => {
+  const html = '<div id="px-captcha">Press &amp; Hold to confirm</div>';
+  assert.equal(detectPageProtection(html)?.provider, 'perimeterx');
+  assert.equal(detectPageProtection(html)?.interactive, true);
+});
+
 test('the observed eBay passive shell needs its continuation form, script and text', () => {
   const shell =
     '<title>Pardon Our Interruption...</title><p>Checking your browser before you access eBay.</p><form id="destForm" method="GET" action="https://www.ebay.com/itm/42"></form><script src="https://ir.ebaystatic.com/rs/c/challenge-abc.js"></script>';
