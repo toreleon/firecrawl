@@ -336,7 +336,7 @@ export const scrapePage = async (
               ? 'loading'
               : snapshot.busyCount
                 ? 'busy'
-                : renderedBodyState(snapshot.renderedText)
+                : renderedBodyState(snapshot.readinessText)
           : undefined;
       const readinessSatisfied =
         rawBody && options.waitForText

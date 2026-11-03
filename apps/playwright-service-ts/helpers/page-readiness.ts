@@ -150,7 +150,8 @@ export const renderedBodyState = (
     .replace(/\s+/g, ' ')
     .trim();
   if (!normalized) return 'empty';
-  return /^(?:loading|please wait)[\s.!…]*$/i.test(normalized)
+  // Readiness text can span separate inline glyph nodes in animated labels.
+  return /^(?:loading|pleasewait)[.!…]*$/i.test(normalized.replace(/\s/g, ''))
     ? 'loading'
     : 'ready';
 };
@@ -184,8 +185,9 @@ export function captureRenderedPage({
   let busyCount = 0;
   let ignoredComplementaryBusyCount = 0;
   let busyScope: 'main' | 'body' = 'body';
+  let primary: Element[] = [];
   if (automatic) {
-    const primary = Array.from(
+    primary = Array.from(
       document.querySelectorAll('main,[role="main"]'),
     ).filter((element) => {
       const style = getComputedStyle(element);
@@ -269,9 +271,78 @@ export function captureRenderedPage({
       (bodyStyle?.display === 'contents' &&
         document.documentElement.getClientRects().length > 0));
   const renderedText = bodyRendered ? body.innerText : '';
+  let readinessText = renderedText;
+  if (automatic) {
+    // Navigation/footer labels and off-document font-measurement probes can
+    // precede the actual page. Inspect primary text separately without changing
+    // returned body text or explicit caller readiness. Below-fold content stays
+    // eligible: these are document bounds, not viewport-only visibility checks.
+    const roots = primary.length
+      ? primary.filter(
+          (element) =>
+            !primary.some(
+              (other) => other !== element && other.contains(element),
+            ),
+        )
+      : bodyRendered
+        ? [body!]
+        : [];
+    const chunks: string[] = [];
+    let characters = 0,
+      visited = 0;
+    const range = document.createRange();
+    const documentRoot = document.documentElement;
+    const minX =
+      documentRoot && getComputedStyle(documentRoot).direction === 'rtl'
+        ? Math.min(
+            0,
+            documentRoot.clientWidth - documentRoot.scrollWidth,
+          )
+        : 0;
+    for (const root of roots) {
+      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+      let node: Node | null;
+      while (
+        (node = walker.nextNode()) &&
+        visited++ < 20000 &&
+        characters < 4096
+      ) {
+        const parent = node.parentElement;
+        if (
+          !parent ||
+          parent.closest(
+            'script,style,noscript,template,[aria-hidden="true"],[inert]',
+          )
+        )
+          continue;
+        const text = (node.textContent ?? '').replace(/\p{Cf}/gu, '').trim();
+        if (!text) continue;
+        const style = getComputedStyle(parent);
+        if (style.visibility === 'hidden' || style.visibility === 'collapse')
+          continue;
+        range.selectNodeContents(node);
+        if (
+          !Array.from(range.getClientRects()).some(
+            (rect) =>
+              rect.width > 0 &&
+              rect.height > 0 &&
+              rect.right + scrollX > minX &&
+              rect.bottom + scrollY > 0,
+          )
+        )
+          continue;
+        const part = text.slice(0, 4096 - characters);
+        chunks.push(part);
+        characters += part.length;
+      }
+      if (visited >= 20000 || characters >= 4096) break;
+    }
+    readinessText = chunks.join(' ');
+  }
   return {
     content: document.documentElement?.outerHTML ?? '',
     renderedText,
+    readinessText,
     title: document.title,
     url: location.href,
     documentReadyState: document.readyState,
@@ -331,7 +402,7 @@ export const waitForRenderedBody = async (
           ? 'loading'
           : busyCount
             ? 'busy'
-            : renderedBodyState(snapshot.renderedText);
+            : renderedBodyState(snapshot.readinessText);
       const protection = detectPageProtection(
         snapshot.content,
         headers(),

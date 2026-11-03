@@ -95,6 +95,17 @@ describe("Self-hosted local browser controls", () => {
         return res.end(
           '<title>Metadata only</title><body style="display:none"><script>var bootstrap="not product content";</script></body>',
         );
+      if (req.url === "/font-probe-api")
+        return res.end(
+          '<span style="position:absolute;left:-9999px;font-size:72px">fontProbe42</span><div id="product"></div><script>setTimeout(()=>document.querySelector("#product").textContent="Visible API product 42",350)</script>',
+        );
+      if (req.url === "/primary-text-api" || req.url === "/primary-empty-api")
+        return res.end(
+          "<main></main><footer>All data will be encrypted. Opens in new tab.</footer>" +
+            (req.url === "/primary-text-api"
+              ? '<script>setTimeout(()=>document.querySelector("main").textContent="Visible API product 42",350)</script>'
+              : ""),
+        );
       if (req.url === "/aws-captcha-api") {
         res.statusCode = 405;
         res.setHeader("x-amzn-waf-action", "captcha");
@@ -608,6 +619,51 @@ describe("Self-hosted local browser controls", () => {
       expect(empty.status).toBe(422);
       expect(empty.body.code).toBe("CONTENT_NOT_READY");
       expect(fixtureRequests.get("/hidden-script-empty-api")).toBe(1);
+    },
+    scrapeTimeout,
+  );
+  itIf(enabled)(
+    "waits for primary browser text beyond probes and footer labels",
+    async () => {
+      for (const path of ["/font-probe-api", "/primary-text-api"]) {
+        const result = await request("/v2/scrape", {
+          url: origin + path,
+          formats: ["rawHtml", "markdown"],
+          maxAge: 0,
+          timeout: scrapeTimeout,
+          browserControls: {
+            workflow: "auto",
+            waitUntil: "domcontentloaded",
+            readiness: { timeoutMs: 1800 },
+          },
+        });
+        expect(result.status).toBe(200);
+        expect(result.body.data.markdown).toContain("Visible API product 42");
+        expect(result.body.data.metadata.browser.readiness.satisfied).toBe(
+          true,
+        );
+        expect(fixtureRequests.get(path)).toBe(1);
+      }
+      const empty = await request("/v2/scrape", {
+        url: origin + "/primary-empty-api",
+        formats: ["rawHtml", "markdown"],
+        maxAge: 0,
+        timeout: scrapeTimeout,
+        browserControls: {
+          workflow: "auto",
+          waitUntil: "domcontentloaded",
+          readiness: { timeoutMs: 250 },
+        },
+      });
+      expect(empty.status).toBe(200);
+      expect(empty.body.data.metadata.browser.readiness.satisfied).toBe(false);
+      expect(empty.body.data.metadata.browser.errorCode).toBe(
+        "CONTENT_NOT_READY",
+      );
+      expect(empty.body.data.metadata.browser.interaction.state).toBe(
+        "CONTENT_NOT_READY",
+      );
+      expect(fixtureRequests.get("/primary-empty-api")).toBe(1);
     },
     scrapeTimeout,
   );

@@ -34,7 +34,13 @@ test('runtime classification does not mistake code samples, comments or ordinary
 });
 test('automatic body readiness distinguishes empty/loading shells from short real content', () => {
   assert.equal(renderedBodyState(' \n '), 'empty');
-  for (const text of ['Loading...', 'loading…', 'Please wait.'])
+  for (const text of [
+    'Loading...',
+    'loading…',
+    'Please wait.',
+    'Loa ding...',
+    'P l e a s e w a i t',
+  ])
     assert.equal(renderedBodyState(text), 'loading');
   for (const text of [
     'Hello',

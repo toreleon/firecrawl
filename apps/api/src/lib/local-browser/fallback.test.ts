@@ -35,6 +35,7 @@ describe("Explicit stateless browser-engine fallback", () => {
       wrongBoot?: boolean;
       url?: string;
       navigationTimeout?: boolean;
+      interactionState?: string;
     } = {},
   ) => {
     const boot = randomUUID();
@@ -81,6 +82,9 @@ describe("Explicit stateless browser-engine fallback", () => {
                 pageStatusCode: status,
                 browserEngine: options.engine ?? "rebrowser",
                 readiness: { satisfied: true },
+                ...(options.interactionState === undefined
+                  ? {}
+                  : { interaction: { state: options.interactionState } }),
                 diagnostics,
                 ...(status !== 200
                   ? { pageError: "Target denied access" }
@@ -179,6 +183,43 @@ describe("Explicit stateless browser-engine fallback", () => {
     );
     expect([primary.calls.scrape, fallback.calls.scrape]).toEqual([1, 1]);
   });
+  it.each(["HUMAN_REQUIRED", "VERIFICATION_REQUIRED"])(
+    "recovers a completed %s workflow gate without a legacy bot signature",
+    async interactionState => {
+      const { primary, fallback } = await configure(
+        { interactionState },
+        { interactionState: "CONTENT_READY" },
+      );
+      const result = await request();
+      expect(result.interaction.state).toBe("CONTENT_READY");
+      expect(result.diagnostics.engineFallback.recovered).toBe(true);
+      expect(result.diagnostics.engineFallback.attempts).toHaveLength(2);
+      expect([primary.calls.scrape, fallback.calls.scrape]).toEqual([1, 1]);
+    },
+  );
+  it.each([
+    "HUMAN_REQUIRED",
+    "VERIFICATION_REQUIRED",
+    "AUTH_REQUIRED",
+    "REGION_UNAVAILABLE",
+    "COUNTRY_SELECTION",
+    "ACCESS_DENIED",
+    "CONTENT_NOT_READY",
+    "UNKNOWN_FUTURE_STATE",
+  ])(
+    "does not promote an HTTP 200 alternate declaring %s",
+    async interactionState => {
+      const { primary, fallback } = await configure(
+        { status: 403 },
+        { interactionState },
+      );
+      const result = await request();
+      expect(result.pageStatusCode).toBe(403);
+      expect(result.diagnostics.engineFallback.recovered).toBe(false);
+      expect(result.diagnostics.engineFallback.usedSecondary).toBe(false);
+      expect([primary.calls.scrape, fallback.calls.scrape]).toEqual([1, 1]);
+    },
+  );
   it("can recover a completed target HTTP 400 without treating browser-service validation errors as target failures", async () => {
     const pair = await configure({ status: 400 });
     const result = await request();

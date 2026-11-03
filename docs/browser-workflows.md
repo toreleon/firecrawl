@@ -102,6 +102,12 @@ Before another dispatch the API requires one completed primary attempt,
 transport loss, failed cleanup, or exhausted budget is never replayed.
 Here HTTP 400 means the retrieved target page's status. A browser-service
 request-validation error stays terminal; it does not authorize another fetch.
+The workflow states `HUMAN_REQUIRED` and `VERIFICATION_REQUIRED` also qualify
+when no legacy vendor signature was returned. The same completion, ownership,
+single-alternate and deadline requirements apply. A supplied alternate workflow
+state must be `CONTENT_READY` before it can count as recovered content; HTTP 200
+alone cannot promote a login, region selector or verification page. Older owners
+that omit workflow state retain the other existing response checks.
 
 For a recognized HTTPS Amazon product URL with `workflow: "auto"`, a confirmed
 `WORKFLOW_NAVIGATION_MISMATCH` may also trigger this opt-in alternate request.
@@ -241,6 +247,14 @@ empty/loading is not `CONTENT_READY`; recognized Amazon/Akamai verification
 shells remain verification states. Short real text is accepted. Explicit
 readiness and JSON/plain-text response handling keep their separate contracts.
 This is a text-readiness check, not proof that every field or lazy section loaded.
+For automatic checks, rendered main landmarks supply readiness text when they
+exist, with body text as the fallback. Footer/navigation labels cannot satisfy
+an empty main landmark. Text wholly outside the document's negative bounds,
+including off-screen font probes, is ignored for this check; ordinary below-fold
+content remains eligible. The bounded probe reads at most 20,000 text nodes and
+4,096 characters and tolerates a temporarily absent document root during
+navigation. Returned body text and explicit caller text/title checks retain
+their existing scope.
 
 Automatic readiness also waits while the current HTML document is still being
 parsed, including a new document reached by a passive redirect. This uses the

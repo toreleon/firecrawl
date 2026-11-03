@@ -2,6 +2,32 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import http from 'node:http';
 import { listen, closeServer, startService, scrape } from './support';
+import { browserConfiguration, launchBrowser } from '../helpers/browser';
+import { captureRenderedPage } from '../helpers/page-readiness';
+
+test('automatic capture tolerates a temporarily absent document root', async () => {
+  const engine = process.env.TEST_RENDER_ENGINE ?? 'rebrowser';
+  const browser = await launchBrowser(
+    browserConfiguration({
+      BROWSER_ENGINE: engine,
+      BROWSER_HEADLESS: 'true',
+      ...(engine === 'camoufox' ? {} : { BROWSER_CHANNEL: 'chromium' }),
+    }),
+  );
+  try {
+    const page = await browser.newPage();
+    await page.setContent('<main>Before navigation</main>');
+    await page.evaluate(() => document.documentElement.remove());
+    const snapshot = await page.evaluate(captureRenderedPage, {
+      automatic: true,
+    });
+    assert.equal(snapshot.content, '');
+    assert.equal(snapshot.renderedText, '');
+    assert.equal(snapshot.readinessText, '');
+  } finally {
+    await browser.close();
+  }
+});
 
 test(
   'readiness uses rendered body text and waits for the current document parser',
@@ -41,6 +67,24 @@ test(
       if (path === '/contents')
         return res.end(
           '<body style="display:contents">Direct public text <main>Visible product details 42</main><p hidden>Hidden private placeholder</p><script>var bootstrap="not product content";</script></body>',
+        );
+      if (path === '/font-probe-late' || path === '/font-probe-empty')
+        return res.end(
+          '<span style="position:absolute;left:-9999px;font-size:72px">fontProbe42</span><div id="product"></div>' +
+            (path === '/font-probe-late'
+              ? '<script>setTimeout(()=>document.querySelector("#product").textContent="Visible product details 42",350)</script>'
+              : ''),
+        );
+      if (path === '/main-late' || path === '/main-empty')
+        return res.end(
+          '<main></main><footer>All data will be encrypted. Opens in new tab.</footer>' +
+            (path === '/main-late'
+              ? '<script>setTimeout(()=>document.querySelector("main").textContent="Visible product details 42",350)</script>'
+              : ''),
+        );
+      if (path === '/below-fold')
+        return res.end(
+          '<div style="height:2000px"></div><p>Visible product details 42</p>',
         );
       res.writeHead(404);
       res.end();
@@ -138,6 +182,57 @@ test(
             result.body.renderedText,
             /bootstrap|Hidden private placeholder/,
           );
+        },
+      );
+      await t.test(
+        'off-document probes cannot make an empty body ready',
+        async () => {
+          for (const path of ['/font-probe-late', '/font-probe-empty']) {
+            const result = await scrape(service.baseUrl, url(path), {
+              ...controls,
+              readiness_timeout: path.endsWith('empty') ? 250 : 1600,
+            });
+            if (path.endsWith('empty')) {
+              assert.equal(result.body.readiness.satisfied, false);
+              assert.equal(result.body.errorCode, 'CONTENT_NOT_READY');
+            } else {
+              assert.equal(result.body.readiness.satisfied, true);
+              assert.match(
+                result.body.renderedText,
+                /Visible product details 42/,
+              );
+            }
+          }
+        },
+      );
+      await t.test(
+        'an empty main landmark does not become ready from footer text',
+        async () => {
+          const late = await scrape(
+            service.baseUrl,
+            url('/main-late'),
+            controls,
+          );
+          assert.equal(late.body.readiness.satisfied, true);
+          assert.match(late.body.renderedText, /Visible product details 42/);
+          const empty = await scrape(service.baseUrl, url('/main-empty'), {
+            ...controls,
+            readiness_timeout: 250,
+          });
+          assert.equal(empty.body.readiness.satisfied, false);
+          assert.equal(empty.body.errorCode, 'CONTENT_NOT_READY');
+        },
+      );
+      await t.test(
+        'ordinary text below the fold still satisfies automatic readiness',
+        async () => {
+          const result = await scrape(
+            service.baseUrl,
+            url('/below-fold'),
+            controls,
+          );
+          assert.equal(result.body.readiness.satisfied, true);
+          assert.match(result.body.renderedText, /Visible product details 42/);
         },
       );
     } finally {

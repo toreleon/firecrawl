@@ -632,6 +632,12 @@ export const scrapeLocalBrowser = async (
       (failure ||
         primary.botDetection ||
         primary.errorCode === "CONTENT_NOT_READY" ||
+        // A rendered workflow gate can be recognized without an older vendor
+        // signature. It is still a failed capture eligible for the same single
+        // stateless alternate, with completion proof and budget checks below.
+        ["HUMAN_REQUIRED", "VERIFICATION_REQUIRED"].includes(
+          primary.interaction?.state,
+        ) ||
         // proxy-chain surfaces a reset of an HTTP target as its own 595
         // response. It remains a failed status with confirmed page cleanup.
         [400, 403, 406, 417, 429, 502, 503, 504, 595].includes(
@@ -712,6 +718,11 @@ export const scrapeLocalBrowser = async (
       !secondary.botDetection &&
       !secondary.pageError &&
       !secondary.errorCode &&
+      // Older owners may omit interaction metadata. A supplied state must
+      // explicitly describe content; an HTTP 200 login/region/puzzle page is
+      // not a successful recovery merely because it contains rendered text.
+      (secondary.interaction?.state === undefined ||
+        secondary.interaction.state === "CONTENT_READY") &&
       secondary.readiness?.satisfied !== false;
     const selected = useSecondary || !primary ? secondary : primary;
     return annotate(selected, {
