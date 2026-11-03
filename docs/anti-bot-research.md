@@ -1,6 +1,7 @@
 # Open-source browser anti-detection integration
 
-Research and local verification: 2026-11-02. Upstream base: `32119bd8a`.
+Initial browser verification: 2026-11-02. Retrieval measurement: 2026-11-03.
+Upstream base: `32119bd8a`.
 
 ## Selection
 
@@ -69,7 +70,7 @@ from pass counts. This tests the passive scraper workflow. The
 the additional probes. [Sannysoft](https://bot.sannysoft.com/) is a separate live
 diagnostic; neither result establishes production coverage.
 
-Final focused checks passed: `pnpm build`, 12 helper tests (`pnpm test`),
+Initial focused checks passed: `pnpm build`, 12 helper tests (`pnpm test`),
 33 real-browser HTTP tests (`pnpm test:integration`), and
 `pnpm audit --prod` (no known vulnerabilities). `docker compose config`
 confirmed the default Rebrowser/headful configuration and `init: true`.
@@ -84,12 +85,55 @@ is separate from this focused workflow.
 
 ## Limits
 
-No production target portfolio or paid proxy service was supplied. There is no
-measured success rate against Cloudflare, DataDome, Akamai, or other commercial
-WAF deployments. CAPTCHA solving, authentication acquisition, proxy rotation,
-and IP-reputation remediation are not implemented by these drivers. A remaining
+No user-specific production target portfolio or paid proxy service was supplied.
+The retrieval benchmark below uses publisher-classified websites; its labels
+do not establish which WAF products or challenge rules were active during our
+requests. CAPTCHA solving, authentication acquisition, proxy rotation, and
+IP-reputation remediation are not implemented by these drivers. A remaining
 challenge is reported, not relabeled as a successful scrape.
 
 Browser versions, diagnostics and WAF rules change. Re-run the bounded benchmark
 after driver/browser changes and evaluate the actual target portfolio before
 promising coverage. Preserve receipts from unsuccessful runs too.
+
+## Reproducible retrieval measurement
+
+`pnpm benchmark:waf` calls the running browser service through `/scrape`.
+The fixture pins the 100 targets, expected markers and publisher labels from
+[Frontier commit 1ae0cf5](https://github.com/usestring/web-data-frontier-benchmark/tree/1ae0cf5fa11f6a80587fdba57cac3efbb75836df).
+It retains source hashes and upstream MIT attribution. Five attempts per target
+produce 500 observations, with concurrency two and a 90-second client deadline.
+Our runner traverses the full target list five times, whereas the publisher
+runs a site's five attempts together. All failures remain in the denominator.
+
+The basic score uses a successful service response, target HTTP 2xx and a
+case-insensitive raw-body marker, matching the publisher's assertion. The
+screened score additionally rejects recognized challenges, reported page errors,
+and markers present only in scripts/styles/comments/noscript. This extra screen
+does not validate CSS visibility, full-page completeness or extracted fields.
+
+The measured deployment is Rebrowser 1.64.101 with Chromium 156.0.8078.4,
+headful under Xvfb on Linux ARM64, using direct Vietnam egress and no upstream
+proxy. The standalone container has two CPUs, 4 GiB of memory, `--init`, no
+additional PID cap, and two concurrent pages. Each request gets a fresh context;
+each worker waits 500 ms before sending its next request, and there are no
+client retries. This measures the browser backend rather than the
+full Firecrawl API and worker stack. Comparing this score to hosted services
+cannot isolate the browser patch's effect from networking or server-side routing.
+
+The runner retains a fixture snapshot, manifest, every attempt and full service
+responses for screened failures. A separate one-second clock monitor flags
+long scheduling gaps or backwards clock changes. macOS runs use process-scoped
+`caffeinate -i` to prevent idle sleep. See the
+[service README](../apps/playwright-service-ts/README.md) for reproduction.
+
+Two invalid setup runs are retained outside Git: an initial 2 GiB/512-PID pilot
+hit the PID cap, and an overnight run had 93 request latencies above two minutes
+despite a 90-second client deadline. Neither complete aggregate is suitable for
+performance comparison; their audit files preserve the reasons.
+
+The measurement runner and timing monitor passed the
+[focused CI run for 23268b6](https://github.com/toreleon/firecrawl/actions/runs/41557864272):
+build, 23 helper tests, 34 HTTP/integration tests, and production dependency audit.
+The inherited server/audit workflows require separate runner infrastructure;
+this result is not a claim that the whole monorepo test suite passed.
