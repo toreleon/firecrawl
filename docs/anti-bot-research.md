@@ -2150,3 +2150,129 @@ Nine unrelated services remained running, all 114 data volumes were retained,
 and no global prune was used. The [cleanup receipt](../apps/playwright-service-ts/benchmarks/fallback-pool-cleanup-results-2026-11-04.json)
 records these checks. No browser image rebuild or hosted credential was needed
 for this API-only routing change.
+
+## Optional initial-navigation deadline (November 4)
+
+The next investigation separated access failures from document-readiness
+failures. The previous full-run captures show an explicit Allmenus location
+rejection and a Temu discontinued-item page. Neither was promoted into a marker
+success. Sixteen fresh browser observations tested eBay at five- and fifteen-second
+automatic readiness budgets, three transport failures and a GitHub control,
+using two workers, one per engine, direct VN egress and no expected-text hint.
+Firefox retrieved eBay in all four observations; Chromium returned 403 in all
+four. Increasing readiness added no match. Saks returned Chromium 403 and a
+Firefox pre-commit reset; Neiman Marcus returned 403 on both; LinkedIn failed
+before a document committed on both. GitHub matched on both engines. The earlier
+eBay empty-content failure was not reproduced, so no longer default wait or
+extra transport retry was added. All sixteen hashes/scores replayed and the two
+containers were removed after healthy zero-page/session checks.
+
+The previous full run also exposed a separate capacity problem: one DraftKings
+response spent 83,327 ms in the browser service, but its recorded attempt took
+only 704 ms. Its remaining attempt budget was 1,848 ms. Service duration includes
+queuing and setup, so this is evidence of substantial time outside the actual
+attempt; it is not evidence that the target navigation itself needed 83 seconds.
+Two Roblox navigations in that run consumed almost the full 85-second API budget.
+Long initial navigations can therefore hold scarce page slots while later jobs
+use up their request deadline waiting.
+
+Implementation `f8d479fa709917cd6fec09049f6b4197ab24ea21` adds opt-in
+`browserControls.navigationTimeout` (100–120,000 ms). It caps the initial
+navigation, bounded by the existing overall deadline, while preserving the
+remaining consent, readiness, post-load and workflow budgets. Omitting it keeps
+the prior behavior. This follows Playwright's separate
+[navigation timeout contract](https://playwright.dev/docs/api/class-page#page-goto-option-timeout);
+a short caller-selected cap can reject a legitimately slow document. Both
+explicitly selected engines receive the cap, and a confirmed closed-page primary
+timeout can leave time for the existing one alternate attempt. No global default
+deadline split, extra attempt, or CAPTCHA answer handling was added.
+
+The control passes through scrape/batch/crawl options, the existing queue/worker
+path, retained-session creation/continuation and JS/Python SDK serialization.
+Owners advertise a dedicated capability flag. Unsupported stateless owners are
+skipped before dispatch; retained requests validate support and boot identity.
+An old owner cannot silently ignore the requested cap. The frozen grader and
+challenge classifier remain unchanged.
+
+Before implementation, a delayed fixture returned 200 despite its requested cap,
+and invalid cap values were accepted. The new test initially expected HTTP 408;
+it was corrected to the existing service's HTTP 500 plus `SCRAPE_TIMEOUT`
+contract. Production error-status mapping was preserved. After implementation,
+the API build and 32 focused client/contract checks passed. Five JS request checks,
+the JS SDK build and sixteen Python request checks passed. Native Chromium passed
+seven TAP checks; the Linux container passed thirteen TAP checks across Chromium
+and Firefox, including five functional cases per engine. These nested TAP totals
+are not counts of distinct public sites.
+
+Three full API tests passed with real native Chromium and Linux Firefox owners
+against local HTTP fixtures. They cover a closed primary phase timeout recovered
+by one alternate, post-commit hydration longer than the navigation cap, omitted
+caps preserving the prior budget, invalid values rejected before target access,
+and retained-session continuation followed by HTTP 204 deletion. Eight unrelated
+API cases were skipped in this focused invocation. The harness recorded its
+then-uncommitted implementation; retained source hashes were subsequently checked
+against `f8d479fa7`. This is separate from the later source-pinned public-site run.
+The [verification receipt](../apps/playwright-service-ts/benchmarks/navigation-timeout-verification-results-2026-11-04.json)
+contains those checks and the sixteen pre-change browser observations.
+
+### Full API measurement with explicit 30-second navigation caps
+
+The current source completed 200 fresh requests on the frozen 100 targets,
+without proxies or hosted calls. Four global HTTP workers/two per policy used
+the same one-primary/two-alternate topology, page limits and 6.5-GiB aggregate
+memory cap as the preceding completed deployment. Both policies explicitly used
+`navigationTimeout: 30000`; the overall API timeout remained 85 seconds and the
+client deadline 90 seconds. The browser image adds the tested control to the
+existing pinned bundle without downloading browsers again.
+
+| All 100 targets, one request/profile | Without fallback | With fallback |
+| --- | --- | --- |
+| Raw substring | 46 | 56 |
+| Screened marker | 45 | 54 |
+| Normalized marker | 46 | 55 |
+| Screened-success p50 | 5,388 ms | 4,748 ms |
+| Screened-success p95 | 9,607 ms | 10,792 ms |
+| Additional Firefox calls | 0 | 53 |
+
+All 46 baseline matches also matched with fallback; nine were adaptive-only and
+45 matched neither. Owner logs account for 200 primary calls and 53 alternates,
+split 27/26, with no target dispatched to an alternate more than once. Returned
+diagnostics reported eleven recoveries, ten matching the frozen marker. Four API
+errors lacked returned fallback diagnostics and remain unknown in that metadata
+ledger. Backend recovery and expected-marker success remain separate measures.
+
+The adaptive normalized total remains 55/100. Apartments.com added a match while
+Verizon lost one after target 417. This is a different fresh sample and policy,
+not evidence that navigation timeouts improved site access. The overall two-policy
+run took 337.860 seconds versus 354.818 seconds previously. Adaptive all-request
+p99 was 30,237 ms versus 83,338 ms, and maximum was 60,981 versus 84,565 ms.
+Roblox still failed, now after 60,981 ms; DraftKings still returned 403, now after
+30,237 ms rather than 83,338 ms. The adaptive screened-success p95 increased from
+10,102 to 10,792 ms. These mixed observations do not establish a general throughput
+or latency gain. Source, request policy, browser identities and live timing differ.
+
+All 200 payload hashes, scores, summaries and lifecycle bounds replayed; timing
+was valid. Peak sampled memory was 1,025/1,318/1,199 MiB. Memory-boundary, OOM,
+OOM-kill and PID-limit counters were zero for every owner; separate Firefox
+socket-throttling counters were 162/194. All owners ended healthy with zero
+pages/sessions and were removed. [Browser CI](https://github.com/toreleon/firecrawl/actions/runs/41692590578)
+passed 60 helper checks, 110 integration checks, build and production dependency
+audit on implementation `f8d479fa7`; broader server/SDK CI is not claimed as passed.
+The [full API receipt](../apps/playwright-service-ts/benchmarks/navigation-timeout-full-api-results-2026-11-04.json)
+retains the source/image pins and the qualified preceding-deployment comparison.
+The last actual hosted result remains the earlier source-pinned 81/100; hosted
+was not refreshed and parity remains unproven.
+
+### Cleanup after navigation-timeout experiments
+
+Seven task browser containers were removed, including both selected-triage
+owners, the dual-engine integration container, the API harness's Firefox owner
+and the three full-benchmark owners. Three task infrastructure services stopped;
+nine unrelated services and all 114 volumes were preserved. Exact-ID cache
+cleanup removed four unshared records, with Docker reporting 453.6 kB. Fifty-nine
+records shared with retained images remain (2.132 GB reported cache, 0 B reported
+reclaimable); the current image and its pinned base remain available. Image
+accounting remains 28.92 GB and host free space was 126 GiB. No global prune was
+used. The [cleanup receipt](../apps/playwright-service-ts/benchmarks/navigation-timeout-cleanup-results-2026-11-04.json)
+preserves preflight inventories and actual prune results without claiming all
+shared cache was deleted or independently measuring physical bytes freed.

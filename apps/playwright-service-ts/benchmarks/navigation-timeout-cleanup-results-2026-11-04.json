@@ -1,0 +1,89 @@
+{
+  "checkedAt": "2026-11-03T18:28:37.673023+00:00",
+  "sourceCommit": "f8d479fa709917cd6fec09049f6b4197ab24ea21",
+  "taskBrowserContainersRemoved": 7,
+  "cleanup": [
+    {
+      "run": "_local/anti-bot/capture-triage-2026-11-04",
+      "name": null,
+      "oomKilled": false
+    },
+    {
+      "run": "_local/anti-bot/capture-triage-2026-11-04",
+      "name": null,
+      "oomKilled": false
+    },
+    {
+      "run": "_local/anti-bot/navigation-timeout-container-tests-2026-11-04",
+      "name": "autogtm-firecrawl-navigation-timeout-tests-20261104",
+      "oomKilled": false
+    },
+    {
+      "run": "_local/anti-bot/navigation-timeout-api-harness-2026-11-04",
+      "name": "autogtm-firecrawl-navigation-timeout-api-harness-20261104",
+      "oomKilled": false
+    },
+    {
+      "run": "_local/anti-bot/navigation-timeout-full-api-harness-2026-11-04",
+      "name": null,
+      "oomKilled": false
+    },
+    {
+      "run": "_local/anti-bot/navigation-timeout-full-api-harness-2026-11-04",
+      "name": null,
+      "oomKilled": false
+    },
+    {
+      "run": "_local/anti-bot/navigation-timeout-full-api-harness-2026-11-04",
+      "name": null,
+      "oomKilled": false
+    }
+  ],
+  "taskInfrastructureStopped": [
+    "autogtm-firecrawl-workflows-pg-20261103",
+    "autogtm-firecrawl-workflows-redis-20261103",
+    "autogtm-firecrawl-workflows-rabbit-20261103"
+  ],
+  "unrelatedRunningServicesPreserved": [
+    "lead-data-postgres",
+    "lead-data-redis",
+    "lead-data-web",
+    "opengtm-agent-runtime-1",
+    "opengtm-agent-test-pg",
+    "opengtm-api-go-1",
+    "opengtm-browser-1",
+    "opengtm-scheduler-go-1",
+    "opengtm-worker-go-1"
+  ],
+  "dataVolumesDeleted": 0,
+  "dataVolumeCountAfter": 114,
+  "volumeNamesUnchangedByCacheCleanup": true,
+  "globalPruneUsed": false,
+  "buildCache": {
+    "recordsBefore": 63,
+    "reportedSizeBefore": "2.133GB",
+    "recordsRemoved": 4,
+    "pruneReportedTotal": "453.6kB",
+    "recordsAfter": 59,
+    "reportedSizeAfter": "2.132GB",
+    "reportedReclaimableAfter": "0B",
+    "allRemainingRecordsSharedWithImages": true,
+    "scope": "Exact task cache IDs previewed and pruned. Shared records remain pinned by retained images; no further prune or image removal attempted.",
+    "imageIdsUnchanged": true,
+    "physicalBytesFreedNotMeasured": true
+  },
+  "currentBrowserImageRetained": "sha256:464401ac076ef7b541178f4baf61a61952dca6e4b331ea1368a168e23b69f737",
+  "pinnedBaseImageRetained": "sha256:4cf1c1eb4550e82504a0f11af5817e2a95143bc96e3b83f081400764e51a8244",
+  "browserBundleRedownloaded": false,
+  "dockerSystemDfAfter": "TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE\nImages          52        10        28.92GB   11.29GB (39%)\nContainers      13        9         360.4kB   28.67kB (7%)\nLocal Volumes   114       5         6.324GB   6.151GB (97%)\nBuild Cache     59        0         2.132GB   0B\n",
+  "hostDiskAfter": "Filesystem      Size    Used   Avail Capacity iused ifree %iused  Mounted on\n/dev/disk3s5   460Gi   310Gi   126Gi    72%    5.4M  1.3G    0%   /System/Volumes/Data\n",
+  "hostedCalls": 0,
+  "evidenceHashes": {
+    "_local/anti-bot/capture-triage-2026-11-04/cleanup.json": "92390f84d33ef30a9c10b609a281870bd651283f10831e1fb8162b393b4edc2b",
+    "_local/anti-bot/navigation-timeout-container-tests-2026-11-04/cleanup.json": "c3b3050c9ba6da983588525423a5ff9e6f955491f05caa9913399160fd436e75",
+    "_local/anti-bot/navigation-timeout-api-harness-2026-11-04/browser-cleanup.json": "c251059964fa8e5e0f94090ea661379379f7ded92aba76f7384bdb9e34bec6d5",
+    "_local/anti-bot/navigation-timeout-full-api-harness-2026-11-04/cleanup.json": "0c7c24b39480974b648010020ab041508990e3d4b3f31ec329268ac4f11feb22",
+    "_local/anti-bot/navigation-timeout-cleanup-2026-11-04/cache-preflight.json": "d604185db64c65398945bfe30233de8e9d82b9e9f1055a0ef0d7b85edab07a20",
+    "_local/anti-bot/navigation-timeout-cleanup-2026-11-04/cache-result.json": "b66890ccf05b9a36f12765576a8b51962baedac8cba2efc45bb4a494c66a5e99"
+  }
+}
