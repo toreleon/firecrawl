@@ -8,6 +8,7 @@ import {
   isRetryableScrapeError,
   attemptBudgetMs,
   ScrapeFailure,
+  errorCode,
 } from './scrape-control';
 
 test('a timed-out allocation disposes its late result rather than leaking it', async () => {
@@ -101,4 +102,22 @@ test('network diagnostics preserve numeric Chromium protocol names', () => {
     'ERR_CONNECTION_RESET',
   );
   assert.equal(networkErrorCode(new Error('unexpected page error')), undefined);
+});
+
+test('observed Gecko transport errors remain typed and only transient cases permit explicit retries', () => {
+  for (const code of ['NS_ERROR_NET_RESET', 'NS_ERROR_NET_INTERRUPT', 'NS_ERROR_NET_TIMEOUT']) {
+    const error = new Error(`page.goto: ${code} at https://example.com`);
+    assert.equal(networkErrorCode(error), code);
+    assert.equal(errorCode(error), 'NETWORK_ERROR');
+    assert.equal(isRetryableScrapeError(error), true);
+  }
+  for (const code of ['NS_ERROR_UNKNOWN_HOST', 'NS_ERROR_CONNECTION_REFUSED']) {
+    assert.equal(networkErrorCode(code), code);
+    assert.equal(errorCode(code), 'NETWORK_ERROR');
+    assert.equal(isRetryableScrapeError(code), false);
+  }
+  for (const code of ['NS_BINDING_ABORTED', 'SEC_ERROR_UNKNOWN_ISSUER', 'SSL_ERROR_BAD_CERT_DOMAIN', 'NS_ERROR_DOM_BAD_URI', 'NS_ERROR_FAILURE']) {
+    assert.equal(isRetryableScrapeError(code), false);
+    assert.equal(networkErrorCode(code), undefined);
+  }
 });

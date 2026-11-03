@@ -518,7 +518,16 @@ export const applyWorkflow = async (
         };
         // One native GET submission, with opaque hidden fields left in the DOM.
         // No answer-required control is clicked or filled by this recipe.
-        await button.click({ timeout: Math.min(5000, deadline.remaining()) });
+        // Register before clicking: load state can still describe the old
+        // product document while its GET submission is waiting to commit.
+        const navigation = page.waitForEvent('framenavigated', {
+          predicate: (frame) => frame === page.mainFrame(),
+          timeout: Math.min(5000, deadline.remaining()),
+        });
+        await Promise.all([
+          navigation,
+          button.click({ timeout: Math.min(5000, deadline.remaining()) }),
+        ]);
         await page.waitForLoadState('domcontentloaded', {
           timeout: Math.min(5000, deadline.remaining()),
         });
@@ -526,15 +535,21 @@ export const applyWorkflow = async (
         let pendingVerification = 1;
         const settleStart = Date.now();
         const settleEnd =
-          settleStart + Math.min(1500, Math.max(1, deadline.remaining() - 300));
+          settleStart + Math.min(5000, Math.max(1, deadline.remaining() - 300));
         do {
           try {
-            after = new URL(page.url());
-            pendingVerification = await page
-              .locator(
+            const snapshot = await deadline.run(page.evaluate(() => ({
+              url: location.href,
+              pending: document.querySelectorAll(
                 'form[action*="/errors_page/validateCaptcha"],#captchacharacters,input[name="field-keywords"]:not([type="hidden"]),iframe[src*="captcha"]',
-              )
-              .count();
+              ).length,
+            })));
+            if (snapshot.url !== page.url()) {
+              await deadline.sleep(50);
+              continue;
+            }
+            after = new URL(snapshot.url);
+            pendingVerification = snapshot.pending;
             const product = amazonProductIdentity(after.href);
             if (
               after.origin !== url.origin ||

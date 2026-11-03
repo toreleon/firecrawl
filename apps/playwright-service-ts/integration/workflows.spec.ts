@@ -23,7 +23,7 @@ test(
     const form =
       '<h4>Click the button below to continue shopping</h4><form method="get" action="/errors_page/validateCaptcha"><input type="hidden" name="amzn" value="opaque"><input type="hidden" name="amzn-r" value="opaque"><input type="hidden" name="field-keywords" value="server"><button type="submit">Continue shopping</button></form>';
     try {
-      for (const delay of [150, 1800]) {
+      for (const delay of [150, 1800, 6500]) {
         const page = await browser.newPage();
         await page.context().setOffline(true);
         let submitted = 0;
@@ -59,7 +59,7 @@ test(
           },
           new Deadline(8000),
         );
-        if (delay === 150) {
+        if (delay <= 1800) {
           const result = await operation;
           assert.match(result.renderedText, /Requested product 42/);
           assert.equal(result.url, target);
@@ -67,11 +67,16 @@ test(
             result.interaction.workflow.steps[0].outcome,
             'submitted-and-returned-to-product',
           );
-        } else
-          await assert.rejects(
-            operation,
-            (e: any) => e.code === 'WORKFLOW_NAVIGATION_MISMATCH',
+        } else {
+          const result = await operation;
+          assert.equal(result.readiness.satisfied, false);
+          assert.equal(
+            result.interaction.workflow.steps[0].outcome,
+            'verification_unresolved',
           );
+          assert.match(result.content, /validateCaptcha/);
+          assert.doesNotMatch(result.renderedText, /Requested product 42/);
+        }
         assert.equal(submitted, 1);
         await page.close();
       }

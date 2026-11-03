@@ -148,14 +148,18 @@ export const retryAfterMs = (value: string | undefined, now = Date.now()) => {
 export const errorCode = (error: unknown) => {
   if (error instanceof ScrapeFailure) return error.code;
   const message = String(error);
+  if (networkErrorCode(error)) return 'NETWORK_ERROR';
   if (/Timeout|deadline/i.test(message)) return 'SCRAPE_TIMEOUT';
-  if (/net::ERR_|ECONN|ENOTFOUND|EAI_AGAIN/.test(message))
+  if (/ECONN|ENOTFOUND|EAI_AGAIN/.test(message))
     return 'NETWORK_ERROR';
   return 'BROWSER_ERROR';
 };
 
 export const networkErrorCode = (error: unknown) =>
-  String(error).match(/net::(ERR_[A-Z0-9_]+)/)?.[1];
+  String(error).match(/net::(ERR_[A-Z0-9_]+)/)?.[1] ??
+  String(error).match(
+    /\b(NS_ERROR_(?:NET_RESET|NET_INTERRUPT|NET_TIMEOUT|CONNECTION_REFUSED|UNKNOWN_HOST|PROXY_CONNECTION_REFUSED))\b/,
+  )?.[1];
 
 export const isRetryableScrapeError = (error: unknown) => {
   if (error instanceof ScrapeFailure) return error.code === 'SCRAPE_TIMEOUT';
@@ -167,6 +171,9 @@ export const isRetryableScrapeError = (error: unknown) => {
       'ERR_EMPTY_RESPONSE',
       'ERR_TIMED_OUT',
       'ERR_HTTP2_PROTOCOL_ERROR',
+      'NS_ERROR_NET_RESET',
+      'NS_ERROR_NET_INTERRUPT',
+      'NS_ERROR_NET_TIMEOUT',
     ].includes(network);
   return errorCode(error) === 'SCRAPE_TIMEOUT';
 };
