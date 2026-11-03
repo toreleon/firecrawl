@@ -124,6 +124,20 @@ and `--image-id=...`. Existing output directories are rejected to preserve old
 receipts. Maximum runner concurrency is four; this does not increase the
 service's own page limit.
 
+Keep the host awake for the entire run. On macOS, scope the idle-sleep assertion
+to the benchmark command (it ends automatically when the command exits):
+
+```sh
+caffeinate -i pnpm benchmark:waf --service=http://127.0.0.1:3003 --attempts=5 --concurrency=2
+```
+
+The runner samples its wall clock every second. A gap above ten seconds or a
+backwards clock adjustment sets `timingIntegrity.valid=false` in the final
+report. This detects host suspension or a stalled event loop; it does not prove
+the cause. Keep the complete affected run for diagnosis and repeat it under
+stable conditions instead of excluding selected failures. A valid timing flag
+alone does not establish that the rest of the benchmark setup is correct.
+
 Outputs include a configuration manifest, an append-only attempt log, a final
 report, and the full service response for each screened failure. The report
 keeps HTTP failures, unknown service errors, rate limits and timeouts separate.

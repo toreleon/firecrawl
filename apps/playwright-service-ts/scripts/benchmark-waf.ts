@@ -1,6 +1,7 @@
 import { mkdir, open, readFile, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import path from 'node:path';
+import { BenchmarkTiming } from '../helpers/benchmark-timing';
 import {
   requestScrape,
   scoreObservation,
@@ -116,6 +117,11 @@ async function main() {
     targets.map((target) => ({ target, attempt: index + 1 })),
   ).flat();
   const results: WafAttempt[] = [];
+  const timing = new BenchmarkTiming();
+  const timingTimer = setInterval(() => {
+    if (timing.sample())
+      console.error('Timing gap detected: do not compare this run with uninterrupted runs.');
+  }, 1000);
   let cursor = 0;
   try {
     await Promise.all(
@@ -160,6 +166,7 @@ async function main() {
       ...manifest,
       status: 'complete',
       finishedAt: new Date().toISOString(),
+      timingIntegrity: timing.snapshot(),
       ...summarizeAttempts(results),
       attempts: results,
     };
@@ -170,7 +177,12 @@ async function main() {
     await writeFile(
       path.join(output, 'manifest.json'),
       JSON.stringify(
-        { ...manifest, status: 'complete', finishedAt: report.finishedAt },
+        {
+          ...manifest,
+          status: 'complete',
+          finishedAt: report.finishedAt,
+          timingIntegrity: report.timingIntegrity,
+        },
         null,
         2,
       ) + '\n',
@@ -179,6 +191,7 @@ async function main() {
       JSON.stringify(
         {
           report: path.join(output, 'report.json'),
+          timingIntegrity: report.timingIntegrity,
           ...summarizeAttempts(results),
         },
         null,
@@ -186,6 +199,7 @@ async function main() {
       ),
     );
   } finally {
+    clearInterval(timingTimer);
     await attemptsFile.close();
   }
 }

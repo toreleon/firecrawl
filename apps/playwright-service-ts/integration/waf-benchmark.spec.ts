@@ -87,6 +87,9 @@ test(
         await readFile(path.join(output, 'report.json'), 'utf8'),
       );
       assert.equal(report.status, 'complete');
+      assert.equal(report.timingIntegrity.valid, true);
+      assert.deepEqual(report.timingIntegrity.gaps, []);
+      assert.equal(report.timingIntegrity.maximumAllowedGapMs, 10000);
       assert.equal(requests, 6);
       assert.equal(report.expectedRequests, 6);
       assert.equal(report.overall.requests, 6);
