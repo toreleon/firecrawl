@@ -1,0 +1,361 @@
+{
+  "status": "complete",
+  "date": "2026-11-03",
+  "runtimeSourceCommit": "ac228cbf03ed8235a2a36a56f72fd1d3cc8a8b50",
+  "purpose": "Stateless controlled API owner distribution, bounded retry repair, and optional media-policy experiment before proxy experiments",
+  "hostedCallsThisIteration": 0,
+  "hostedParity": "Not established; latest hosted comparison is the separate d27415afa 20-target API receipt, not rerun for this runtime.",
+  "mediaExperiment": {
+    "scope": "Selected 20-target browser-service subset, not the 100-target frontier or full API/hosted comparison",
+    "rounds": 3,
+    "requests": 120,
+    "totalClientConcurrency": 4,
+    "maxAttemptsPerRequest": 1,
+    "expectedTextSent": false,
+    "proxy": false,
+    "egressCountry": "VN",
+    "browser": "Rebrowser full Chromium, Linux ARM64, headful under Xvfb",
+    "sameImage": "sha256:c2dc05fe80bf91b6a59304f2c0623f15d57b8157781a2e314863d4df18ccecc0",
+    "limitsPerOwner": {
+      "cpuCount": 2,
+      "memoryGiB": 3,
+      "pageCapacity": 2
+    },
+    "graderSha256": "ffd9f0d2e5996825aa77cb71b600a6667558e166d4471a084c20638bab9171d6",
+    "classifierFallbackSha256": "3111f011045834a040e5497825cd0bf2c698a3fa8ca77a48c8479dddf2348817",
+    "profiles": {
+      "mediaOff": {
+        "requests": 60,
+        "uniqueTargets": 20,
+        "frontierPasses": 25,
+        "screenedPasses": 23,
+        "normalizedPasses": 26,
+        "frontierSuccessRate": 0.4166666666666667,
+        "screenedSuccessRate": 0.38333333333333336,
+        "normalizedSuccessRate": 0.43333333333333335,
+        "successfulLatencyP50Ms": 3920,
+        "successfulLatencyP95Ms": 9730,
+        "allAttemptLatencyP95Ms": 7494,
+        "failures": {
+          "challenge": 13,
+          "target_status_403": 12,
+          "network_error": 4,
+          "rate_limited": 3,
+          "marker_only_in_noncontent_markup": 2,
+          "missing_expected_marker": 3
+        }
+      },
+      "mediaOn": {
+        "requests": 60,
+        "uniqueTargets": 20,
+        "frontierPasses": 21,
+        "screenedPasses": 18,
+        "normalizedPasses": 21,
+        "frontierSuccessRate": 0.35,
+        "screenedSuccessRate": 0.3,
+        "normalizedSuccessRate": 0.35,
+        "successfulLatencyP50Ms": 3366,
+        "successfulLatencyP95Ms": 7509,
+        "allAttemptLatencyP95Ms": 6523,
+        "failures": {
+          "network_error": 5,
+          "challenge": 15,
+          "target_status_403": 12,
+          "rate_limited": 3,
+          "marker_only_in_noncontent_markup": 3,
+          "missing_expected_marker": 3,
+          "timeout": 1
+        }
+      }
+    },
+    "paired": {
+      "both": 21,
+      "mediaOffOnly": 5,
+      "mediaOnOnly": 0,
+      "neither": 34
+    },
+    "byTarget": [
+      {
+        "target": "Amazon",
+        "mediaOff": 2,
+        "mediaOn": 0
+      },
+      {
+        "target": "indeed",
+        "mediaOff": 0,
+        "mediaOn": 0
+      },
+      {
+        "target": "lowes",
+        "mediaOff": 0,
+        "mediaOn": 0
+      },
+      {
+        "target": "louisvuitton",
+        "mediaOff": 0,
+        "mediaOn": 0
+      },
+      {
+        "target": "mouser",
+        "mediaOff": 0,
+        "mediaOn": 0
+      },
+      {
+        "target": "tripadvisor",
+        "mediaOff": 0,
+        "mediaOn": 0
+      },
+      {
+        "target": "ebay",
+        "mediaOff": 0,
+        "mediaOn": 0
+      },
+      {
+        "target": "cargurus",
+        "mediaOff": 0,
+        "mediaOn": 0
+      },
+      {
+        "target": "crunchbase",
+        "mediaOff": 0,
+        "mediaOn": 0
+      },
+      {
+        "target": "Google Search",
+        "mediaOff": 0,
+        "mediaOn": 0
+      },
+      {
+        "target": "YouTube",
+        "mediaOff": 3,
+        "mediaOn": 3
+      },
+      {
+        "target": "Airbnb",
+        "mediaOff": 1,
+        "mediaOn": 0
+      },
+      {
+        "target": "TikTok",
+        "mediaOff": 3,
+        "mediaOn": 3
+      },
+      {
+        "target": "Facebook",
+        "mediaOff": 3,
+        "mediaOn": 3
+      },
+      {
+        "target": "Best Buy",
+        "mediaOff": 3,
+        "mediaOn": 3
+      },
+      {
+        "target": "CoinMarketCap",
+        "mediaOff": 3,
+        "mediaOn": 3
+      },
+      {
+        "target": "Zoopla",
+        "mediaOff": 2,
+        "mediaOn": 0
+      },
+      {
+        "target": "github",
+        "mediaOff": 3,
+        "mediaOn": 3
+      },
+      {
+        "target": "stackoverflow",
+        "mediaOff": 0,
+        "mediaOn": 0
+      },
+      {
+        "target": "arxiv",
+        "mediaOff": 3,
+        "mediaOn": 3
+      }
+    ],
+    "resources": {
+      "mediaOff": {
+        "peakSampledMemoryMiB": 969,
+        "nonLoopbackRxBytes": 118732672,
+        "nonLoopbackTxBytes": 38541353,
+        "blockedMedia": 0
+      },
+      "mediaOn": {
+        "peakSampledMemoryMiB": 1176,
+        "nonLoopbackRxBytes": 101115391,
+        "nonLoopbackTxBytes": 30284496,
+        "blockedMedia": 433
+      }
+    },
+    "resourceCaveat": "Non-loopback container NIC bytes include TLS, API traffic, telemetry and protocol overhead; not exact target payload or a causal bandwidth estimate.",
+    "audit": {
+      "auditedRequests": 120,
+      "threePerTargetPerProfile": true,
+      "allScoresAndHashesReplay": true,
+      "graderUnchanged": true,
+      "sameRuntimeImagesAndSource": true,
+      "noExpectedTextHints": true,
+      "noResourceLimitEvents": true,
+      "cleanupVerified": true,
+      "timingIntegrity": {
+        "valid": true,
+        "sampleIntervalMs": 1000,
+        "maximumAllowedGapMs": 10000,
+        "maximumObservedGapMs": 1003,
+        "gaps": []
+      }
+    },
+    "decision": "Keep BLOCK_MEDIA=false by default. Opt-in control is repaired but did not improve normalized retrieval on this subset.",
+    "evidence": {
+      "directory": "_local/anti-bot/media-policy-paired-2026-11-03",
+      "reportSha256": "8b3a60b0828f670d1ece336d6a078a1cecc7ff18ee32c1807d6b836ffdbfcbbf",
+      "auditSha256": "6a3fc151e008af31347be1218f37c1297c838c84838352dbe426b8a76db37c81",
+      "runtimeManifestSha256": "e6096bf798e9c6a4c8d77fa8c4c938983d5f3014378317b20c7c04f3ea43b994"
+    },
+    "fixtureSha256": "a886fb57087e842c2857b89a7669e31d2fb7b98d6bd7deb60a2329f29581b76a"
+  },
+  "apiCapacityExperiment": {
+    "status": "complete",
+    "sourceCommit": "ac228cbf03ed8235a2a36a56f72fd1d3cc8a8b50",
+    "auditedRequests": 16,
+    "warmupRequests": 4,
+    "clientConcurrency": 8,
+    "maxConfiguredBrowserPages": 4,
+    "oneOwnerWallMs": 5649,
+    "twoOwnersWallMs": 2950,
+    "throughputMultiplier": 1.914915254237288,
+    "balancedCounts": [
+      4,
+      4
+    ],
+    "timingValid": true,
+    "allExpectedContentAndStatusChecked": true,
+    "sourceFilesMatchCommit": {
+      "apps/api/src/lib/local-browser/client.ts": "62bfe3a01870714c782eb0dc3d19166254ea4c2e547232bdf806c8850cbba2cd",
+      "apps/api/src/__tests__/snips/v2/browser-controls.test.ts": "398d3d073dff19619e14cb361163e6229f3b5c4668efccfc1a98ff353563b755",
+      "apps/playwright-service-ts/api.ts": "02a9767f142cd040ec257e4ad7bb8f87b080d02373f23a32315ce467677a1284",
+      "apps/playwright-service-ts/helpers/scrape-control.ts": "228fc82c0663d0cba5d8131a1457915a48f7c17b8860ba6a0bb337eeb66ad874"
+    },
+    "scope": "Single local-fixture capacity run per configuration, native macOS API and headless Rebrowser, two pages per browser; doubles configured page capacity; not a public-target accuracy or hosted speed comparison.",
+    "evidenceDirectory": "_local/anti-bot/api-pool-capacity-2026-11-03",
+    "auditSha256": "ee64c44f70e58d2f5ac5f0272888d7ff9ad6f4f6923a8d4295ac1148fc6c783a"
+  },
+  "directHttpDiagnostic": {
+    "scope": "Direct HTTP diagnostic, not a full Firecrawl API or browser comparison. No JS, workflows or consent rules were executed.",
+    "concurrency": 2,
+    "proxy": false,
+    "normalizedMatches": 0,
+    "requests": 10,
+    "targets": [
+      {
+        "target": "indeed",
+        "pageStatus": 403,
+        "normalizedPass": false,
+        "failureReason": "challenge"
+      },
+      {
+        "target": "lowes",
+        "pageStatus": 403,
+        "normalizedPass": false,
+        "failureReason": "target_status_403"
+      },
+      {
+        "target": "louisvuitton",
+        "pageStatus": 403,
+        "normalizedPass": false,
+        "failureReason": "target_status_403"
+      },
+      {
+        "target": "mouser",
+        "pageStatus": 403,
+        "normalizedPass": false,
+        "failureReason": "target_status_403"
+      },
+      {
+        "target": "tripadvisor",
+        "pageStatus": 403,
+        "normalizedPass": false,
+        "failureReason": "challenge"
+      },
+      {
+        "target": "ebay",
+        "pageStatus": 403,
+        "normalizedPass": false,
+        "failureReason": "target_status_403"
+      },
+      {
+        "target": "crunchbase",
+        "pageStatus": 403,
+        "normalizedPass": false,
+        "failureReason": "challenge"
+      },
+      {
+        "target": "cargurus",
+        "pageStatus": 406,
+        "normalizedPass": false,
+        "failureReason": "target_status_406"
+      },
+      {
+        "target": "stackoverflow",
+        "pageStatus": 403,
+        "normalizedPass": false,
+        "failureReason": "challenge"
+      },
+      {
+        "target": "Google Search",
+        "pageStatus": 200,
+        "normalizedPass": false,
+        "failureReason": "marker_only_in_noncontent_markup"
+      }
+    ],
+    "conclusion": "No direct HTTP fallback added from this diagnostic; denials persist across the browser and Undici, and script-only matches remain failures.",
+    "reportSha256": "38431ef021fb9ad5423aa0325a3a78f0b92c3ea23f5b2f7444379ddacccb7b87"
+  },
+  "verification": {
+    "browserCI": {
+      "url": "https://github.com/toreleon/firecrawl/actions/runs/41618803019",
+      "sourceCommit": "ac228cbf03ed8235a2a36a56f72fd1d3cc8a8b50",
+      "build": true,
+      "helpersPassed": 48,
+      "integrationPassed": 62,
+      "productionDependencyAudit": true,
+      "retainedLogSha256": "2cadb542aa4ca108b078fcb93a17ba5fb6a8a3ddf5ceba6ad47c632459eb90ec"
+    },
+    "apiHarness": {
+      "directory": "_local/anti-bot/api-pool-harness-2026-11-03",
+      "realApiTestsPassed": 4,
+      "clientTestsPassedAtHarness": 4,
+      "harnessExitCode": 0,
+      "coverage": [
+        "stateless two-owner distribution",
+        "typed empty/verification failures",
+        "explicit readiness",
+        "retained tab and handoff with stable owner"
+      ],
+      "harnessLogSha256": "09a766dcc28f06c945f1c54f5d8317dfaf7b6d568c234cba4bd0bb2d89bc2009",
+      "teardownNote": "Extract-worker logged an AMQP Channel closing error during shutdown. Command tests and harness exited zero; task services were stopped."
+    },
+    "finalClientTests": {
+      "passed": 5,
+      "coverage": [
+        "balanced owners",
+        "pre-dispatch unhealthy-owner fallback",
+        "no replay after command failure",
+        "no replay after lost response",
+        "deadline/cancellation before dispatch and shared health probe survival"
+      ],
+      "logSha256": "47a7a3e8a488c37b33f7a0f8f6793d40f92ae2ec439faed62643be6e57d7f8e6"
+    },
+    "apiBuild": "Passed in real API harnesses after final source/test edits",
+    "broaderServerAndSdkCI": "Queued on custom runners; not reported as passed."
+  },
+  "limits": [
+    "Live-site variation, shared egress and only three rounds do not establish a causal media effect for an individual site.",
+    "Media latency compares different successful target sets; it is not a broad speed result.",
+    "The capacity experiment doubles configured page capacity from two to four. It is a single local fixture run per profile, not hosted throughput or public-target coverage.",
+    "Retry changes are covered by controlled tests. The media experiment uses one attempt and does not measure a retry-policy coverage improvement."
+  ]
+}

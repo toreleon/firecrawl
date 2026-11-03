@@ -32,6 +32,23 @@ capabilities; commands addressed to an old process fail. Existing Firecrawl API
 authentication supplies the team identity. Authentication-disabled installations
 have the existing single `bypass` identity and must remain on a trusted network.
 
+For stateless requests with `browserControls`, the API rotates across
+`LOCAL_BROWSER_OWNER_URLS` per API process, with a randomized starting position.
+It can choose another owner if health discovery fails before dispatch. Discovery
+shares the caller's deadline and cancellation; a shared health probe is not
+cancelled by one caller. Once a scrape is dispatched, its failure or lost response
+is returned without replay on another owner. Retained sessions continue to use
+their recorded owner. `metadata.browser.diagnostics.ownerBootId` identifies the
+process that executed a capture. Requests without `browserControls` retain their
+existing engine path. This is round-robin distribution, not a distributed load
+balancer or a guarantee of equal utilization across API replicas.
+
+The browser's optional `BLOCK_MEDIA=true` setting blocks image and media
+subresources by resource type, after URL/security checks. It preserves scripts,
+styles and explicitly requested documents, including an image document. Its
+default remains `false`; enabling it can change image-dependent workflows and
+human handoff screenshots. `/health` exposes the effective `blockMedia` value.
+
 Do not configure `PROXY_SERVER` for direct-egress operation. No proxy pool,
 rotation, external CAPTCHA solver or paid model is required by this feature.
 
@@ -95,6 +112,14 @@ empty/loading is not `CONTENT_READY`; recognized Amazon/Akamai verification
 shells remain verification states. Short real text is accepted. Explicit
 readiness and JSON/plain-text response handling keep their separate contracts.
 This is a text-readiness check, not proof that every field or lazy section loaded.
+
+`maxAttempts` defaults to one. Opt-in retries recognize coded phase deadlines
+and transient connection/HTTP2 errors, while cancellation, session errors,
+workflow identity mismatches and hard status failures remain terminal. Attempt
+budgets preserve requested fixed/readiness waits before dividing the available
+time. A retry requires the previous stateless tab to finish closing; retained
+workflow tabs and commands with actions keep their existing single-attempt rule.
+Diagnostics include each attempt's budget and tab-close observation.
 
 A recipe and caller actions
 cannot be combined. Version recipes deliberately as sites change.

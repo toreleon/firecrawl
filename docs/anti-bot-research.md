@@ -714,3 +714,110 @@ The goal remains open: the local comparison improved match rate, while the
 fresh hosted comparison still showed a substantial retrieval gap. Neither this
 selected pilot nor the browser comparison measures extraction F1, a complete
 crawl/refresh system, or production availability.
+
+## Stateless worker routing, retries and media policy
+
+The next iteration (`ac228cbf0`) repaired three concrete implementation gaps.
+Stateless requests with `browserControls` selected only the first configured
+owner; they now rotate across owners per API process. Health discovery shares
+the caller's deadline and cancellation, deduplicates pending probes, and permits
+selection of another owner only before dispatch. Retained sessions remain pinned
+to their recorded owner. A failed dispatched command or lost response is never
+replayed on another owner. Capture diagnostics expose the executing boot ID.
+
+Opt-in retry detection previously depended on error-message wording and missed
+the service's own coded phase deadline. It now checks typed errors and a narrow
+set of transient transport failures, including HTTP2 protocol errors. Budget
+planning preserves requested fixed/readiness waits when all possible attempts
+cannot fit. The old tab must finish closing before another stateless attempt.
+Cancellation, session loss, workflow identity mismatches and hard denials remain
+terminal; action/workflow-session retry restrictions remain in effect. The
+controlled fixture recovers a slow first navigation in the shared deadline and
+proves that a fixed wait does not become an impossible half-budget attempt.
+This repair is not a measured public-target retry-coverage gain.
+
+The optional `BLOCK_MEDIA=true` route was also bypassed by a later catch-all
+handler calling `continue()`. Playwright documents that matching handlers run
+in the opposite order to registration and `continue()` skips remaining handlers.
+The repair combines security, advertising and optional media decisions in one
+handler. It uses the browser's resource type instead of a filename extension,
+blocking extensionless/query-string image subresources while preserving scripts
+named `.jpg` and requested top-level image documents. A failure-first fixture demonstrated
+the previous ineffective filter. The default was and remains `false`.
+Sources: [route chaining](https://playwright.dev/docs/api/class-route#route-fallback)
+and [resource types](https://playwright.dev/docs/api/class-request#request-resource-type).
+
+### Full API capacity measurement
+
+With the same native macOS API and two headless Rebrowser owners, eight concurrent
+fresh fixture scrapes requested a 1,200 ms post-load wait. Each owner had two page
+permits. One configured owner completed all eight in 5,649 ms; two owners completed
+them in 2,950 ms, with four requests on each. All 16 measured requests and four
+warmups returned the expected document and HTTP status. Timing had no suspension
+gaps and all owners ended with zero active pages/sessions.
+
+This is a 1.91× throughput increase in a controlled, single-run capacity check,
+obtained by using four page permits instead of two. It establishes functioning
+API distribution, not hosted speed parity, a CPU efficiency improvement, or a
+public-site success-rate increase. The separate real API regression checks also
+confirm that a retained session uses the same owner after a subsequent scrape.
+
+### Media experiment before proxy routing
+
+The same Linux ARM64 headful image ran both profiles with only `BLOCK_MEDIA`
+different. A selected subset of 20 frozen targets ran three times per profile:
+120 requests, four client workers, two page permits/two CPUs/3 GiB per owner,
+direct Vietnam egress, one attempt, consent rejection, automatic workflows and
+no supplied expected-text hint. This subset differs from the earlier 20-target
+full-API pilot and is not a fresh hosted comparison.
+
+| Check | Media allowed | Media blocked |
+| --- | --- | --- |
+| Raw substring | 25/60 | 21/60 |
+| Screened marker | 23/60 | 18/60 |
+| Normalized marker | 26/60 (43.3%) | 21/60 (35.0%) |
+| Screened-success p50 | 3,920 ms | 3,366 ms |
+| Screened-success p95 | 9,730 ms | 7,509 ms |
+| Observed non-loopback RX | 118,732,672 bytes | 101,115,391 bytes |
+| Peak sampled memory | 969 MiB | 1,176 MiB |
+
+There were 21 paired matches, five media-allowed-only matches and no
+media-blocked-only matches. The differences were Amazon 2→0, Zoopla 2→0 and
+Airbnb 1→0. Blocked-media Amazon attempts ended in empty/aborted network responses
+or timeout; Zoopla returned challenge states, and Airbnb's marker stayed only in
+non-content markup. These observations do not isolate the cause of an individual
+loss from live-site variation or shared egress. Successful latency also compares
+different successful target sets. There is no basis here to enable blocking as a
+general coverage optimization.
+
+The blocked profile recorded 433 blocked media requests and about 14.8% fewer
+incoming NIC bytes. NIC counters include TLS, API traffic and protocol overhead;
+they are not exact target payload measurements or an outcome-independent cost
+estimate. Memory/OOM/process-limit counters stayed zero. All 120 unique records,
+response hashes, scores and summaries replayed with unchanged grader/classifier
+bytes and identical runtime source/compiled hashes. Both services ended healthy
+and were stopped. Keep media loading enabled by default.
+
+A separate ten-target direct-HTTP diagnostic used the existing secure dispatcher,
+TLS verification, private-address checks and redirect guards, without proxies,
+JavaScript or a fake browser identity. None of the ten previous hosted-only
+targets passed the unchanged normalized grader: eight returned 403, CarGurus
+returned 406 and Google returned a 200 non-content shell. CarGurus also failing
+through Undici is evidence against assuming Chromium HTTP2 alone caused its
+denial. This small diagnostic does not establish a universal transport result;
+it provides no reason to add a raw-fetch shortcut for these targets.
+
+The source passed [browser CI](https://github.com/toreleon/firecrawl/actions/runs/41618803019):
+build, 48 helper checks, 62 integration checks and production dependency audit.
+Four real API harness checks passed, including two-owner routing and retained-owner
+identity. Five focused client checks cover balanced selection, health fallback,
+no replay after failure or a lost response, and deadline/cancellation before
+dispatch. The harness logged an extract-worker AMQP closing error during shutdown;
+the tests and harness exited zero, and all task services were stopped. Broader
+custom-runner server/SDK CI is still queued. No hosted calls or provider credits
+were used in this iteration.
+
+The [compact receipt](../apps/playwright-service-ts/benchmarks/worker-routing-media-results-2026-11-03.json)
+pins all three experiments and local evidence hashes. Hosted parity remains open;
+the last direct hosted comparison is still the separately pinned 45% versus 80%
+API pilot, not a measurement of this newer source.
