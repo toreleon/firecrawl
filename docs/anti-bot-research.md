@@ -1050,3 +1050,74 @@ establish CSS visibility or extraction F1. The [full API receipt](../apps/playwr
 contains the original 100-target denominator, per-target outcomes, provider
 refusals, marker-quality evidence and source/credit/audit pins. Hosted parity is
 not established.
+
+## Supporting sidebars must not gate primary-content readiness
+
+The complete hosted API comparison exposed a correctable Yahoo Finance failure.
+The direct fork returned HTTP 200, the expected company marker in body text and
+Markdown, and usable quote content. Its sole busy region was a widget list under
+the supporting Dock sidebar, with skeletons and advertising. Because the site's
+broad main wrapper contained the sidebar, automatic readiness counted it as
+primary loading, waited five seconds and returned `CONTENT_NOT_READY`.
+
+This is a captured false readiness failure, rather than evidence of an access
+block. W3C defines [complementary landmarks](https://www.w3.org/WAI/ARIA/apg/patterns/landmarks/examples/complementary.html)
+as supporting content that remains meaningful separately, and maps native
+`aside` to that role. We infer that a busy supporting region inside a broad main
+wrapper should not gate primary readiness. Source `8daec7135` implements that
+rule without Yahoo-specific selectors or an expected-text hint.
+
+The rule only applies when all relevant visible main landmarks contain the
+supporting region. Body fallback still honors busy supporting content; a main
+inside an aside, an aside explicitly assigned `role="main"` and busy ancestors of
+main retain their loading signals. Final capture applies the same rule and
+reports `ignoredComplementaryBusyCount`. Explicit caller readiness remains
+authoritative. Author-provided landmark semantics can be wrong, so this does
+not establish completeness of primary content or sidebars.
+
+Seven focused readiness checks passed after the failure-first fixture. The
+full API harness passed six checks, including primary results hydrating while
+a supporting sidebar remains busy, and unresolved primary content retaining its
+failure metadata. [Browser CI](https://github.com/toreleon/firecrawl/actions/runs/41637736679)
+passed build, 51 helper checks, 73 integration checks and dependency audit.
+The API harness logged the known extract-worker AMQP closing error during
+teardown; tests and harness exited zero. Broader custom-runner server/SDK CI
+remains queued. Protection classification and the frozen grader are unchanged.
+
+The follow-up comparison used all 100 frozen browser targets once per image:
+`4a363134f` baseline versus `8daec7135` candidate, four global workers and the same
+Linux ARM64 headful base, direct Vietnam egress, two CPUs/3 GiB/two page permits,
+media enabled, consent rejection, automatic workflow, one attempt and no expected
+answer hint. This was a browser-service comparison; no hosted calls were made
+for this fix.
+
+| Check | Baseline, 100 requests | Candidate, 100 requests |
+| --- | --- | --- |
+| Raw substring | 45 (45%) | 45 (45%) |
+| Screened marker | 42 (42%) | 41 (41%) |
+| Normalized marker | 43 (43%) | 42 (42%) |
+| Screened-success p50 | 3,966 ms | 3,913 ms |
+| Screened-success p95 | 8,108 ms | 7,931 ms |
+
+All 42 candidate normalized matches were shared with the baseline. The sole
+baseline-only match was Yellow Pages: its candidate response had the marker but
+HTTP 503, before automatic readiness ran. There were 57 pairs matching neither.
+On the 42 common matches, nearest-rank p50 was 3,966→3,853 ms and p95
+8,108→7,931 ms. This small latency change and one response-status difference do
+not establish a causal aggregate gain or regression.
+
+Yahoo Finance passed both profiles this time. The candidate observed and
+excluded one supporting busy region on Yahoo Finance and one on Best Buy;
+both returned matching content. The historical full-API false failure was not
+reproduced in the live baseline, so the controlled API fixture provides the
+causal regression proof. Neither the live run nor the semantic rule proves all
+sidebar content was loaded.
+
+All 200 unique records, hashes and scores replayed offline with unchanged frozen
+grader/fallback bytes and valid timing. Memory peaked at 1,262/1,220 MiB with zero
+resource-limit events. Both owners ended healthy with zero pages/sessions and
+were stopped. The [compact receipt](../apps/playwright-service-ts/benchmarks/complementary-readiness-results-2026-11-03.json)
+records the exact source/image pins, loss diagnostics, supporting-region cases,
+current checks and separate historical classifier audit. The hosted API score
+remains 42/100 versus 80/100 on the separately pinned `4a363134f` deployment;
+it is not a refreshed score for `8daec7135`. No hosted parity is claimed.

@@ -135,9 +135,15 @@ Automatic readiness also waits for visible `aria-busy="true"` regions inside a
 visible `main` or `[role="main"]`, including a busy ancestor of that main region.
 If there is no visible main region, it checks the body. Hidden, inert,
 accessibility-hidden and offscreen busy elements are ignored, as are explicit
-advertisement regions with `data-ad-status` and an advertising accessibility label. Busy navigation
-outside an existing main region does not delay it. The final capture checks the
-signal again. Metadata includes `busyCount`, `maxBusyCount` and `busyScope` in
+advertisement regions with `data-ad-status` and an advertising accessibility label.
+Busy native `aside` elements without a role override, and explicit
+`role="complementary"` regions, do not delay primary readiness when they sit
+inside a visible main landmark. A main inside such a region, a busy ancestor
+of main, and body fallback without a visible main retain their busy signals.
+This uses author-provided supporting-content semantics; it does not establish
+that all sidebar content has loaded. Busy navigation outside an existing main
+region does not delay it. The final capture checks the signal again. Metadata
+includes `busyCount`, `maxBusyCount`, `ignoredComplementaryBusyCount` and `busyScope` in
 `readiness.automatic`. A remaining busy region yields outcome `busy` and
 `CONTENT_NOT_READY`, within the shared request deadline.
 
