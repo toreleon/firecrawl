@@ -364,7 +364,11 @@ export const applyWorkflow = async (
   const url = new URL(page.url());
   const observations: {
     entryHost: string;
-    amazonContinuation?: { origin: string; asin: string };
+    amazonContinuation?: {
+      origin: string;
+      asin: string;
+      settleWaitMs?: number;
+    };
     countrySelection?: {
       observed: boolean;
       candidateCount: number;
@@ -418,12 +422,45 @@ export const applyWorkflow = async (
         await page.waitForLoadState('domcontentloaded', {
           timeout: Math.min(5000, deadline.remaining()),
         });
-        const after = new URL(page.url());
-        const pendingVerification = await page
-          .locator(
-            'form[action*="/errors_page/validateCaptcha"],#captchacharacters,input[name="field-keywords"]:not([type="hidden"]),iframe[src*="captcha"]',
-          )
-          .count();
+        let after = new URL(page.url());
+        let pendingVerification = 1;
+        const settleStart = Date.now();
+        const settleEnd =
+          settleStart + Math.min(1500, Math.max(1, deadline.remaining() - 300));
+        do {
+          try {
+            after = new URL(page.url());
+            pendingVerification = await page
+              .locator(
+                'form[action*="/errors_page/validateCaptcha"],#captchacharacters,input[name="field-keywords"]:not([type="hidden"]),iframe[src*="captcha"]',
+              )
+              .count();
+            const product = amazonProductIdentity(after.href);
+            if (
+              after.origin !== url.origin ||
+              (product !== null && product !== amazonProductIdentity(url.href))
+            )
+              throw new ScrapeFailure(
+                'WORKFLOW_NAVIGATION_MISMATCH',
+                'Amazon continuation changed the requested product or origin',
+              );
+            if (
+              !pendingVerification &&
+              (after.pathname === '/' || product !== null)
+            )
+              break;
+          } catch (error) {
+            if (
+              !/Execution context was destroyed|navigating/i.test(String(error))
+            )
+              throw error;
+          }
+          if (Date.now() >= settleEnd) break;
+          await deadline.sleep(
+            Math.min(100, Math.max(1, settleEnd - Date.now())),
+          );
+        } while (Date.now() <= settleEnd);
+        observations.amazonContinuation.settleWaitMs = Date.now() - settleStart;
         if (
           after.origin !== url.origin ||
           (amazonProductIdentity(after.href) !== null &&

@@ -267,14 +267,7 @@ export const scrapePage = async (
         continue;
       }
       const expectedProduct = workflow.observations.amazonContinuation;
-      if (
-        expectedProduct &&
-        workflow.steps.some(
-          (step) =>
-            step.type === 'amazon-continue@1' &&
-            step.outcome.startsWith('submitted'),
-        )
-      ) {
+      if (expectedProduct) {
         const actualProduct = amazonProductIdentity(snapshot.url);
         if (
           new URL(snapshot.url).origin !== expectedProduct.origin ||

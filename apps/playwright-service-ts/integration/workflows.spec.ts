@@ -9,6 +9,79 @@ import { shouldBlockAdRequest } from '../helpers/resource-policy';
 import { scrapePage } from '../helpers/scrape-page';
 
 test(
+  'delayed continuation redirects settle before return, and unresolved forms cannot become homepage success',
+  { timeout: 20000 },
+  async () => {
+    const browser = await launchBrowser(
+      browserConfiguration({
+        BROWSER_ENGINE: 'rebrowser',
+        BROWSER_CHANNEL: 'chromium',
+        BROWSER_HEADLESS: 'true',
+      }),
+    );
+    const target = 'https://www.amazon.com/Test/dp/B000000042';
+    const form =
+      '<h4>Click the button below to continue shopping</h4><form method="get" action="/errors_page/validateCaptcha"><input type="hidden" name="amzn" value="opaque"><input type="hidden" name="amzn-r" value="opaque"><input type="hidden" name="field-keywords" value="server"><button type="submit">Continue shopping</button></form>';
+    try {
+      for (const delay of [150, 1800]) {
+        const page = await browser.newPage();
+        await page.context().setOffline(true);
+        let submitted = 0;
+        await page.route('**/*', (route) => {
+          const url = new URL(route.request().url());
+          if (url.pathname === '/errors_page/validateCaptcha') {
+            submitted++;
+            return route.fulfill({
+              contentType: 'text/html',
+              body:
+                form +
+                `<script>setTimeout(()=>location.replace('https://www.amazon.com/'),${delay})</script>`,
+            });
+          }
+          if (url.pathname === '/')
+            return route.fulfill({
+              contentType: 'text/html',
+              body: '<main>Storefront</main>',
+            });
+          return route.fulfill({
+            contentType: 'text/html',
+            body: submitted ? '<main>Requested product 42</main>' : form,
+          });
+        });
+        const operation = scrapePage(
+          page,
+          target,
+          {
+            waitUntil: 'domcontentloaded',
+            waitAfterLoad: delay === 1800 ? 600 : 0,
+            readinessTimeout: 500,
+            workflow: 'auto',
+          },
+          new Deadline(8000),
+        );
+        if (delay === 150) {
+          const result = await operation;
+          assert.match(result.renderedText, /Requested product 42/);
+          assert.equal(result.url, target);
+          assert.equal(
+            result.interaction.workflow.steps[0].outcome,
+            'submitted-and-returned-to-product',
+          );
+        } else
+          await assert.rejects(
+            operation,
+            (e: any) => e.code === 'WORKFLOW_NAVIGATION_MISMATCH',
+          );
+        assert.equal(submitted, 1);
+        await page.close();
+      }
+    } finally {
+      await browser.close();
+    }
+  },
+);
+
+test(
   'Amazon answer-free continuation keeps cookies and returns to the exact requested product',
   { timeout: 20000 },
   async () => {
