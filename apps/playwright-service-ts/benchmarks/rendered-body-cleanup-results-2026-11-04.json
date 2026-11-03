@@ -1,0 +1,224 @@
+{
+  "checkedAt": "2026-11-03T21:53:24.317699+00:00",
+  "sourceCommit": "4c3e920a9c628285ba63f9a14d93cd03edfb1252",
+  "scope": "Remove task browser/test containers and exact new build-cache IDs; retain the verified production candidate, its pinned bases, unrelated images/services, all volumes and raw evidence. No global prune.",
+  "taskContainersRemoved": 9,
+  "containerCleanup": [
+    {
+      "runDirectory": "_local/anti-bot/ebay-render-diagnostic-2026-11-04",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-03T19:32:57.593789847Z",
+        "FinishedAt": "2026-11-03T19:33:35.091953503Z"
+      },
+      "imageId": "sha256:464401ac076ef7b541178f4baf61a61952dca6e4b331ea1368a168e23b69f737",
+      "removedAfterReceipt": true,
+      "captureLogIncomplete": "Bounded Docker log rotated before the initial observations were copied. This attempt is not used to establish the eBay capture cause."
+    },
+    {
+      "runDirectory": "_local/anti-bot/ebay-render-diagnostic-corrected-2026-11-04",
+      "imageId": "sha256:464401ac076ef7b541178f4baf61a61952dca6e4b331ea1368a168e23b69f737",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-03T19:34:45.8357833Z",
+        "FinishedAt": "2026-11-03T19:35:23.323612428Z"
+      },
+      "removedAfterReceipt": true
+    },
+    {
+      "runDirectory": "_local/anti-bot/rendered-body-linux-tests-2026-11-04",
+      "imageId": "sha256:cbff34eac3e1296b9ea7a980b9007ef5b6f881e0c56aaffa93f8ed87a8e63fda",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-03T19:38:29.513573375Z",
+        "FinishedAt": "2026-11-03T19:38:38.317827546Z"
+      },
+      "removedAfterReceipt": true
+    },
+    {
+      "runDirectory": "_local/anti-bot/rendered-body-api-harness-2026-11-04",
+      "name": "autogtm-firecrawl-rendered-body-api-harness-20261104",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 143,
+        "Error": "",
+        "StartedAt": "2026-11-03T19:38:06.673932212Z",
+        "FinishedAt": "2026-11-03T19:38:19.370917176Z"
+      },
+      "image": "sha256:cbff34eac3e1296b9ea7a980b9007ef5b6f881e0c56aaffa93f8ed87a8e63fda",
+      "containerRemovedAfterReceipt": true
+    },
+    {
+      "runDirectory": "_local/anti-bot/rendered-body-paired-2026-11-04",
+      "name": "autogtm-firecrawl-render-baseline-20261104",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 143,
+        "Error": "",
+        "StartedAt": "2026-11-03T19:40:08.95425588Z",
+        "FinishedAt": "2026-11-03T19:40:50.11597376Z"
+      },
+      "imageId": "sha256:464401ac076ef7b541178f4baf61a61952dca6e4b331ea1368a168e23b69f737",
+      "removedAfterReceipt": true
+    },
+    {
+      "runDirectory": "_local/anti-bot/rendered-body-paired-2026-11-04",
+      "name": "autogtm-firecrawl-render-candidate-20261104",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 143,
+        "Error": "",
+        "StartedAt": "2026-11-03T19:40:13.081297423Z",
+        "FinishedAt": "2026-11-03T19:40:50.352036593Z"
+      },
+      "imageId": "sha256:cbff34eac3e1296b9ea7a980b9007ef5b6f881e0c56aaffa93f8ed87a8e63fda",
+      "removedAfterReceipt": true
+    },
+    {
+      "runDirectory": "_local/anti-bot/rendered-body-full-api-harness-2026-11-04",
+      "image": "sha256:cbff34eac3e1296b9ea7a980b9007ef5b6f881e0c56aaffa93f8ed87a8e63fda",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 143,
+        "Error": "",
+        "StartedAt": "2026-11-03T19:41:04.588616128Z",
+        "FinishedAt": "2026-11-03T19:47:18.407276217Z"
+      },
+      "cpuNano": 2000000000,
+      "memoryBytes": 2684354560,
+      "containerRemovedAfterReceipt": true
+    },
+    {
+      "runDirectory": "_local/anti-bot/rendered-body-full-api-harness-2026-11-04",
+      "image": "sha256:cbff34eac3e1296b9ea7a980b9007ef5b6f881e0c56aaffa93f8ed87a8e63fda",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 143,
+        "Error": "",
+        "StartedAt": "2026-11-03T19:41:06.290390295Z",
+        "FinishedAt": "2026-11-03T19:47:18.651260593Z"
+      },
+      "cpuNano": 2000000000,
+      "memoryBytes": 2147483648,
+      "containerRemovedAfterReceipt": true
+    },
+    {
+      "runDirectory": "_local/anti-bot/rendered-body-full-api-harness-2026-11-04",
+      "image": "sha256:cbff34eac3e1296b9ea7a980b9007ef5b6f881e0c56aaffa93f8ed87a8e63fda",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 143,
+        "Error": "",
+        "StartedAt": "2026-11-03T19:41:10.203302922Z",
+        "FinishedAt": "2026-11-03T19:47:18.875882968Z"
+      },
+      "cpuNano": 2000000000,
+      "memoryBytes": 2147483648,
+      "containerRemovedAfterReceipt": true
+    }
+  ],
+  "newProductionImageRetained": "sha256:cbff34eac3e1296b9ea7a980b9007ef5b6f881e0c56aaffa93f8ed87a8e63fda",
+  "prototypeImagesCreated": 0,
+  "preExistingImageIdsPreserved": true,
+  "cache": {
+    "taskRecordsRemoved": 8,
+    "baseline59RecordsPreserved": true,
+    "remainingRecords": 59,
+    "pruneReportedTotal": [
+      "Total:\t626.8kB"
+    ],
+    "physicalBytesFreedNotMeasured": true
+  },
+  "unrelatedRunningServicesPreserved": [
+    "lead-data-postgres",
+    "lead-data-redis",
+    "lead-data-web",
+    "opengtm-agent-runtime-1",
+    "opengtm-agent-test-pg",
+    "opengtm-api-go-1",
+    "opengtm-browser-1",
+    "opengtm-scheduler-go-1",
+    "opengtm-worker-go-1"
+  ],
+  "taskInfrastructureStopped": [
+    "autogtm-firecrawl-workflows-rabbit-20261103",
+    "autogtm-firecrawl-workflows-redis-20261103",
+    "autogtm-firecrawl-workflows-pg-20261103"
+  ],
+  "dataVolumesDeleted": 0,
+  "dataVolumeCountAfter": 114,
+  "volumeNamesUnchanged": true,
+  "globalPruneUsed": false,
+  "dockerSystemDfAfter": "TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE\nImages          53        10        28.92GB   11.29GB (39%)\nContainers      13        9         360.4kB   28.67kB (7%)\nLocal Volumes   114       5         6.325GB   6.151GB (97%)\nBuild Cache     59        0         2.132GB   0B\n",
+  "hostDiskAfter": "Filesystem      Size    Used   Avail Capacity iused ifree %iused  Mounted on\n/dev/disk3s5   460Gi   312Gi   124Gi    72%    5.4M  1.3G    0%   /System/Volumes/Data\n",
+  "evidenceHashes": {
+    "_local/anti-bot/ebay-render-diagnostic-2026-11-04/cleanup.json": "aa0607fc0a3cce8ecca810235f5c94e5c40dd5bb3ba9ddd1929482607ba67462",
+    "_local/anti-bot/ebay-render-diagnostic-corrected-2026-11-04/cleanup.json": "13cda2dbf1bbb9e865dbd253d9f2c59ae4e53811776fc92e1fac521a54acfec2",
+    "_local/anti-bot/rendered-body-linux-tests-2026-11-04/cleanup.json": "907d37fc044aab78318347c312302336693c9957aa8ab193e5ea45fdadbef078",
+    "_local/anti-bot/rendered-body-api-harness-2026-11-04/browser-cleanup.json": "41f66ea5043c689e5d367a9ce2108c5eaf41441194942d65cda95f7fb6836e27",
+    "_local/anti-bot/rendered-body-paired-2026-11-04/cleanup.json": "936f8bee5c7d77acc58eb4b3d51984d037c64ac4d5613bd526cd5cc197e26caf",
+    "_local/anti-bot/rendered-body-full-api-harness-2026-11-04/cleanup.json": "ab4948fcc47c060a9f252cf94a615cc6e1ef49d805e36ef3d6debb8051011ce4",
+    "_local/anti-bot/rendered-body-cleanup-2026-11-04/preflight.json": "fbb2edc90761c0e2429162ee9ae885e10386a8a938e63a7fad91dbea0d86f411",
+    "_local/anti-bot/rendered-body-cleanup-2026-11-04/cache-result.json": "896e47668bd64a9d2b4a8d783841c4d653cba6c9a78bb849d27659123d254fce"
+  }
+}

@@ -236,6 +236,15 @@ shells remain verification states. Short real text is accepted. Explicit
 readiness and JSON/plain-text response handling keep their separate contracts.
 This is a text-readiness check, not proof that every field or lazy section loaded.
 
+Automatic readiness also waits while the current HTML document is still being
+parsed, including a new document reached by a passive redirect. This uses the
+same readiness budget; it does not wait for every image or for network idle.
+`readiness.automatic.documentReadyState` records the captured document state.
+A hidden or otherwise unrendered body cannot satisfy body-text readiness through
+the browser's `innerText` fallback to script/text content. Rendered children of a
+`display: contents` body remain supported. A stream that stays open can return
+partial content with an unresolved readiness outcome when the budget expires.
+
 Automatic readiness also recognizes the observed small AWS connection
 interstitial served with HTTP 403: the `Verifying Connection` title, AWS edge
 challenge script, local interstitial script, loading/status containers and

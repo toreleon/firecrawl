@@ -1,0 +1,1441 @@
+{
+  "sourceCommit": "4c3e920a9c628285ba63f9a14d93cd03edfb1252",
+  "baselineSourceCommit": "f8d479fa709917cd6fec09049f6b4197ab24ea21",
+  "scope": "Five counterbalanced eBay rounds per image plus GitHub/arXiv controls on fresh Firefox contexts. Same driver/browser parent image and budgets. Frozen HTML scores and supplementary rendered-body exact markers are separate. This is not a full API result.",
+  "protocol": {
+    "status": "complete",
+    "startedAt": "2026-11-03T19:40:17.444Z",
+    "sourceCommit": "4c3e920a9c628285ba63f9a14d93cd03edfb1252",
+    "baselineSourceCommit": "f8d479fa709917cd6fec09049f6b4197ab24ea21",
+    "fixtureSha256": "a886fb57087e842c2857b89a7669e31d2fb7b98d6bd7deb60a2329f29581b76a",
+    "expectedRequests": 14,
+    "globalConcurrency": 2,
+    "perOwnerConcurrency": 1,
+    "clientTimeoutMs": 35000,
+    "serviceTimeoutMs": 30000,
+    "controls": {
+      "wait_until": "domcontentloaded",
+      "navigation_timeout": 30000,
+      "workflow": "auto",
+      "consent": "rejectNonEssential",
+      "max_attempts": 1,
+      "readiness_timeout": 5000
+    },
+    "expectedMarkerSent": false,
+    "upstreamProxy": false,
+    "hostedCalls": 0,
+    "scope": "Five counterbalanced eBay rounds per image plus GitHub/arXiv controls on fresh Firefox contexts. Same driver/browser parent image and budgets. Frozen HTML scores and supplementary rendered-body exact markers are separate. This is not a full API result.",
+    "finishedAt": "2026-11-03T19:40:48.547Z",
+    "scoresAndHashesReplayed": 14,
+    "timingIntegrity": {
+      "valid": true,
+      "sampleIntervalMs": 1000,
+      "maximumAllowedGapMs": 10000,
+      "maximumObservedGapMs": 1004,
+      "gaps": []
+    }
+  },
+  "deployment": {
+    "sourceCommit": "4c3e920a9c628285ba63f9a14d93cd03edfb1252",
+    "owners": [
+      {
+        "profile": "baseline",
+        "name": "autogtm-firecrawl-render-baseline-20261104",
+        "port": 33181,
+        "tag": "autogtm/firecrawl-browser:navigation-timeout-2026-11-04",
+        "source": "f8d479fa709917cd6fec09049f6b4197ab24ea21",
+        "imageId": "sha256:464401ac076ef7b541178f4baf61a61952dca6e4b331ea1368a168e23b69f737",
+        "health": {
+          "status": "healthy",
+          "browserEngine": "camoufox",
+          "headless": false,
+          "maxConcurrentPages": 1,
+          "activePages": 0,
+          "browserSessions": 0,
+          "blockAds": true,
+          "blockMedia": false,
+          "ownerBootId": "afc313be-848a-4ff5-8f4d-f9c35dec2452",
+          "capabilities": {
+            "version": 1,
+            "readiness": true,
+            "navigationTimeout": true,
+            "actions": [
+              "click",
+              "wait",
+              "write",
+              "press",
+              "scroll",
+              "scrape"
+            ],
+            "workflows": [
+              "none",
+              "auto",
+              "bestbuy-us@1",
+              "product-details@1"
+            ],
+            "consent": true,
+            "retainedPages": true,
+            "fencedSessions": true,
+            "pageScopedHandoff": true
+          },
+          "serviceWorkers": "block"
+        },
+        "runtimeSourceHashes": {
+          "api.ts": "dbb929d53e24c9b8fe57c112c0507f139b271e20597221d1b368dc30334d6e90",
+          "helpers/page-readiness.ts": "5a4dafabdc24401a2a83b44a49c97a894495229baa4877f2b059dda1007d8daa",
+          "helpers/scrape-page.ts": "82a452e2d699cda231e72bccfd64b6d49769dab8194ce911435c5fcedb8f8630",
+          "helpers/browser.ts": "0205ad8aa08a05cecefe83adf2b4e257d8af48eca0794e1a8437e946b38cc98a",
+          "helpers/workflows.ts": "2f829da96d5525bc05aee2290a3a138dc60d0dc31ff9745ab25c1e647104347a",
+          "helpers/ssrf.ts": "78df1d6e5191ca70442af84a28cffebe0751fa12a75d0a11314bf23287a5bca6",
+          "helpers/waf-benchmark.ts": "ffd9f0d2e5996825aa77cb71b600a6667558e166d4471a084c20638bab9171d6",
+          "helpers/bot-detection.ts": "3111f011045834a040e5497825cd0bf2c698a3fa8ca77a48c8479dddf2348817"
+        },
+        "network": {
+          "country": "VN",
+          "proxyConfigured": false
+        }
+      },
+      {
+        "profile": "candidate",
+        "name": "autogtm-firecrawl-render-candidate-20261104",
+        "port": 33182,
+        "tag": "autogtm/firecrawl-browser:rendered-body-2026-11-04",
+        "source": "4c3e920a9c628285ba63f9a14d93cd03edfb1252",
+        "imageId": "sha256:cbff34eac3e1296b9ea7a980b9007ef5b6f881e0c56aaffa93f8ed87a8e63fda",
+        "health": {
+          "status": "healthy",
+          "browserEngine": "camoufox",
+          "headless": false,
+          "maxConcurrentPages": 1,
+          "activePages": 0,
+          "browserSessions": 0,
+          "blockAds": true,
+          "blockMedia": false,
+          "ownerBootId": "8dd68976-1079-4ef5-878a-702980f8fb16",
+          "capabilities": {
+            "version": 1,
+            "readiness": true,
+            "navigationTimeout": true,
+            "actions": [
+              "click",
+              "wait",
+              "write",
+              "press",
+              "scroll",
+              "scrape"
+            ],
+            "workflows": [
+              "none",
+              "auto",
+              "bestbuy-us@1",
+              "product-details@1"
+            ],
+            "consent": true,
+            "retainedPages": true,
+            "fencedSessions": true,
+            "pageScopedHandoff": true
+          },
+          "serviceWorkers": "block"
+        },
+        "runtimeSourceHashes": {
+          "api.ts": "dbb929d53e24c9b8fe57c112c0507f139b271e20597221d1b368dc30334d6e90",
+          "helpers/page-readiness.ts": "59e0b3d9b1ceb5bfef729f5f7339d175309abe1e42725dd139291b37b8d56a38",
+          "helpers/scrape-page.ts": "9d3ea4ee285e35256f1e11b925a0401f5b43e01bc85a999846185facaa8ed3ef",
+          "helpers/browser.ts": "0205ad8aa08a05cecefe83adf2b4e257d8af48eca0794e1a8437e946b38cc98a",
+          "helpers/workflows.ts": "2f829da96d5525bc05aee2290a3a138dc60d0dc31ff9745ab25c1e647104347a",
+          "helpers/ssrf.ts": "78df1d6e5191ca70442af84a28cffebe0751fa12a75d0a11314bf23287a5bca6",
+          "helpers/waf-benchmark.ts": "ffd9f0d2e5996825aa77cb71b600a6667558e166d4471a084c20638bab9171d6",
+          "helpers/bot-detection.ts": "3111f011045834a040e5497825cd0bf2c698a3fa8ca77a48c8479dddf2348817"
+        },
+        "network": {
+          "country": "VN",
+          "proxyConfigured": false
+        }
+      }
+    ],
+    "globalConcurrency": 2,
+    "perOwnerConcurrency": 1,
+    "cpusPerOwner": 2,
+    "memoryGiBPerOwner": 3,
+    "upstreamProxy": false,
+    "hostedCalls": 0
+  },
+  "byProfile": {
+    "baseline": {
+      "overall": {
+        "requests": 7,
+        "uniqueTargets": 3,
+        "frontierPasses": 6,
+        "screenedPasses": 4,
+        "normalizedPasses": 5,
+        "frontierSuccessRate": 0.8571428571428571,
+        "screenedSuccessRate": 0.5714285714285714,
+        "normalizedSuccessRate": 0.7142857142857143,
+        "successfulLatencyP50Ms": 3955,
+        "successfulLatencyP95Ms": 5286,
+        "allAttemptLatencyP95Ms": 5286,
+        "failures": {
+          "content_not_ready": 2,
+          "missing_expected_marker": 1
+        }
+      },
+      "byWafLabel": {
+        "akamai": {
+          "requests": 5,
+          "uniqueTargets": 1,
+          "frontierPasses": 5,
+          "screenedPasses": 3,
+          "normalizedPasses": 3,
+          "frontierSuccessRate": 1,
+          "screenedSuccessRate": 0.6,
+          "normalizedSuccessRate": 0.6,
+          "successfulLatencyP50Ms": 5187,
+          "successfulLatencyP95Ms": 5286,
+          "allAttemptLatencyP95Ms": 5286,
+          "failures": {
+            "content_not_ready": 2
+          }
+        },
+        "unclassified": {
+          "requests": 2,
+          "uniqueTargets": 2,
+          "frontierPasses": 1,
+          "screenedPasses": 1,
+          "normalizedPasses": 2,
+          "frontierSuccessRate": 0.5,
+          "screenedSuccessRate": 0.5,
+          "normalizedSuccessRate": 1,
+          "successfulLatencyP50Ms": 2654,
+          "successfulLatencyP95Ms": 2654,
+          "allAttemptLatencyP95Ms": 2654,
+          "failures": {
+            "missing_expected_marker": 1
+          }
+        }
+      }
+    },
+    "candidate": {
+      "overall": {
+        "requests": 7,
+        "uniqueTargets": 3,
+        "frontierPasses": 6,
+        "screenedPasses": 6,
+        "normalizedPasses": 7,
+        "frontierSuccessRate": 0.8571428571428571,
+        "screenedSuccessRate": 0.8571428571428571,
+        "normalizedSuccessRate": 1,
+        "successfulLatencyP50Ms": 5365,
+        "successfulLatencyP95Ms": 5699,
+        "allAttemptLatencyP95Ms": 5699,
+        "failures": {
+          "missing_expected_marker": 1
+        }
+      },
+      "byWafLabel": {
+        "akamai": {
+          "requests": 5,
+          "uniqueTargets": 1,
+          "frontierPasses": 5,
+          "screenedPasses": 5,
+          "normalizedPasses": 5,
+          "frontierSuccessRate": 1,
+          "screenedSuccessRate": 1,
+          "normalizedSuccessRate": 1,
+          "successfulLatencyP50Ms": 5592,
+          "successfulLatencyP95Ms": 5699,
+          "allAttemptLatencyP95Ms": 5699,
+          "failures": {}
+        },
+        "unclassified": {
+          "requests": 2,
+          "uniqueTargets": 2,
+          "frontierPasses": 1,
+          "screenedPasses": 1,
+          "normalizedPasses": 2,
+          "frontierSuccessRate": 0.5,
+          "screenedSuccessRate": 0.5,
+          "normalizedSuccessRate": 1,
+          "successfulLatencyP50Ms": 2477,
+          "successfulLatencyP95Ms": 2477,
+          "allAttemptLatencyP95Ms": 2477,
+          "failures": {
+            "missing_expected_marker": 1
+          }
+        }
+      }
+    }
+  },
+  "ebayByProfile": {
+    "baseline": {
+      "requests": 5,
+      "normalizedHtmlMatches": 3,
+      "renderedExactMatches": 2,
+      "latenciesMs": [
+        4541,
+        3955,
+        5187,
+        4626,
+        5286
+      ]
+    },
+    "candidate": {
+      "requests": 5,
+      "normalizedHtmlMatches": 5,
+      "renderedExactMatches": 5,
+      "latenciesMs": [
+        5059,
+        5606,
+        5699,
+        5365,
+        5592
+      ]
+    }
+  },
+  "observations": [
+    {
+      "target": "ebay",
+      "profile": "baseline",
+      "attempt": 1,
+      "url": "https://www.ebay.com/itm/227305215584",
+      "wafLabel": "akamai",
+      "startedAt": "2026-11-03T19:40:17.445Z",
+      "latencyMs": 4541,
+      "evidenceFile": "evidence/001.json",
+      "evidenceSha256": "ff199ac31f797c60a5e89a5a8b552a41f55f38f49fd8a3e4e7cb5bf44f86da84",
+      "renderedExactMarkerPresent": false,
+      "renderedTextChars": 0,
+      "readiness": {
+        "requested": false,
+        "satisfied": false,
+        "scope": "body",
+        "documentRevision": 2,
+        "automatic": {
+          "mode": "rendered-body",
+          "outcome": "empty",
+          "waitMs": 2395,
+          "timeoutMs": 5000,
+          "busyCount": 0,
+          "ignoredComplementaryBusyCount": 0,
+          "maxBusyCount": 0,
+          "busyScope": "body"
+        }
+      },
+      "frontierPass": true,
+      "screenedPass": false,
+      "normalizedPass": false,
+      "serviceAttemptCount": 1,
+      "failureReason": "content_not_ready",
+      "apiStatus": 200,
+      "pageStatus": 200,
+      "rawMarkerPresent": true,
+      "textMarkerPresent": true,
+      "pageError": "Expected content did not become ready",
+      "landedUrl": "https://www.ebay.com/itm/227305215584",
+      "title": "PNY GeForce RTX 4090 XLR8 Epic-X RGB OC 24GB GDDR6X GPU - Gaming Graphic Cards | eBay",
+      "contentBytes": 12316,
+      "contentSha256": "084cf073a182e6af92ebf3a173a6014db724a38296524513646ab9d86341549e"
+    },
+    {
+      "target": "ebay",
+      "profile": "candidate",
+      "attempt": 1,
+      "url": "https://www.ebay.com/itm/227305215584",
+      "wafLabel": "akamai",
+      "startedAt": "2026-11-03T19:40:17.454Z",
+      "latencyMs": 5059,
+      "evidenceFile": "evidence/002.json",
+      "evidenceSha256": "fc4de1db8118158543d3a2c8b4d8e41cd078f1f566ce181f5d72e81597d0c11d",
+      "renderedExactMarkerPresent": true,
+      "renderedTextChars": 9331,
+      "readiness": {
+        "requested": false,
+        "satisfied": true,
+        "scope": "body",
+        "documentRevision": 2,
+        "automatic": {
+          "mode": "rendered-body",
+          "outcome": "ready",
+          "waitMs": 2716,
+          "timeoutMs": 5000,
+          "busyCount": 0,
+          "ignoredComplementaryBusyCount": 0,
+          "maxBusyCount": 0,
+          "busyScope": "main",
+          "documentReadyState": "interactive"
+        }
+      },
+      "frontierPass": true,
+      "screenedPass": true,
+      "normalizedPass": true,
+      "serviceAttemptCount": 1,
+      "apiStatus": 200,
+      "pageStatus": 200,
+      "rawMarkerPresent": true,
+      "textMarkerPresent": true,
+      "landedUrl": "https://www.ebay.com/itm/227305215584",
+      "title": "PNY GeForce RTX 4090 XLR8 Epic-X RGB OC 24GB GDDR6X GPU - Gaming Graphic Cards | eBay",
+      "contentBytes": 769143,
+      "contentSha256": "154318af958c377c396e595bbd5b213465a1f860d34e55cad68a9f64078727ef"
+    },
+    {
+      "target": "ebay",
+      "profile": "baseline",
+      "attempt": 2,
+      "url": "https://www.ebay.com/itm/227305215584",
+      "wafLabel": "akamai",
+      "startedAt": "2026-11-03T19:40:22.519Z",
+      "latencyMs": 3955,
+      "evidenceFile": "evidence/004.json",
+      "evidenceSha256": "46138bd863e83ee68abd2723fcb96a2a916d02d5e94f5484df51dfb8aadc03fb",
+      "renderedExactMarkerPresent": false,
+      "renderedTextChars": 184,
+      "readiness": {
+        "requested": false,
+        "satisfied": true,
+        "scope": "body",
+        "documentRevision": 2,
+        "automatic": {
+          "mode": "rendered-body",
+          "outcome": "ready",
+          "waitMs": 2328,
+          "timeoutMs": 5000,
+          "busyCount": 0,
+          "ignoredComplementaryBusyCount": 0,
+          "maxBusyCount": 0,
+          "busyScope": "body"
+        }
+      },
+      "frontierPass": true,
+      "screenedPass": true,
+      "normalizedPass": true,
+      "serviceAttemptCount": 1,
+      "apiStatus": 200,
+      "pageStatus": 200,
+      "rawMarkerPresent": true,
+      "textMarkerPresent": true,
+      "landedUrl": "https://www.ebay.com/itm/227305215584",
+      "title": "PNY GeForce RTX 4090 XLR8 Epic-X RGB OC 24GB GDDR6X GPU - Gaming Graphic Cards | eBay",
+      "contentBytes": 12316,
+      "contentSha256": "084cf073a182e6af92ebf3a173a6014db724a38296524513646ab9d86341549e"
+    },
+    {
+      "target": "ebay",
+      "profile": "candidate",
+      "attempt": 2,
+      "url": "https://www.ebay.com/itm/227305215584",
+      "wafLabel": "akamai",
+      "startedAt": "2026-11-03T19:40:22.519Z",
+      "latencyMs": 5606,
+      "evidenceFile": "evidence/003.json",
+      "evidenceSha256": "6a11f4a0043c94c0d16c8a88c2ab685db90846003419a85728a69d8cf2081010",
+      "renderedExactMarkerPresent": true,
+      "renderedTextChars": 9331,
+      "readiness": {
+        "requested": false,
+        "satisfied": true,
+        "scope": "body",
+        "documentRevision": 2,
+        "automatic": {
+          "mode": "rendered-body",
+          "outcome": "ready",
+          "waitMs": 2636,
+          "timeoutMs": 5000,
+          "busyCount": 0,
+          "ignoredComplementaryBusyCount": 0,
+          "maxBusyCount": 0,
+          "busyScope": "main",
+          "documentReadyState": "interactive"
+        }
+      },
+      "frontierPass": true,
+      "screenedPass": true,
+      "normalizedPass": true,
+      "serviceAttemptCount": 1,
+      "apiStatus": 200,
+      "pageStatus": 200,
+      "rawMarkerPresent": true,
+      "textMarkerPresent": true,
+      "landedUrl": "https://www.ebay.com/itm/227305215584",
+      "title": "PNY GeForce RTX 4090 XLR8 Epic-X RGB OC 24GB GDDR6X GPU - Gaming Graphic Cards | eBay",
+      "contentBytes": 738307,
+      "contentSha256": "10ee5e1978b2b36ab0cd0e8ef9a34daf8ed8e016c999cb018e7864f69440b022"
+    },
+    {
+      "target": "ebay",
+      "profile": "baseline",
+      "attempt": 3,
+      "url": "https://www.ebay.com/itm/227305215584",
+      "wafLabel": "akamai",
+      "startedAt": "2026-11-03T19:40:28.131Z",
+      "latencyMs": 5187,
+      "evidenceFile": "evidence/005.json",
+      "evidenceSha256": "6311b0d802465354ac16a405d60d9a2bc3bdd911a9aad19ab209450dfb51e98b",
+      "renderedExactMarkerPresent": true,
+      "renderedTextChars": 9331,
+      "readiness": {
+        "requested": false,
+        "satisfied": true,
+        "scope": "body",
+        "documentRevision": 2,
+        "automatic": {
+          "mode": "rendered-body",
+          "outcome": "ready",
+          "waitMs": 2858,
+          "timeoutMs": 5000,
+          "busyCount": 0,
+          "ignoredComplementaryBusyCount": 0,
+          "maxBusyCount": 0,
+          "busyScope": "main"
+        }
+      },
+      "frontierPass": true,
+      "screenedPass": true,
+      "normalizedPass": true,
+      "serviceAttemptCount": 1,
+      "apiStatus": 200,
+      "pageStatus": 200,
+      "rawMarkerPresent": true,
+      "textMarkerPresent": true,
+      "landedUrl": "https://www.ebay.com/itm/227305215584",
+      "title": "PNY GeForce RTX 4090 XLR8 Epic-X RGB OC 24GB GDDR6X GPU - Gaming Graphic Cards | eBay",
+      "contentBytes": 783590,
+      "contentSha256": "a0bbac9cf37929fa622ed2853f02b78a0730b624600fcf2d37ef49d38f2b44c0"
+    },
+    {
+      "target": "ebay",
+      "profile": "candidate",
+      "attempt": 3,
+      "url": "https://www.ebay.com/itm/227305215584",
+      "wafLabel": "akamai",
+      "startedAt": "2026-11-03T19:40:28.131Z",
+      "latencyMs": 5699,
+      "evidenceFile": "evidence/006.json",
+      "evidenceSha256": "3c753e2fc84441e76e2b44c6a36c8c93163f4da7b6c90428656dec0594511f76",
+      "renderedExactMarkerPresent": true,
+      "renderedTextChars": 9331,
+      "readiness": {
+        "requested": false,
+        "satisfied": true,
+        "scope": "body",
+        "documentRevision": 2,
+        "automatic": {
+          "mode": "rendered-body",
+          "outcome": "ready",
+          "waitMs": 3186,
+          "timeoutMs": 5000,
+          "busyCount": 0,
+          "ignoredComplementaryBusyCount": 0,
+          "maxBusyCount": 0,
+          "busyScope": "main",
+          "documentReadyState": "interactive"
+        }
+      },
+      "frontierPass": true,
+      "screenedPass": true,
+      "normalizedPass": true,
+      "serviceAttemptCount": 1,
+      "apiStatus": 200,
+      "pageStatus": 200,
+      "rawMarkerPresent": true,
+      "textMarkerPresent": true,
+      "landedUrl": "https://www.ebay.com/itm/227305215584",
+      "title": "PNY GeForce RTX 4090 XLR8 Epic-X RGB OC 24GB GDDR6X GPU - Gaming Graphic Cards | eBay",
+      "contentBytes": 717958,
+      "contentSha256": "1d1ca44851f1d76739fcdafaa207346958b42874920aaed93eb199d300e6db66"
+    },
+    {
+      "target": "ebay",
+      "profile": "baseline",
+      "attempt": 4,
+      "url": "https://www.ebay.com/itm/227305215584",
+      "wafLabel": "akamai",
+      "startedAt": "2026-11-03T19:40:33.836Z",
+      "latencyMs": 4626,
+      "evidenceFile": "evidence/008.json",
+      "evidenceSha256": "b376aa34f538e7b8a6a6aad41f2330f093a01448850dfd4a3c1dfd4cf0f26553",
+      "renderedExactMarkerPresent": false,
+      "renderedTextChars": 0,
+      "readiness": {
+        "requested": false,
+        "satisfied": false,
+        "scope": "body",
+        "documentRevision": 2,
+        "automatic": {
+          "mode": "rendered-body",
+          "outcome": "empty",
+          "waitMs": 2698,
+          "timeoutMs": 5000,
+          "busyCount": 0,
+          "ignoredComplementaryBusyCount": 0,
+          "maxBusyCount": 0,
+          "busyScope": "body"
+        }
+      },
+      "frontierPass": true,
+      "screenedPass": false,
+      "normalizedPass": false,
+      "serviceAttemptCount": 1,
+      "failureReason": "content_not_ready",
+      "apiStatus": 200,
+      "pageStatus": 200,
+      "rawMarkerPresent": true,
+      "textMarkerPresent": true,
+      "pageError": "Expected content did not become ready",
+      "landedUrl": "https://www.ebay.com/itm/227305215584",
+      "title": "PNY GeForce RTX 4090 XLR8 Epic-X RGB OC 24GB GDDR6X GPU - Gaming Graphic Cards | eBay",
+      "contentBytes": 12316,
+      "contentSha256": "084cf073a182e6af92ebf3a173a6014db724a38296524513646ab9d86341549e"
+    },
+    {
+      "target": "ebay",
+      "profile": "candidate",
+      "attempt": 4,
+      "url": "https://www.ebay.com/itm/227305215584",
+      "wafLabel": "akamai",
+      "startedAt": "2026-11-03T19:40:33.836Z",
+      "latencyMs": 5365,
+      "evidenceFile": "evidence/007.json",
+      "evidenceSha256": "55b7a241bb93f5f7b46a9062513e23a09c66b30b8b53cea7292a7a24a7b9b3c0",
+      "renderedExactMarkerPresent": true,
+      "renderedTextChars": 9331,
+      "readiness": {
+        "requested": false,
+        "satisfied": true,
+        "scope": "body",
+        "documentRevision": 2,
+        "automatic": {
+          "mode": "rendered-body",
+          "outcome": "ready",
+          "waitMs": 2948,
+          "timeoutMs": 5000,
+          "busyCount": 0,
+          "ignoredComplementaryBusyCount": 0,
+          "maxBusyCount": 0,
+          "busyScope": "main",
+          "documentReadyState": "interactive"
+        }
+      },
+      "frontierPass": true,
+      "screenedPass": true,
+      "normalizedPass": true,
+      "serviceAttemptCount": 1,
+      "apiStatus": 200,
+      "pageStatus": 200,
+      "rawMarkerPresent": true,
+      "textMarkerPresent": true,
+      "landedUrl": "https://www.ebay.com/itm/227305215584",
+      "title": "PNY GeForce RTX 4090 XLR8 Epic-X RGB OC 24GB GDDR6X GPU - Gaming Graphic Cards | eBay",
+      "contentBytes": 741351,
+      "contentSha256": "dd304943102a3cb099fc93b7b9f2f18a59130ba7217007e63ae64b472910e0a0"
+    },
+    {
+      "target": "ebay",
+      "profile": "baseline",
+      "attempt": 5,
+      "url": "https://www.ebay.com/itm/227305215584",
+      "wafLabel": "akamai",
+      "startedAt": "2026-11-03T19:40:39.206Z",
+      "latencyMs": 5286,
+      "evidenceFile": "evidence/009.json",
+      "evidenceSha256": "bb67967c5fa709d5d4c1ee3e40de96338939b1009cd2ee8bbe74924c40393c70",
+      "renderedExactMarkerPresent": true,
+      "renderedTextChars": 9331,
+      "readiness": {
+        "requested": false,
+        "satisfied": true,
+        "scope": "body",
+        "documentRevision": 2,
+        "automatic": {
+          "mode": "rendered-body",
+          "outcome": "ready",
+          "waitMs": 2946,
+          "timeoutMs": 5000,
+          "busyCount": 0,
+          "ignoredComplementaryBusyCount": 0,
+          "maxBusyCount": 0,
+          "busyScope": "main"
+        }
+      },
+      "frontierPass": true,
+      "screenedPass": true,
+      "normalizedPass": true,
+      "serviceAttemptCount": 1,
+      "apiStatus": 200,
+      "pageStatus": 200,
+      "rawMarkerPresent": true,
+      "textMarkerPresent": true,
+      "landedUrl": "https://www.ebay.com/itm/227305215584",
+      "title": "PNY GeForce RTX 4090 XLR8 Epic-X RGB OC 24GB GDDR6X GPU - Gaming Graphic Cards | eBay",
+      "contentBytes": 783573,
+      "contentSha256": "4ea8e1cc21c6fc389560c35e46dd6e8a927ef981713bcd09364a63e1222e3d83"
+    },
+    {
+      "target": "ebay",
+      "profile": "candidate",
+      "attempt": 5,
+      "url": "https://www.ebay.com/itm/227305215584",
+      "wafLabel": "akamai",
+      "startedAt": "2026-11-03T19:40:39.206Z",
+      "latencyMs": 5592,
+      "evidenceFile": "evidence/010.json",
+      "evidenceSha256": "0240e51089cafeabc8269817bab836f22660130d88982b33d60755fd2eddcd9c",
+      "renderedExactMarkerPresent": true,
+      "renderedTextChars": 9331,
+      "readiness": {
+        "requested": false,
+        "satisfied": true,
+        "scope": "body",
+        "documentRevision": 2,
+        "automatic": {
+          "mode": "rendered-body",
+          "outcome": "ready",
+          "waitMs": 2828,
+          "timeoutMs": 5000,
+          "busyCount": 0,
+          "ignoredComplementaryBusyCount": 0,
+          "maxBusyCount": 0,
+          "busyScope": "main",
+          "documentReadyState": "interactive"
+        }
+      },
+      "frontierPass": true,
+      "screenedPass": true,
+      "normalizedPass": true,
+      "serviceAttemptCount": 1,
+      "apiStatus": 200,
+      "pageStatus": 200,
+      "rawMarkerPresent": true,
+      "textMarkerPresent": true,
+      "landedUrl": "https://www.ebay.com/itm/227305215584",
+      "title": "PNY GeForce RTX 4090 XLR8 Epic-X RGB OC 24GB GDDR6X GPU - Gaming Graphic Cards | eBay",
+      "contentBytes": 771255,
+      "contentSha256": "cf5e524f01a3c82d494c05afa709db849a366735cc36a0d6d0cbf41b1b9fc302"
+    },
+    {
+      "target": "github",
+      "profile": "candidate",
+      "attempt": 1,
+      "url": "https://github.com/facebook/react",
+      "wafLabel": "unclassified",
+      "startedAt": "2026-11-03T19:40:44.803Z",
+      "latencyMs": 2477,
+      "evidenceFile": "evidence/011.json",
+      "evidenceSha256": "ba1b3d66c2328ffabf58e729252305531dd279584f850ec331747f616ebabf31",
+      "renderedExactMarkerPresent": true,
+      "renderedTextChars": 5105,
+      "readiness": {
+        "requested": false,
+        "satisfied": true,
+        "scope": "body",
+        "documentRevision": 1,
+        "automatic": {
+          "mode": "rendered-body",
+          "outcome": "ready",
+          "waitMs": 55,
+          "timeoutMs": 5000,
+          "busyCount": 0,
+          "ignoredComplementaryBusyCount": 0,
+          "maxBusyCount": 0,
+          "busyScope": "main",
+          "documentReadyState": "interactive"
+        }
+      },
+      "frontierPass": true,
+      "screenedPass": true,
+      "normalizedPass": true,
+      "serviceAttemptCount": 1,
+      "apiStatus": 200,
+      "pageStatus": 200,
+      "rawMarkerPresent": true,
+      "textMarkerPresent": true,
+      "landedUrl": "https://github.com/react/react",
+      "title": "GitHub - react/react: The library for web and native user interfaces. \u00b7 GitHub",
+      "contentBytes": 332894,
+      "contentSha256": "a31e16bf15bfaa85c81d3fc8f35944b12fd2b5f83d40529fa8b9bae8c7e71363"
+    },
+    {
+      "target": "github",
+      "profile": "baseline",
+      "attempt": 1,
+      "url": "https://github.com/facebook/react",
+      "wafLabel": "unclassified",
+      "startedAt": "2026-11-03T19:40:44.804Z",
+      "latencyMs": 2654,
+      "evidenceFile": "evidence/012.json",
+      "evidenceSha256": "832a04e4cbc8b4c9c5b97234653306912458b132f633acda75162a093f8cb5ee",
+      "renderedExactMarkerPresent": true,
+      "renderedTextChars": 5105,
+      "readiness": {
+        "requested": false,
+        "satisfied": true,
+        "scope": "body",
+        "documentRevision": 1,
+        "automatic": {
+          "mode": "rendered-body",
+          "outcome": "ready",
+          "waitMs": 12,
+          "timeoutMs": 5000,
+          "busyCount": 0,
+          "ignoredComplementaryBusyCount": 0,
+          "maxBusyCount": 0,
+          "busyScope": "main"
+        }
+      },
+      "frontierPass": true,
+      "screenedPass": true,
+      "normalizedPass": true,
+      "serviceAttemptCount": 1,
+      "apiStatus": 200,
+      "pageStatus": 200,
+      "rawMarkerPresent": true,
+      "textMarkerPresent": true,
+      "landedUrl": "https://github.com/react/react",
+      "title": "GitHub - react/react: The library for web and native user interfaces. \u00b7 GitHub",
+      "contentBytes": 332894,
+      "contentSha256": "eed987c3f0447cf0673d93c7887fd43972a7a52e6554a04f572ca02100cc42b6"
+    },
+    {
+      "target": "arxiv",
+      "profile": "baseline",
+      "attempt": 1,
+      "url": "https://arxiv.org/abs/1706.03762",
+      "wafLabel": "unclassified",
+      "startedAt": "2026-11-03T19:40:47.464Z",
+      "latencyMs": 1028,
+      "evidenceFile": "evidence/013.json",
+      "evidenceSha256": "d6a08ac735ba695201c3af68ebcd76c664f114264ea177eca26fb054cd8798a7",
+      "renderedExactMarkerPresent": true,
+      "renderedTextChars": 3166,
+      "readiness": {
+        "requested": false,
+        "satisfied": true,
+        "scope": "body",
+        "documentRevision": 1,
+        "automatic": {
+          "mode": "rendered-body",
+          "outcome": "ready",
+          "waitMs": 3,
+          "timeoutMs": 5000,
+          "busyCount": 0,
+          "ignoredComplementaryBusyCount": 0,
+          "maxBusyCount": 0,
+          "busyScope": "main"
+        }
+      },
+      "frontierPass": false,
+      "screenedPass": false,
+      "normalizedPass": true,
+      "serviceAttemptCount": 1,
+      "failureReason": "missing_expected_marker",
+      "apiStatus": 200,
+      "pageStatus": 200,
+      "rawMarkerPresent": false,
+      "textMarkerPresent": true,
+      "landedUrl": "https://arxiv.org/abs/1706.03762",
+      "title": "[1706.03762] Attention Is All You Need",
+      "contentBytes": 43412,
+      "contentSha256": "629f61cab6c5a2f2447bd25d703972d3242aae365f0f4d55d58ee4f6e405023c"
+    },
+    {
+      "target": "arxiv",
+      "profile": "candidate",
+      "attempt": 1,
+      "url": "https://arxiv.org/abs/1706.03762",
+      "wafLabel": "unclassified",
+      "startedAt": "2026-11-03T19:40:47.464Z",
+      "latencyMs": 1033,
+      "evidenceFile": "evidence/014.json",
+      "evidenceSha256": "b9ed5a87ac5e8731591124ad649922c9e9611647ffbccafbe3cfb5068ca2b390",
+      "renderedExactMarkerPresent": true,
+      "renderedTextChars": 3166,
+      "readiness": {
+        "requested": false,
+        "satisfied": true,
+        "scope": "body",
+        "documentRevision": 1,
+        "automatic": {
+          "mode": "rendered-body",
+          "outcome": "ready",
+          "waitMs": 4,
+          "timeoutMs": 5000,
+          "busyCount": 0,
+          "ignoredComplementaryBusyCount": 0,
+          "maxBusyCount": 0,
+          "busyScope": "main",
+          "documentReadyState": "interactive"
+        }
+      },
+      "frontierPass": false,
+      "screenedPass": false,
+      "normalizedPass": true,
+      "serviceAttemptCount": 1,
+      "failureReason": "missing_expected_marker",
+      "apiStatus": 200,
+      "pageStatus": 200,
+      "rawMarkerPresent": false,
+      "textMarkerPresent": true,
+      "landedUrl": "https://arxiv.org/abs/1706.03762",
+      "title": "[1706.03762] Attention Is All You Need",
+      "contentBytes": 43412,
+      "contentSha256": "629f61cab6c5a2f2447bd25d703972d3242aae365f0f4d55d58ee4f6e405023c"
+    }
+  ],
+  "resourceAudit": {
+    "samples": 7,
+    "peakSampledMemoryMiB": {
+      "baseline": 1387,
+      "candidate": 1502
+    },
+    "maximumObservedEventCounters": {
+      "baseline": {
+        "memory.events:low": 0,
+        "memory.events:high": 0,
+        "memory.events:max": 0,
+        "memory.events:oom": 0,
+        "memory.events:oom_kill": 0,
+        "memory.events:oom_group_kill": 0,
+        "memory.events:sock_throttled": 0,
+        "pids.events:max": 0
+      },
+      "candidate": {
+        "memory.events:low": 0,
+        "memory.events:high": 0,
+        "memory.events:max": 0,
+        "memory.events:oom": 0,
+        "memory.events:oom_kill": 0,
+        "memory.events:oom_group_kill": 0,
+        "memory.events:sock_throttled": 0,
+        "pids.events:max": 0
+      }
+    },
+    "finalPagesAndSessionsZero": true,
+    "bothContainersRemoved": true
+  },
+  "beforeChangeDiagnosis": {
+    "runDirectory": "_local/anti-bot/ebay-render-diagnostic-corrected-2026-11-04",
+    "imageId": "sha256:464401ac076ef7b541178f4baf61a61952dca6e4b331ea1368a168e23b69f737",
+    "captures": [
+      {
+        "target": "ebay",
+        "elapsedMs": 4535,
+        "status": 200,
+        "htmlChars": 12314,
+        "renderedTextChars": 0,
+        "readiness": {
+          "requested": false,
+          "satisfied": false,
+          "scope": "body",
+          "documentRevision": 2,
+          "automatic": {
+            "mode": "rendered-body",
+            "outcome": "empty",
+            "waitMs": 2481,
+            "timeoutMs": 5000,
+            "busyCount": 0,
+            "ignoredComplementaryBusyCount": 0,
+            "maxBusyCount": 0,
+            "busyScope": "body"
+          }
+        }
+      },
+      {
+        "target": "ebay",
+        "elapsedMs": 4406,
+        "status": 200,
+        "htmlChars": 12314,
+        "renderedTextChars": 184,
+        "readiness": {
+          "requested": false,
+          "satisfied": true,
+          "scope": "body",
+          "documentRevision": 2,
+          "automatic": {
+            "mode": "rendered-body",
+            "outcome": "ready",
+            "waitMs": 2403,
+            "timeoutMs": 5000,
+            "busyCount": 0,
+            "ignoredComplementaryBusyCount": 0,
+            "maxBusyCount": 0,
+            "busyScope": "body"
+          }
+        }
+      },
+      {
+        "target": "github",
+        "elapsedMs": 2437,
+        "status": 200,
+        "htmlChars": 332873,
+        "renderedTextChars": 5105,
+        "readiness": {
+          "requested": false,
+          "satisfied": true,
+          "scope": "body",
+          "documentRevision": 1,
+          "automatic": {
+            "mode": "rendered-body",
+            "outcome": "ready",
+            "waitMs": 45,
+            "timeoutMs": 5000,
+            "busyCount": 0,
+            "ignoredComplementaryBusyCount": 0,
+            "maxBusyCount": 0,
+            "busyScope": "main"
+          }
+        }
+      }
+    ],
+    "followups": [
+      {
+        "event": "followup",
+        "target": "ebay",
+        "elapsedMs": 5025,
+        "delayMs": 0,
+        "snapshot": {
+          "url": "https://www.ebay.com/itm/227305215584",
+          "readyState": "interactive",
+          "bodyDisplay": "block",
+          "bodyVisibility": "visible",
+          "bodyContentVisibility": "visible",
+          "bodyRects": 1,
+          "htmlRects": 1,
+          "renderedTextChars": 8996,
+          "bodyTextContentChars": 554973,
+          "htmlChars": 764141,
+          "bodyChildTags": [
+            "svg",
+            "svg",
+            "DIV",
+            "DIV",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT"
+          ],
+          "bodyTextPrefix": "Skip to main content\nHi! Sign in or register\nDeals\nBrand Outlet\nHelp & Contact\nSell\nWatchlist\nExpand Watch List\nMy eBay\nExpand My eBay\nNotifications\nExpand Cart\nShop by category\nSearch\nAdvanced\nThis item is out of stock.\nThis item is out of stock.\nPicture 1 of 10\n57\nShare\nPNY GeForce RTX 4090 XLR8 E"
+        }
+      },
+      {
+        "event": "followup",
+        "target": "ebay",
+        "elapsedMs": 5560,
+        "delayMs": 300,
+        "snapshot": {
+          "url": "https://www.ebay.com/itm/227305215584",
+          "readyState": "interactive",
+          "bodyDisplay": "block",
+          "bodyVisibility": "visible",
+          "bodyContentVisibility": "visible",
+          "bodyRects": 1,
+          "htmlRects": 1,
+          "renderedTextChars": 9331,
+          "bodyTextContentChars": 554763,
+          "htmlChars": 768442,
+          "bodyChildTags": [
+            "svg",
+            "svg",
+            "DIV",
+            "DIV",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT"
+          ],
+          "bodyTextPrefix": "Skip to main content\nHi! Sign in or register\nDeals\nBrand Outlet\nHelp & Contact\nVietnam\n72014\nSell\nWatchlist\nExpand Watch List\nMy eBay\nExpand My eBay\nNotifications\nExpand Cart\nShop by category\nSearch\nAdvanced\nThis item is out of stock.\nThis item is out of stock.\nPicture 1 of 10\n57\nShare\nPNY GeForce R"
+        }
+      },
+      {
+        "event": "followup",
+        "target": "ebay",
+        "elapsedMs": 6767,
+        "delayMs": 1200,
+        "snapshot": {
+          "url": "https://www.ebay.com/itm/227305215584",
+          "readyState": "interactive",
+          "bodyDisplay": "block",
+          "bodyVisibility": "visible",
+          "bodyContentVisibility": "visible",
+          "bodyRects": 1,
+          "htmlRects": 1,
+          "renderedTextChars": 11489,
+          "bodyTextContentChars": 557939,
+          "htmlChars": 1644764,
+          "bodyChildTags": [
+            "svg",
+            "svg",
+            "svg",
+            "DIV",
+            "DIV",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT"
+          ],
+          "bodyTextPrefix": "Skip to main content\nHi! Sign in or register\nDeals\nBrand Outlet\nHelp & Contact\nVietnam\n72014\nSell\nExpand Sell Menu\nWatchlist\nExpand Watch List\nMy eBay\nExpand My eBay\nNotifications\nExpand Cart\nShop by category\nSearch\nAdvanced\nThis item is out of stock.\nThis item is out of stock.\nFind similar items fr"
+        }
+      },
+      {
+        "event": "followup",
+        "target": "ebay",
+        "elapsedMs": 10668,
+        "delayMs": 3500,
+        "snapshot": {
+          "url": "https://www.ebay.com/itm/227305215584",
+          "readyState": "complete",
+          "bodyDisplay": "block",
+          "bodyVisibility": "visible",
+          "bodyContentVisibility": "visible",
+          "bodyRects": 1,
+          "htmlRects": 1,
+          "renderedTextChars": 11491,
+          "bodyTextContentChars": 810014,
+          "htmlChars": 2198271,
+          "bodyChildTags": [
+            "DIV",
+            "SCRIPT",
+            "SCRIPT",
+            "DIV",
+            "svg",
+            "svg",
+            "svg",
+            "DIV",
+            "DIV",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT"
+          ],
+          "bodyTextPrefix": "Skip to main content\nHi! Sign in or register\nDeals\nBrand Outlet\nHelp & Contact\nVietnam\n72014\nSell\nExpand Sell Menu\nWatchlist\nExpand Watch List\nMy eBay\nExpand My eBay\nNotifications\nExpand Cart\nShop by category\nSearch\nAdvanced\nThis item is out of stock.\nThis item is out of stock.\nFind similar items fr"
+        }
+      },
+      {
+        "event": "followup",
+        "target": "ebay",
+        "elapsedMs": 4413,
+        "delayMs": 0,
+        "snapshot": {
+          "url": "https://www.ebay.com/itm/227305215584",
+          "readyState": "loading",
+          "bodyDisplay": "block",
+          "bodyVisibility": "visible",
+          "bodyContentVisibility": "visible",
+          "bodyRects": 1,
+          "htmlRects": 1,
+          "renderedTextChars": 0,
+          "bodyTextContentChars": 184,
+          "htmlChars": 12314,
+          "bodyChildTags": [
+            "DIV"
+          ],
+          "bodyTextPrefix": ""
+        }
+      },
+      {
+        "event": "followup",
+        "target": "ebay",
+        "elapsedMs": 5092,
+        "delayMs": 300,
+        "snapshot": {
+          "url": "https://www.ebay.com/itm/227305215584",
+          "readyState": "interactive",
+          "bodyDisplay": "block",
+          "bodyVisibility": "visible",
+          "bodyContentVisibility": "visible",
+          "bodyRects": 1,
+          "htmlRects": 1,
+          "renderedTextChars": 9331,
+          "bodyTextContentChars": 556760,
+          "htmlChars": 777523,
+          "bodyChildTags": [
+            "svg",
+            "svg",
+            "DIV",
+            "DIV",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT"
+          ],
+          "bodyTextPrefix": "Skip to main content\nHi! Sign in or register\nDeals\nBrand Outlet\nHelp & Contact\nVietnam\n72014\nSell\nWatchlist\nExpand Watch List\nMy eBay\nExpand My eBay\nNotifications\nExpand Cart\nShop by category\nSearch\nAdvanced\nThis item is out of stock.\nThis item is out of stock.\nPicture 1 of 10\n57\nShare\nPNY GeForce R"
+        }
+      },
+      {
+        "event": "followup",
+        "target": "ebay",
+        "elapsedMs": 6642,
+        "delayMs": 1200,
+        "snapshot": {
+          "url": "https://www.ebay.com/itm/227305215584",
+          "readyState": "complete",
+          "bodyDisplay": "block",
+          "bodyVisibility": "visible",
+          "bodyContentVisibility": "visible",
+          "bodyRects": 1,
+          "htmlRects": 1,
+          "renderedTextChars": 11359,
+          "bodyTextContentChars": 560087,
+          "htmlChars": 1664953,
+          "bodyChildTags": [
+            "DIV",
+            "svg",
+            "svg",
+            "svg",
+            "DIV",
+            "DIV",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT"
+          ],
+          "bodyTextPrefix": "Skip to main content\nHi! Sign in or register\nDeals\nBrand Outlet\nHelp & Contact\nVietnam\n72014\nSell\nExpand Sell Menu\nWatchlist\nExpand Watch List\nMy eBay\nExpand My eBay\nNotifications\nExpand Cart\nShop by category\nSearch\nAdvanced\nThis item is out of stock.\nThis item is out of stock.\nFind similar items fr"
+        }
+      },
+      {
+        "event": "followup",
+        "target": "ebay",
+        "elapsedMs": 10199,
+        "delayMs": 3500,
+        "snapshot": {
+          "url": "https://www.ebay.com/itm/227305215584",
+          "readyState": "complete",
+          "bodyDisplay": "block",
+          "bodyVisibility": "visible",
+          "bodyContentVisibility": "visible",
+          "bodyRects": 1,
+          "htmlRects": 1,
+          "renderedTextChars": 11359,
+          "bodyTextContentChars": 814686,
+          "htmlChars": 2204675,
+          "bodyChildTags": [
+            "DIV",
+            "SCRIPT",
+            "SCRIPT",
+            "DIV",
+            "svg",
+            "svg",
+            "svg",
+            "DIV",
+            "DIV",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT",
+            "SCRIPT"
+          ],
+          "bodyTextPrefix": "Skip to main content\nHi! Sign in or register\nDeals\nBrand Outlet\nHelp & Contact\nVietnam\n72014\nSell\nExpand Sell Menu\nWatchlist\nExpand Watch List\nMy eBay\nExpand My eBay\nNotifications\nExpand Cart\nShop by category\nSearch\nAdvanced\nThis item is out of stock.\nThis item is out of stock.\nFind similar items fr"
+        }
+      },
+      {
+        "event": "followup",
+        "target": "github",
+        "elapsedMs": 2446,
+        "delayMs": 0,
+        "snapshot": {
+          "url": "https://github.com/react/react",
+          "readyState": "complete",
+          "bodyDisplay": "block",
+          "bodyVisibility": "visible",
+          "bodyContentVisibility": "visible",
+          "bodyRects": 1,
+          "htmlRects": 1,
+          "renderedTextChars": 5105,
+          "bodyTextContentChars": 46757,
+          "htmlChars": 332953,
+          "bodyChildTags": [
+            "DIV",
+            "DIV",
+            "DIV"
+          ],
+          "bodyTextPrefix": "Skip to content\nNavigation Menu\nProducts\nDevelopers\nBusinesses\nResources\nPricing\nSearch\n/\nSign in\nSign up\nreact\nreact\nRepository navigation\nCode\nIssues\n853\n\u00a0(853)\nPull requests\n646\n\u00a0(646)\nActions\nSecurity and quality\n10\n\u00a0(10)\nInsights\nreact\nPublic\nNotifications\nFork51.6k\n\u00a0(51.6k)\nStar252k\n\u00a0(252k)\nma"
+        }
+      },
+      {
+        "event": "followup",
+        "target": "github",
+        "elapsedMs": 2751,
+        "delayMs": 300,
+        "snapshot": {
+          "url": "https://github.com/react/react",
+          "readyState": "complete",
+          "bodyDisplay": "block",
+          "bodyVisibility": "visible",
+          "bodyContentVisibility": "visible",
+          "bodyRects": 1,
+          "htmlRects": 1,
+          "renderedTextChars": 5202,
+          "bodyTextContentChars": 46894,
+          "htmlChars": 337589,
+          "bodyChildTags": [
+            "DIV",
+            "DIV",
+            "DIV",
+            "DIV"
+          ],
+          "bodyTextPrefix": "Skip to content\nNavigation Menu\nProducts\nDevelopers\nBusinesses\nResources\nPricing\nSearch\n/\nSign in\nSign up\nreact\nreact\nRepository navigation\nCode\nIssues\n853\n\u00a0(853)\nPull requests\n646\n\u00a0(646)\nActions\nSecurity and quality\n10\n\u00a0(10)\nInsights\nreact\nPublic\nNotifications\nFork51.6k\n\u00a0(51.6k)\nStar252k\n\u00a0(252k)\nma"
+        }
+      },
+      {
+        "event": "followup",
+        "target": "github",
+        "elapsedMs": 3961,
+        "delayMs": 1200,
+        "snapshot": {
+          "url": "https://github.com/react/react",
+          "readyState": "complete",
+          "bodyDisplay": "block",
+          "bodyVisibility": "visible",
+          "bodyContentVisibility": "visible",
+          "bodyRects": 1,
+          "htmlRects": 1,
+          "renderedTextChars": 7102,
+          "bodyTextContentChars": 49230,
+          "htmlChars": 456803,
+          "bodyChildTags": [
+            "DIV",
+            "DIV",
+            "DIV",
+            "DIV"
+          ],
+          "bodyTextPrefix": "Skip to content\nNavigation Menu\nProducts\nDevelopers\nBusinesses\nResources\nPricing\nSearch\n/\nSign in\nSign up\nreact\nreact\nRepository navigation\nCode\nIssues\n853\n\u00a0(853)\nPull requests\n646\n\u00a0(646)\nActions\nSecurity and quality\n10\n\u00a0(10)\nInsights\nreact\nPublic\nNotifications\nFork51.6k\n\u00a0(51.6k)\nStar252k\n\u00a0(252k)\nma"
+        }
+      },
+      {
+        "event": "followup",
+        "target": "github",
+        "elapsedMs": 7478,
+        "delayMs": 3500,
+        "snapshot": {
+          "url": "https://github.com/react/react",
+          "readyState": "complete",
+          "bodyDisplay": "block",
+          "bodyVisibility": "visible",
+          "bodyContentVisibility": "visible",
+          "bodyRects": 1,
+          "htmlRects": 1,
+          "renderedTextChars": 7102,
+          "bodyTextContentChars": 49230,
+          "htmlChars": 456803,
+          "bodyChildTags": [
+            "DIV",
+            "DIV",
+            "DIV",
+            "DIV"
+          ],
+          "bodyTextPrefix": "Skip to content\nNavigation Menu\nProducts\nDevelopers\nBusinesses\nResources\nPricing\nSearch\n/\nSign in\nSign up\nreact\nreact\nRepository navigation\nCode\nIssues\n853\n\u00a0(853)\nPull requests\n646\n\u00a0(646)\nActions\nSecurity and quality\n10\n\u00a0(10)\nInsights\nreact\nPublic\nNotifications\nFork51.6k\n\u00a0(51.6k)\nStar252k\n\u00a0(252k)\nma"
+        }
+      }
+    ],
+    "contextCloseEvents": 3,
+    "logSha256": "e6b5d4ed1fad655e400846979a9ce8f7f81ab10d36cc993b939c7adfd1ef20b2",
+    "containerRemoved": true,
+    "excludedFirstAttempt": {
+      "runDirectory": "_local/anti-bot/ebay-render-diagnostic-2026-11-04",
+      "reason": "Bounded Docker log rotated before copying initial captures. Not used to establish the cause or a retrieval rate; container removed."
+    }
+  },
+  "verification": {
+    "nativeBeforeChange": {
+      "tests": 5,
+      "pass": 1,
+      "fail": 4,
+      "parentFailureIncluded": true,
+      "scope": "Three failing functional cases plus parent failure; display:contents preservation already passed.",
+      "logSha256": "e260ce9598ce4fc647bc9cdbee4cfde818f415fa27a0cae33a1565d54597fa4f"
+    },
+    "nativeAfterChange": {
+      "tests": 12,
+      "pass": 12,
+      "logSha256": "8ada887e8afd771f8f7cf32c19a42e1306af723d803976203a200f034275848a"
+    },
+    "linuxAfterChange": {
+      "tests": 10,
+      "pass": 10,
+      "exitCode": 0,
+      "engines": [
+        "rebrowser",
+        "camoufox"
+      ],
+      "runtimeSourceHashes": {
+        "helpers/page-readiness.ts": "59e0b3d9b1ceb5bfef729f5f7339d175309abe1e42725dd139291b37b8d56a38",
+        "helpers/scrape-page.ts": "9d3ea4ee285e35256f1e11b925a0401f5b43e01bc85a999846185facaa8ed3ef",
+        "integration/rendered-body-capture.spec.ts": "ef4e7c4fd99e0ccfda8b5671cec2960bc1d89648560aa50c55103a07b10325c1"
+      },
+      "imageId": "sha256:cbff34eac3e1296b9ea7a980b9007ef5b6f881e0c56aaffa93f8ed87a8e63fda",
+      "logSha256": "277c18d477ab97c1591dcdf86be144ac7953bd45ff7356a98c42735701f57361"
+    },
+    "realApiQueueBrowser": {
+      "pass": 3,
+      "skipped": 9,
+      "sourceHashesMatchCandidateCommit": true,
+      "uncommittedTreeAtTestTime": true,
+      "logSha256": "f600c20d34d26beef7f203fccb2af1b06651048e048f6949b4c64a750e6b246e"
+    },
+    "browserCI": {
+      "sourceCommit": "4c3e920a9c628285ba63f9a14d93cd03edfb1252",
+      "url": "https://github.com/toreleon/firecrawl/actions/runs/41705531222",
+      "jobId": 126159699721,
+      "conclusion": "success",
+      "helperChecksPassed": 60,
+      "integrationChecksPassed": 115,
+      "productionDependencyAudit": true,
+      "logSha256": "df45f49ba7e57357918a066153739f937a651f8c1c8d906ec25339dd9c796822"
+    }
+  },
+  "findings": [
+    "Old Firefox captures could mark a 12 KB parser/bootstrap fragment ready before the product body arrived in the same retained tab. A later snapshot showed the document still loading, then interactive with over 8,000 rendered characters.",
+    "On five counterbalanced fresh eBay observations per image, rendered exact-marker retrieval was 2/5 before and 5/5 after. Frozen normalized HTML matches were 3/5 and 5/5; these metrics are deliberately separate.",
+    "Both GitHub/arXiv controls passed on both images. No expected text was sent to the browser. No default timeout, extra retry, upstream proxy or interactive verification answer was introduced."
+  ],
+  "limits": [
+    "Five live eBay rounds are a selected retrieval experiment, not a general WAF success rate, a full API result or hosted parity.",
+    "The readiness guard can wait until the existing budget expires for an HTML stream that never completes; any partial capture stays explicitly unready. It does not wait for images/network idle or require readyState complete.",
+    "Actual hosted results were not refreshed here."
+  ],
+  "researchSources": [
+    "https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/innerText",
+    "https://developer.mozilla.org/en-US/docs/Web/API/Document/readyState"
+  ],
+  "artifactHashes": {
+    "report.json": "d888c79e72b036cc7a5b2a329a78e279252f79d86b84d071969b13b4e0331221",
+    "attempts.jsonl": "be0958e7b8fa784bf0dd9790db88ba08a99455031d69931ab66e6ad3afff27cc",
+    "deployment.json": "cadd92cba2b35d1a35a58ca20c67f0ec2a2f18b5f4f6912e62150379103f4f59",
+    "cleanup.json": "936f8bee5c7d77acc58eb4b3d51984d037c64ac4d5613bd526cd5cc197e26caf",
+    "resource-samples.jsonl": "1d4f1d0106ca44f72954a329ac667ffcae57bae3783a0834470bebb64bbb3bc6",
+    "final-health.json": "e3b91f1399300460a34ba9062501bd5bd2b1a769b552035bb4743ae99326259e"
+  }
+}

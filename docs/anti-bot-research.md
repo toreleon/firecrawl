@@ -2459,3 +2459,114 @@ disk reclamation was not independently measured. The pre-existing image set,
 59 shared cache records, nine unrelated running services and all 114 volumes
 were preserved. The [cleanup receipt](../apps/playwright-service-ts/benchmarks/http-transport-cleanup-results-2026-11-04.json)
 records inventories, exact removals and evidence hashes. No global prune was used.
+
+## Parsed-document and rendered-body capture repair (November 4)
+
+Inspection of the earlier eBay failure found a concrete capture issue. Firefox
+could return a roughly 12 KB document whose product phrase was in metadata,
+while its body contained only a bootstrap script. The browser service sometimes
+called that ready; the API's Markdown quality check correctly rejected it.
+The [diagnosis and verification receipt](../apps/playwright-service-ts/benchmarks/rendered-body-verification-results-2026-11-04.json)
+keeps those measures separate instead of promoting metadata into product content.
+
+A before-change follow-up kept the same page open after two captures. The
+document was still `loading` in one immediate follow-up, then became
+`interactive` with over 8,000 rendered characters roughly half a second later.
+The initial diagnostic's bounded Docker log rotated before its first captures
+were copied; that incomplete attempt is excluded. The corrected diagnostic
+retains all three captures, twelve follow-ups and context-close events.
+
+Mozilla documents that [`innerText` can fall back to `textContent` when an
+element is not rendered](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/innerText),
+and that [`readyState: loading` means the HTML parser is still working](https://developer.mozilla.org/en-US/docs/Web/API/Document/readyState).
+Source `4c3e920a9c628285ba63f9a14d93cd03edfb1252` now prevents hidden/unrendered
+body fallback text from satisfying body readiness. Automatic readiness also
+waits for the current document to leave the parsing state, then evaluates the
+existing rendered-body and busy-region conditions. The final capture rechecks
+that state. Explicit body-text readiness uses the same rendered-text check;
+title scope and visible `display: contents` children retain their contracts.
+
+The existing five-second default readiness allowance, caller timeout, retries,
+navigation cap and proxy policy are unchanged. A stream that remains open can
+exhaust that allowance and return explicitly unready partial content. The fix
+does not require `readyState: complete`, image completion or network idle.
+
+### Matched Firefox capture experiment
+
+Two headful Linux ARM64 Firefox owners used the same parent/browser bundle,
+2 CPUs/3 GiB each, one page each, direct VN egress, fresh contexts, consent
+rejection, automatic workflow, 30-second request/navigation deadlines and the
+same five-second readiness budget. Five eBay rounds counterbalanced dispatch
+order, followed by GitHub/arXiv controls. No expected phrase was sent to either
+owner. All fourteen hashes and scores replayed.
+
+| Five eBay observations per image | Before | Repaired |
+| --- | --- | --- |
+| Frozen normalized HTML marker matches | 3/5 | 5/5 |
+| Exact phrase in captured rendered body text | 2/5 | 5/5 |
+| GitHub/arXiv controls, two per image | 2/2 | 2/2 |
+
+The two metrics differ because HTML title/metadata matches do not establish
+rendered product content. The repaired captures took 5.1–5.7 seconds, including
+the needed body load; prematurely returned before-change captures could finish
+sooner. This selected experiment is not a general latency or WAF-vendor claim.
+Peak sampled memory was 1,387/1,502 MiB; memory-boundary/OOM/PID and socket event
+counters were zero, and both owners ended with zero pages/sessions.
+
+Three functional regressions failed before the fix: streaming navigation,
+hidden-body hydration and a permanently hidden script-only body. After repair,
+the native browser suite passed twelve checks and the Linux Chromium/Firefox
+suite passed ten. Three real API/queue/browser cases passed, with nine unrelated
+cases skipped: streamed/hidden-body success and script-only failure, existing
+unresolved-busy partial content, and explicit readiness forwarding. Tested file
+hashes match the committed candidate. [Browser CI](https://github.com/toreleon/firecrawl/actions/runs/41705531222)
+passed build, 60 helper checks, 115 integration checks and the production
+dependency audit on this source. Broader server/SDK jobs remained queued.
+
+### Full API rerun and loss inspection
+
+The [full API receipt](../apps/playwright-service-ts/benchmarks/rendered-body-full-api-results-2026-11-04.json)
+records 200 fresh API requests on the unchanged 100-target fixture: baseline
+without alternate-engine recovery and adaptive with it. Both explicitly capped
+initial navigation at 30 seconds. Four global HTTP workers/two per policy used
+one Chromium primary and two Firefox alternates with the prior 6.5 GiB aggregate
+browser limit. No upstream proxy or hosted API call was used.
+
+| Current full API outcomes, 100 targets/policy | Baseline | Adaptive |
+| --- | --- | --- |
+| Raw HTML substring matches | 46 | 56 |
+| Screened matches | 44 | 54 |
+| Normalized matches | 45 | 55 |
+
+All 45 baseline normalized matches also matched with fallback; ten were
+adaptive-only and 45 matched neither. All 200 payload/hash/score records replayed
+with valid timing and concurrency bounds. Logs account for 200 primary calls
+and 51 alternate calls, split 25/26, with no alternate URL repeated. eBay
+returned HTTP 200 and matching Markdown in both policies; the adaptive capture
+contained 28,869 Markdown characters and an `interactive`, ready document.
+
+Adaptive coverage stayed at 55/100 versus the preceding navigation-cap run.
+eBay and Reddit gained matches; Amazon and Zoopla lost them. The Amazon alternate
+returned a continuation/verification form, already `interactive`, instead of the
+requested product. Zoopla returned Cloudflare HTTP 403 documents on both engines;
+its primary did not enter automatic readiness. These observed failures were not
+parser-budget expirations. The source and live epoch differ, so the aggregate
+changes do not isolate a code effect or establish a stable gain.
+
+The two-policy run took 352.3 seconds versus 337.9 previously. Peak sampled
+memory was 1,316/1,137/1,380 MiB, with zero memory-boundary/OOM/PID-limit events.
+One Firefox owner recorded 147 socket-throttling events, separately from OOM.
+All owners ended healthy with zero pages/sessions. The latest source has a
+verified capture repair, but overall coverage remains below the earlier actual
+hosted 81/100 result; hosted was not refreshed and parity remains unproven.
+
+### Cleanup
+
+Nine task containers were removed across diagnostics, tests and benchmarks;
+the three task infrastructure services were stopped. Eight exact new build-cache
+records were pruned, with Docker reporting 626.8 kB. The small verified production
+candidate and its pinned bases were retained. Image accounting remained 28.92 GB;
+59 baseline cache records remain with zero reclaimable bytes. Nine unrelated
+running services and all 114 volume names were preserved. The [cleanup receipt](../apps/playwright-service-ts/benchmarks/rendered-body-cleanup-results-2026-11-04.json)
+retains inventories and actual stop/removal results, including expected SIGTERM
+exit 143 for explicitly stopped serving owners. No global prune was used.
