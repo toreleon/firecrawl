@@ -41,6 +41,25 @@ describe("Self-hosted local browser controls", () => {
         (fixtureRequests.get(req.url ?? "") ?? 0) + 1,
       );
       res.setHeader("content-type", "text/html");
+      if (req.url === "/passive-api") {
+        res.setHeader("content-security-policy", "script-src 'nonce-fixture'");
+        return res.end(
+          '<title>Pardon Our Interruption...</title><p>Checking your browser before you access eBay.</p><form id="destForm" method="GET" action="/shell"></form><script src="https://ir.ebaystatic.com/rs/c/challenge-fixture.js"></script><script nonce="fixture">setTimeout(()=>location.href="/shell",350)</script>',
+        );
+      }
+      if (req.url === "/format-api") {
+        res.setHeader("content-type", "text/html; charset=utf-8");
+        return res.end(
+          '<main>\u200b\u200d\u2060</main><script>setTimeout(()=>document.querySelector("main").textContent="Automatic API content 42",350)</script>',
+        );
+      }
+      if (req.url === "/aws-captcha-api") {
+        res.statusCode = 405;
+        res.setHeader("x-amzn-waf-action", "captcha");
+        return res.end(
+          "<title>Human Verification</title><main>Complete the security check</main><button onclick=\"fetch('/unexpected-answer')\">Begin</button>",
+        );
+      }
       if (
         req.url === "/engine-gate" ||
         req.url === "/engine-network" ||
@@ -127,6 +146,46 @@ describe("Self-hosted local browser controls", () => {
     };
   };
   const enabled = TEST_SELF_HOST && !!config.PLAYWRIGHT_MICROSERVICE_URL;
+  itIf(enabled)(
+    "waits for passive redirects and invisible hydration while preserving interactive verification",
+    async () => {
+      for (const path of ["/passive-api", "/format-api"]) {
+        const result = await request("/v2/scrape", {
+          url: origin + path,
+          formats: ["rawHtml", "markdown"],
+          maxAge: 0,
+          timeout: scrapeTimeout,
+          browserControls: {
+            workflow: "auto",
+            waitUntil: "domcontentloaded",
+            maxAttempts: 1,
+          },
+        });
+        expect(result.status).toBe(200);
+        expect(result.body.data.markdown).toContain("Automatic API content 42");
+        expect(result.body.data.metadata.browser.readiness.satisfied).toBe(
+          true,
+        );
+        expect(
+          result.body.data.metadata.browser.diagnostics.attempts,
+        ).toHaveLength(1);
+      }
+      const denied = await request("/v2/scrape", {
+        url: origin + "/aws-captcha-api",
+        formats: ["rawHtml", "markdown"],
+        maxAge: 0,
+        timeout: scrapeTimeout,
+        browserControls: { workflow: "auto" },
+      });
+      expect(denied.status).toBe(200);
+      expect(denied.body.data.metadata.browser.interaction.state).toBe(
+        "HUMAN_REQUIRED",
+      );
+      expect(denied.body.data.metadata.statusCode).toBe(405);
+      expect(fixtureRequests.get("/unexpected-answer")).toBeUndefined();
+    },
+    scrapeTimeout,
+  );
   itIf(enabled && !!config.LOCAL_BROWSER_FALLBACK_OWNER_URLS)(
     "uses one distinct backend only for explicitly opted-in stateless completed failures",
     async () => {

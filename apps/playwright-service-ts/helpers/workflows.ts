@@ -742,10 +742,12 @@ export const interactionState = (
   ready: boolean,
   status: number | null,
   challenge: boolean,
+  interactive = false,
 ) => {
   if (/\/accounts\/login|\/signin(?:[/?]|$)/i.test(url)) return 'AUTH_REQUIRED';
   if (/not available in your location/i.test(text)) return 'REGION_UNAVAILABLE';
   if (
+    interactive ||
     /prove your humanity|verify you are human|security verification|human verification|complete the challenge/i.test(
       text,
     )

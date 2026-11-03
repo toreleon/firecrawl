@@ -36,6 +36,93 @@ test('automatic body readiness distinguishes empty/loading shells from short rea
   assert.equal(renderedBodyState(' \n '), 'empty');
   for (const text of ['Loading...', 'loading…', 'Please wait.'])
     assert.equal(renderedBodyState(text), 'loading');
-  for (const text of ['Hello', 'Loading instructions for this product', '42'])
+  for (const text of [
+    'Hello',
+    'Loading instructions for this product',
+    '42',
+  ])
     assert.equal(renderedBodyState(text), 'ready');
+});
+
+test('format-only bodies are empty and cannot end automatic hydration waits', () => {
+  assert.equal(
+    renderedBodyState('\u200b\u200c\u200d\u2060\ufeff'),
+    'empty',
+  );
+  assert.equal(renderedBodyState('Loading\u200b...'), 'loading');
+  assert.equal(renderedBodyState('Product\u200b 42'), 'ready');
+  assert.equal(renderedBodyState('👩‍💻'), 'ready');
+});
+
+test('AWS action headers distinguish passive challenge from interactive CAPTCHA', () => {
+  const captcha = detectPageProtection('', {
+    'X-Amzn-Waf-Action': 'captcha',
+  });
+  assert.equal(captcha?.provider, 'aws-waf');
+  assert.equal((captcha as any)?.interactive, true);
+  const passive = detectPageProtection('', {
+    'x-amzn-waf-action': 'challenge',
+  });
+  assert.equal(passive?.provider, 'aws-waf');
+  assert.notEqual((passive as any)?.interactive, true);
+});
+
+test('observed AWS CAPTCHA shells require live scripts and interstitial structure', () => {
+  const classic =
+    '<title>Human Verification</title><script src="https://abc.def.us-east-1.captcha.awswaf.com/a/b/c/captcha.js"></script><div id="captcha-container"></div>';
+  const custom =
+    '<title>Shop Captcha</title><script src="https://abc.eu-central-1.captcha-sdk.awswaf.com/abc/jsapi.js"></script><script src="https://abc.def.eu-central-1.token.awswaf.com/abc/challenge.js"></script><body>Unusual traffic.</body>';
+  for (const html of [classic, custom]) {
+    const d = detectPageProtection(html);
+    assert.equal(d?.provider, 'aws-waf');
+    assert.equal((d as any)?.interactive, true);
+  }
+  for (const html of [
+    '<title>Contact us</title><main>Send a message</main><script src="https://abc.eu-central-1.captcha-sdk.awswaf.com/abc/jsapi.js"></script><div id="captcha-container"></div>',
+    `<title>Documentation</title><main>API example</main><script>const sample=${JSON.stringify(classic)}</script>`,
+    `<!--${classic}--><main>Normal product</main>`,
+    classic.replace(
+      'captcha.awswaf.com',
+      'captcha.awswaf.com.attacker.test',
+    ),
+  ])
+    assert.equal(detectPageProtection(html), undefined);
+});
+
+test('an empty HUMAN shell on a CAPTCHA route is verification, not UUID content', () => {
+  const shell =
+    '<title>Travel</title><div id="app_main"><div id="px-captcha"></div><p>c4edbd88-d790-11f1-acc3-9f65e4b607cd</p></div>';
+  const d = (detectPageProtection as any)(
+    shell,
+    {},
+    'https://travel.test/sttc/px/captcha-v2/index.html?url=original',
+  );
+  assert.equal(d?.provider, 'perimeterx');
+  assert.equal(d?.interactive, true);
+  assert.equal(
+    (detectPageProtection as any)(shell, {}, 'https://travel.test/contact'),
+    undefined,
+  );
+  assert.equal(
+    (detectPageProtection as any)(
+      `<!--${shell}--><main>Normal</main>`,
+      {},
+      'https://travel.test/sttc/px/captcha-v2/index.html',
+    ),
+    undefined,
+  );
+});
+
+test('the observed eBay passive shell needs its continuation form, script and text', () => {
+  const shell =
+    '<title>Pardon Our Interruption...</title><p>Checking your browser before you access eBay.</p><form id="destForm" method="GET" action="https://www.ebay.com/itm/42"></form><script src="https://ir.ebaystatic.com/rs/c/challenge-abc.js"></script>';
+  assert.equal(detectPageProtection(shell)?.provider, 'ebay');
+  assert.notEqual((detectPageProtection(shell) as any)?.interactive, true);
+  for (const html of [
+    shell.replace('id="destForm"', 'id="contact"'),
+    shell.replace('ir.ebaystatic.com', 'ir.ebaystatic.com.attacker.test'),
+    `<main>Normal product</main><script>const sample=${JSON.stringify(shell)}</script>`,
+    `<!--${shell}--><main>Normal product</main>`,
+  ])
+    assert.equal(detectPageProtection(html), undefined);
 });

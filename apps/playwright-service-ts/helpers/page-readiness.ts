@@ -6,7 +6,17 @@ import { Deadline } from './scrape-control';
 export const detectPageProtection = (
   html: string,
   headers: Record<string, string> = {},
-): BotDetection | undefined => {
+  url?: string,
+): (BotDetection & { interactive?: true }) | undefined => {
+  const awsAction = Object.entries(headers)
+    .find(([key]) => key.toLowerCase() === 'x-amzn-waf-action')?.[1]
+    ?.toLowerCase();
+  if (awsAction === 'captcha' || awsAction === 'challenge')
+    return {
+      provider: 'aws-waf',
+      reason: `AWS WAF ${awsAction} response header`,
+      ...(awsAction === 'captcha' && { interactive: true as const }),
+    };
   const known = detectBotChallenge(html, headers);
   if (known) return known;
   if (html.length > 65536) return;
@@ -14,6 +24,71 @@ export const detectPageProtection = (
     /<!--[\s\S]*?-->|<(script|style|noscript)\b[^>]*>[\s\S]*?<\/\1\s*>/gi,
     ' ',
   );
+  // Retain real script opening tags while removing their contents, comments
+  // and styles. A quoted example inside an inline script is not a loaded SDK.
+  const structure = html
+    .replace(/<!--[\s\S]*?-->/g, ' ')
+    .replace(
+      /<(script|style|noscript)\b([^>]*)>[\s\S]*?<\/\1\s*>/gi,
+      (_, tag: string, attrs: string) =>
+        tag.toLowerCase() === 'script' ? `<script${attrs}></script>` : ' ',
+    );
+  const scripts = Array.from(
+    structure.matchAll(/<script\b[^>]*\bsrc\s*=\s*(["'])(.*?)\1/gi),
+    (match) => match[2],
+  );
+  const hasScript = (pattern: RegExp) =>
+    scripts.some((src) => pattern.test(src));
+  const title =
+    structure.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i)?.[1]?.trim() ??
+    '';
+  const hasAwsCaptcha = hasScript(
+    /^https:\/\/[a-z0-9.-]+\.(?:captcha|captcha-sdk)\.awswaf\.com\/[^<>"']*\/(?:captcha|jsapi)\.js(?:[?#]|$)/i,
+  );
+  if (
+    hasAwsCaptcha &&
+    ((/^Human Verification$/i.test(title) &&
+      /\bid=["']captcha-container["']/i.test(markup)) ||
+      (/^(?:\S+\s+)?Captcha$/i.test(title) &&
+        hasScript(
+          /^https:\/\/[a-z0-9.-]+\.token\.awswaf\.com\/[^<>"']*\/challenge\.js(?:[?#]|$)/i,
+        ) &&
+        markup
+          .replace(/<head\b[^>]*>[\s\S]*?<\/head>/gi, '')
+          .replace(/<[^>]+>/g, '')
+          .trim().length < 512))
+  )
+    return {
+      provider: 'aws-waf',
+      reason: 'AWS WAF CAPTCHA interstitial',
+      interactive: true,
+    };
+  let path = '';
+  try {
+    if (url) path = new URL(url).pathname;
+  } catch {
+    // An absent/invalid URL cannot establish a dedicated verification route.
+  }
+  if (
+    /\/sttc\/px\/captcha(?:-v\d+)?\/(?:index\.html)?$/i.test(path) &&
+    /<(?:div|iframe)\b[^>]*\bid=["']px-captcha["']/i.test(markup)
+  )
+    return {
+      provider: 'perimeterx',
+      reason: 'HUMAN CAPTCHA container on a dedicated verification route',
+      interactive: true,
+    };
+  if (
+    /<form\b[^>]*\bid=["']destForm["']/i.test(markup) &&
+    /checking your browser before you access eBay/i.test(markup) &&
+    hasScript(
+      /^https:\/\/ir\.ebaystatic\.com\/rs\/c\/challenge-[\w-]+\.js(?:[?#]|$)/i,
+    )
+  )
+    return {
+      provider: 'ebay',
+      reason: 'eBay passive browser-check continuation document',
+    };
   if (
     /<form\b[^>]*\bid=["']captcha-form["']/i.test(markup) &&
     /\bclass=["'][^"']*\bg-recaptcha\b/i.test(markup) &&
@@ -52,7 +127,10 @@ export const detectPageProtection = (
 export const renderedBodyState = (
   text: string,
 ): 'empty' | 'loading' | 'ready' => {
-  const normalized = text.replace(/\s+/g, ' ').trim();
+  const normalized = text
+    .replace(/\p{Cf}/gu, '')
+    .replace(/\s+/g, ' ')
+    .trim();
   if (!normalized) return 'empty';
   return /^(?:loading|please wait)[\s.!…]*$/i.test(normalized)
     ? 'loading'
@@ -114,11 +192,17 @@ export function captureRenderedPage({
       if (element.closest('[aria-hidden="true"],[inert]')) continue;
       // Explicit ad placeholders may remain busy because advertising is blocked.
       // They do not describe loading of the requested editorial/product content.
-      const ad = element.closest('[data-ad-status][role="region"][aria-label]');
-      if (ad && /\badvertisement$/i.test(ad.getAttribute('aria-label') ?? ''))
+      const ad = element.closest(
+        '[data-ad-status][role="region"][aria-label]',
+      );
+      if (
+        ad &&
+        /\badvertisement$/i.test(ad.getAttribute('aria-label') ?? '')
+      )
         continue;
       const style = getComputedStyle(element);
-      if (style.display === 'none' || style.visibility === 'hidden') continue;
+      if (style.display === 'none' || style.visibility === 'hidden')
+        continue;
       // Lazy offscreen widgets must not keep otherwise ready visible content busy.
       if (
         Array.from(element.getClientRects()).some(
@@ -179,9 +263,13 @@ export const waitForRenderedBody = async (
   page: Page,
   deadline: Deadline,
   timeoutMs: number,
+  headers: () => Record<string, string> = () => ({}),
 ) => {
   const started = Date.now();
-  const budget = Math.min(timeoutMs, Math.max(1, deadline.remaining() - 300));
+  const budget = Math.min(
+    timeoutMs,
+    Math.max(1, deadline.remaining() - 300),
+  );
   const end = started + budget;
   let outcome:
     | 'empty'
@@ -200,14 +288,22 @@ export const waitForRenderedBody = async (
         page.evaluate(captureRenderedPage, { automatic: true }),
       );
       busyCount = snapshot.busyCount;
-      ignoredComplementaryBusyCount = snapshot.ignoredComplementaryBusyCount;
+      ignoredComplementaryBusyCount =
+        snapshot.ignoredComplementaryBusyCount;
       maxBusyCount = Math.max(maxBusyCount, busyCount);
       busyScope = snapshot.busyScope;
-      outcome = busyCount ? 'busy' : renderedBodyState(snapshot.renderedText);
-      const protection = detectPageProtection(snapshot.content);
+      outcome = busyCount
+        ? 'busy'
+        : renderedBodyState(snapshot.renderedText);
+      const protection = detectPageProtection(
+        snapshot.content,
+        headers(),
+        snapshot.url,
+      );
       if (protection) {
         outcome = 'verification';
         if (
+          protection.interactive ||
           ['amazon', 'google'].includes(protection.provider) ||
           /prove your humanity|verify (?:that )?you are human|complete the challenge|enter the characters/i.test(
             snapshot.renderedText,
@@ -216,7 +312,9 @@ export const waitForRenderedBody = async (
           break;
       } else if (outcome === 'ready') break;
     } catch (error) {
-      if (!/Execution context was destroyed|navigating/i.test(String(error)))
+      if (
+        !/Execution context was destroyed|navigating/i.test(String(error))
+      )
         throw error;
       outcome = 'navigating';
     }

@@ -128,7 +128,10 @@ export const scrapePage = async (
     (state.response?.status() ?? 0) >= 200 &&
     (state.response?.status() ?? 0) < 300 &&
     !/application\/json|text\/plain|image\/|application\/pdf/i.test(initialType)
-      ? await waitForRenderedBody(page, deadline, options.readinessTimeout)
+      ? await waitForRenderedBody(
+          page, deadline, options.readinessTimeout,
+          () => state.response?.headers() ?? {},
+        )
       : undefined;
   let staticHttpError = false;
   const response = state.response;
@@ -242,7 +245,7 @@ export const scrapePage = async (
           new URL(snapshot.url).origin !== expectedProduct.origin ||
           (actualProduct !== null && actualProduct !== expectedProduct.asin) ||
           (actualProduct === null &&
-            !detectPageProtection(snapshot.content, headers))
+            !detectPageProtection(snapshot.content, headers, snapshot.url))
         )
           throw new ScrapeFailure(
             'WORKFLOW_NAVIGATION_MISMATCH',
@@ -258,7 +261,7 @@ export const scrapePage = async (
           : snapshot.content;
       const automaticOutcome =
         automatic && !rawBody
-          ? detectPageProtection(snapshot.content, headers)
+          ? detectPageProtection(snapshot.content, headers, snapshot.url)
             ? 'verification'
             : snapshot.busyCount
               ? 'busy'

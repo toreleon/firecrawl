@@ -771,7 +771,7 @@ app.post('/scrape', async (req: Request, res: Response) => {
         entry.durationMs = Date.now() - started;
         if (
           attempt < max_attempts &&
-          !detectPageProtection(result.content, result.headers) &&
+          !detectPageProtection(result.content, result.headers, result.url) &&
           [429, 502, 503, 504].includes(result.status ?? 0)
         )
           delay =
@@ -822,6 +822,7 @@ app.post('/scrape', async (req: Request, res: Response) => {
     const botDetection = detectPageProtection(
       result.content,
       result.headers ?? {},
+      result.url,
     );
     const pageError = botDetection
       ? `Bot protection challenge remains (${botDetection.provider}): ${botDetection.reason}`
@@ -855,6 +856,7 @@ app.post('/scrape', async (req: Request, res: Response) => {
           result.readiness.satisfied,
           result.status,
           !!botDetection,
+          botDetection?.interactive === true,
         ),
       },
       diagnostics: {
