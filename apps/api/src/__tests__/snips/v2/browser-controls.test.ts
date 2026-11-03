@@ -7,9 +7,28 @@ import { itIf, TEST_API_URL, TEST_SELF_HOST } from "../lib";
 describe("Self-hosted local browser controls", () => {
   let fixture: http.Server;
   let origin: string;
+  const fixtureRequests = new Map<string, number>();
   beforeAll(async () => {
     fixture = http.createServer((req, res) => {
+      fixtureRequests.set(
+        req.url ?? "",
+        (fixtureRequests.get(req.url ?? "") ?? 0) + 1,
+      );
       res.setHeader("content-type", "text/html");
+      if (req.url === "/shell")
+        return res.end(
+          '<main>Loading...</main><script>setTimeout(()=>document.body.innerHTML="<main>Automatic API content 42</main>",350)</script>',
+        );
+      if (req.url === "/empty")
+        return res.end("<title>Metadata only</title><main></main>");
+      if (req.url === "/transient-gate")
+        return res.end(
+          '<main id="sec-if-cpt-container" style="display:none"><div id="sec-bc-tile-container"></div><button id="progress-button" disabled></button><img class="scf-akamai-logo"></main><script>setTimeout(()=>document.body.innerHTML="<main>Automatic API content 42</main>",350)</script>',
+        );
+      if (req.url === "/verification")
+        return res.end(
+          '<main id="sec-if-cpt-container" style="display:none"><div id="sec-bc-tile-container"></div><button id="progress-button" disabled></button><img class="scf-akamai-logo"></main>',
+        );
       if (req.url === "/late")
         return res.end(
           '<title>Late</title><main>Loading</main><script>setTimeout(()=>document.body.innerHTML="<main id=ready>API late content 42</main>",500)</script>',
@@ -40,6 +59,58 @@ describe("Self-hosted local browser controls", () => {
     };
   };
   const enabled = TEST_SELF_HOST && !!config.PLAYWRIGHT_MICROSERVICE_URL;
+  itIf(enabled)(
+    "waits for ordinary rendered content without a marker hint and preserves typed empty/verification failures",
+    async () => {
+      const ready = await request("/v2/scrape", {
+        url: `${origin}/shell`,
+        formats: ["rawHtml", "markdown"],
+        maxAge: 0,
+        waitFor: 0,
+        timeout: scrapeTimeout,
+        browserControls: { workflow: "auto", waitUntil: "domcontentloaded" },
+      });
+      expect(ready.status).toBe(200);
+      expect(ready.body.data.markdown).toContain("Automatic API content 42");
+      expect(ready.body.data.rawHtml).toContain(
+        "<main>Automatic API content 42</main>",
+      );
+      expect(ready.body.data.metadata.browser.readiness.requested).toBe(false);
+      expect(ready.body.data.metadata.browser.readiness.automatic.outcome).toBe(
+        "ready",
+      );
+      const transitioned = await request("/v2/scrape", {
+        url: `${origin}/transient-gate`,
+        formats: ["rawHtml", "markdown"],
+        maxAge: 0,
+        waitFor: 0,
+        timeout: scrapeTimeout,
+        browserControls: { workflow: "auto", waitUntil: "domcontentloaded" },
+      });
+      expect(transitioned.status).toBe(200);
+      expect(transitioned.body.data.markdown).toContain(
+        "Automatic API content 42",
+      );
+      for (const [path, code] of [
+        ["/empty", "CONTENT_NOT_READY"],
+        ["/verification", "VERIFICATION_REQUIRED"],
+      ]) {
+        const failed = await request("/v2/scrape", {
+          url: origin + path,
+          formats: ["rawHtml", "markdown"],
+          maxAge: 0,
+          waitFor: 0,
+          timeout: scrapeTimeout,
+          browserControls: { workflow: "auto", waitUntil: "domcontentloaded" },
+        });
+        expect(failed.status).toBe(422);
+        expect(failed.body.success).toBe(false);
+        expect(failed.body.code).toBe(code);
+        expect(fixtureRequests.get(path)).toBe(1);
+      }
+    },
+    scrapeTimeout,
+  );
   itIf(enabled)(
     "forwards readiness through the API and returns a typed failure",
     async () => {

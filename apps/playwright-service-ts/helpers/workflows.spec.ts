@@ -4,6 +4,8 @@ import {
   countryDestination,
   validActions,
   interactionState,
+  amazonContinuationAllowed,
+  amazonProductIdentity,
 } from './workflows';
 
 test('country navigation preserves origin, product path and SKU', () => {
@@ -18,6 +20,57 @@ test('country navigation preserves origin, product path and SKU', () => {
     url.replace('skuId=123', 'skuId=456') + '&intl=nosplash',
   ])
     assert.equal(countryDestination(url, next), null);
+});
+test('Amazon continuation permits only the observed answer-free GET form on the requested product', () => {
+  const url = 'https://www.amazon.com/Test/dp/B000000042';
+  const valid = {
+    action: '/errors_page/validateCaptcha',
+    method: 'get',
+    formCount: 1,
+    buttonCount: 1,
+    prompt: true,
+    shortPage: true,
+    otherControls: false,
+    inputs: [
+      { name: 'amzn', type: 'hidden', empty: false },
+      { name: 'amzn-r', type: 'hidden', empty: false },
+      { name: 'field-keywords', type: 'hidden', empty: true },
+    ],
+  };
+  assert.equal(amazonProductIdentity(url), 'B000000042');
+  assert.equal(amazonProductIdentity('not a URL'), null);
+  assert.equal(amazonContinuationAllowed(url, valid), true);
+  assert.equal(amazonProductIdentity('https://www.amazon.com/cart'), null);
+  for (const broken of [
+    { ...valid, method: 'post' },
+    { ...valid, formCount: 2 },
+    { ...valid, buttonCount: 2 },
+    { ...valid, prompt: false },
+    { ...valid, otherControls: true },
+    { ...valid, action: 'https://evil.example/errors_page/validateCaptcha' },
+    { ...valid, action: 'http://%' },
+    { ...valid, action: '/errors_page/validateCaptcha?redirect=elsewhere' },
+    {
+      ...valid,
+      inputs: valid.inputs.map((i) =>
+        i.name === 'field-keywords' ? { ...i, type: 'text' } : i,
+      ),
+    },
+    {
+      ...valid,
+      inputs: valid.inputs.map((i) =>
+        i.name === 'field-keywords' ? { ...i, empty: false } : i,
+      ),
+    },
+  ])
+    assert.equal(amazonContinuationAllowed(url, broken), false);
+  assert.equal(
+    amazonContinuationAllowed(
+      url.replace('amazon.com', 'amazon.com.evil.example'),
+      valid,
+    ),
+    false,
+  );
 });
 test('interactive commands reject broad clicks, code execution and retry-shaped malformed inputs', () => {
   assert.equal(validActions([{ type: 'click', selector: '#specific' }]), true);

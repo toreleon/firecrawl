@@ -2,6 +2,7 @@ import type { Page, Frame } from 'playwright';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { Deadline, ScrapeFailure } from './scrape-control';
+import { waitForRenderedBody } from './page-readiness';
 
 export type ConsentPolicy = 'off' | 'rejectNonEssential' | 'acceptAll';
 export type Workflow = 'none' | 'auto' | 'bestbuy-us@1' | 'product-details@1';
@@ -292,6 +293,69 @@ export const countryDestination = (
   return next.href;
 };
 
+export const amazonProductIdentity = (value: string): string | null => {
+  let url: URL;
+  try {
+    url = new URL(value);
+  } catch {
+    return null;
+  }
+  if (
+    url.protocol !== 'https:' ||
+    !['amazon.com', 'www.amazon.com'].includes(url.host) ||
+    url.username ||
+    url.password
+  )
+    return null;
+  return (
+    url.pathname
+      .match(/\/(?:dp|gp\/product)\/([A-Z0-9]{10})(?:\/|$)/i)?.[1]
+      .toUpperCase() ?? null
+  );
+};
+
+export const amazonContinuationAllowed = (
+  current: string,
+  form: {
+    action: string;
+    method: string;
+    formCount: number;
+    buttonCount: number;
+    prompt: boolean;
+    shortPage: boolean;
+    otherControls: boolean;
+    inputs: { name: string; type: string; empty: boolean }[];
+  },
+) => {
+  if (!amazonProductIdentity(current)) return false;
+  const entry = new URL(current);
+  if (
+    ![
+      '/errors_page/validateCaptcha',
+      entry.origin + '/errors_page/validateCaptcha',
+    ].includes(form.action)
+  )
+    return false;
+  const action = new URL(form.action, current);
+  return (
+    action.origin === entry.origin &&
+    action.pathname === '/errors_page/validateCaptcha' &&
+    !action.search &&
+    !action.hash &&
+    form.method.toLowerCase() === 'get' &&
+    form.formCount === 1 &&
+    form.buttonCount === 1 &&
+    form.prompt &&
+    form.shortPage &&
+    !form.otherControls &&
+    form.inputs.length === 3 &&
+    form.inputs.every((input) => input.type === 'hidden') &&
+    JSON.stringify(form.inputs.map((input) => input.name).sort()) ===
+      JSON.stringify(['amzn', 'amzn-r', 'field-keywords']) &&
+    form.inputs.find((input) => input.name === 'field-keywords')?.empty === true
+  );
+};
+
 export const applyWorkflow = async (
   page: Page,
   workflow: Workflow,
@@ -301,12 +365,114 @@ export const applyWorkflow = async (
   const url = new URL(page.url());
   const observations: {
     entryHost: string;
+    amazonContinuation?: { origin: string; asin: string };
     countrySelection?: {
       observed: boolean;
       candidateCount: number;
       waitMs: number;
     };
   } = { entryHost: url.hostname };
+  if (workflow === 'auto' && amazonProductIdentity(url.href)) {
+    const forms = page.locator('form');
+    const formCount = await forms.count();
+    if (formCount === 1) {
+      const form = forms.first();
+      const button = form.getByRole('button', {
+        name: 'Continue shopping',
+        exact: true,
+      });
+      const buttonCount = await button.count();
+      const info = await form.evaluate((element) => {
+        const form = element as HTMLFormElement;
+        const text = document.body?.innerText ?? '';
+        return {
+          action: form.getAttribute('action') ?? '',
+          method: form.method,
+          prompt: /click the button below to continue shopping/i.test(text),
+          shortPage: text.length <= 2000,
+          otherControls:
+            !!form.querySelector(
+              'textarea,select,[contenteditable="true"],input:not([type="hidden"])',
+            ) || !!document.querySelector('iframe'),
+          inputs: Array.from(form.querySelectorAll('input')).map((input) => ({
+            name: input.name,
+            type: input.type,
+            empty: input.value === '',
+          })),
+        };
+      });
+      if (
+        amazonContinuationAllowed(url.href, {
+          ...info,
+          formCount,
+          buttonCount,
+        }) &&
+        (await button.isVisible()) &&
+        (await button.isEnabled())
+      ) {
+        observations.amazonContinuation = {
+          origin: url.origin,
+          asin: amazonProductIdentity(url.href)!,
+        };
+        // One native GET submission, with opaque hidden fields left in the DOM.
+        // No answer-required control is clicked or filled by this recipe.
+        await button.click({ timeout: Math.min(5000, deadline.remaining()) });
+        await page.waitForLoadState('domcontentloaded', {
+          timeout: Math.min(5000, deadline.remaining()),
+        });
+        const after = new URL(page.url());
+        const pendingVerification = await page
+          .locator(
+            'form[action*="/errors_page/validateCaptcha"],#captchacharacters,input[name="field-keywords"]:not([type="hidden"]),iframe[src*="captcha"]',
+          )
+          .count();
+        if (
+          after.origin !== url.origin ||
+          (amazonProductIdentity(after.href) !== null &&
+            amazonProductIdentity(after.href) !==
+              amazonProductIdentity(url.href)) ||
+          (after.pathname !== '/' &&
+            !pendingVerification &&
+            amazonProductIdentity(after.href) !==
+              amazonProductIdentity(url.href))
+        )
+          throw new ScrapeFailure(
+            'WORKFLOW_NAVIGATION_MISMATCH',
+            'Amazon continuation changed the requested product or origin',
+          );
+        if (pendingVerification)
+          steps.push({
+            type: 'amazon-continue@1',
+            outcome: 'verification_unresolved',
+          });
+        else {
+          if (after.pathname === '/') {
+            await waitForRenderedBody(page, deadline, 1500);
+            await page.goto(url.href, {
+              waitUntil: 'domcontentloaded',
+              timeout: deadline.remaining(),
+            });
+          }
+          if (
+            amazonProductIdentity(page.url()) !==
+              amazonProductIdentity(url.href) ||
+            new URL(page.url()).origin !== url.origin
+          )
+            throw new ScrapeFailure(
+              'WORKFLOW_NAVIGATION_MISMATCH',
+              'Amazon continuation did not return to the requested product',
+            );
+          steps.push({
+            type: 'amazon-continue@1',
+            outcome:
+              after.pathname === '/'
+                ? 'submitted-and-returned-to-product'
+                : 'submitted-original-product',
+          });
+        }
+      }
+    }
+  }
   if (
     (workflow === 'auto' || workflow === 'bestbuy-us@1') &&
     url.hostname === 'www.bestbuy.com'

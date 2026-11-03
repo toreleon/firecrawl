@@ -6,6 +6,203 @@ import { browserConfiguration, launchBrowser } from '../helpers/browser';
 import { applyWorkflow } from '../helpers/workflows';
 import { Deadline } from '../helpers/scrape-control';
 import { shouldBlockAdRequest } from '../helpers/resource-policy';
+import { scrapePage } from '../helpers/scrape-page';
+
+test(
+  'Amazon answer-free continuation keeps cookies and returns to the exact requested product',
+  { timeout: 20000 },
+  async () => {
+    const browser = await launchBrowser(
+      browserConfiguration({
+        BROWSER_ENGINE: 'rebrowser',
+        BROWSER_CHANNEL: 'chromium',
+        BROWSER_HEADLESS: 'true',
+      }),
+    );
+    const target = 'https://www.amazon.com/Test/dp/B000000042';
+    const form =
+      '<h4>Click the button below to continue shopping</h4><form method="get" action="/errors_page/validateCaptcha"><input type="hidden" name="amzn" value="opaque"><input type="hidden" name="amzn-r" value="opaque"><input type="hidden" name="field-keywords" value=""><button type="submit">Continue shopping</button></form>';
+    try {
+      const page = await browser.newPage();
+      await page.context().setOffline(true);
+      let submitted = 0,
+        productRequests = 0;
+      await page.route('**/*', async (route) => {
+        const url = new URL(route.request().url());
+        if (url.pathname === '/errors_page/validateCaptcha') {
+          submitted++;
+          assert.equal(route.request().method(), 'GET');
+          assert.equal(url.searchParams.get('field-keywords'), '');
+          return route.fulfill({
+            contentType: 'text/html',
+            headers: {
+              'set-cookie':
+                'continuation=accepted; Path=/; Secure; SameSite=Lax',
+            },
+            body: '<script>location.replace("https://www.amazon.com/")</script>',
+          });
+        }
+        if (url.pathname === '/')
+          return route.fulfill({
+            contentType: 'text/html',
+            body: '<main>Storefront</main>',
+          });
+        assert.equal(url.href, target);
+        productRequests++;
+        return route.fulfill({
+          contentType: 'text/html',
+          body: route
+            .request()
+            .headers()
+            .cookie?.includes('continuation=accepted')
+            ? '<main>Requested product 42</main>'
+            : form,
+        });
+      });
+      await page.goto(target, { waitUntil: 'domcontentloaded' });
+      const workflow = await applyWorkflow(page, 'auto', new Deadline(10000));
+      assert.equal(submitted, 1);
+      assert.equal(productRequests, 2);
+      assert.equal(page.url(), target);
+      assert.match(
+        await page.locator('body').innerText(),
+        /Requested product 42/,
+      );
+      assert.equal(
+        workflow.steps[0].outcome,
+        'submitted-and-returned-to-product',
+      );
+    } finally {
+      await browser.close();
+    }
+  },
+);
+
+test(
+  'Amazon continuation does not answer puzzles and rejects a different product redirect',
+  { timeout: 20000 },
+  async () => {
+    const browser = await launchBrowser(
+      browserConfiguration({
+        BROWSER_ENGINE: 'rebrowser',
+        BROWSER_CHANNEL: 'chromium',
+        BROWSER_HEADLESS: 'true',
+      }),
+    );
+    const target = 'https://www.amazon.com/Test/dp/B000000042';
+    const form =
+      '<h4>Click the button below to continue shopping</h4><form method="get" action="/errors_page/validateCaptcha"><input type="hidden" name="amzn" value="opaque"><input type="hidden" name="amzn-r" value="opaque"><input type="hidden" name="field-keywords" value=""><button type="submit">Continue shopping</button></form>';
+    try {
+      for (const puzzle of [true, false]) {
+        const page = await browser.newPage();
+        await page.context().setOffline(true);
+        let submitted = 0;
+        await page.route('**/*', (route) => {
+          const url = new URL(route.request().url());
+          if (url.pathname === '/errors_page/validateCaptcha') {
+            submitted++;
+            return route.fulfill({
+              contentType: 'text/html',
+              body: '<script>location.replace("https://www.amazon.com/Other/dp/B000000043")</script>',
+            });
+          }
+          return route.fulfill({
+            contentType: 'text/html',
+            body:
+              url.href === target
+                ? form.replace(
+                    '</form>',
+                    puzzle
+                      ? '<input id="captchacharacters" type="text"></form>'
+                      : '</form>',
+                  )
+                : '<main>Other product</main>',
+          });
+        });
+        await page.goto(target, { waitUntil: 'domcontentloaded' });
+        if (puzzle) {
+          assert.equal(
+            (await applyWorkflow(page, 'auto', new Deadline(5000))).steps
+              .length,
+            0,
+          );
+          assert.equal(submitted, 0);
+        } else {
+          await assert.rejects(
+            applyWorkflow(page, 'auto', new Deadline(5000)),
+            (e: any) => e.code === 'WORKFLOW_NAVIGATION_MISMATCH',
+          );
+          assert.equal(submitted, 1);
+        }
+        await page.close();
+      }
+    } finally {
+      await browser.close();
+    }
+  },
+);
+
+test(
+  'capture rejects a late redirect to a different Amazon product after continuation',
+  { timeout: 15000 },
+  async () => {
+    const browser = await launchBrowser(
+      browserConfiguration({
+        BROWSER_ENGINE: 'rebrowser',
+        BROWSER_CHANNEL: 'chromium',
+        BROWSER_HEADLESS: 'true',
+      }),
+    );
+    try {
+      const page = await browser.newPage();
+      await page.context().setOffline(true);
+      let submitted = false;
+      const target = 'https://www.amazon.com/Test/dp/B000000042';
+      await page.route('**/*', (route) => {
+        const url = new URL(route.request().url());
+        if (url.pathname === '/errors_page/validateCaptcha') {
+          submitted = true;
+          return route.fulfill({
+            contentType: 'text/html',
+            body: '<script>location.replace("https://www.amazon.com/")</script>',
+          });
+        }
+        if (url.pathname === '/')
+          return route.fulfill({
+            contentType: 'text/html',
+            body: '<main>Storefront</main>',
+          });
+        if (url.href === target)
+          return route.fulfill({
+            contentType: 'text/html',
+            body: submitted
+              ? '<main>Requested product 42</main><script>setTimeout(()=>location.replace("https://www.amazon.com/Other/dp/B000000043"),100)</script>'
+              : '<h4>Click the button below to continue shopping</h4><form method="get" action="/errors_page/validateCaptcha"><input type="hidden" name="amzn" value="opaque"><input type="hidden" name="amzn-r" value="opaque"><input type="hidden" name="field-keywords" value=""><button type="submit">Continue shopping</button></form>',
+          });
+        return route.fulfill({
+          contentType: 'text/html',
+          body: '<main>Another product also mentioning Requested product 42</main>',
+        });
+      });
+      await assert.rejects(
+        scrapePage(
+          page,
+          target,
+          {
+            waitUntil: 'domcontentloaded',
+            waitAfterLoad: 350,
+            readinessTimeout: 500,
+            workflow: 'auto',
+          },
+          new Deadline(8000),
+        ),
+        (e: any) => e.code === 'WORKFLOW_NAVIGATION_MISMATCH',
+      );
+    } finally {
+      await browser.close();
+    }
+  },
+);
 
 test(
   'coin overview recipe hydrates public content by scrolling it into view',
@@ -157,6 +354,21 @@ test(
   async (t) => {
     const fixture = http.createServer((req, res) => {
       res.setHeader('content-type', 'text/html');
+      if (req.url === '/shell-empty' || req.url === '/shell-loading')
+        return res.end(
+          `${req.url === '/shell-loading' ? '<main>Loading...</main>' : ''}<script>setTimeout(()=>document.body.innerHTML='<main>Late rendered product 42</main>',350)</script>`,
+        );
+      if (req.url === '/empty-stays')
+        return res.end('<title>Only metadata</title><main></main>');
+      if (req.url === '/hello') return res.end('<main>Hello</main>');
+      if (req.url === '/transient-gate')
+        return res.end(
+          '<main id="sec-if-cpt-container" style="display:none"><div id="sec-bc-tile-container"></div><button id="progress-button" disabled></button><img class="scf-akamai-logo"></main><script>setTimeout(()=>document.body.innerHTML="<main>Late rendered product 42</main>",350)</script>',
+        );
+      if (req.url === '/akamai-empty')
+        return res.end(
+          '<main id="sec-if-cpt-container" style="display:none"><div id="sec-bc-tile-container"></div><button id="progress-button" disabled></button><img class="scf-akamai-logo"></main>',
+        );
       if (req.url?.startsWith('/static-denial')) {
         res.statusCode = 403;
         if (req.url.endsWith('-chunked')) {
@@ -192,6 +404,49 @@ test(
     const origin = `http://127.0.0.1:${port}`;
     const service = await startService({ BROWSER_ENGINE: 'rebrowser' });
     try {
+      await t.test(
+        'automatic workflows wait for rendered shells without a marker hint and keep empty/verification states explicit',
+        async () => {
+          for (const path of [
+            '/shell-empty',
+            '/shell-loading',
+            '/transient-gate',
+          ]) {
+            const result = await scrape(service.baseUrl, origin + path, {
+              workflow: 'auto',
+              wait_until: 'domcontentloaded',
+              wait_after_load: 0,
+              readiness_timeout: 2000,
+            });
+            assert.equal(result.body.readiness.requested, false);
+            assert.equal(result.body.readiness.satisfied, true);
+            assert.equal(result.body.readiness.automatic.outcome, 'ready');
+            assert.match(result.body.renderedText, /Late rendered product 42/);
+          }
+          const empty = await scrape(service.baseUrl, origin + '/empty-stays', {
+            workflow: 'auto',
+            readiness_timeout: 120,
+          });
+          assert.equal(empty.body.interaction.state, 'CONTENT_NOT_READY');
+          assert.equal(empty.body.errorCode, 'CONTENT_NOT_READY');
+          const verification = await scrape(
+            service.baseUrl,
+            origin + '/akamai-empty',
+            { workflow: 'auto', readiness_timeout: 120 },
+          );
+          assert.equal(verification.body.botDetection.provider, 'akamai');
+          assert.equal(
+            verification.body.interaction.state,
+            'VERIFICATION_REQUIRED',
+          );
+          assert.equal(verification.body.readiness.satisfied, false);
+          const hello = await scrape(service.baseUrl, origin + '/hello', {
+            workflow: 'auto',
+          });
+          assert.equal(hello.body.readiness.satisfied, true);
+          assert.equal(hello.body.readiness.automatic.outcome, 'ready');
+        },
+      );
       await t.test(
         'static HTTP denials skip futile readiness while active error redirects can finish',
         async () => {

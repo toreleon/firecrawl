@@ -77,6 +77,25 @@ site's stored choice.
 The current recipes select the original Best Buy product's US destination and
 expand an observed Canada Goose details control. `auto` also scrolls an observed
 CoinMarketCap About section into view to trigger public, viewport-based hydration.
+For Amazon.com product URLs, `auto` can submit the observed one-button GET
+continuation form when it has exactly the three known hidden inputs, an empty
+answer field, and no answer-entry controls or iframe. It submits at most once
+per browser attempt, keeps the same context, and returns from the storefront to
+the original product. It checks origin and product identity again at capture;
+another product is an explicit `WORKFLOW_NAVIGATION_MISMATCH` failure. Visible
+answer fields and other interactive verification remain unresolved for handoff.
+The diagnostic step is `amazon-continue@1`, not a new public workflow value.
+
+When `auto` has no explicit selector/text readiness condition, it waits up to
+the readiness budget (five seconds by default) for an empty/loading body or a
+passive verification page to produce rendered text. It does not use a known
+answer string or wait for global network idleness. Metadata includes
+`readiness.automatic` with the observed outcome and time. A body that stays
+empty/loading is not `CONTENT_READY`; recognized Amazon/Akamai verification
+shells remain verification states. Short real text is accepted. Explicit
+readiness and JSON/plain-text response handling keep their separate contracts.
+This is a text-readiness check, not proof that every field or lazy section loaded.
+
 A recipe and caller actions
 cannot be combined. Version recipes deliberately as sites change.
 
@@ -101,6 +120,12 @@ are encrypted in PostgreSQL and do not appear in the public response or queue
 payload. Scrape deadlines are stamped before dispatch and carried through the
 queue where internal request context exists; remaining budgets are bounded at
 the adapter and browser. Interactive commands use one attempt.
+
+If a controlled browser returns no usable text for a Markdown-dependent output,
+the API returns HTTP 422 with a typed `CONTENT_NOT_READY`,
+`VERIFICATION_REQUIRED`, `HUMAN_REQUIRED` or `ACCESS_DENIED` code, rather than
+losing the cause in a generic engine failure. Raw-HTML responses can still carry
+their captured document and explicit readiness/error metadata.
 
 ## Retained tabs and multiple workers
 

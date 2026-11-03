@@ -2,6 +2,11 @@ import { Page, Response } from 'playwright';
 import { createHash } from 'node:crypto';
 import { Deadline, ScrapeFailure } from './scrape-control';
 import {
+  detectPageProtection,
+  renderedBodyState,
+  waitForRenderedBody,
+} from './page-readiness';
+import {
   applyConsent,
   applyWorkflow,
   prepareConsent,
@@ -9,6 +14,7 @@ import {
   ConsentPolicy,
   Workflow,
   BrowserAction,
+  amazonProductIdentity,
 } from './workflows';
 
 export type ReadinessOptions = {
@@ -113,6 +119,16 @@ export const scrapePage = async (
     await deadline.run(applyConsent(page, options.consent ?? 'off', deadline));
   if (options.waitAfterLoad > 0) await deadline.sleep(options.waitAfterLoad);
   state.phase = 'readiness';
+  const initialType = state.response?.headers()['content-type'] ?? '';
+  const automatic =
+    options.workflow === 'auto' &&
+    !options.checkSelector &&
+    !options.waitForText &&
+    (state.response?.status() ?? 0) >= 200 &&
+    (state.response?.status() ?? 0) < 300 &&
+    !/application\/json|text\/plain|image\/|application\/pdf/i.test(initialType)
+      ? await waitForRenderedBody(page, deadline, options.readinessTimeout)
+      : undefined;
   let staticHttpError = false;
   const response = state.response;
   if (
@@ -250,6 +266,27 @@ export const scrapePage = async (
         await deadline.sleep(50);
         continue;
       }
+      const expectedProduct = workflow.observations.amazonContinuation;
+      if (
+        expectedProduct &&
+        workflow.steps.some(
+          (step) =>
+            step.type === 'amazon-continue@1' &&
+            step.outcome.startsWith('submitted'),
+        )
+      ) {
+        const actualProduct = amazonProductIdentity(snapshot.url);
+        if (
+          new URL(snapshot.url).origin !== expectedProduct.origin ||
+          (actualProduct !== null && actualProduct !== expectedProduct.asin) ||
+          (actualProduct === null &&
+            !detectPageProtection(snapshot.content, headers))
+        )
+          throw new ScrapeFailure(
+            'WORKFLOW_NAVIGATION_MISMATCH',
+            'Captured document is not the requested Amazon product',
+          );
+      }
       const contentType = headers['content-type'];
       const rawBody =
         contentType && /application\/json|text\/plain/i.test(contentType);
@@ -257,6 +294,12 @@ export const scrapePage = async (
         rawBody && current
           ? (await deadline.run(current.body())).toString('utf8')
           : snapshot.content;
+      const automaticOutcome =
+        automatic && !rawBody
+          ? detectPageProtection(snapshot.content, headers)
+            ? 'verification'
+            : renderedBodyState(snapshot.renderedText)
+          : undefined;
       const readinessSatisfied =
         rawBody && options.waitForText
           ? !options.checkSelector &&
@@ -266,7 +309,9 @@ export const scrapePage = async (
               .includes(
                 options.waitForText.toLowerCase().replace(/\s+/g, ' ').trim(),
               )
-          : snapshot.ready && selectorReady;
+          : snapshot.ready &&
+            selectorReady &&
+            (!automaticOutcome || automaticOutcome === 'ready');
       return {
         content,
         renderedText: snapshot.renderedText,
@@ -280,6 +325,12 @@ export const scrapePage = async (
           satisfied: readinessSatisfied,
           scope: options.readinessScope ?? 'body',
           documentRevision: revision,
+          ...(automatic && {
+            automatic: {
+              ...automatic,
+              ...(automaticOutcome && { outcome: automaticOutcome }),
+            },
+          }),
         },
         interaction: { consent: { ...consent }, workflow },
         diagnostics: {

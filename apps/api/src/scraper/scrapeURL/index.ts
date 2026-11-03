@@ -86,6 +86,7 @@ import {
   composeTimeoutProcessing,
   CrawlDenialError,
   ActionsNotSupportedError,
+  LocalBrowserTransportError,
 } from "../../lib/error";
 import { htmlTransform } from "./lib/removeUnwantedElements";
 import { postprocessors } from "./postprocessors";
@@ -818,6 +819,22 @@ async function scrapeURLLoopIter(
         factors: { isLongEnough, isGoodStatusCode, hasNoPageError },
         length: engineResult.html?.trim().length ?? 0,
       });
+      if (meta.options.browserControls) {
+        const state = engineResult.browser?.interaction?.state;
+        const reason = [
+          "HUMAN_REQUIRED",
+          "VERIFICATION_REQUIRED",
+          "ACCESS_DENIED",
+          "CONTENT_NOT_READY",
+        ].includes(state)
+          ? state
+          : "CONTENT_NOT_READY";
+        throw new LocalBrowserTransportError(
+          reason,
+          "Local browser returned no usable text; inspect browser readiness or continue the retained session",
+          422,
+        );
+      }
       throw new EngineUnsuccessfulError(engine);
     }
   } finally {

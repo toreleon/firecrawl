@@ -11,7 +11,7 @@ import { getError } from './helpers/get_error';
 import { Server } from 'proxy-chain';
 import { isInternalHost, ssrfPrepareRequest } from './helpers/ssrf';
 import { browserConfiguration, launchBrowser } from './helpers/browser';
-import { detectBotChallenge } from './helpers/bot-detection';
+import { detectPageProtection } from './helpers/page-readiness';
 import { cookieScope } from './helpers/cookies';
 import { shouldBlockAdRequest } from './helpers/resource-policy';
 import {
@@ -753,7 +753,7 @@ app.post('/scrape', async (req: Request, res: Response) => {
         entry.durationMs = Date.now() - started;
         if (
           attempt < max_attempts &&
-          !detectBotChallenge(result.content, result.headers) &&
+          !detectPageProtection(result.content, result.headers) &&
           [429, 502, 503, 504].includes(result.status ?? 0)
         )
           delay =
@@ -799,7 +799,7 @@ app.post('/scrape', async (req: Request, res: Response) => {
         'CONTENT_NOT_READY',
         'Required selector did not become visible',
       );
-    const botDetection = detectBotChallenge(
+    const botDetection = detectPageProtection(
       result.content,
       result.headers ?? {},
     );
