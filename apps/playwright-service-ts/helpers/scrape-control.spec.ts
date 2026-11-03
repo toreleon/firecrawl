@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { Deadline, retryAfterMs } from './scrape-control';
+import { Deadline, retryAfterMs, boundedClose } from './scrape-control';
 
 test('a timed-out allocation disposes its late result rather than leaking it', async () => {
   let disposed = false;
@@ -23,4 +23,9 @@ test('Retry-After supports delta seconds and HTTP dates without inventing a dela
   assert.equal(retryAfterMs('30'), 30000);
   assert.equal(retryAfterMs('Thu, 01 Jan 1970 00:00:05 GMT', 1000), 4000);
   assert.equal(retryAfterMs('invalid'), null);
+});
+
+test('a stuck browser close cannot indefinitely hold its request permit', async () => {
+  assert.equal(await boundedClose(new Promise(() => {}), 20), false);
+  assert.equal(await boundedClose(Promise.resolve(), 20), true);
 });

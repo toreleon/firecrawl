@@ -7,6 +7,27 @@ export class ScrapeFailure extends Error {
   }
 }
 
+/** Cleanup must not prevent an error response or hold a concurrency permit. */
+export const boundedClose = async (
+  operation: Promise<unknown>,
+  timeoutMs = 1000,
+): Promise<boolean> => {
+  let timer: NodeJS.Timeout | undefined;
+  try {
+    return await Promise.race([
+      operation.then(
+        () => true,
+        () => true,
+      ),
+      new Promise<boolean>((resolve) => {
+        timer = setTimeout(() => resolve(false), timeoutMs);
+      }),
+    ]);
+  } finally {
+    clearTimeout(timer);
+  }
+};
+
 export class Deadline {
   private readonly end: number;
   constructor(timeoutMs: number) {

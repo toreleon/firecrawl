@@ -19,6 +19,7 @@ import {
   ScrapeFailure,
   errorCode,
   retryAfterMs,
+  boundedClose,
 } from './helpers/scrape-control';
 import { scrapePage } from './helpers/scrape-page';
 import { BrowserSessions } from './helpers/browser-sessions';
@@ -253,7 +254,7 @@ const sessions = new BrowserSessions(
     return createContext(skipTlsVerification, userAgentOverride);
   },
   async (bundle) => {
-    await bundle.context.close();
+    await boundedClose(bundle.context.close());
   },
   Math.max(1, Math.min(128, Number(process.env.MAX_BROWSER_SESSIONS) || 8)),
   Math.max(
@@ -412,6 +413,7 @@ app.post('/scrape', async (req: Request, res: Response) => {
   let sessionToken: string | undefined;
   let sessionExpiresAt: number | undefined;
   let succeeded = false;
+  let cleanupHealthy = true;
   const attempts: Record<string, unknown>[] = [];
 
   let requestContext: BrowserContext | null = null;
@@ -569,7 +571,7 @@ app.post('/scrape', async (req: Request, res: Response) => {
         delay = 250 * 2 ** (attempt - 1);
       } finally {
         if (page) {
-          await page.close().catch(() => {});
+          cleanupHealthy = (await boundedClose(page.close())) && cleanupHealthy;
           page = null;
         }
       }
@@ -649,9 +651,9 @@ app.post('/scrape', async (req: Request, res: Response) => {
   } finally {
     if (sessionToken)
       await sessions
-        .release(sessionToken, !succeeded && !session_id)
+        .release(sessionToken, (!succeeded && !session_id) || !cleanupHealthy)
         .catch(() => {});
-    else if (requestContext) await requestContext.close().catch(() => {});
+    else if (requestContext) await boundedClose(requestContext.close());
     if (permit) pageSemaphore.release();
   }
 });
