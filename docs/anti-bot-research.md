@@ -2387,7 +2387,75 @@ retains image/build-cache preflights, actual removals and volume inventories.
 These are selected browser experiments, not a new full API result. The latest
 source-pinned full run remains 55/100 with fallback, and the earlier hosted
 comparison remains 81/100 on its own source and deployment. Parity is unproven.
-A remaining untested transport question is the fork's HTTP fetch engine, which
-currently uses Undici: an HTTP-client comparison would be a separate experiment
-and must preserve redirect/private-address checks and requested browser-control
-semantics. No HTTP transport change or coverage claim was made here.
+The next experiment investigates the HTTP fetch engine, which uses Undici.
+It must preserve redirect/private-address checks and requested browser-control
+semantics; a static HTTP response cannot satisfy browser controls.
+
+## HTTP headers, HTTP/2 and TLS transport experiment (November 4)
+
+The [transport receipt](../apps/playwright-service-ts/benchmarks/http-transport-experiments-results-2026-11-04.json)
+records 56 static HTTP observations: four profiles on twelve selected persistent
+failures plus GitHub/arXiv controls. This is a one-round diagnostic, not a new
+full API benchmark. Source remained at `1aa610f1d8cc6d8ea4bccd270168470961ea3cb9`,
+with production implementation from `f8d479fa709917cd6fec09049f6b4197ab24ea21`.
+
+[curl_cffi supports a pinned Chrome 152 profile](https://curl-cffi.readthedocs.io/en/latest/impersonate/targets.html).
+The experiment used the Linux ARM64 `curl_cffi==0.17.0` wheel, SHA-256
+`aa91d26234516ddb9eb97310d5fe1705aa6f677f101d57ffdb76d5f75439506e`,
+and Undici 7.30.1 on Node 24.16.0. Browser-style header values were obtained from
+that packaged curl profile and explicitly supplied to all three browser-header
+profiles. The default Undici profile retained its own default headers.
+
+| Static HTTP profile | Diagnostic HTTP protocol | Normalized matches | Failed targets recovered |
+| --- | --- | --- | --- |
+| Undici, default headers | HTTP/1.1 | 2/14 | 0/12 |
+| Undici, browser headers | HTTP/1.1 | 2/14 | 0/12 |
+| Undici, browser headers, H2 enabled | HTTP/2 | 2/14 | 0/12 |
+| curl_cffi, Chrome 152, same explicit headers | HTTP/2 | 2/14 | 0/12 |
+
+All eight GitHub/arXiv control observations passed. None of Lowe's, Safeway,
+American Airlines, Macy's, Home Depot, Neiman Marcus, G2, StockX, WSJ, CarGurus,
+LinkedIn or Crunchbase gained a normalized match. One default-Undici American
+Airlines response matched the raw HTML phrase only in non-content markup; the
+frozen normalized grader correctly remained a failure. Neiman Marcus and
+LinkedIn had transport failures, so those observations do not establish a WAF
+denial or identify its cause.
+
+The diagnostic endpoint observed different TLS and HTTP/2 fingerprints for curl
+and Undici, and confirmed the intended H1/H2 negotiation. All three Undici
+profiles sent an empty Cookie header there; curl did not. Header ordering,
+cookies, library and OS bundles therefore remain confounds: this compares client
+bundles and does not isolate TLS as a cause. The sanitized diagnostic receipts
+retain protocol/fingerprint/header names without the diagnostic endpoint's IP
+fields. These differences produced no selected-site coverage gain.
+
+Each logical request used a fresh client/cookie jar, one attempt, a shared
+15-second deadline across redirects, an 8 MiB decoded-body cap, TLS verification,
+and the same local pinned-DNS filtering proxy with direct VN egress. No upstream
+proxy, JavaScript, consent actions, readiness workflow, retained session,
+expected-text hint or hosted API call was used. Maximum concurrency was four,
+one request per profile, below the user's limit of eight. Caller browser controls
+were not exposed by this static prototype and production routing was not changed.
+
+The [curl security guidance](https://curl-cffi.readthedocs.io/en/latest/security.html)
+warns that unrestricted automatic redirects can reach private destinations.
+This prototype followed redirects manually through the existing destination
+filter. Every profile passed direct-private HTTP and public-to-private HTTP/HTTPS
+negative controls, with zero connections reaching the owned private fixture.
+The initial adapter attempt converted JSON header pairs incorrectly and stopped
+at GitHub: its four control observations are excluded, with source/logs and its
+container cleanup retained separately. The corrected run replayed all 56 hashes
+and scores with valid timing. Peak sampled memory was 95 MiB, all observed
+memory-boundary/OOM/PID counters were zero, and final active requests were zero.
+
+No new transport dependency or default was adopted. The latest full API result
+remains 55/100; the earlier actual hosted result remains 81/100 on its own source
+and deployment. Neither was rerun by this static experiment, and hosted parity
+remains unproven.
+
+Both HTTP lab containers and both prototype images were removed. Eighteen exact
+task build-cache records were pruned, with Docker reporting 307.9 MB; physical
+disk reclamation was not independently measured. The pre-existing image set,
+59 shared cache records, nine unrelated running services and all 114 volumes
+were preserved. The [cleanup receipt](../apps/playwright-service-ts/benchmarks/http-transport-cleanup-results-2026-11-04.json)
+records inventories, exact removals and evidence hashes. No global prune was used.

@@ -1,0 +1,95 @@
+{
+  "checkedAt": "2026-11-03T19:26:11.585120+00:00",
+  "sourceCommit": "1aa610f1d8cc6d8ea4bccd270168470961ea3cb9",
+  "scope": "Exact removal of two static-HTTP prototype image outputs and their new build-cache IDs. Unrelated services, pre-existing images/cache, all volumes and raw evidence retained.",
+  "taskContainersRemoved": [
+    {
+      "runDirectory": "_local/anti-bot/http-transport-lab-2026-11-04",
+      "name": "autogtm-firecrawl-http-transport-lab-20261104",
+      "imageId": "sha256:37e24c63384da07b846b3bd85e0dd002da40cbc13543ecd6b96a8881c7dbfb78",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-03T19:23:35.726570545Z",
+        "FinishedAt": "2026-11-03T19:23:46.4398068Z"
+      },
+      "removedAfterReceipt": true
+    },
+    {
+      "runDirectory": "_local/anti-bot/http-transport-lab-corrected-2026-11-04",
+      "name": "autogtm-firecrawl-http-transport-lab-corrected-20261104",
+      "imageId": "sha256:b0ddee3b0a1491b0c9df509af14b80fcc260ae08b1812cf700acc39ed2395c28",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-03T19:24:34.699445336Z",
+        "FinishedAt": "2026-11-03T19:25:04.872922628Z"
+      },
+      "removedAfterReceipt": true
+    }
+  ],
+  "prototypeImagesRemoved": [
+    {
+      "id": "sha256:37e24c63384da07b846b3bd85e0dd002da40cbc13543ecd6b96a8881c7dbfb78",
+      "repoTags": [
+        "autogtm/firecrawl-http:transport-lab-2026-11-04"
+      ],
+      "logicalSizeBytes": 137865681
+    },
+    {
+      "id": "sha256:b0ddee3b0a1491b0c9df509af14b80fcc260ae08b1812cf700acc39ed2395c28",
+      "repoTags": [
+        "autogtm/firecrawl-http:transport-lab-corrected-2026-11-04"
+      ],
+      "logicalSizeBytes": 137865750
+    }
+  ],
+  "cache": {
+    "taskRecordsRemoved": 18,
+    "remainingRecords": 59,
+    "baseline59RecordsPreserved": true,
+    "pruneReportedTotal": [
+      "Total:\t307.9MB"
+    ],
+    "physicalBytesFreedNotMeasured": true
+  },
+  "unrelatedRunningServicesPreserved": [
+    "lead-data-postgres",
+    "lead-data-redis",
+    "lead-data-web",
+    "opengtm-agent-runtime-1",
+    "opengtm-agent-test-pg",
+    "opengtm-api-go-1",
+    "opengtm-browser-1",
+    "opengtm-scheduler-go-1",
+    "opengtm-worker-go-1"
+  ],
+  "preExistingImageIdsPreserved": true,
+  "dataVolumesDeleted": 0,
+  "dataVolumeCountAfter": 114,
+  "volumeNamesUnchanged": true,
+  "globalPruneUsed": false,
+  "dockerSystemDfAfter": "TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE\nImages          52        10        28.92GB   11.29GB (39%)\nContainers      13        9         360.4kB   28.67kB (7%)\nLocal Volumes   114       5         6.324GB   6.151GB (97%)\nBuild Cache     59        0         2.132GB   0B\n",
+  "hostDiskAfter": "Filesystem      Size    Used   Avail Capacity iused ifree %iused  Mounted on\n/dev/disk3s5   460Gi   311Gi   125Gi    72%    5.4M  1.3G    0%   /System/Volumes/Data\n",
+  "evidenceHashes": {
+    "_local/anti-bot/http-transport-lab-2026-11-04/cleanup.json": "a1ef310dec96f76bd50540da6a2d779ff632e82f18758f264924d77b049345a4",
+    "_local/anti-bot/http-transport-lab-corrected-2026-11-04/cleanup.json": "ee28c5082aa02afcb44ea6cdc1ebdf259d06ac8b3c5cd28fad75d1ed125ec9dd",
+    "_local/anti-bot/http-transport-cleanup-2026-11-04/preflight.json": "819b72891bfdb41e6102619de299f3e947f270801e2eaa043cdd746a6f63d23c",
+    "_local/anti-bot/http-transport-cleanup-2026-11-04/image-removal.json": "de5b89f5b56789201ac74c664494bde45bdbb3ea45f85b8f3d7c347cb51570da",
+    "_local/anti-bot/http-transport-cleanup-2026-11-04/cache-result.json": "b87ebd1affcccf33a5a65fdd8e012828d8b32fd68f4f49056e2929940ed59366"
+  }
+}
