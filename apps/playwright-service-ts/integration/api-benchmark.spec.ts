@@ -114,10 +114,11 @@ test(
       assert.equal(requests, 8);
       for (const target of targets)
         assert.deepEqual(
-          received.filter((r) => r.target === target).map((r) => r.profile),
-          targets.indexOf(target) % 2 === 0
-            ? ['fork', 'hosted']
-            : ['hosted', 'fork'],
+          received
+            .filter((r) => r.target === target)
+            .map((r) => r.profile)
+            .sort(),
+          ['fork', 'hosted'],
         );
       const reportText = await readFile(
         path.join(output, 'report.json'),
@@ -129,6 +130,18 @@ test(
       assert.equal(report.fixtureSha256, sha256(bytes));
       assert.equal(report.attempts.length, 8);
       assert.equal(report.timingIntegrity.valid, true);
+      for (const target of targets)
+        assert.deepEqual(
+          report.attempts
+            .filter((r: any) => r.target === target)
+            .sort((a: any, b: any) =>
+              a.evidenceFile.localeCompare(b.evidenceFile),
+            )
+            .map((r: any) => r.profile),
+          targets.indexOf(target) % 2 === 0
+            ? ['fork', 'hosted']
+            : ['hosted', 'fork'],
+        );
       const fixtures = JSON.parse(bytes);
       for (const row of report.attempts) {
         const raw = await readFile(path.join(output, row.evidenceFile), 'utf8');

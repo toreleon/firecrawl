@@ -6,6 +6,7 @@ import {
   normalizeApiResponse,
   redact,
   validateProfiles,
+  ProfilePacer,
 } from './api-benchmark';
 import { scoreObservation } from './waf-benchmark';
 
@@ -15,6 +16,13 @@ const target = {
   containsText: 'Expected company',
 };
 test('API normalization requires target HTTP status and raw HTML, even when API success is true', () => {
+  assert.equal(
+    scoreObservation(
+      target,
+      normalizeApiResponse(500, { success: false, code: 'NETWORK_ERROR' }),
+    ).failureReason,
+    'network_error',
+  );
   for (const data of [
     { rawHtml: '<main>Expected company</main>' },
     { markdown: 'Expected company', metadata: { statusCode: 200 } },
@@ -137,4 +145,32 @@ test('secrets are removed recursively from response content and error strings', 
   );
   assert.equal(saved.includes('test-secret'), false);
   assert.equal(JSON.parse(saved).nested[0], 'Bearer [REDACTED]');
+});
+
+test('all workers share a profile dispatch interval while other profiles remain independent', async () => {
+  const pacer = new ProfilePacer();
+  const starts: number[] = [];
+  const profile = {
+    name: 'paced',
+    baseUrl: 'https://fixture.test',
+    minIntervalMs: 25,
+  };
+  const waiting = Array.from({ length: 5 }, async () => {
+    await pacer.wait(profile);
+    starts.push(Date.now());
+  });
+  await pacer.wait({ name: 'other', baseUrl: 'https://fixture.test' });
+  assert.ok(
+    starts.length < 5,
+    'another profile must not wait for the paced queue',
+  );
+  await Promise.all(waiting);
+  for (let i = 1; i < starts.length; i++)
+    assert.ok(starts[i] - starts[i - 1] >= 24);
+  assert.throws(() =>
+    validateProfiles([
+      { ...profile, minIntervalMs: -1 },
+      { name: 'other', baseUrl: 'https://fixture.test' },
+    ]),
+  );
 });

@@ -5,6 +5,7 @@ export type ApiProfile = {
   name: string;
   baseUrl: string;
   apiKeyEnv?: string;
+  minIntervalMs?: number;
   // Fork-only controls are explicit in the receipt; never sent to Cloud.
   browserControls?: Record<string, unknown>;
 };
@@ -18,7 +19,14 @@ export const validateProfiles = (value: unknown): ApiProfile[] => {
       !p ||
       typeof p !== 'object' ||
       Object.keys(p).some(
-        (k) => !['name', 'baseUrl', 'apiKeyEnv', 'browserControls'].includes(k),
+        (k) =>
+          ![
+            'name',
+            'baseUrl',
+            'apiKeyEnv',
+            'minIntervalMs',
+            'browserControls',
+          ].includes(k),
       ) ||
       typeof p.name !== 'string' ||
       !/^[a-z0-9_-]{1,64}$/i.test(p.name) ||
@@ -29,6 +37,10 @@ export const validateProfiles = (value: unknown): ApiProfile[] => {
     names.add(p.name);
     const url = new URL(p.baseUrl);
     if (
+      (p.minIntervalMs !== undefined &&
+        (!Number.isInteger(p.minIntervalMs) ||
+          p.minIntervalMs < 0 ||
+          p.minIntervalMs > 60000)) ||
       !['https:', 'http:'].includes(url.protocol) ||
       url.username ||
       url.password ||
@@ -48,6 +60,32 @@ export const validateProfiles = (value: unknown): ApiProfile[] => {
   }
   return value as ApiProfile[];
 };
+
+/** Serialize dispatch reservations per profile, shared by all workers. */
+export class ProfilePacer {
+  private tails = new Map<string, Promise<void>>();
+  private last = new Map<string, number>();
+  async wait(profile: ApiProfile) {
+    if (!profile.minIntervalMs) return 0;
+    const now = Date.now();
+    const turn = (this.tails.get(profile.name) ?? Promise.resolve()).then(
+      async () => {
+        const slot = Math.max(
+          Date.now(),
+          (this.last.get(profile.name) ?? 0) + (profile.minIntervalMs ?? 0),
+        );
+        while (Date.now() < slot)
+          await new Promise((resolve) =>
+            setTimeout(resolve, slot - Date.now()),
+          );
+        this.last.set(profile.name, Date.now());
+      },
+    );
+    this.tails.set(profile.name, turn);
+    await turn;
+    return Date.now() - now;
+  }
+}
 
 export const redact = (value: unknown, secrets: string[]): string => {
   let serialized = JSON.stringify(value, null, 2);
@@ -78,7 +116,10 @@ export const normalizeApiResponse = (
       content: typeof data.rawHtml === 'string' ? data.rawHtml : '',
       pageStatusCode:
         typeof meta.statusCode === 'number' ? meta.statusCode : null,
-      ...(meta.browser?.errorCode && { errorCode: meta.browser.errorCode }),
+      ...((meta.browser?.errorCode ||
+        ['NETWORK_ERROR', 'SCRAPE_TIMEOUT'].includes(response.code)) && {
+        errorCode: meta.browser?.errorCode ?? response.code,
+      }),
       ...((response.success !== true || meta.error) && {
         pageError: String(
           response.error ?? meta.error ?? 'API did not report success',

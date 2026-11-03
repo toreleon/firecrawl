@@ -51,6 +51,14 @@ profile/target/attempt coverage, retained payload and content hashes, replayed
 HTML and Markdown marker checks, summary metrics and source hashes without
 making network requests.
 
+Set a profile's `minIntervalMs` to pace its dispatches across all workers. For
+example, `7000` stays below ten requests per minute; give both profiles this
+interval for a paced comparison. Pacing wait is recorded separately from HTTP
+latency. Provider HTTP status and account rate-limit counts are also recorded:
+an API-level 429 is not a target-site WAF failure. Failed attempts remain in the
+denominator and are not silently retried. A run limited by account quotas must
+not be presented as a retrieval-capability comparison.
+
 This measures retrieval and one expected snippet per target. A Markdown marker
 match does not establish extraction recall, precision, table fidelity, field
 accuracy, crawl discovery or production availability. Those need additional

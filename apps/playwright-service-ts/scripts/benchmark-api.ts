@@ -7,6 +7,7 @@ import {
   apiOutputMetrics,
   apiRequestBody,
   sha256,
+  ProfilePacer,
 } from '../helpers/api-benchmark';
 import {
   scoreObservation,
@@ -162,9 +163,13 @@ async function main() {
     ReturnType<typeof apiOutputMetrics> & {
       profile: string;
       payloadSha256: string;
+      apiStatus: number;
+      providerRateLimited: boolean;
+      dispatchWaitMs: number;
     };
   const rows: Row[] = [];
   const timing = new BenchmarkTiming();
+  const pacer = new ProfilePacer();
   const timer = setInterval(() => timing.sample(), 1000);
   let cursor = 0;
   try {
@@ -175,6 +180,7 @@ async function main() {
           const { target, attempt, profile } = tasks[taskIndex];
           if (delayMs)
             await new Promise((resolve) => setTimeout(resolve, delayMs));
+          const dispatchWaitMs = await pacer.wait(profile);
           const start = Date.now();
           const result = await requestApiScrape(
             profile,
@@ -192,6 +198,8 @@ async function main() {
             attempt,
             startedAt: new Date(start).toISOString(),
             latencyMs: Date.now() - start,
+            dispatchWaitMs,
+            providerRateLimited: evidence.observation.apiStatus === 429,
             ...scoreObservation(target, evidence.observation),
             ...apiOutputMetrics(evidence.payload, target.containsText),
             payloadSha256: sha256(JSON.stringify(evidence.payload)),
@@ -214,6 +222,8 @@ async function main() {
           {
             ...summarizeAttempts(selected),
             apiSuccesses: selected.filter((r) => r.apiSuccess).length,
+            providerRateLimits: selected.filter((r) => r.providerRateLimited)
+              .length,
             markdownMarkerPasses: selected.filter(
               (r) => r.markdownMarkerPresent,
             ).length,
