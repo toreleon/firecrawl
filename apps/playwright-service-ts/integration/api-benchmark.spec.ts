@@ -296,3 +296,37 @@ test(
     }
   },
 );
+
+test(
+  'API deadline settles a body source that ignores abort and cancels the reader',
+  { timeout: 10000 },
+  async () => {
+    const original = globalThis.fetch;
+    let cancelled = false;
+    globalThis.fetch = async () =>
+      new Response(
+        new ReadableStream({
+          start(controller) {
+            controller.enqueue(new TextEncoder().encode('{'));
+          },
+          cancel() {
+            cancelled = true;
+          },
+        }),
+        { status: 200, headers: { 'content-type': 'application/json' } },
+      );
+    try {
+      const result = await requestApiScrape(
+        { name: 'owned', baseUrl: 'http://127.0.0.1:1' },
+        'https://fixture.test',
+        50,
+      );
+      assert.equal(result.observation.apiStatus, 200);
+      assert.equal(result.observation.timedOut, true);
+      assert.equal(result.payload, null);
+      assert.equal(cancelled, true);
+    } finally {
+      globalThis.fetch = original;
+    }
+  },
+);

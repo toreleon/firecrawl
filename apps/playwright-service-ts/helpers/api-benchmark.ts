@@ -207,9 +207,19 @@ export const requestApiScrape = async (
   apiKey?: string,
 ) => {
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), timeoutMs);
   let apiStatus = 0;
-  try {
+  let cancelBody: (() => Promise<void>) | undefined;
+  let timer: NodeJS.Timeout | undefined;
+  const deadline = new Promise<never>((_, reject) => {
+    timer = setTimeout(() => {
+      // Abort is cleanup, not the only way to settle the caller's deadline:
+      // a stalled body source may not propagate its abort promptly.
+      reject(new Error('API request deadline exceeded'));
+      controller.abort();
+      void cancelBody?.().catch(() => {});
+    }, timeoutMs);
+  });
+  const operation = (async () => {
     const response = await fetch(
       `${profile.baseUrl.replace(/\/$/, '')}/v2/scrape`,
       {
@@ -227,6 +237,7 @@ export const requestApiScrape = async (
     apiStatus = response.status;
     const chunks: Uint8Array[] = [];
     const reader = response.body?.getReader();
+    if (reader) cancelBody = () => reader.cancel();
     let length = 0;
     if (reader) {
       while (true) {
@@ -259,6 +270,9 @@ export const requestApiScrape = async (
       };
     }
     return { observation: normalizeApiResponse(apiStatus, payload), payload };
+  })();
+  try {
+    return await Promise.race([operation, deadline]);
   } catch (error) {
     return {
       observation: {

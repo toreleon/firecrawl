@@ -11,8 +11,8 @@ export const listen = async (server: net.Server): Promise<number> => {
 
 export const closeServer = (server: http.Server): Promise<void> =>
   new Promise((resolve, reject) => {
-    server.closeAllConnections();
     server.close((error) => (error ? reject(error) : resolve()));
+    server.closeAllConnections();
   });
 
 export const startService = async (env: NodeJS.ProcessEnv = {}) => {
