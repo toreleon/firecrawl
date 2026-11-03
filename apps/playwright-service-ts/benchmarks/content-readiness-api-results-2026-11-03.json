@@ -1,0 +1,1140 @@
+{
+  "scope": "Fresh selected 20-target full-API refresh after continuation and body-readiness repairs; hosted parity remains unproven",
+  "startedAt": "2026-11-03T09:31:12.155Z",
+  "finishedAt": "2026-11-03T09:34:28.241Z",
+  "durationMs": 196086,
+  "forkRuntimeCommit": "d27415afa855a6dcd40fcd4fc9ff2d53c128901f",
+  "forkBrowserImage": "sha256:c296494157a229273633832581d5a36537d6b25b10ea42978ab386a87124aea9",
+  "fixtureSha256": "a886fb57087e842c2857b89a7669e31d2fb7b98d6bd7deb60a2329f29581b76a",
+  "benchmarkSourceHashes": {
+    "helpers/api-benchmark.ts": "af10bfaa680bc324d261917a8368b72a60c365d59a1e1dd4019a81ee1421307c",
+    "helpers/waf-benchmark.ts": "ffd9f0d2e5996825aa77cb71b600a6667558e166d4471a084c20638bab9171d6",
+    "helpers/bot-detection.ts": "3111f011045834a040e5497825cd0bf2c698a3fa8ca77a48c8479dddf2348817",
+    "scripts/benchmark-api.ts": "4c378deaacc038a34646ae026ef57499b19f944b99f3529c51f3a5749b7cab76"
+  },
+  "runtimeSourceAndCompiledHashes": {
+    "api.ts": "d45b24d8efbff71d1cf48f6745058576419d6c4429b6f3f671a6400e14fff742",
+    "helpers/workflows.ts": "c04877b76682e1f26e0adc087804532ecc69da951cf332756d18734e4f7fa4bb",
+    "helpers/scrape-page.ts": "3fe422c48007de8ee9e49916fff94fb0d60ef43f889f356a670cb61270437123",
+    "helpers/page-readiness.ts": "709b198fec0353c5a5fc34d5baf2ed306c7601bff3649561f3edeb8f4ee5ba14",
+    "helpers/waf-benchmark.ts": "ffd9f0d2e5996825aa77cb71b600a6667558e166d4471a084c20638bab9171d6",
+    "helpers/bot-detection.ts": "3111f011045834a040e5497825cd0bf2c698a3fa8ca77a48c8479dddf2348817",
+    "dist/api.js": "490cbccc1762ed83874d9a0a50ee94daf6f8bca51c8e1a387012b028ecc6b801",
+    "dist/helpers/workflows.js": "5aea0fce3099264fba33333a406157a87990a9f0f3b4ffb5d5ee457d7e2b6aee",
+    "dist/helpers/scrape-page.js": "32e92c782d45c3a46e43811dbef406fe5b4f7ba58eb69049a502bacf30a80160",
+    "dist/helpers/page-readiness.js": "91a46f54ad1158aa7bc9789fabb1535125f6d2828021b01b226d242e5d0f4d15",
+    "dist/helpers/waf-benchmark.js": "4eea26db4617351a9daa9ad546c8d9d16983d2d736f5a1d435a3159fe7a96f4d",
+    "dist/helpers/bot-detection.js": "77a197cbbe0942b6106db2eb2579fc1af8dc7a167e3e959de51a89f8ed7a746e"
+  },
+  "commonRequest": {
+    "url": "<target URL>",
+    "formats": [
+      "rawHtml",
+      "markdown"
+    ],
+    "onlyMainContent": false,
+    "maxAge": 0,
+    "storeInCache": false,
+    "waitFor": 0,
+    "timeout": 85000
+  },
+  "configuration": {
+    "targets": 20,
+    "attemptsPerProfilePerTarget": 1,
+    "concurrency": 4,
+    "minIntervalMs": 7000,
+    "actualMinimumDispatchGapsMs": {
+      "fork": 7000.0,
+      "hosted": 7000.0
+    },
+    "expectedTextHintSent": false,
+    "forkBrowserControls": {
+      "waitUntil": "domcontentloaded",
+      "consent": "rejectNonEssential",
+      "workflow": "auto",
+      "maxAttempts": 1
+    },
+    "forkBrowserCpuCount": 2,
+    "forkBrowserMemoryGiB": 3,
+    "forkBrowserPageCapacity": 2,
+    "forkUpstreamProxy": false,
+    "hostedRouting": "Provider-controlled, not matched to the direct fork"
+  },
+  "byProfile": {
+    "fork": {
+      "overall": {
+        "requests": 20,
+        "uniqueTargets": 20,
+        "frontierPasses": 9,
+        "screenedPasses": 8,
+        "normalizedPasses": 9,
+        "frontierSuccessRate": 0.45,
+        "screenedSuccessRate": 0.4,
+        "normalizedSuccessRate": 0.45,
+        "successfulLatencyP50Ms": 2483,
+        "successfulLatencyP95Ms": 10988,
+        "allAttemptLatencyP95Ms": 5195,
+        "failures": {
+          "target_status_403": 5,
+          "challenge": 4,
+          "network_error": 1,
+          "rate_limited": 1,
+          "missing_expected_marker": 1
+        }
+      },
+      "byWafLabel": {
+        "akamai": {
+          "requests": 5,
+          "uniqueTargets": 5,
+          "frontierPasses": 1,
+          "screenedPasses": 1,
+          "normalizedPasses": 1,
+          "frontierSuccessRate": 0.2,
+          "screenedSuccessRate": 0.2,
+          "normalizedSuccessRate": 0.2,
+          "successfulLatencyP50Ms": 5195,
+          "successfulLatencyP95Ms": 5195,
+          "allAttemptLatencyP95Ms": 5195,
+          "failures": {
+            "target_status_403": 4
+          }
+        },
+        "aws-waf": {
+          "requests": 1,
+          "uniqueTargets": 1,
+          "frontierPasses": 1,
+          "screenedPasses": 1,
+          "normalizedPasses": 1,
+          "frontierSuccessRate": 1,
+          "screenedSuccessRate": 1,
+          "normalizedSuccessRate": 1,
+          "successfulLatencyP50Ms": 10988,
+          "successfulLatencyP95Ms": 10988,
+          "allAttemptLatencyP95Ms": 10988,
+          "failures": {}
+        },
+        "cloudflare": {
+          "requests": 4,
+          "uniqueTargets": 4,
+          "frontierPasses": 1,
+          "screenedPasses": 1,
+          "normalizedPasses": 1,
+          "frontierSuccessRate": 0.25,
+          "screenedSuccessRate": 0.25,
+          "normalizedSuccessRate": 0.25,
+          "successfulLatencyP50Ms": 5042,
+          "successfulLatencyP95Ms": 5042,
+          "allAttemptLatencyP95Ms": 5042,
+          "failures": {
+            "target_status_403": 1,
+            "challenge": 2
+          }
+        },
+        "custom": {
+          "requests": 3,
+          "uniqueTargets": 3,
+          "frontierPasses": 2,
+          "screenedPasses": 1,
+          "normalizedPasses": 1,
+          "frontierSuccessRate": 0.6666666666666666,
+          "screenedSuccessRate": 0.3333333333333333,
+          "normalizedSuccessRate": 0.3333333333333333,
+          "successfulLatencyP50Ms": 1915,
+          "successfulLatencyP95Ms": 1915,
+          "allAttemptLatencyP95Ms": 1915,
+          "failures": {
+            "challenge": 1,
+            "rate_limited": 1
+          }
+        },
+        "datadome": {
+          "requests": 3,
+          "uniqueTargets": 3,
+          "frontierPasses": 1,
+          "screenedPasses": 1,
+          "normalizedPasses": 1,
+          "frontierSuccessRate": 0.3333333333333333,
+          "screenedSuccessRate": 0.3333333333333333,
+          "normalizedSuccessRate": 0.3333333333333333,
+          "successfulLatencyP50Ms": 2483,
+          "successfulLatencyP95Ms": 2483,
+          "allAttemptLatencyP95Ms": 3673,
+          "failures": {
+            "challenge": 1,
+            "network_error": 1
+          }
+        },
+        "unclassified": {
+          "requests": 4,
+          "uniqueTargets": 4,
+          "frontierPasses": 3,
+          "screenedPasses": 3,
+          "normalizedPasses": 4,
+          "frontierSuccessRate": 0.75,
+          "screenedSuccessRate": 0.75,
+          "normalizedSuccessRate": 1,
+          "successfulLatencyP50Ms": 2399,
+          "successfulLatencyP95Ms": 3170,
+          "allAttemptLatencyP95Ms": 3170,
+          "failures": {
+            "missing_expected_marker": 1
+          }
+        }
+      },
+      "apiSuccesses": 19,
+      "providerRateLimits": 0,
+      "markdownMarkerPasses": 10,
+      "returnedCreditsUsed": 19,
+      "unknownCreditsCount": 1,
+      "cacheStateCounts": {
+        "not_reported": 20
+      }
+    },
+    "hosted": {
+      "overall": {
+        "requests": 20,
+        "uniqueTargets": 20,
+        "frontierPasses": 15,
+        "screenedPasses": 15,
+        "normalizedPasses": 16,
+        "frontierSuccessRate": 0.75,
+        "screenedSuccessRate": 0.75,
+        "normalizedSuccessRate": 0.8,
+        "successfulLatencyP50Ms": 11551,
+        "successfulLatencyP95Ms": 21017,
+        "allAttemptLatencyP95Ms": 21017,
+        "failures": {
+          "service_error": 2,
+          "missing_expected_marker": 2,
+          "timeout": 1
+        }
+      },
+      "byWafLabel": {
+        "akamai": {
+          "requests": 5,
+          "uniqueTargets": 5,
+          "frontierPasses": 4,
+          "screenedPasses": 4,
+          "normalizedPasses": 4,
+          "frontierSuccessRate": 0.8,
+          "screenedSuccessRate": 0.8,
+          "normalizedSuccessRate": 0.8,
+          "successfulLatencyP50Ms": 12154,
+          "successfulLatencyP95Ms": 17616,
+          "allAttemptLatencyP95Ms": 17616,
+          "failures": {
+            "missing_expected_marker": 1
+          }
+        },
+        "aws-waf": {
+          "requests": 1,
+          "uniqueTargets": 1,
+          "frontierPasses": 1,
+          "screenedPasses": 1,
+          "normalizedPasses": 1,
+          "frontierSuccessRate": 1,
+          "screenedSuccessRate": 1,
+          "normalizedSuccessRate": 1,
+          "successfulLatencyP50Ms": 18358,
+          "successfulLatencyP95Ms": 18358,
+          "allAttemptLatencyP95Ms": 18358,
+          "failures": {}
+        },
+        "cloudflare": {
+          "requests": 4,
+          "uniqueTargets": 4,
+          "frontierPasses": 4,
+          "screenedPasses": 4,
+          "normalizedPasses": 4,
+          "frontierSuccessRate": 1,
+          "screenedSuccessRate": 1,
+          "normalizedSuccessRate": 1,
+          "successfulLatencyP50Ms": 7550,
+          "successfulLatencyP95Ms": 21017,
+          "allAttemptLatencyP95Ms": 21017,
+          "failures": {}
+        },
+        "custom": {
+          "requests": 3,
+          "uniqueTargets": 3,
+          "frontierPasses": 1,
+          "screenedPasses": 1,
+          "normalizedPasses": 1,
+          "frontierSuccessRate": 0.3333333333333333,
+          "screenedSuccessRate": 0.3333333333333333,
+          "normalizedSuccessRate": 0.3333333333333333,
+          "successfulLatencyP50Ms": 14782,
+          "successfulLatencyP95Ms": 14782,
+          "allAttemptLatencyP95Ms": 14782,
+          "failures": {
+            "service_error": 2
+          }
+        },
+        "datadome": {
+          "requests": 3,
+          "uniqueTargets": 3,
+          "frontierPasses": 3,
+          "screenedPasses": 3,
+          "normalizedPasses": 3,
+          "frontierSuccessRate": 1,
+          "screenedSuccessRate": 1,
+          "normalizedSuccessRate": 1,
+          "successfulLatencyP50Ms": 8359,
+          "successfulLatencyP95Ms": 10772,
+          "allAttemptLatencyP95Ms": 10772,
+          "failures": {}
+        },
+        "unclassified": {
+          "requests": 4,
+          "uniqueTargets": 4,
+          "frontierPasses": 2,
+          "screenedPasses": 2,
+          "normalizedPasses": 3,
+          "frontierSuccessRate": 0.5,
+          "screenedSuccessRate": 0.5,
+          "normalizedSuccessRate": 0.75,
+          "successfulLatencyP50Ms": 2812,
+          "successfulLatencyP95Ms": 3486,
+          "allAttemptLatencyP95Ms": 90007,
+          "failures": {
+            "missing_expected_marker": 1,
+            "timeout": 1
+          }
+        }
+      },
+      "apiSuccesses": 17,
+      "providerRateLimits": 0,
+      "markdownMarkerPasses": 15,
+      "returnedCreditsUsed": 17,
+      "unknownCreditsCount": 3,
+      "cacheStateCounts": {
+        "not_reported": 20
+      }
+    }
+  },
+  "pairedOutcomes": {
+    "both": [
+      "Amazon",
+      "etsy",
+      "databricks",
+      "Zoopla",
+      "github",
+      "arxiv"
+    ],
+    "hostedOnly": [
+      "indeed",
+      "lowes",
+      "louisvuitton",
+      "mouser",
+      "tripadvisor",
+      "ebay",
+      "cargurus",
+      "crunchbase",
+      "Google Search",
+      "stackoverflow"
+    ],
+    "neither": [
+      "Reddit"
+    ],
+    "forkOnly": [
+      "Best Buy",
+      "Facebook",
+      "CoinMarketCap"
+    ]
+  },
+  "byTarget": [
+    {
+      "target": "Amazon",
+      "outcome": "both",
+      "fork": {
+        "apiStatus": 200,
+        "targetStatus": 200,
+        "normalizedPass": true,
+        "frontierPass": true,
+        "screenedPass": true,
+        "markdownMarkerPresent": true,
+        "failureReason": null,
+        "responseCode": null,
+        "interactionState": "CONTENT_READY",
+        "workflowSteps": [
+          {
+            "type": "amazon-continue@1",
+            "outcome": "submitted-and-returned-to-product"
+          }
+        ],
+        "latencyMs": 10988,
+        "contentSha256": "30e5f81c29f820540a38139d9149c65e069089a0cbd884623be7cf489004e5a9",
+        "payloadSha256": "ab88c6073b5f443e961f29dba95ac12db0c201c9a27cf0a933a7dcae89c5adef"
+      },
+      "hosted": {
+        "apiStatus": 200,
+        "targetStatus": 200,
+        "normalizedPass": true,
+        "frontierPass": true,
+        "screenedPass": true,
+        "markdownMarkerPresent": true,
+        "failureReason": null,
+        "responseCode": null,
+        "interactionState": null,
+        "workflowSteps": [],
+        "latencyMs": 18358,
+        "contentSha256": "471becccc9b1a048a6b2343ba3b3d37b7e40940fb71260b28179790978648a13",
+        "payloadSha256": "c3444f606a501a5e629b494a8129fe64aea9fe1fef22bea3332ff4ace00e428f"
+      }
+    },
+    {
+      "target": "indeed",
+      "outcome": "hostedOnly",
+      "fork": {
+        "apiStatus": 200,
+        "targetStatus": 403,
+        "normalizedPass": false,
+        "frontierPass": false,
+        "screenedPass": false,
+        "markdownMarkerPresent": false,
+        "failureReason": "target_status_403",
+        "responseCode": null,
+        "interactionState": "VERIFICATION_REQUIRED",
+        "workflowSteps": [],
+        "latencyMs": 2088,
+        "contentSha256": "ecf56438d2f9169b6c3cc75cff8d514b92d37a4aa7a4756707d9dad88e34a6d6",
+        "payloadSha256": "618992ecef3fc114e76a20084ffbc9902f317c00c936699b33fd0667f7ebb37e"
+      },
+      "hosted": {
+        "apiStatus": 200,
+        "targetStatus": 200,
+        "normalizedPass": true,
+        "frontierPass": true,
+        "screenedPass": true,
+        "markdownMarkerPresent": true,
+        "failureReason": null,
+        "responseCode": null,
+        "interactionState": null,
+        "workflowSteps": [],
+        "latencyMs": 21017,
+        "contentSha256": "52949ae6c39cb7f97cd13aeaa6a71b5250f92bfcdf146a9f4b5e541054e07a39",
+        "payloadSha256": "cc6ed38303676968418e76adef62b2a9af034514dfa1849843cc2e157b4ab605"
+      }
+    },
+    {
+      "target": "lowes",
+      "outcome": "hostedOnly",
+      "fork": {
+        "apiStatus": 200,
+        "targetStatus": 403,
+        "normalizedPass": false,
+        "frontierPass": false,
+        "screenedPass": false,
+        "markdownMarkerPresent": false,
+        "failureReason": "target_status_403",
+        "responseCode": null,
+        "interactionState": "ACCESS_DENIED",
+        "workflowSteps": [],
+        "latencyMs": 1321,
+        "contentSha256": "b9eec2da08202d90c22e3933a3860c45c2988b0a0f057a74d58c1f89214b88f0",
+        "payloadSha256": "43173d2b1e8a7710181744efc7b31864d1798e73fcbbe5b0d85136d0ad354097"
+      },
+      "hosted": {
+        "apiStatus": 200,
+        "targetStatus": 200,
+        "normalizedPass": true,
+        "frontierPass": true,
+        "screenedPass": true,
+        "markdownMarkerPresent": false,
+        "failureReason": null,
+        "responseCode": null,
+        "interactionState": null,
+        "workflowSteps": [],
+        "latencyMs": 15089,
+        "contentSha256": "9aac7e738118119da093562e9d78344c93ca4861de062a6e7478ac0f3af9ff81",
+        "payloadSha256": "b8f093bb10566a0282db03758c699e9b870d6bb4088f624ebc6d1da1d79c9349"
+      }
+    },
+    {
+      "target": "etsy",
+      "outcome": "both",
+      "fork": {
+        "apiStatus": 200,
+        "targetStatus": 200,
+        "normalizedPass": true,
+        "frontierPass": true,
+        "screenedPass": true,
+        "markdownMarkerPresent": true,
+        "failureReason": null,
+        "responseCode": null,
+        "interactionState": "CONTENT_READY",
+        "workflowSteps": [],
+        "latencyMs": 2483,
+        "contentSha256": "3b962a7cc956f24966153187870d0249ebcdefeb2d32e0f4d8d25a2274cce6a0",
+        "payloadSha256": "20c10db92a1eedce1e2b37b0236862f9a656d7500915b385ae9f5c9f95e700c9"
+      },
+      "hosted": {
+        "apiStatus": 200,
+        "targetStatus": 200,
+        "normalizedPass": true,
+        "frontierPass": true,
+        "screenedPass": true,
+        "markdownMarkerPresent": true,
+        "failureReason": null,
+        "responseCode": null,
+        "interactionState": null,
+        "workflowSteps": [],
+        "latencyMs": 10772,
+        "contentSha256": "7b3e4f107b07f8727f2d61c578cd67feea45e54d915a80cfc4c291315b5ab3b5",
+        "payloadSha256": "b0ae6950f88cf72a17fbe79786def447eed90d8fd6d0d4588d441c1818c18c7b"
+      }
+    },
+    {
+      "target": "louisvuitton",
+      "outcome": "hostedOnly",
+      "fork": {
+        "apiStatus": 200,
+        "targetStatus": 403,
+        "normalizedPass": false,
+        "frontierPass": false,
+        "screenedPass": false,
+        "markdownMarkerPresent": false,
+        "failureReason": "target_status_403",
+        "responseCode": null,
+        "interactionState": "ACCESS_DENIED",
+        "workflowSteps": [],
+        "latencyMs": 2363,
+        "contentSha256": "adc4b82ad2249e4c63ba3d36e3b7f4e5b1776ab92bcdb948171a09e2511cc299",
+        "payloadSha256": "7473bf79ece5ebeae6514f79d436db278a9a422468981e888842cd584f872664"
+      },
+      "hosted": {
+        "apiStatus": 200,
+        "targetStatus": 200,
+        "normalizedPass": true,
+        "frontierPass": true,
+        "screenedPass": true,
+        "markdownMarkerPresent": true,
+        "failureReason": null,
+        "responseCode": null,
+        "interactionState": null,
+        "workflowSteps": [],
+        "latencyMs": 11551,
+        "contentSha256": "cb07ab86df6e550fb2db30b264228bc390fcbf867629b0263fd2f5427ed1be7a",
+        "payloadSha256": "c85bf654b88b98b2c032da17083913c212fbdfdbbe71a512cd0d15b4b6cca460"
+      }
+    },
+    {
+      "target": "databricks",
+      "outcome": "both",
+      "fork": {
+        "apiStatus": 200,
+        "targetStatus": 200,
+        "normalizedPass": true,
+        "frontierPass": true,
+        "screenedPass": true,
+        "markdownMarkerPresent": true,
+        "failureReason": null,
+        "responseCode": null,
+        "interactionState": "CONTENT_READY",
+        "workflowSteps": [],
+        "latencyMs": 1171,
+        "contentSha256": "b4542a4f64eb5992e04ef1f5261e0f4c66a3b7eb141bd5e4ed76d9b9a7cd7067",
+        "payloadSha256": "29eda4ee80ed27ce5b005c3a8b276603ea42f3f90f9d45f48ccc68bcfa6facaa"
+      },
+      "hosted": {
+        "apiStatus": 200,
+        "targetStatus": 200,
+        "normalizedPass": true,
+        "frontierPass": true,
+        "screenedPass": true,
+        "markdownMarkerPresent": true,
+        "failureReason": null,
+        "responseCode": null,
+        "interactionState": null,
+        "workflowSteps": [],
+        "latencyMs": 3486,
+        "contentSha256": "3fb473b7d1b8b1b397da305bb6618f872c763d3126f678b0265da1739de40028",
+        "payloadSha256": "cfa3926e8878962e183ba391b97eb00a2792cfb90fd3c930ca9fbc4626f31c03"
+      }
+    },
+    {
+      "target": "mouser",
+      "outcome": "hostedOnly",
+      "fork": {
+        "apiStatus": 200,
+        "targetStatus": 403,
+        "normalizedPass": false,
+        "frontierPass": false,
+        "screenedPass": false,
+        "markdownMarkerPresent": false,
+        "failureReason": "target_status_403",
+        "responseCode": null,
+        "interactionState": "ACCESS_DENIED",
+        "workflowSteps": [],
+        "latencyMs": 1335,
+        "contentSha256": "54b9c9529a0384c7db60407a7e73038111b018e2bf91e8ccf5021ac66b5d0ac6",
+        "payloadSha256": "805b468211ba5891de3402dde08de4d8a99dcdb38bbebec10231574c5a7392c0"
+      },
+      "hosted": {
+        "apiStatus": 200,
+        "targetStatus": 200,
+        "normalizedPass": true,
+        "frontierPass": true,
+        "screenedPass": true,
+        "markdownMarkerPresent": true,
+        "failureReason": null,
+        "responseCode": null,
+        "interactionState": null,
+        "workflowSteps": [],
+        "latencyMs": 12154,
+        "contentSha256": "8271ad029ca57f86820648ae5074cf981d5807a28bcb5822d3903906f77e3e21",
+        "payloadSha256": "2c79a44e47870ff7d5726ea132c5839c605fa8be234e76178cd73976477ed028"
+      }
+    },
+    {
+      "target": "tripadvisor",
+      "outcome": "hostedOnly",
+      "fork": {
+        "apiStatus": 200,
+        "targetStatus": 403,
+        "normalizedPass": false,
+        "frontierPass": false,
+        "screenedPass": false,
+        "markdownMarkerPresent": false,
+        "failureReason": "challenge",
+        "responseCode": null,
+        "interactionState": "VERIFICATION_REQUIRED",
+        "workflowSteps": [],
+        "latencyMs": 3673,
+        "contentSha256": "7d7ce3648290e3c071c305c6e57ba736dd0cff0768c270fa1b18a1af4ad3d446",
+        "payloadSha256": "9047dc43b867fd1f799f04c15a15b6a69e37c61b524c34b438f0fa4465562663"
+      },
+      "hosted": {
+        "apiStatus": 200,
+        "targetStatus": 200,
+        "normalizedPass": true,
+        "frontierPass": true,
+        "screenedPass": true,
+        "markdownMarkerPresent": true,
+        "failureReason": null,
+        "responseCode": null,
+        "interactionState": null,
+        "workflowSteps": [],
+        "latencyMs": 8359,
+        "contentSha256": "74020d0886872cc2fd06b6a8f48f109dd57c60b3486cc8f5490069c9cfd3665f",
+        "payloadSha256": "3d04c77f227a30eb7318454e9f5dc85c26b7375ab0a3c22246bcd21537b08589"
+      }
+    },
+    {
+      "target": "ebay",
+      "outcome": "hostedOnly",
+      "fork": {
+        "apiStatus": 200,
+        "targetStatus": 403,
+        "normalizedPass": false,
+        "frontierPass": false,
+        "screenedPass": false,
+        "markdownMarkerPresent": false,
+        "failureReason": "target_status_403",
+        "responseCode": null,
+        "interactionState": "ACCESS_DENIED",
+        "workflowSteps": [],
+        "latencyMs": 1440,
+        "contentSha256": "5586e84a7070d0266a5a8231d58f30b715a5b3ef424928a12ab3b29eb7b8dccf",
+        "payloadSha256": "dcef3c20ea6d4ea06a32643868c638ee8b8166dc356ca28a978fa1eabe99b478"
+      },
+      "hosted": {
+        "apiStatus": 200,
+        "targetStatus": 200,
+        "normalizedPass": true,
+        "frontierPass": true,
+        "screenedPass": true,
+        "markdownMarkerPresent": true,
+        "failureReason": null,
+        "responseCode": null,
+        "interactionState": null,
+        "workflowSteps": [],
+        "latencyMs": 17616,
+        "contentSha256": "c34c9d1c5d2d8cdb1b6029bd70732f834a9673a72d5e825ab293876b21c23ced",
+        "payloadSha256": "0b6c064c907b0fb42ed61249aa9afbda756e0dfef808c63f5e79221efb3a56d4"
+      }
+    },
+    {
+      "target": "cargurus",
+      "outcome": "hostedOnly",
+      "fork": {
+        "apiStatus": 500,
+        "targetStatus": null,
+        "normalizedPass": false,
+        "frontierPass": false,
+        "screenedPass": false,
+        "markdownMarkerPresent": false,
+        "failureReason": "network_error",
+        "responseCode": "NETWORK_ERROR",
+        "interactionState": null,
+        "workflowSteps": [],
+        "latencyMs": 426,
+        "contentSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "payloadSha256": "a511d43f45b93fcc3bb83269c67841b098293cfc9070b9bf7f20897e0bad80aa"
+      },
+      "hosted": {
+        "apiStatus": 200,
+        "targetStatus": 200,
+        "normalizedPass": true,
+        "frontierPass": true,
+        "screenedPass": true,
+        "markdownMarkerPresent": true,
+        "failureReason": null,
+        "responseCode": null,
+        "interactionState": null,
+        "workflowSteps": [],
+        "latencyMs": 7977,
+        "contentSha256": "2c801e9546d61b58859512058bb8a65c62cc62596372ab601146b832e52606b8",
+        "payloadSha256": "626414151e369b6ae5871dd400c0481b8617f3335cfce9998a87b1d35da54208"
+      }
+    },
+    {
+      "target": "crunchbase",
+      "outcome": "hostedOnly",
+      "fork": {
+        "apiStatus": 200,
+        "targetStatus": 403,
+        "normalizedPass": false,
+        "frontierPass": false,
+        "screenedPass": false,
+        "markdownMarkerPresent": false,
+        "failureReason": "challenge",
+        "responseCode": null,
+        "interactionState": "VERIFICATION_REQUIRED",
+        "workflowSteps": [],
+        "latencyMs": 865,
+        "contentSha256": "a5a113da22beb94d93dfe03bceb75a516a3598e2292c7d9743abca2694a81e6a",
+        "payloadSha256": "9a9714df5efb5df011f1b59f0695374f2993466b2f949cc9c0584296cc55fa32"
+      },
+      "hosted": {
+        "apiStatus": 200,
+        "targetStatus": 200,
+        "normalizedPass": true,
+        "frontierPass": true,
+        "screenedPass": true,
+        "markdownMarkerPresent": true,
+        "failureReason": null,
+        "responseCode": null,
+        "interactionState": null,
+        "workflowSteps": [],
+        "latencyMs": 7550,
+        "contentSha256": "c57233ecf965fd5702dfd0dd10b93a1114a5b931bf3126da65f2c519459f3884",
+        "payloadSha256": "54f3242c4bfffc7ff0bb705cecb8ee23dd45db5f9880af09592a1ddf1a45ad7f"
+      }
+    },
+    {
+      "target": "Reddit",
+      "outcome": "neither",
+      "hosted": {
+        "apiStatus": 403,
+        "targetStatus": null,
+        "normalizedPass": false,
+        "frontierPass": false,
+        "screenedPass": false,
+        "markdownMarkerPresent": false,
+        "failureReason": "service_error",
+        "responseCode": null,
+        "interactionState": null,
+        "workflowSteps": [],
+        "latencyMs": 285,
+        "contentSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "payloadSha256": "dd08024cb2d032c3536db2b1db585cb50da637bb0dd933f07da83c2fb1ace7ff"
+      },
+      "fork": {
+        "apiStatus": 200,
+        "targetStatus": 200,
+        "normalizedPass": false,
+        "frontierPass": true,
+        "screenedPass": false,
+        "markdownMarkerPresent": false,
+        "failureReason": "challenge",
+        "responseCode": null,
+        "interactionState": "HUMAN_REQUIRED",
+        "workflowSteps": [],
+        "latencyMs": 972,
+        "contentSha256": "c946bc35832e8046037e4ac5110fd828a694060b45c5227d6757399e1169b553",
+        "payloadSha256": "7b6fdbff5ed667e79585bdbbb21af65caf1741a17998fa6bf6e26c5520c28d30"
+      }
+    },
+    {
+      "target": "Google Search",
+      "outcome": "hostedOnly",
+      "fork": {
+        "apiStatus": 200,
+        "targetStatus": 429,
+        "normalizedPass": false,
+        "frontierPass": false,
+        "screenedPass": false,
+        "markdownMarkerPresent": true,
+        "failureReason": "rate_limited",
+        "responseCode": null,
+        "interactionState": "CONTENT_READY",
+        "workflowSteps": [],
+        "latencyMs": 1432,
+        "contentSha256": "7d5ccb70e998c26ac6767019c45351ee4ff3add53ed341ad698dba76c3b77504",
+        "payloadSha256": "1987e1627deb426101d59bd3a1f211aa84b06bd8044812c09301d68ee14fbd64"
+      },
+      "hosted": {
+        "apiStatus": 200,
+        "targetStatus": 200,
+        "normalizedPass": true,
+        "frontierPass": true,
+        "screenedPass": true,
+        "markdownMarkerPresent": true,
+        "failureReason": null,
+        "responseCode": null,
+        "interactionState": null,
+        "workflowSteps": [],
+        "latencyMs": 14782,
+        "contentSha256": "34723a18d9d42eddb85123eddb6f1a22044fa39b5c04b618f8e61c38e1f6bee8",
+        "payloadSha256": "27bd6e413b4509f0097bcf7b3300f658ab0cceee801e4c2ceb6d98955f5d4fb7"
+      }
+    },
+    {
+      "target": "Best Buy",
+      "outcome": "forkOnly",
+      "fork": {
+        "apiStatus": 200,
+        "targetStatus": 200,
+        "normalizedPass": true,
+        "frontierPass": true,
+        "screenedPass": true,
+        "markdownMarkerPresent": true,
+        "failureReason": null,
+        "responseCode": null,
+        "interactionState": "CONTENT_READY",
+        "workflowSteps": [
+          {
+            "type": "country-selection",
+            "outcome": "navigated-original-product"
+          }
+        ],
+        "latencyMs": 5195,
+        "contentSha256": "6820ffc79a0f6e9aec3dfd3197ee17bba7727c6c5cbd95afb6c9f76607c28a16",
+        "payloadSha256": "d987becbf4b62236e1a0129797ed6f16741904e9b965a120dd1b12f290bb597b"
+      },
+      "hosted": {
+        "apiStatus": 200,
+        "targetStatus": 200,
+        "normalizedPass": false,
+        "frontierPass": false,
+        "screenedPass": false,
+        "markdownMarkerPresent": false,
+        "failureReason": "missing_expected_marker",
+        "responseCode": null,
+        "interactionState": null,
+        "workflowSteps": [],
+        "latencyMs": 7061,
+        "contentSha256": "ddae7f50fcbaa7abd88d5998f2ae333e5fe79425d19e557202fa7174e48a8121",
+        "payloadSha256": "84be760f6ef1e5cac4692ead5d938706eeed1fbda2a2c6cb0870d0c6840d03d2"
+      }
+    },
+    {
+      "target": "Facebook",
+      "outcome": "forkOnly",
+      "hosted": {
+        "apiStatus": 403,
+        "targetStatus": null,
+        "normalizedPass": false,
+        "frontierPass": false,
+        "screenedPass": false,
+        "markdownMarkerPresent": false,
+        "failureReason": "service_error",
+        "responseCode": null,
+        "interactionState": null,
+        "workflowSteps": [],
+        "latencyMs": 805,
+        "contentSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "payloadSha256": "dd08024cb2d032c3536db2b1db585cb50da637bb0dd933f07da83c2fb1ace7ff"
+      },
+      "fork": {
+        "apiStatus": 200,
+        "targetStatus": 200,
+        "normalizedPass": true,
+        "frontierPass": true,
+        "screenedPass": true,
+        "markdownMarkerPresent": true,
+        "failureReason": null,
+        "responseCode": null,
+        "interactionState": "CONTENT_READY",
+        "workflowSteps": [],
+        "latencyMs": 1915,
+        "contentSha256": "604d0bfe295197a05912f93bab5061ddd6f7bce1c948f8411eae06ef693ec656",
+        "payloadSha256": "2a278f4d60a6cbbf4a2e372629d12d93517d32c8669a3e7c045bcc6ece90a41f"
+      }
+    },
+    {
+      "target": "CoinMarketCap",
+      "outcome": "forkOnly",
+      "fork": {
+        "apiStatus": 200,
+        "targetStatus": 200,
+        "normalizedPass": true,
+        "frontierPass": true,
+        "screenedPass": true,
+        "markdownMarkerPresent": true,
+        "failureReason": null,
+        "responseCode": null,
+        "interactionState": "CONTENT_READY",
+        "workflowSteps": [
+          {
+            "type": "coin-about@1",
+            "outcome": "scrolled-into-view"
+          }
+        ],
+        "latencyMs": 3170,
+        "contentSha256": "0be923842c2f94db2c93cffad2c27af7ab0984480fd15a9beea6f717f9879772",
+        "payloadSha256": "e9f735d3a9b6eb58b1b1982fe8cbdd1eb4bf408a2905900c4f33bc72ea59db0c"
+      },
+      "hosted": {
+        "apiStatus": 200,
+        "targetStatus": null,
+        "normalizedPass": false,
+        "frontierPass": false,
+        "screenedPass": false,
+        "markdownMarkerPresent": false,
+        "failureReason": "timeout",
+        "responseCode": null,
+        "interactionState": null,
+        "workflowSteps": [],
+        "latencyMs": 90007,
+        "contentSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "payloadSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+      }
+    },
+    {
+      "target": "Zoopla",
+      "outcome": "both",
+      "fork": {
+        "apiStatus": 200,
+        "targetStatus": 200,
+        "normalizedPass": true,
+        "frontierPass": true,
+        "screenedPass": true,
+        "markdownMarkerPresent": true,
+        "failureReason": null,
+        "responseCode": null,
+        "interactionState": "CONTENT_READY",
+        "workflowSteps": [],
+        "latencyMs": 5042,
+        "contentSha256": "e7fad88b57f453aeee3105621df5eb28eec79f6e2b53663b2b39079ad88afacd",
+        "payloadSha256": "28e3f5f1dbb057a3455be97a998f5f382358af772460759226d6e07e6446f9c8"
+      },
+      "hosted": {
+        "apiStatus": 200,
+        "targetStatus": 200,
+        "normalizedPass": true,
+        "frontierPass": true,
+        "screenedPass": true,
+        "markdownMarkerPresent": true,
+        "failureReason": null,
+        "responseCode": null,
+        "interactionState": null,
+        "workflowSteps": [],
+        "latencyMs": 6440,
+        "contentSha256": "79d9dbe7a84b769397c130f1b4ef0d723d1c142e6c73ec4ecec806a1f8752f80",
+        "payloadSha256": "1f61476fce3587aff5a7f149784ba0b7d39b2779e211a128f50e355a599fa827"
+      }
+    },
+    {
+      "target": "github",
+      "outcome": "both",
+      "fork": {
+        "apiStatus": 200,
+        "targetStatus": 200,
+        "normalizedPass": true,
+        "frontierPass": true,
+        "screenedPass": true,
+        "markdownMarkerPresent": true,
+        "failureReason": null,
+        "responseCode": null,
+        "interactionState": "CONTENT_READY",
+        "workflowSteps": [],
+        "latencyMs": 2399,
+        "contentSha256": "0858f7f173ec0c56cadf81c3f5a2c7bdd5850423d53631f431494fa31309487f",
+        "payloadSha256": "0496a6f84ad2f56231bafacde3b6112995b034c07526aad4dac86d182dae7eac"
+      },
+      "hosted": {
+        "apiStatus": 200,
+        "targetStatus": 200,
+        "normalizedPass": true,
+        "frontierPass": true,
+        "screenedPass": true,
+        "markdownMarkerPresent": true,
+        "failureReason": null,
+        "responseCode": null,
+        "interactionState": null,
+        "workflowSteps": [],
+        "latencyMs": 2812,
+        "contentSha256": "d8e002f586345b0f0d603dfb6dfae12922c4a9830aedbd89e38fb887eb4d0d02",
+        "payloadSha256": "e29b4e90e535986ebfc740c967b8f656c46ef63495630c3d94af71d651bbdc09"
+      }
+    },
+    {
+      "target": "stackoverflow",
+      "outcome": "hostedOnly",
+      "fork": {
+        "apiStatus": 200,
+        "targetStatus": 403,
+        "normalizedPass": false,
+        "frontierPass": false,
+        "screenedPass": false,
+        "markdownMarkerPresent": false,
+        "failureReason": "challenge",
+        "responseCode": null,
+        "interactionState": "VERIFICATION_REQUIRED",
+        "workflowSteps": [],
+        "latencyMs": 804,
+        "contentSha256": "b38b7ae2f51deddfcb433d93bc7be58b6e6e98910b63036d988420bca09011a3",
+        "payloadSha256": "11ef45d31af98e184bcbd2ed304e1acfddf8411a62fe30586c2b6c0ae3aa5df6"
+      },
+      "hosted": {
+        "apiStatus": 200,
+        "targetStatus": 200,
+        "normalizedPass": true,
+        "frontierPass": true,
+        "screenedPass": true,
+        "markdownMarkerPresent": true,
+        "failureReason": null,
+        "responseCode": null,
+        "interactionState": null,
+        "workflowSteps": [],
+        "latencyMs": 13704,
+        "contentSha256": "ede934621c13bef4c3b7b07565e1bd3baf475d667d4b280d97bc164551e0bc9a",
+        "payloadSha256": "3369a30ba5f09574d199a0a146c9fa000e1ee8e5f100a16485804873f551e6fb"
+      }
+    },
+    {
+      "target": "arxiv",
+      "outcome": "both",
+      "fork": {
+        "apiStatus": 200,
+        "targetStatus": 200,
+        "normalizedPass": true,
+        "frontierPass": false,
+        "screenedPass": false,
+        "markdownMarkerPresent": true,
+        "failureReason": "missing_expected_marker",
+        "responseCode": null,
+        "interactionState": "CONTENT_READY",
+        "workflowSteps": [],
+        "latencyMs": 854,
+        "contentSha256": "629f61cab6c5a2f2447bd25d703972d3242aae365f0f4d55d58ee4f6e405023c",
+        "payloadSha256": "c6031a3f682fc836103ed894910786f0f408780b3d0836ced6b8d89b395c56cd"
+      },
+      "hosted": {
+        "apiStatus": 200,
+        "targetStatus": 200,
+        "normalizedPass": true,
+        "frontierPass": false,
+        "screenedPass": false,
+        "markdownMarkerPresent": true,
+        "failureReason": "missing_expected_marker",
+        "responseCode": null,
+        "interactionState": null,
+        "workflowSteps": [],
+        "latencyMs": 7501,
+        "contentSha256": "cea339a5e44d2bbaa2193d0d8adfd92ef5e0ccc3043f721fbbb447ea2f31e142",
+        "payloadSha256": "f253a057d2aab350ef4ce9984b6172d4bf07df8809a43ca1d07ea7d6199693a3"
+      }
+    }
+  ],
+  "previousPacedPilot": {
+    "forkRuntimeCommit": "f47d7085ce6a07be1ce38fc523a10533648b9f36",
+    "forkNormalizedMatches": 9,
+    "hostedNormalizedMatches": 14,
+    "requestsPerProfile": 20,
+    "targetOutcomeChanges": [
+      {
+        "target": "Amazon",
+        "fork": {
+          "prior": false,
+          "current": true
+        },
+        "hosted": {
+          "prior": true,
+          "current": true
+        }
+      },
+      {
+        "target": "lowes",
+        "fork": {
+          "prior": false,
+          "current": false
+        },
+        "hosted": {
+          "prior": false,
+          "current": true
+        }
+      },
+      {
+        "target": "Google Search",
+        "fork": {
+          "prior": true,
+          "current": false
+        },
+        "hosted": {
+          "prior": false,
+          "current": true
+        }
+      }
+    ],
+    "comparisonLimits": "Different observation times; the refreshed fork gained Amazon and lost Google Search to target HTTP 429. Hosted gained Lowe's and Google Search. These are not isolated causal estimates."
+  },
+  "credits": {
+    "observedBalanceDecrease": 18,
+    "hostedReturnedCreditsUsed": 17,
+    "hostedResponsesWithoutCreditUsage": 3,
+    "observedTotalBalanceDecreaseAcrossThreePilots": 43,
+    "limits": "Balance changes may include concurrent usage or settlement timing; returned usage is not a complete billing receipt."
+  },
+  "validation": {
+    "offlineAudit": {
+      "status": "complete",
+      "attempts": 40,
+      "uniquePairs": true,
+      "allEvidenceHashesMatch": true,
+      "allScoresReplay": true,
+      "sourceHashesMatch": true,
+      "networkRequests": 0
+    },
+    "runtimeSourceAndCompiledHashesMatchCheckout": true,
+    "minimumPacingVerified": true,
+    "zeroProviderRateLimits": true,
+    "cleanup": {
+      "autogtm-firecrawl-api-content-readiness-ready-20261103": {
+        "stopped": true,
+        "OOMKilled": false,
+        "exitCode": 143
+      },
+      "autogtm-firecrawl-workflows-pg-20261103": {
+        "stopped": true,
+        "OOMKilled": false,
+        "exitCode": 0
+      },
+      "autogtm-firecrawl-workflows-redis-20261103": {
+        "stopped": true,
+        "OOMKilled": false,
+        "exitCode": 0
+      },
+      "autogtm-firecrawl-workflows-rabbit-20261103": {
+        "stopped": true,
+        "OOMKilled": false,
+        "exitCode": 0
+      }
+    },
+    "temporaryCredentialRemoved": true
+  },
+  "limits": [
+    "Fresh API results only; maxAge=0 and storeInCache=false. Returned cache metadata is retained when provided.",
+    "Fork egress and hosted infrastructure may differ; this is an outcome comparison, not a causal proxy or browser experiment.",
+    "Missing target status or rawHtml is not inferred as success. Markdown marker presence is supplementary, not extraction F1.",
+    "WAF categories are fixture publisher labels, not proof of a live WAF rule.",
+    "Request limits bound dispatch count, not provider credits; provider-side retries and charges can differ.",
+    "Selected targets and one attempt per target do not prove broad hosted parity or long-run coverage.",
+    "No extraction F1 or production availability claim is established.",
+    "The account rate-limit count is distinct from target-site HTTP 429 responses.",
+    "Successful-request latency compares different successful target sets."
+  ],
+  "localEvidence": "_local/anti-bot/api-content-readiness-2026-11-03"
+}

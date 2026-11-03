@@ -599,3 +599,118 @@ Vuitton response, and Reddit's browser failure became a generic API error.
 Recovering content, clearer failure reporting and throughput must be measured
 separately; Cloud's infrastructure differs from the proxy-free fork, so this
 comparison alone does not identify the cause of its retrieval advantage.
+
+### Rendered content and answer-free continuation repair
+
+The paired API failures included a single-button Amazon validation form and an
+empty rendered Akamai shell. Neither was product content, despite the earlier
+`CONTENT_READY` metadata. Playwright documents that page activity can continue
+after `load`; navigation completion alone does not establish content readiness
+([navigation documentation](https://playwright.dev/docs/navigations)).
+
+`workflow: auto` now waits within the readiness budget for empty/loading HTML or
+a passive verification page to produce rendered text, without receiving an
+expected answer string. Explicit readiness and JSON/plain-text handling retain
+their separate behavior. Runtime classification recognizes the observed Amazon
+and Akamai verification documents. Empty Markdown-dependent browser results
+return typed HTTP 422 failures through the API instead of a generic engine error.
+
+The Amazon recipe submits only the observed answer-free GET form with exactly
+the known hidden inputs and no answer-entry controls or iframe. It preserves
+server-supplied hidden values, keeps the browser context, and returns from the
+storefront to the original product. Actual puzzles remain unresolved. Three
+diagnostic submissions alone retrieved no product; adding a return to the
+original URL retrieved the expected rendered product in two of three fresh
+sessions. This small diagnostic motivated the recipe, not a general success claim.
+
+A completed interleaved browser comparison used the frozen 100 targets twice on
+each runtime: 400 service requests, four total client workers, two pages/two CPUs
+and 3 GiB per browser, the same browser distribution/base image, direct Vietnam
+egress and no upstream proxy. Both received consent rejection, automatic
+workflows, one service attempt and no expected-text readiness hint. Profile
+order rotated by target and round. The baseline was `f47d7085c`; the measured
+candidate was `da7af1f2a`.
+
+| Check | Baseline, 200 requests | Candidate, 200 requests |
+| --- | --- | --- |
+| Raw substring | 83 (41.5%) | 91 (45.5%) |
+| Screened marker | 79 (39.5%) | 86 (43.0%) |
+| Normalized marker | 81 (40.5%) | 88 (44.0%) |
+| Screened-success p50 | 3,099 ms | 3,846 ms |
+| Screened-success p95 | 5,966 ms | 7,475 ms |
+
+There were eight candidate-only matches and one baseline-only match, for seven
+net additional matches. Changes were Amazon +1, Booking.com +2, Expedia +1,
+TikTok +2, Airbnb +1, Zoopla +1 and YouTube -1. The YouTube loss timed out in the
+consent phase. This does not establish a causal consent regression or a general
+WAF improvement: live-site variation and shared egress remain confounders. The
+observed coverage increase also cost latency. Earlier 500-request measurements
+used marker-aware readiness and different capacity profiles, so their rates
+are not interchangeable with this comparison.
+
+All 400 unique profile/target/round records, response hashes and scores replayed
+correctly. Grader and fallback-classifier bytes were unchanged. The added runtime
+classifier rejected none of 424 historical normalized successes. Timing passed,
+peak sampled memory was 1,284/1,247 MiB for baseline/candidate, and all recorded
+memory/OOM/process-limit counters stayed zero. Both services ended healthy with
+zero pages/sessions and were stopped. An earlier 218-request candidate run was
+aborted when live evidence showed that the hidden form field already had a
+server-supplied value. Its incorrect empty-value guard was repaired; those
+partial results are excluded. The [400-request receipt](../apps/playwright-service-ts/benchmarks/content-readiness-results-2026-11-03.json)
+preserves the versions and exclusions.
+
+One measured candidate attempt exposed a later redirect race: a form marked
+unresolved subsequently landed on the storefront. It remained a failed marker
+check. The subsequent `d27415afa` repair observes the pending redirect for up to
+1.5 seconds and checks identity on every post-submission capture, including an
+unresolved form. Controlled tests cover both delayed recovery and rejecting a
+later storefront/other-product capture. The 400-request result is not relabeled
+as a measurement of that later repair.
+
+### Refreshed full-API comparison
+
+The later runtime `d27415afa` was measured through the full API against hosted
+Firecrawl on the same selected 20 targets. Both profiles again requested fresh
+raw HTML/Markdown, had no expected-text hint, dispatched at least 7,000 ms apart
+and made 20 requests each. Account-level HTTP 429 responses were zero.
+
+| Check | Direct fork | Hosted Firecrawl |
+| --- | --- | --- |
+| Raw substring | 9/20 (45%) | 15/20 (75%) |
+| Screened marker | 8/20 (40%) | 15/20 (75%) |
+| Normalized marker | 9/20 (45%) | 16/20 (80%) |
+| Markdown marker | 10/20 | 15/20 |
+| Screened-success p50 | 2,483 ms | 11,551 ms |
+| Screened-success p95 | 10,988 ms | 21,017 ms |
+
+The fork gained Amazon and lost Google Search to target HTTP 429 versus the
+previous paced pilot, keeping its normalized count at nine. Hosted gained
+Lowe's and Google Search, increasing from 14 to 16. Six targets passed both,
+ten only on hosted, three only on the fork and one on neither. The fork-only
+matches were Best Buy, Facebook and CoinMarketCap. Successful latency compares
+different target sets and does not establish broad speed superiority. The
+captured Reddit response retained `HUMAN_REQUIRED` and challenge/error metadata;
+its raw substring was not treated as a screened or normalized success.
+
+All 40 records and scores passed offline replay. Twelve running-image source
+and compiled files matched the checkout, verified from the stopped container;
+the exact image ID is in the [API result receipt](../apps/playwright-service-ts/benchmarks/content-readiness-api-results-2026-11-03.json).
+The runtime passed build, 46 helper checks, 60 integration checks and production
+dependency audit in [CI](https://github.com/toreleon/firecrawl/actions/runs/41610946910).
+Three focused real-API harness checks passed for the changed API engine code,
+covering ordinary and transient-shell content, typed empty/verification failure,
+retained tabs and handoff. The later browser-only corrections did not change
+that API engine file. This is not a new full API/SDK regression-suite result.
+
+The hosted balance decreased by 18 during this refresh, versus 17 credits
+reported in responses, with three responses lacking usage data. Across all
+three API pilots, the observed balance decrease was 43. Concurrent usage and
+settlement timing remain possible; balance changes are not a complete billing
+receipt. A broker-startup failure before this run issued no scrape requests;
+the launcher was repaired to wait for an AMQP handshake. Task services were
+stopped and the temporary credential file removed.
+
+The goal remains open: the local comparison improved match rate, while the
+fresh hosted comparison still showed a substantial retrieval gap. Neither this
+selected pilot nor the browser comparison measures extraction F1, a complete
+crawl/refresh system, or production availability.
