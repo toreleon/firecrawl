@@ -28,6 +28,29 @@ type CompletedReceipt = {
   errorCode?: string;
 };
 const completedErrors = new WeakMap<LocalBrowserError, CompletedReceipt>();
+const completedErrorCodes = [
+  "NETWORK_ERROR",
+  "SCRAPE_TIMEOUT",
+  "WORKFLOW_NAVIGATION_MISMATCH",
+];
+const amazonProduct = (value: unknown): string | undefined => {
+  if (typeof value !== "string") return;
+  try {
+    const url = new URL(value);
+    if (
+      url.protocol !== "https:" ||
+      !["amazon.com", "www.amazon.com"].includes(url.host) ||
+      url.username ||
+      url.password
+    )
+      return;
+    return url.pathname
+      .match(/\/(?:dp|gp\/product)\/([A-Z0-9]{10})(?:\/|$)/i)?.[1]
+      .toUpperCase();
+  } catch {
+    return;
+  }
+};
 const completedReceipt = (
   result: any,
   boot?: string,
@@ -50,7 +73,7 @@ const completedReceipt = (
     ...(Number.isInteger(result.pageStatusCode) && {
       pageStatusCode: result.pageStatusCode,
     }),
-    ...(["NETWORK_ERROR", "SCRAPE_TIMEOUT", "CONTENT_NOT_READY"].includes(
+    ...([...completedErrorCodes, "CONTENT_NOT_READY"].includes(
       result.errorCode,
     ) && { errorCode: result.errorCode }),
   };
@@ -129,7 +152,7 @@ export const browserRpc = async (
         response.status,
       );
       const proof = completedReceipt(result, options.boot);
-      if (proof && ["NETWORK_ERROR", "SCRAPE_TIMEOUT"].includes(error.code))
+      if (proof && completedErrorCodes.includes(error.code))
         completedErrors.set(error, { ...proof, errorCode: error.code });
       throw error;
     }
@@ -449,6 +472,8 @@ export const scrapeLocalBrowser = async (
   },
 ) => {
   const fallbackEnabled = input.controls.engineFallback === true;
+  const expectedAmazon =
+    input.controls.workflow === "auto" ? amazonProduct(input.url) : undefined;
   if (
     fallbackEnabled &&
     (input.controls.sessionId ||
@@ -494,7 +519,7 @@ export const scrapeLocalBrowser = async (
       if (input.signal?.aborted) throw discoveryError(true);
       const left = until - Date.now();
       if (left < 100) throw discoveryError(false);
-      return validateResponse(
+      const result = validateResponse(
         await browserRpc(
           selected.base,
           "/scrape",
@@ -510,6 +535,33 @@ export const scrapeLocalBrowser = async (
           },
         ),
       );
+      // Older owners may return a ready document from another product. Guard
+      // the landed URL here too, before either primary or alternate promotion.
+      if (
+        expectedAmazon &&
+        result.pageStatusCode >= 200 &&
+        result.pageStatusCode < 300 &&
+        !result.botDetection &&
+        !result.pageError &&
+        !result.errorCode &&
+        result.readiness?.satisfied !== false &&
+        amazonProduct(result.url) !== expectedAmazon
+      ) {
+        const error = new LocalBrowserError(
+          "WORKFLOW_NAVIGATION_MISMATCH",
+          "Browser did not capture the original Amazon product",
+          500,
+        );
+        const receipt = completedReceipt(
+          result,
+          selected.boot,
+          selected.engine,
+        );
+        if (receipt)
+          completedErrors.set(error, { ...receipt, errorCode: error.code });
+        throw error;
+      }
+      return result;
     };
     if (!fallbackEnabled) return dispatch(owner);
     let primary: any;
@@ -520,6 +572,8 @@ export const scrapeLocalBrowser = async (
       proof = completedReceipt(primary, owner.boot, owner.engine);
     } catch (error) {
       if (!(error instanceof LocalBrowserError) || !completedErrors.has(error))
+        throw error;
+      if (error.code === "WORKFLOW_NAVIGATION_MISMATCH" && !expectedAmazon)
         throw error;
       failure = error;
       proof = {

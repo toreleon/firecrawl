@@ -33,6 +33,7 @@ describe("Explicit stateless browser-engine fallback", () => {
       lost?: boolean;
       unhealthy?: boolean;
       wrongBoot?: boolean;
+      url?: string;
     } = {},
   ) => {
     const boot = randomUUID();
@@ -71,6 +72,7 @@ describe("Explicit stateless browser-engine fallback", () => {
                   status === 200
                     ? "<main>Recovered public record</main>"
                     : "<main>Blocked public record</main>",
+                ...(options.url === undefined ? {} : { url: options.url }),
                 pageStatusCode: status,
                 browserEngine: options.engine ?? "rebrowser",
                 readiness: { satisfied: true },
@@ -159,6 +161,125 @@ describe("Explicit stateless browser-engine fallback", () => {
       595,
     );
     expect([primary.calls.scrape, fallback.calls.scrape]).toEqual([1, 1]);
+  });
+  const amazon = "https://www.amazon.com/Product/dp/B000000042";
+  it("can fetch the original Amazon product on a distinct engine after confirmed identity-failure cleanup", async () => {
+    const pair = await configure(
+      { apiStatus: 500, code: "WORKFLOW_NAVIGATION_MISMATCH" },
+      { url: amazon },
+    );
+    const result = await request({
+      url: amazon,
+      controls: { workflow: "auto", engineFallback: true },
+    });
+    expect(result.url).toBe(amazon);
+    expect(result.diagnostics.engineFallback.recovered).toBe(true);
+    expect(result.diagnostics.engineFallback.attempts[0].errorCode).toBe(
+      "WORKFLOW_NAVIGATION_MISMATCH",
+    );
+    expect(pair.primary.calls.bodies[0].url).toBe(amazon);
+    expect(pair.fallback.calls.bodies[0].url).toBe(amazon);
+    expect([pair.primary.calls.scrape, pair.fallback.calls.scrape]).toEqual([
+      1, 1,
+    ]);
+  });
+  it("keeps identity failures terminal outside the explicit Amazon auto-workflow policy", async () => {
+    for (const overrides of [
+      { url: amazon, controls: { workflow: "auto" } },
+      { url: amazon, controls: { engineFallback: true } },
+      {
+        url: "https://example.com/dp/B000000042",
+        controls: { workflow: "auto", engineFallback: true },
+      },
+      {
+        url: "https://www.amazon.com.attacker.test/dp/B000000042",
+        controls: { workflow: "auto", engineFallback: true },
+      },
+      {
+        url: "https://www.amazon.com:444/dp/B000000042",
+        controls: { workflow: "auto", engineFallback: true },
+      },
+      {
+        url: "http://www.amazon.com/dp/B000000042",
+        controls: { workflow: "auto", engineFallback: true },
+      },
+      {
+        url: "https://user@www.amazon.com/dp/B000000042",
+        controls: { workflow: "auto", engineFallback: true },
+      },
+    ]) {
+      const pair = await configure(
+        { apiStatus: 500, code: "WORKFLOW_NAVIGATION_MISMATCH" },
+        { url: amazon },
+      );
+      await expect(request(overrides)).rejects.toMatchObject({
+        code: "WORKFLOW_NAVIGATION_MISMATCH",
+      });
+      expect(pair.fallback.calls.scrape).toBe(0);
+    }
+  });
+  it("does not replay identity errors without verified owner and closed-page proof", async () => {
+    for (const extra of [{ closed: false }, { wrongBoot: true }]) {
+      const pair = await configure(
+        { apiStatus: 500, code: "WORKFLOW_NAVIGATION_MISMATCH", ...extra },
+        { url: amazon },
+      );
+      await expect(
+        request({
+          url: amazon,
+          controls: { workflow: "auto", engineFallback: true },
+        }),
+      ).rejects.toMatchObject({ code: "WORKFLOW_NAVIGATION_MISMATCH" });
+      expect(pair.fallback.calls.scrape).toBe(0);
+    }
+  });
+  it("guards successful old-owner responses too and never promotes a wrong-product alternate", async () => {
+    const wrong = amazon.replace("B000000042", "B000000043");
+    const pair = await configure({ url: wrong }, { url: amazon });
+    const result = await request({
+      url: amazon,
+      controls: { workflow: "auto", engineFallback: true },
+    });
+    expect(result.url).toBe(amazon);
+    expect(result.diagnostics.engineFallback.attempts[0].errorCode).toBe(
+      "WORKFLOW_NAVIGATION_MISMATCH",
+    );
+    expect([pair.primary.calls.scrape, pair.fallback.calls.scrape]).toEqual([
+      1, 1,
+    ]);
+    for (const url of [wrong, "https://example.com/dp/B000000042", undefined]) {
+      const next = await configure(
+        { apiStatus: 500, code: "WORKFLOW_NAVIGATION_MISMATCH" },
+        { url },
+      );
+      await expect(
+        request({
+          url: amazon,
+          controls: { workflow: "auto", engineFallback: true },
+        }),
+      ).rejects.toMatchObject({ code: "WORKFLOW_NAVIGATION_MISMATCH" });
+      expect([next.primary.calls.scrape, next.fallback.calls.scrape]).toEqual([
+        1, 1,
+      ]);
+    }
+  });
+  it("retains a known primary denial if a closed alternate presents the wrong Amazon product", async () => {
+    const pair = await configure(
+      { status: 403, url: amazon },
+      { url: amazon.replace("B000000042", "B000000043") },
+    );
+    const result = await request({
+      url: amazon,
+      controls: { workflow: "auto", engineFallback: true },
+    });
+    expect(result.pageStatusCode).toBe(403);
+    expect(result.diagnostics.engineFallback.recovered).toBe(false);
+    expect(result.diagnostics.engineFallback.attempts[1].errorCode).toBe(
+      "WORKFLOW_NAVIGATION_MISMATCH",
+    );
+    expect([pair.primary.calls.scrape, pair.fallback.calls.scrape]).toEqual([
+      1, 1,
+    ]);
   });
   it("does not activate after primary success or without the opt-in", async () => {
     let pair = await configure();

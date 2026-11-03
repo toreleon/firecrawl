@@ -95,6 +95,7 @@ export const scrapePage = async (
   const state = trackDocument(page);
   const navStart = state.navigations.length;
   const failStart = state.failed.length;
+  const requestedAmazon = options.workflow === 'auto' ? amazonProductIdentity(url) : null;
   // Retained tabs use discovery-only injection; awaited explicit CMP controls
   // cannot leave a background consent click racing a later human handoff.
   await prepareConsent(page, options.consent ?? 'off', !options.retained);
@@ -104,6 +105,10 @@ export const scrapePage = async (
       waitUntil: options.waitUntil,
       timeout: deadline.remaining(),
     });
+  const originalProduct = requestedAmazon ? {
+    asin: requestedAmazon,
+    origin: amazonProductIdentity(page.url()) === requestedAmazon ? new URL(page.url()).origin : new URL(url).origin,
+  } : undefined;
   state.phase = 'consent';
   const consent = await deadline.run(
     applyConsent(page, options.consent ?? 'off', deadline),
@@ -238,13 +243,15 @@ export const scrapePage = async (
         await deadline.sleep(50);
         continue;
       }
-      const expectedProduct = workflow.observations.amazonContinuation;
+      const expectedProduct = workflow.observations.amazonContinuation ?? originalProduct;
       if (expectedProduct) {
         const actualProduct = amazonProductIdentity(snapshot.url);
         if (
           new URL(snapshot.url).origin !== expectedProduct.origin ||
           (actualProduct !== null && actualProduct !== expectedProduct.asin) ||
           (actualProduct === null &&
+            (current?.status() ?? 200) >= 200 &&
+            (current?.status() ?? 200) < 300 &&
             !detectPageProtection(snapshot.content, headers, snapshot.url))
         )
           throw new ScrapeFailure(
