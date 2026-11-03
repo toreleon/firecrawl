@@ -33,8 +33,7 @@ RUN pnpm run build
 ARG INSTALL_CAMOUFOX=false
 ENV XDG_CACHE_HOME=/usr/local/share/browser-cache
 RUN if [ "$INSTALL_CAMOUFOX" = "true" ]; then \
-      node node_modules/playwright-core/cli.js install-deps firefox && \
-      node dist/scripts/prepare-camoufox.js; \
+      node node_modules/playwright-core/cli.js install-deps firefox; \
     fi
 
 RUN chown -R node:node /usr/src/app \
@@ -48,5 +47,11 @@ ENV PORT=${PORT}
 EXPOSE ${PORT}
 
 USER node
+
+# Download as the runtime user: recursively chowning the extracted Firefox/font
+# bundle in a later layer would duplicate several GB in every optional image.
+RUN if [ "$INSTALL_CAMOUFOX" = "true" ]; then \
+      node dist/scripts/prepare-camoufox.js; \
+    fi
 
 CMD [ "sh", "docker-entrypoint.sh" ]

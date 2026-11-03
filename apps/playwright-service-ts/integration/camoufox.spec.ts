@@ -91,17 +91,21 @@ test(
       await t.test(
         'a failed selector closes the page and releases capacity',
         async () => {
-          const result = await scrape(
-            service.baseUrl,
-            fixtures.url + '/ordinary',
-            { check_selector: '#missing', timeout: 250, wait_after_load: 0 },
-          );
-          assert.equal(result.status, 500);
-          const health = await (
-            await fetch(service.baseUrl + '/health')
-          ).json();
-          assert.equal(health.activePages, 0);
-          assert.equal(health.browserSessions, 0);
+          for (let attempt = 0; attempt < 3; attempt++) {
+            const result = await scrape(
+              service.baseUrl,
+              fixtures.url + '/ordinary',
+              { check_selector: '#missing', timeout: 250, wait_after_load: 0 },
+            );
+            assert.equal(result.status, 500);
+            const health = await (
+              await fetch(service.baseUrl + '/health', {
+                signal: AbortSignal.timeout(5000),
+              })
+            ).json();
+            assert.equal(health.activePages, 0);
+            assert.equal(health.browserSessions, 0);
+          }
         },
       );
     } finally {

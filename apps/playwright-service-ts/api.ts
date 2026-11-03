@@ -711,14 +711,32 @@ app.post('/scrape', async (req: Request, res: Response) => {
             'SESSION_LOST',
             'Retained tab was closed; create a new workflow',
           );
-        page =
+        if (
           session_mode === 'workflow' &&
           contextBundle.workflowPage &&
           !contextBundle.workflowPage.isClosed()
-            ? contextBundle.workflowPage
-            : await deadline.run(requestContext.newPage(), async (late) =>
-                late.close(),
-              );
+        )
+          page = contextBundle.workflowPage;
+        else {
+          const allocation = requestContext.newPage();
+          try {
+            page = await deadline.run(allocation);
+          } catch (error) {
+            // Deleting a Firefox context while its page allocation is pending
+            // can stall the browser protocol. Drain and close the late page
+            // before the outer context cleanup, under the normal cleanup bound.
+            let closed = false;
+            const finished = await boundedClose(
+              allocation.then(async (late) => {
+                await late.close();
+                closed = late.isClosed();
+                entry.pageClosed = closed;
+              }),
+            );
+            cleanupHealthy = finished && closed && cleanupHealthy;
+            throw error;
+          }
+        }
         if (session_mode === 'workflow') contextBundle.workflowPage = page;
         await page.setExtraHTTPHeaders(filteredHeaders);
         const budget = attemptBudgetMs(
