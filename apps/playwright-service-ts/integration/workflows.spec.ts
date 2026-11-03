@@ -2,6 +2,50 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import http from 'node:http';
 import { listen, closeServer, startService, scrape } from './support';
+import { browserConfiguration, launchBrowser } from '../helpers/browser';
+import { applyWorkflow } from '../helpers/workflows';
+import { Deadline } from '../helpers/scrape-control';
+
+test(
+  'late country controls navigate to the original product without a public request',
+  { timeout: 15000 },
+  async () => {
+    const browser = await launchBrowser(
+      browserConfiguration({
+        BROWSER_ENGINE: 'rebrowser',
+        BROWSER_CHANNEL: 'chromium',
+        BROWSER_HEADLESS: 'true',
+      }),
+    );
+    try {
+      const page = await browser.newPage();
+      let requests = 0;
+      await page.route('**/*', async (route) => {
+      if (!route.request().isNavigationRequest()) return route.abort();
+        requests++;
+        const url = new URL(route.request().url());
+        const body =
+          url.searchParams.get('intl') === 'nosplash'
+            ? '<title>Product 42</title><main>Original product 42</main>'
+            : `<title>Country selector</title><main>Loading</main><script>setTimeout(()=>{document.body.innerHTML='<h1>Choose a country</h1><a href="?skuId=42&amp;intl=nosplash">United States</a>'},400)</script>`;
+        await route.fulfill({ contentType: 'text/html', body });
+      });
+      await page.goto('https://www.bestbuy.com/site/product/42.p?skuId=42', {
+        waitUntil: 'domcontentloaded',
+      });
+      const result = await applyWorkflow(page, 'auto', new Deadline(5000));
+      assert.equal(result.steps[0]?.outcome, 'navigated-original-product');
+      assert.equal(new URL(page.url()).searchParams.get('skuId'), '42');
+      assert.match(
+        await page.locator('body').innerText(),
+        /Original product 42/,
+      );
+      assert.equal(requests, 2);
+    } finally {
+      await browser.close();
+    }
+  },
+);
 
 test(
   'bounded workflows and retained tabs through the browser HTTP service',

@@ -303,8 +303,25 @@ export const applyWorkflow = async (
     (workflow === 'auto' || workflow === 'bestbuy-us@1') &&
     url.hostname === 'www.bestbuy.com'
   ) {
+    // DOMContentLoaded can precede the country chooser's hydration. Observe
+    // both its rendered prompt and destination link before deciding it is absent.
+    await page
+      .waitForFunction(
+        () =>
+          /choose\s+a\s+country|select\s+your\s+country/i.test(
+            document.body?.innerText ?? '',
+          ) &&
+          Array.from(document.querySelectorAll('a[href]')).some((link) =>
+            (link as HTMLAnchorElement).href.includes('intl=nosplash'),
+          ),
+        undefined,
+        { timeout: Math.min(5000, Math.max(1, deadline.remaining() - 300)) },
+      )
+      .catch((error) => {
+        if (!/Timeout/i.test(String(error))) throw error;
+      });
     if (
-      /choose a country|select your country/i.test(
+      /choose\s+a\s+country|select\s+your\s+country/i.test(
         await page.locator('body').innerText(),
       )
     ) {
