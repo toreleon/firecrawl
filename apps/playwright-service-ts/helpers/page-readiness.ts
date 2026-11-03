@@ -7,7 +7,7 @@ export const detectPageProtection = (
   html: string,
   headers: Record<string, string> = {},
   url?: string,
-): (BotDetection & { interactive?: true }) | undefined => {
+): (BotDetection & { interactive?: true; passive?: true }) | undefined => {
   const awsAction = Object.entries(headers)
     .find(([key]) => key.toLowerCase() === 'x-amzn-waf-action')?.[1]
     ?.toLowerCase();
@@ -65,6 +65,21 @@ export const detectPageProtection = (
       provider: 'aws-waf',
       reason: 'AWS WAF CAPTCHA interstitial',
       interactive: true,
+    };
+  if (
+    /^Verifying Connection$/i.test(title) &&
+    hasScript(
+      /^https:\/\/[a-z0-9.-]+\.edge\.sdk\.awswaf\.com\/[^<>"']*\/challenge\.js(?:[?#]|$)/i,
+    ) &&
+    hasScript(/^\/interstitial\/interstitial\.js(?:[?#]|$)/i) &&
+    /\bid=["']loading-state["']/i.test(markup) &&
+    /\bid=["']status-text["']/i.test(markup) &&
+    /please wait while we verify your browser\./i.test(markup)
+  )
+    return {
+      provider: 'aws-waf',
+      reason: 'Passive AWS WAF connection verification interstitial',
+      passive: true,
     };
   let path = '';
   try {

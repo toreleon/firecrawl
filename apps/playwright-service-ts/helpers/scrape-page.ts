@@ -126,15 +126,41 @@ export const scrapePage = async (
   if (options.waitAfterLoad > 0) await deadline.sleep(options.waitAfterLoad);
   state.phase = 'readiness';
   const initialType = state.response?.headers()['content-type'] ?? '';
-  const automatic =
+  const automaticRequested =
     options.workflow === 'auto' &&
     !options.checkSelector &&
     !options.waitForText &&
-    (state.response?.status() ?? 0) >= 200 &&
-    (state.response?.status() ?? 0) < 300 &&
-    !/application\/json|text\/plain|image\/|application\/pdf/i.test(initialType)
+    !/application\/json|text\/plain|image\/|application\/pdf/i.test(
+      initialType,
+    );
+  let passiveVerification = false;
+  if (automaticRequested && state.response?.status() === 403) {
+    try {
+      const initial = await deadline.run(
+        page.evaluate(captureRenderedPage, {}),
+      );
+      passiveVerification = !!detectPageProtection(
+        initial.content,
+        state.response?.headers(),
+        initial.url,
+      )?.passive;
+    } catch (error) {
+      // A passive script can commit its return navigation during this probe.
+      // Recheck the current status below and let the capture revision guard
+      // handle an in-flight document instead of failing the entire scrape.
+      if (!/Execution context was destroyed|navigating/i.test(String(error)))
+        throw error;
+    }
+  }
+  const automatic =
+    automaticRequested &&
+    (passiveVerification ||
+      ((state.response?.status() ?? 0) >= 200 &&
+        (state.response?.status() ?? 0) < 300))
       ? await waitForRenderedBody(
-          page, deadline, options.readinessTimeout,
+          page,
+          deadline,
+          options.readinessTimeout,
           () => state.response?.headers() ?? {},
         )
       : undefined;

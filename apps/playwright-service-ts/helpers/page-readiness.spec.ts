@@ -89,6 +89,40 @@ test('observed AWS CAPTCHA shells require live scripts and interstitial structur
     assert.equal(detectPageProtection(html), undefined);
 });
 
+test('passive AWS connection shells require the observed scripts and waiting structure', () => {
+  const shell =
+    '<title>Verifying Connection</title><script src="https://abc.edge.sdk.awswaf.com/abc/def/challenge.js" defer></script><div id="loading-state"><p id="status-text">Please wait while we verify your browser.</p></div><script src="/interstitial/interstitial.js" defer></script>';
+  assert.deepEqual(detectPageProtection(shell), {
+    provider: 'aws-waf',
+    reason: 'Passive AWS WAF connection verification interstitial',
+    passive: true,
+  });
+  assert.equal(
+    detectPageProtection(shell, { 'x-amzn-waf-action': 'captcha' })
+      ?.interactive,
+    true,
+  );
+  assert.notEqual(
+    detectPageProtection(shell, { 'x-amzn-waf-action': 'captcha' })?.passive,
+    true,
+  );
+  for (const html of [
+    shell.replace('Verifying Connection', 'Ordinary public record'),
+    shell.replace('id="loading-state"', 'id="content"'),
+    shell.replace('id="status-text"', 'id="description"'),
+    shell.replace('/interstitial/interstitial.js', '/application.js'),
+    shell.replace('Please wait while we verify your browser.', 'Public record'),
+    shell.replace(
+      'https://abc.edge.sdk.awswaf.com/',
+      'http://abc.edge.sdk.awswaf.com/',
+    ),
+    shell.replace('sdk.awswaf.com/', 'sdk.awswaf.com.attacker.test/'),
+    `<main>Documentation</main><script>const sample=${JSON.stringify(shell)}</script>`,
+    `<main>Documentation</main><!--${shell}-->`,
+  ])
+    assert.equal(detectPageProtection(html), undefined);
+});
+
 test('an empty HUMAN shell on a CAPTCHA route is verification, not UUID content', () => {
   const shell =
     '<title>Travel</title><div id="app_main"><div id="px-captcha"></div><p>c4edbd88-d790-11f1-acc3-9f65e4b607cd</p></div>';
