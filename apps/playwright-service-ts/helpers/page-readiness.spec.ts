@@ -98,6 +98,13 @@ test('passive AWS connection shells require the observed scripts and waiting str
     passive: true,
   });
   assert.equal(
+    detectPageProtection(shell.replace(
+      'Please wait while we verify your browser.',
+      'Verified! Redirecting...',
+    ))?.passive,
+    true,
+  );
+  assert.equal(
     detectPageProtection(shell, { 'x-amzn-waf-action': 'captcha' })
       ?.interactive,
     true,

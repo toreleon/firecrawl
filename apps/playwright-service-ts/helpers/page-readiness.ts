@@ -74,7 +74,7 @@ export const detectPageProtection = (
     hasScript(/^\/interstitial\/interstitial\.js(?:[?#]|$)/i) &&
     /\bid=["']loading-state["']/i.test(markup) &&
     /\bid=["']status-text["']/i.test(markup) &&
-    /please wait while we verify your browser\./i.test(markup)
+    /please wait while we verify your browser\.|verified!\s*redirecting\.{3}/i.test(markup)
   )
     return {
       provider: 'aws-waf',
@@ -282,6 +282,7 @@ export const waitForRenderedBody = async (
   deadline: Deadline,
   timeoutMs: number,
   headers: () => Record<string, string> = () => ({}),
+  verificationPending: () => boolean = () => false,
 ) => {
   const started = Date.now();
   const budget = Math.min(
@@ -318,6 +319,9 @@ export const waitForRenderedBody = async (
         headers(),
         snapshot.url,
       );
+      // An identified non-2xx verification document is not ready merely
+      // because its script changes a status label before returning content.
+      if (verificationPending()) outcome = 'verification';
       if (protection) {
         outcome = 'verification';
         if (

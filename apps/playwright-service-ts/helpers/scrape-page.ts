@@ -152,6 +152,8 @@ export const scrapePage = async (
         throw error;
     }
   }
+  const verificationPending = (status = state.response?.status() ?? 0) =>
+    passiveVerification && !(status >= 200 && status < 300);
   const automatic =
     automaticRequested &&
     (passiveVerification ||
@@ -162,6 +164,7 @@ export const scrapePage = async (
           deadline,
           options.readinessTimeout,
           () => state.response?.headers() ?? {},
+          verificationPending,
         )
       : undefined;
   let staticHttpError = false;
@@ -294,7 +297,8 @@ export const scrapePage = async (
           : snapshot.content;
       const automaticOutcome =
         automatic && !rawBody
-          ? detectPageProtection(snapshot.content, headers, snapshot.url)
+          ? verificationPending(current?.status() ?? 0) ||
+            detectPageProtection(snapshot.content, headers, snapshot.url)
             ? 'verification'
             : snapshot.busyCount
               ? 'busy'

@@ -25,6 +25,8 @@ test(
           for (const mode of [
             'continue',
             'unresolved',
+            'verified-stuck',
+            'unknown-stuck',
             'off',
             'denial',
             'captcha',
@@ -44,8 +46,10 @@ test(
                   contentType: 'application/javascript',
                   body:
                     mode === 'continue' || mode === 'off'
-                      ? 'setTimeout(() => location.replace("/public-record?ready=1"), 450)'
-                      : '',
+                      ? 'setTimeout(() => { document.getElementById("status-text").textContent = "Verified! Redirecting..." }, 75); setTimeout(() => location.replace("/public-record?ready=1"), 450)'
+                      : mode === 'verified-stuck' || mode === 'unknown-stuck'
+                        ? `setTimeout(() => { document.getElementById("status-text").textContent = ${JSON.stringify(mode === 'verified-stuck' ? 'Verified! Redirecting...' : 'Finishing...')} }, 75)`
+                        : '',
                 });
               if (url.searchParams.has('ready'))
                 return route.fulfill({
@@ -71,7 +75,13 @@ test(
                 waitUntil: 'domcontentloaded',
                 waitAfterLoad: 0,
                 workflow: mode === 'off' ? 'none' : 'auto',
-                readinessTimeout: mode === 'unresolved' ? 220 : 1800,
+                readinessTimeout: [
+                  'unresolved',
+                  'verified-stuck',
+                  'unknown-stuck',
+                ].includes(mode)
+                  ? 220
+                  : 1800,
               },
               new Deadline(4000),
             );
@@ -86,20 +96,23 @@ test(
               assert.equal(result.diagnostics.navigations.length, 2);
             } else {
               assert.equal(result.status, mode === 'captcha' ? 405 : 403);
-              if (mode === 'unresolved') {
+              if (
+                ['unresolved', 'verified-stuck', 'unknown-stuck'].includes(mode)
+              ) {
                 assert.equal(
                   result.readiness.automatic?.outcome,
                   'verification',
                 );
                 assert.equal(result.readiness.satisfied, false);
-                assert.equal(
-                  detectPageProtection(
-                    result.content,
-                    result.headers,
-                    result.url,
-                  )?.provider,
-                  'aws-waf',
-                );
+                if (mode !== 'unknown-stuck')
+                  assert.equal(
+                    detectPageProtection(
+                      result.content,
+                      result.headers,
+                      result.url,
+                    )?.provider,
+                    'aws-waf',
+                  );
                 assert.ok(Date.now() - start >= 180);
               } else {
                 assert.equal(result.readiness.automatic, undefined);
