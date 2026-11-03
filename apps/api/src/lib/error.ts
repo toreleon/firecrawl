@@ -1,6 +1,7 @@
 import { UNSUPPORTED_SITE_MESSAGE } from "./strings";
 
 export type ErrorCodes =
+  | "LOCAL_BROWSER_ERROR"
   | "THIRD_PARTY_DATA_TERMS_REQUIRED"
   | "THIRD_PARTY_DATA_NOT_FOUND"
   | "THIRD_PARTY_DATA_UNSUPPORTED_URL"
@@ -412,6 +413,31 @@ export class UnsupportedSiteError extends TransportableError {
     const x = new UnsupportedSiteError();
     x.stack = data.stack;
     return x;
+  }
+}
+
+export class LocalBrowserTransportError extends TransportableError {
+  constructor(
+    readonly reason: string,
+    message: string,
+    readonly status = 409,
+  ) {
+    super("LOCAL_BROWSER_ERROR", message);
+  }
+  serialize() {
+    return { ...super.serialize(), reason: this.reason, status: this.status };
+  }
+  static deserialize(
+    _: ErrorCodes,
+    data: ReturnType<typeof this.prototype.serialize>,
+  ) {
+    const error = new LocalBrowserTransportError(
+      data.reason,
+      data.message,
+      data.status,
+    );
+    error.stack = data.stack;
+    return error;
   }
 }
 

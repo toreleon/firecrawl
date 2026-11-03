@@ -187,7 +187,9 @@ lifetime; `MAX_BROWSER_SESSIONS` is capped at 128 and `BROWSER_SESSION_TTL_MS` a
 30 minutes. Expired idle contexts are removed automatically. Use
 `DELETE /sessions/<token>` for early disposal. Sessions do not change the fixed
 upstream proxy, persist across restarts, or provide tenant authentication.
-The standard Firecrawl API adapter does not yet forward these optional fields.
+The v2 Firecrawl API forwards these controls through `browserControls`. See
+[local browser workflows](../../docs/browser-workflows.md) for retained tabs,
+PostgreSQL ownership, bounded actions and page-scoped human handoff.
 
 Cookie-header seeding uses the public suffix list, including private suffixes,
 instead of guessing a registrable domain from the last two labels. IP and

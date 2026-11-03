@@ -1,11 +1,14 @@
 import type { Meta } from "..";
 
 export function hasCustomRequestContext(
-  options: Pick<Meta["options"], "headers" | "actions" | "profile">,
+  options: Pick<Meta["options"], "headers" | "actions" | "profile"> & {
+    browserControls?: unknown;
+  },
 ): boolean {
   return (
     Object.keys(options.headers ?? {}).length > 0 ||
     (options.actions?.length ?? 0) > 0 ||
-    options.profile !== undefined
+    options.profile !== undefined ||
+    options.browserControls !== undefined
   );
 }

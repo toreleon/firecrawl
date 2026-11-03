@@ -6,6 +6,10 @@ import { config } from "../../config";
 import { isRequestedModelSupported } from "../../lib/extraction-provider";
 import { z } from "zod";
 import { browserProfileNameSchema } from "../../lib/browser-profiles";
+import {
+  browserControlsSchema,
+  LOCAL_ACTION_TYPES,
+} from "../../lib/local-browser/controls";
 import { protocolIncluded, checkUrl } from "../../lib/validateUrl";
 import { hasReachableHost } from "../../lib/url-utils";
 import { countries } from "../../lib/validate-country";
@@ -853,6 +857,7 @@ const scrapeOptionFields = z.strictObject({
   mobile: z.boolean().prefault(false),
   parsers: parsersSchema.optional(),
   actions: actionsSchema.optional(),
+  browserControls: browserControlsSchema.optional(),
 
   location: locationSchema,
 
@@ -890,6 +895,75 @@ const scrapeOptionFields = z.strictObject({
 });
 
 const baseScrapeOptions = scrapeOptionFields
+  .refine(
+    options =>
+      !(
+        options.browserControls &&
+        (options.lockdown ||
+          options.profile ||
+          options.fastMode ||
+          options.mobile ||
+          options.location ||
+          options.proxy === "stealth" ||
+          options.proxy === "enhanced")
+      ),
+    {
+      message:
+        "Local browser controls require live desktop browsing without a cloud profile, location or proxy override.",
+      path: ["browserControls"],
+    },
+  )
+  .refine(
+    options =>
+      !options.browserControls ||
+      !options.actions?.some(
+        action =>
+          !LOCAL_ACTION_TYPES.includes(action.type) ||
+          (action.type === "click" && action.all),
+      ),
+    {
+      message:
+        "Local browser supports single click, wait, write, press, scroll and scrape actions only.",
+      path: ["actions"],
+    },
+  )
+  .refine(
+    options =>
+      !(
+        options.browserControls?.workflow &&
+        options.browserControls.workflow !== "none" &&
+        options.actions?.length
+      ),
+    {
+      message: "Choose a workflow or explicit actions.",
+      path: ["actions"],
+    },
+  )
+  .refine(
+    options =>
+      !(
+        options.actions?.length &&
+        (options.browserControls?.maxAttempts ?? 1) > 1
+      ),
+    {
+      message: "Interactive actions cannot be retried.",
+      path: ["browserControls"],
+    },
+  )
+  .refine(
+    options =>
+      !options.browserControls ||
+      !options.formats.some(format =>
+        ["screenshot", "branding", "rawBase64", "audio", "video"].includes(
+          format.type,
+        ),
+      ),
+    {
+      message:
+        "The local browser controls do not support screenshots, branding, rawBase64, audio or video formats.",
+      path: ["formats"],
+    },
+  )
   .refine(options => !(options.profile && options.lockdown), {
     message: "Profiles require live browsing and cannot be used with lockdown.",
     path: ["profile"],
@@ -929,7 +1003,8 @@ export const applyScrapeOptionsDefaults = <T extends ScrapeOptionsBase>(
   ...obj,
   skipTlsVerification:
     obj.skipTlsVerification ??
-    ((obj.headers && Object.keys(obj.headers).length > 0) ||
+    (obj.browserControls !== undefined ||
+    (obj.headers && Object.keys(obj.headers).length > 0) ||
     (obj.actions && obj.actions.length > 0)
       ? false
       : true),
@@ -1342,6 +1417,10 @@ const batchScrapeRequestSchemaBase = baseScrapeOptions.safeExtend({
 export const batchScrapeRequestSchema = strictWithMessage(
   batchScrapeRequestSchemaBase,
 )
+  .refine(
+    x => !x.browserControls?.sessionId,
+    "Shared mutable sessions are not supported in batch requests",
+  )
   .refine(waitForRefine, waitForRefineOpts)
   .transform(extractTransformRequired);
 
@@ -1368,6 +1447,10 @@ const batchScrapeRequestSchemaNoURLValidationBase =
 export const batchScrapeRequestSchemaNoURLValidation = strictWithMessage(
   batchScrapeRequestSchemaNoURLValidationBase,
 )
+  .refine(
+    x => !x.browserControls?.sessionId,
+    "Shared mutable sessions are not supported in batch requests",
+  )
   .refine(waitForRefine, waitForRefineOpts)
   .transform(extractTransformRequired);
 
@@ -1439,6 +1522,10 @@ const crawlRequestSchemaBase = crawlerOptions.extend({
 });
 
 export const crawlRequestSchema = strictWithMessage(crawlRequestSchemaBase)
+  .refine(
+    x => !x.scrapeOptions?.browserControls?.sessionId,
+    "Shared mutable sessions are not supported in crawl requests",
+  )
   .superRefine((x, ctx) => {
     addPathRegexIssues(x, ctx);
   })
@@ -1617,6 +1704,7 @@ export type Document = {
     statusCode: number;
     scrapeId?: string;
     error?: string;
+    browser?: Record<string, any>;
     numPages?: number;
     totalPages?: number;
     contentType?: string;

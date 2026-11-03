@@ -412,6 +412,12 @@ export async function scrapeController(
                         : {}),
                     },
                     internalOptions: {
+                      ...(req.body.browserControls
+                        ? {
+                            browserDeadlineAt:
+                              middlewareStartTime + (timeout ?? 30000),
+                          }
+                        : {}),
                       teamId: req.auth.team_id,
                       saveScrapeResultToGCS: process.env
                         .GCS_FIRE_ENGINE_BUCKET_NAME
@@ -458,6 +464,16 @@ export async function scrapeController(
           },
         );
       } catch (e) {
+        if (
+          e instanceof TransportableError &&
+          e.code === "LOCAL_BROWSER_ERROR"
+        ) {
+          return res.status((e as any).status ?? 409).json({
+            success: false,
+            code: (e as any).reason ?? e.code,
+            error: e.message,
+          });
+        }
         if (reservedKeylessCredits > 0 && !reconciledKeylessCredits) {
           reconciledKeylessCredits = true;
           adjustKeylessCredits(req.auth.team_id, -reservedKeylessCredits).catch(

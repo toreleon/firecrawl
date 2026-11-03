@@ -23,14 +23,48 @@ import {
 } from './helpers/scrape-control';
 import { scrapePage } from './helpers/scrape-page';
 import { BrowserSessions } from './helpers/browser-sessions';
+import { randomUUID, timingSafeEqual } from 'node:crypto';
+import {
+  BrowserAction,
+  ConsentPolicy,
+  Workflow,
+  validActions,
+  workflowIds,
+  actionTypes,
+  interactionState,
+  handoffKeys,
+} from './helpers/workflows';
 
 dotenv.config();
 const browserConfig = browserConfiguration();
 
 const app = express();
+const ownerBootId = randomUUID();
 const port = process.env.PORT || 3003;
 
 app.use(express.json());
+app.use((req, res, next) => {
+  const expected = process.env.BROWSER_SERVICE_AUTH_TOKEN;
+  const actual = req.headers.authorization?.replace(/^Bearer /, '') ?? '';
+  if (
+    expected &&
+    (Buffer.byteLength(expected) !== Buffer.byteLength(actual) ||
+      !timingSafeEqual(Buffer.from(expected), Buffer.from(actual)))
+  )
+    return res.status(401).json({
+      errorCode: 'UNAUTHORIZED',
+      error: 'Internal browser authentication required',
+    });
+  if (
+    req.headers['x-browser-owner'] &&
+    req.headers['x-browser-owner'] !== ownerBootId
+  )
+    return res.status(409).json({
+      errorCode: 'SESSION_LOST',
+      error: 'Browser owner process changed',
+    });
+  next();
+});
 
 const BLOCK_MEDIA =
   (process.env.BLOCK_MEDIA || 'False').toUpperCase() === 'TRUE';
@@ -140,6 +174,14 @@ interface UrlModel {
   max_attempts?: number;
   create_session?: boolean;
   session_id?: string;
+  session_mode?: 'context' | 'workflow';
+  continue_session?: boolean;
+  readiness_scope?: 'body' | 'title';
+  consent?: ConsentPolicy;
+  workflow?: Workflow;
+  actions?: BrowserAction[];
+  block_ads?: boolean;
+  operation_revision?: number;
 }
 
 let browser: Browser;
@@ -158,9 +200,12 @@ const initializeBrowser = async () => {
 const createContext = async (
   skipTlsVerification: boolean = false,
   userAgentOverride?: string,
+  blockAds = BLOCK_ADS,
+  workflowOrigin?: string,
 ): Promise<{
   context: BrowserContext;
   securityState: ContextSecurityState;
+  workflowPage?: Page;
 }> => {
   const securityState: ContextSecurityState = {
     blockedNavigationRequestUrl: null,
@@ -217,7 +262,15 @@ const createContext = async (
       const hostname = new URL(requestUrlString).hostname.toLowerCase();
 
       if (
-        BLOCK_ADS &&
+        workflowOrigin &&
+        request.isNavigationRequest() &&
+        request.frame().parentFrame() === null &&
+        new URL(requestUrlString).origin !== workflowOrigin
+      )
+        return route.abort('blockedbyclient');
+
+      if (
+        blockAds &&
         AD_SERVING_DOMAINS.some(
           (domain) => hostname === domain || hostname.endsWith(`.${domain}`),
         )
@@ -250,8 +303,14 @@ const isValidUrl = (urlString: string): boolean => {
 
 const sessions = new BrowserSessions(
   async (profile: string) => {
-    const { skipTlsVerification, userAgentOverride } = JSON.parse(profile);
-    return createContext(skipTlsVerification, userAgentOverride);
+    const { skipTlsVerification, userAgentOverride, blockAds, workflowOrigin } =
+      JSON.parse(profile);
+    return createContext(
+      skipTlsVerification,
+      userAgentOverride,
+      blockAds,
+      workflowOrigin,
+    );
   },
   async (bundle) => {
     await boundedClose(bundle.context.close());
@@ -282,6 +341,85 @@ app.delete('/sessions/:token', async (req: Request, res: Response) => {
   }
 });
 
+const sessionPageOperation = async (
+  req: Request,
+  res: Response,
+  run: (page: Page) => Promise<unknown>,
+) => {
+  const token = req.params.token as string;
+  const revisionHeader = req.headers['x-operation-revision'];
+  const revision =
+    revisionHeader === undefined ? undefined : Number(revisionHeader);
+  if (
+    !/^[a-f0-9]{64}$/.test(token) ||
+    (revision !== undefined &&
+      (!Number.isSafeInteger(revision) || revision < 1))
+  )
+    return res.status(400).json({ errorCode: 'INVALID_OPTIONS' });
+  try {
+    const result = await sessions.use(
+      token,
+      async (bundle) => {
+        if (!bundle.workflowPage || bundle.workflowPage.isClosed())
+          throw new ScrapeFailure(
+            'SESSION_LOST',
+            'Retained tab is unavailable',
+          );
+        return new Deadline(5000).run(run(bundle.workflowPage));
+      },
+      revision,
+    );
+    res.json(result);
+  } catch (error) {
+    res
+      .status(409)
+      .json({ errorCode: errorCode(error), error: 'Session operation failed' });
+  }
+};
+app.get('/sessions/:token/snapshot', async (req, res) =>
+  sessionPageOperation(req, res, async (page) => {
+    const image = await page.screenshot({
+      type: 'jpeg',
+      quality: 65,
+      timeout: 4000,
+    });
+    const viewport = await page.evaluate(() => ({
+      width: innerWidth,
+      height: innerHeight,
+    }));
+    return { image: image.toString('base64'), ...viewport, url: page.url() };
+  }),
+);
+app.post('/sessions/:token/input', async (req, res) => {
+  const input = req.body;
+  if (
+    !input ||
+    !['click', 'key', 'text'].includes(input.type) ||
+    (input.type === 'click' &&
+      ![input.x, input.y].every(
+        (n) => Number.isFinite(n) && n >= 0 && n <= 10000,
+      )) ||
+    (input.type === 'key' && !handoffKeys.includes(input.key)) ||
+    (input.type === 'text' &&
+      (typeof input.text !== 'string' || input.text.length > 1024))
+  )
+    return res.status(400).json({ errorCode: 'INVALID_OPTIONS' });
+  return sessionPageOperation(req, res, async (page) => {
+    if (input.type === 'click') {
+      const size = await page.evaluate(() => ({
+        width: innerWidth,
+        height: innerHeight,
+      }));
+      if (input.x >= size.width || input.y >= size.height)
+        throw new ScrapeFailure('INVALID_OPTIONS', 'Click outside viewport');
+      await page.mouse.click(input.x, input.y);
+    }
+    if (input.type === 'key') await page.keyboard.press(input.key);
+    if (input.type === 'text') await page.keyboard.insertText(input.text);
+    return { success: true };
+  });
+});
+
 app.get('/health', async (req: Request, res: Response) => {
   try {
     if (!browser) {
@@ -301,6 +439,17 @@ app.get('/health', async (req: Request, res: Response) => {
       activePages: MAX_CONCURRENT_PAGES - pageSemaphore.getAvailablePermits(),
       browserSessions: sessions.size,
       blockAds: BLOCK_ADS,
+      ownerBootId,
+      capabilities: {
+        version: 1,
+        readiness: true,
+        actions: actionTypes,
+        workflows: workflowIds,
+        consent: true,
+        retainedPages: true,
+        fencedSessions: true,
+        pageScopedHandoff: true,
+      },
       serviceWorkers: 'block',
     });
   } catch (error) {
@@ -326,6 +475,14 @@ app.post('/scrape', async (req: Request, res: Response) => {
     max_attempts = 1,
     create_session = false,
     session_id,
+    session_mode = 'context',
+    continue_session = false,
+    readiness_scope = 'body',
+    consent = 'off',
+    workflow = 'none',
+    actions = [],
+    block_ads = BLOCK_ADS,
+    operation_revision,
   }: UrlModel = req.body;
 
   console.log(`================= Scrape Request =================`);
@@ -364,6 +521,20 @@ app.post('/scrape', async (req: Request, res: Response) => {
     (session_id !== undefined &&
       (typeof session_id !== 'string' || !/^[a-f0-9]{64}$/.test(session_id))) ||
     (create_session && session_id) ||
+    !['context', 'workflow'].includes(session_mode) ||
+    !['body', 'title'].includes(readiness_scope) ||
+    !['off', 'rejectNonEssential', 'acceptAll'].includes(consent) ||
+    !workflowIds.includes(workflow) ||
+    typeof block_ads !== 'boolean' ||
+    typeof continue_session !== 'boolean' ||
+    !validActions(actions) ||
+    (actions.length > 0 && workflow !== 'none') ||
+    ((session_mode === 'workflow' || actions.length > 0) &&
+      max_attempts !== 1) ||
+    (continue_session && (!session_id || session_mode !== 'workflow')) ||
+    (session_mode === 'workflow' && !session_id && !create_session) ||
+    (operation_revision !== undefined &&
+      (!Number.isSafeInteger(operation_revision) || operation_revision < 1)) ||
     (headers !== undefined &&
       (!headers ||
         typeof headers !== 'object' ||
@@ -375,7 +546,8 @@ app.post('/scrape', async (req: Request, res: Response) => {
       .json({ error: 'Invalid scrape options', errorCode: 'INVALID_OPTIONS' });
   }
   const requestStarted = Date.now();
-  const deadline = new Deadline(timeout);
+  const cancellation = new AbortController();
+  const deadline = new Deadline(timeout, cancellation.signal);
   if (!url) {
     return res.status(400).json({ error: 'URL is required' });
   }
@@ -419,6 +591,12 @@ app.post('/scrape', async (req: Request, res: Response) => {
   let requestContext: BrowserContext | null = null;
   let securityState: ContextSecurityState | null = null;
   let page: Page | null = null;
+  const disconnected = () => {
+    if (res.writableEnded) return;
+    cancellation.abort();
+    if (page) void boundedClose(page.close());
+  };
+  res.once('close', disconnected);
 
   try {
     await pageSemaphore.acquire(deadline.remaining());
@@ -435,11 +613,22 @@ app.post('/scrape', async (req: Request, res: Response) => {
     const profile = JSON.stringify({
       skipTlsVerification: skip_tls_verification,
       userAgentOverride,
+      blockAds: block_ads,
+      consent,
+      sessionMode: session_mode,
+      ...(session_mode === 'workflow'
+        ? { workflowOrigin: new URL(url).origin }
+        : {}),
     });
     const lease =
       create_session || session_id
         ? await deadline.run(
-            sessions.acquire(new URL(url).origin, profile, session_id),
+            sessions.acquire(
+              new URL(url).origin,
+              profile,
+              session_id,
+              operation_revision,
+            ),
             async (late) => sessions.release(late.token, true),
           )
         : undefined;
@@ -448,7 +637,7 @@ app.post('/scrape', async (req: Request, res: Response) => {
     const contextBundle =
       lease?.value ??
       (await deadline.run(
-        createContext(skip_tls_verification, userAgentOverride),
+        createContext(skip_tls_verification, userAgentOverride, block_ads),
         async (late) => late.context.close(),
       ));
     requestContext = contextBundle.context;
@@ -519,16 +708,30 @@ app.post('/scrape', async (req: Request, res: Response) => {
       attempts.push(entry);
       let delay: number | null = null;
       try {
-        page = await deadline.run(requestContext.newPage(), async (late) =>
-          late.close(),
-        );
-        if (Object.keys(filteredHeaders).length)
-          await page.setExtraHTTPHeaders(filteredHeaders);
+        if (
+          session_mode === 'workflow' &&
+          contextBundle.workflowPage?.isClosed()
+        )
+          throw new ScrapeFailure(
+            'SESSION_LOST',
+            'Retained tab was closed; create a new workflow',
+          );
+        page =
+          session_mode === 'workflow' &&
+          contextBundle.workflowPage &&
+          !contextBundle.workflowPage.isClosed()
+            ? contextBundle.workflowPage
+            : await deadline.run(requestContext.newPage(), async (late) =>
+                late.close(),
+              );
+        if (session_mode === 'workflow') contextBundle.workflowPage = page;
+        await page.setExtraHTTPHeaders(filteredHeaders);
         const attemptDeadline = new Deadline(
           Math.max(
             1,
             Math.floor(deadline.remaining() / (max_attempts - attempt + 1)),
           ),
+          cancellation.signal,
         );
         result = await scrapePage(
           page,
@@ -539,6 +742,12 @@ app.post('/scrape', async (req: Request, res: Response) => {
             checkSelector: check_selector,
             waitForText: wait_for_text,
             readinessTimeout: readiness_timeout,
+            readinessScope: readiness_scope,
+            consent,
+            workflow,
+            actions,
+            continueSession: continue_session,
+            retained: session_mode === 'workflow',
           },
           attemptDeadline,
         );
@@ -570,7 +779,7 @@ app.post('/scrape', async (req: Request, res: Response) => {
         result = undefined;
         delay = 250 * 2 ** (attempt - 1);
       } finally {
-        if (page) {
+        if (page && session_mode !== 'workflow') {
           cleanupHealthy = (await boundedClose(page.close())) && cleanupHealthy;
           page = null;
         }
@@ -616,6 +825,18 @@ app.post('/scrape', async (req: Request, res: Response) => {
       url: result.url,
       browserEngine: browserConfig.engine,
       readiness: result.readiness,
+      renderedText: result.renderedText,
+      actions: result.actions,
+      interaction: {
+        ...result.interaction,
+        state: interactionState(
+          result.renderedText,
+          result.url,
+          result.readiness.satisfied,
+          result.status,
+          !!botDetection,
+        ),
+      },
       diagnostics: {
         ...result.diagnostics,
         attempts,
@@ -649,9 +870,15 @@ app.post('/scrape', async (req: Request, res: Response) => {
       diagnostics: { attempts },
     });
   } finally {
+    res.off('close', disconnected);
     if (sessionToken)
       await sessions
-        .release(sessionToken, (!succeeded && !session_id) || !cleanupHealthy)
+        .release(
+          sessionToken,
+          (!succeeded && (!session_id || session_mode === 'workflow')) ||
+            !cleanupHealthy ||
+            cancellation.signal.aborted,
+        )
         .catch(() => {});
     else if (requestContext) await boundedClose(requestContext.close());
     if (permit) pageSemaphore.release();

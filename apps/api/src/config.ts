@@ -822,6 +822,11 @@ const configSchema = z.object({
 
   // Browser Service
   HANGAR_URL: z.url().optional(),
+  // Local retained-tab sessions: durable directory shared by API/worker replicas.
+  LOCAL_BROWSER_DATABASE_URL: emptyStringAsUndefined(z.string()),
+  LOCAL_BROWSER_SESSION_SECRET: emptyStringAsUndefined(z.string().min(32)),
+  LOCAL_BROWSER_OWNER_URLS: emptyStringAsUndefined(z.string()),
+  BROWSER_SERVICE_AUTH_TOKEN: z.string().optional(),
 
   // Audio (avgrab)
   AVGRAB_SERVICE_URL: z.string().optional(),

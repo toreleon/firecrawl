@@ -547,6 +547,10 @@ def prepare_scrape_options(options: Optional[ScrapeOptions]) -> Optional[Dict[st
     
     # Convert to dict and handle manual snake_case to camelCase conversion
     options_data = validated_options.model_dump(exclude_none=True)
+    if validated_options.browser_controls is not None:
+        options_data["browser_controls"] = validated_options.browser_controls.model_dump(exclude_none=True, by_alias=True)
+        if validated_options.skip_tls_verification is None:
+            options_data["skip_tls_verification"] = False
     
     # Apply defaults for None fields
     for field, default_value in default_values.items():
@@ -557,6 +561,7 @@ def prepare_scrape_options(options: Optional[ScrapeOptions]) -> Optional[Dict[st
     
     # Manual field mapping for snake_case to camelCase conversion
     field_mappings = {
+        "browser_controls": "browserControls",
         "include_tags": "includeTags",
         "exclude_tags": "excludeTags",
         "only_main_content": "onlyMainContent",

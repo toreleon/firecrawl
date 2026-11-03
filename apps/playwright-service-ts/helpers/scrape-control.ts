@@ -30,10 +30,15 @@ export const boundedClose = async (
 
 export class Deadline {
   private readonly end: number;
-  constructor(timeoutMs: number) {
+  constructor(
+    timeoutMs: number,
+    private readonly signal?: AbortSignal,
+  ) {
     this.end = Date.now() + timeoutMs;
   }
   remaining() {
+    if (this.signal?.aborted)
+      throw new ScrapeFailure('SCRAPE_CANCELLED', 'Scrape was cancelled');
     const left = this.end - Date.now();
     if (left <= 0)
       throw new ScrapeFailure('SCRAPE_TIMEOUT', 'Scrape deadline exceeded');
@@ -45,6 +50,7 @@ export class Deadline {
   ): Promise<T> {
     let expired = false;
     let timer: NodeJS.Timeout | undefined;
+    let abort: (() => void) | undefined;
     operation.then(
       (value) => {
         if (expired && onLateResult) void onLateResult(value).catch(() => {});
@@ -56,6 +62,13 @@ export class Deadline {
       return await Promise.race([
         operation,
         new Promise<never>((_, reject) => {
+          abort = () => {
+            expired = true;
+            reject(
+              new ScrapeFailure('SCRAPE_CANCELLED', 'Scrape was cancelled'),
+            );
+          };
+          this.signal?.addEventListener('abort', abort, { once: true });
           timer = setTimeout(() => {
             expired = true;
             reject(
@@ -65,11 +78,15 @@ export class Deadline {
         }),
       ]);
     } catch (error) {
-      if (error instanceof ScrapeFailure && error.code === 'SCRAPE_TIMEOUT')
+      if (
+        error instanceof ScrapeFailure &&
+        ['SCRAPE_TIMEOUT', 'SCRAPE_CANCELLED'].includes(error.code)
+      )
         expired = true;
       throw error;
     } finally {
       clearTimeout(timer);
+      if (abort) this.signal?.removeEventListener('abort', abort);
     }
   }
   async sleep(ms: number) {

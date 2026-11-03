@@ -69,6 +69,12 @@ async function main() {
   if (!['load', 'domcontentloaded'].includes(waitUntil))
     throw new Error('Invalid --wait-until');
   const maxAttempts = positive('max-attempts', '1', 3);
+  const consent = argument('consent', 'off');
+  if (!['off', 'rejectNonEssential', 'acceptAll'].includes(consent))
+    throw new Error('Invalid --consent');
+  const workflow = argument('workflow', 'none');
+  if (!['none', 'auto', 'bestbuy-us@1', 'product-details@1'].includes(workflow))
+    throw new Error('Invalid --workflow');
   const evidence = argument('evidence', 'failures');
   if (!['all', 'failures'].includes(evidence))
     throw new Error('Invalid --evidence');
@@ -77,6 +83,13 @@ async function main() {
   });
   if (!healthResponse.ok) throw new Error('Browser service is unhealthy');
   const health = await healthResponse.json();
+  if (
+    (consent !== 'off' && !health.capabilities?.consent) ||
+    (workflow !== 'none' && !health.capabilities?.workflows?.includes(workflow))
+  )
+    throw new Error(
+      'Browser service does not advertise the requested workflow capabilities',
+    );
   const startedAt = new Date().toISOString();
   const output = path.resolve(
     argument(
@@ -107,6 +120,8 @@ async function main() {
     expectedRequests: targets.length * attemptsPerTarget,
     clientRetries: 0,
     serviceMaxAttempts: maxAttempts,
+    consent,
+    workflow,
     readiness,
     readinessTimeoutMs: readinessTimeout,
     waitUntil,
@@ -160,6 +175,8 @@ async function main() {
             {
               wait_until: waitUntil,
               max_attempts: maxAttempts,
+              consent,
+              workflow,
               ...(readiness === 'text' && {
                 wait_for_text: target.containsText,
                 readiness_timeout: readinessTimeout,

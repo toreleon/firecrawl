@@ -1,0 +1,152 @@
+import http from "node:http";
+import { randomUUID } from "node:crypto";
+import { scrapeTimeout } from "./lib";
+import { config } from "../../../config";
+import { itIf, TEST_API_URL, TEST_SELF_HOST } from "../lib";
+
+describe("Self-hosted local browser controls", () => {
+  let fixture: http.Server;
+  let origin: string;
+  beforeAll(async () => {
+    fixture = http.createServer((req, res) => {
+      res.setHeader("content-type", "text/html");
+      if (req.url === "/late")
+        return res.end(
+          '<title>Late</title><main>Loading</main><script>setTimeout(()=>document.body.innerHTML="<main id=ready>API late content 42</main>",500)</script>',
+        );
+      res.end(
+        "<title>Workflow</title><main id=state>Initial content</main><button id=next onclick=\"sessionStorage.setItem('state','42');document.querySelector('#state').textContent='API retained tab 42'\">Next</button>",
+      );
+    });
+    await new Promise<void>(resolve => fixture.listen(0, "127.0.0.1", resolve));
+    origin = `http://127.0.0.1:${(fixture.address() as any).port}`;
+  });
+  afterAll(async () => {
+    fixture.closeAllConnections();
+    await new Promise<void>(resolve => fixture.close(() => resolve()));
+  });
+  const request = async (path: string, body?: unknown, method = "POST") => {
+    const response = await fetch(`${TEST_API_URL}${path}`, {
+      method,
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer ${config.TEST_API_KEY ?? "test"}`,
+      },
+      ...(body === undefined ? {} : { body: JSON.stringify(body) }),
+    });
+    return {
+      status: response.status,
+      body: response.status === 204 ? null : await response.json(),
+    };
+  };
+  const enabled = TEST_SELF_HOST && !!config.PLAYWRIGHT_MICROSERVICE_URL;
+  itIf(enabled)(
+    "forwards readiness through the API and returns a typed failure",
+    async () => {
+      const ready = await request("/v2/scrape", {
+        url: `${origin}/late`,
+        formats: ["rawHtml"],
+        timeout: scrapeTimeout,
+        maxAge: 0,
+        browserControls: {
+          waitUntil: "domcontentloaded",
+          readiness: {
+            selector: "#ready",
+            text: "API late content 42",
+            timeoutMs: 2000,
+          },
+        },
+      });
+      expect(ready.status).toBe(200);
+      expect(ready.body.data.rawHtml).toContain("API late content 42");
+      expect(ready.body.data.metadata.browser.readiness.satisfied).toBe(true);
+      const unsupported = await request("/v2/scrape", {
+        url: origin,
+        browserControls: { workflow: "unknown@1" },
+      });
+      expect(unsupported.status).toBe(400);
+    },
+    scrapeTimeout,
+  );
+  itIf(enabled)(
+    "creates a distributed session and resumes the same live tab through the API",
+    async () => {
+      const creationId = randomUUID();
+      const created = await request("/v2/browser/sessions", {
+        creationId,
+        url: origin,
+        timeout: scrapeTimeout,
+      });
+      expect(created.status).toBe(201);
+      const id = created.body.id;
+      const duplicate = await request("/v2/browser/sessions", {
+        url: origin,
+        timeout: scrapeTimeout,
+        creationId,
+      });
+      expect(duplicate.body.id).toBe(id);
+      try {
+        const first = await request("/v2/scrape", {
+          url: origin,
+          formats: ["rawHtml"],
+          timeout: scrapeTimeout,
+          browserControls: { sessionId: id, continueSession: true },
+          actions: [{ type: "click", selector: "#next" }],
+        });
+        expect(first.status).toBe(200);
+        const second = await request("/v2/scrape", {
+          url: origin,
+          formats: ["rawHtml"],
+          timeout: scrapeTimeout,
+          browserControls: {
+            sessionId: id,
+            continueSession: true,
+            readiness: { text: "API retained tab 42" },
+          },
+        });
+        expect(second.body.data.rawHtml).toContain("API retained tab 42");
+        expect(second.body.data.metadata.browser.sessionId).toBe(id);
+        const handoff = await request(`/v2/browser/sessions/${id}/handoff`, {});
+        expect(handoff.status).toBe(200);
+        const ticket = handoff.body.viewPath.split("#")[1];
+        const viewer = await fetch(
+          `${TEST_API_URL}${handoff.body.viewPath.split("#")[0]}`,
+        );
+        expect(viewer.status).toBe(200);
+        const viewerHtml = await viewer.text();
+        expect(
+          () =>
+            new Function(viewerHtml.match(/<script>([\s\S]*?)<\/script>/)![1]),
+        ).not.toThrow();
+        const snapshot = await fetch(
+          `${TEST_API_URL}/v2/browser/sessions/${id}/handoff/snapshot`,
+          { headers: { "x-browser-handoff": ticket } },
+        );
+        expect(snapshot.status).toBe(200);
+        expect((await snapshot.json()).image.length).toBeGreaterThan(100);
+        const invalidTicket = await fetch(
+          `${TEST_API_URL}/v2/browser/sessions/${id}/handoff/snapshot`,
+          { headers: { "x-browser-handoff": "0".repeat(64) } },
+        );
+        expect(invalidTicket.status).toBe(403);
+        const resumed = await request(`/v2/browser/sessions/${id}/resume`, {});
+        expect(resumed.status).toBe(200);
+        expect(resumed.body.content).toContain("API retained tab 42");
+        expect(JSON.stringify(second.body)).not.toMatch(
+          /"sessionId":"[a-f0-9]{64}"/,
+        );
+        const wrongOrigin = await request("/v2/scrape", {
+          url: "https://example.org",
+          browserControls: { sessionId: id, continueSession: true },
+        });
+        expect(wrongOrigin.status).toBeGreaterThanOrEqual(400);
+      } finally {
+        expect(
+          (await request(`/v2/browser/sessions/${id}`, undefined, "DELETE"))
+            .status,
+        ).toBe(204);
+      }
+    },
+    scrapeTimeout,
+  );
+});

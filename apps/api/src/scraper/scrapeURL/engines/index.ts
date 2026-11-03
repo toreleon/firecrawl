@@ -155,6 +155,7 @@ export type EngineScrapeResult = {
   url: string;
 
   html: string;
+  browser?: Record<string, any>;
   rawBase64?: string;
   markdown?: string;
   pages?: Array<{ pageNumber: number; markdown: string }>;
@@ -651,6 +652,26 @@ export async function buildFallbackList(meta: Meta): Promise<
     unsupportedFeatures: Set<FeatureFlag>;
   }[]
 > {
+  // These controls require this exact backend. A cache/provider/fetch result
+  // cannot satisfy a stateful command, and commands must never be hedged.
+  if (meta.options.browserControls) {
+    if (
+      isUrlBlocked(
+        meta.rewrittenUrl ?? meta.url,
+        meta.internalOptions.teamFlags ?? null,
+        {
+          team_id: meta.internalOptions.teamId ?? null,
+          org_id: meta.internalOptions.orgId ?? null,
+          origin: null,
+          record: false,
+        },
+      )
+    )
+      throw new Error("URL is blocked for live browser access");
+    if (!usePlaywright)
+      throw new Error("Local browser service is not configured");
+    return [{ engine: "playwright", unsupportedFeatures: new Set() }];
+  }
   if (hasFormatOfType(meta.options.formats, "rawBase64")) {
     if (meta.internalOptions.agentIndexOnly) {
       throw new AgentIndexOnlyError();

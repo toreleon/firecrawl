@@ -39,6 +39,20 @@ class _FakeClient:
 
 class TestScrapeRequestPreparation:
     """Unit tests for scrape request preparation."""
+    def test_local_browser_controls_nested_aliases(self):
+        from firecrawl.v2.types import BrowserControls, BrowserReadiness
+        controls = BrowserControls(
+            wait_until="domcontentloaded",
+            readiness=BrowserReadiness(selector="main", text="Company 42", timeout_ms=3000),
+            session_id="f63d36ec-882e-4b56-a663-68678c905cb6",
+            continue_session=True,
+            consent="rejectNonEssential",
+        )
+        data = _prepare_scrape_request("https://example.com", ScrapeOptions(browser_controls=controls))
+        assert data["browserControls"]["waitUntil"] == "domcontentloaded"
+        assert data["browserControls"]["readiness"]["timeoutMs"] == 3000
+        assert data["browserControls"]["continueSession"] is True
+        assert "browser_controls" not in data
 
     def test_basic_request_preparation(self):
         """Test basic request preparation with minimal fields."""

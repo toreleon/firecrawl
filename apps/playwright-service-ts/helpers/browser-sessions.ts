@@ -12,6 +12,7 @@ export class BrowserSessions<T> {
       profile: string;
       expiresAt: number;
       busy: boolean;
+      revision: number;
     }
   >();
   constructor(
@@ -21,7 +22,12 @@ export class BrowserSessions<T> {
     private readonly ttlMs = 300000,
   ) {}
 
-  async acquire(origin: string, profile: string, token?: string) {
+  async acquire(
+    origin: string,
+    profile: string,
+    token?: string,
+    revision?: number,
+  ) {
     await this.sweep();
     if (token) {
       const entry = this.entries.get(token);
@@ -40,6 +46,7 @@ export class BrowserSessions<T> {
           'SESSION_BUSY',
           'Session already has an active request',
         );
+      this.fence(entry, revision);
       entry.busy = true;
       return { token, value: entry.value, expiresAt: entry.expiresAt };
     }
@@ -59,6 +66,7 @@ export class BrowserSessions<T> {
         profile,
         expiresAt: Date.now() + this.ttlMs,
         busy: true,
+        revision: revision ?? 0,
       };
       this.entries.set(token, entry);
       return { token, value, expiresAt: entry.expiresAt };
@@ -67,6 +75,41 @@ export class BrowserSessions<T> {
     }
   }
   private creating = 0;
+  private fence(entry: { revision: number }, revision?: number) {
+    if (
+      entry.revision > 0 &&
+      (revision === undefined || revision <= entry.revision)
+    )
+      throw new ScrapeFailure('SESSION_STALE', 'Session command is stale');
+    if (revision !== undefined) entry.revision = revision;
+  }
+  async use<R>(
+    token: string,
+    run: (value: T) => Promise<R>,
+    revision?: number,
+  ) {
+    const entry = this.entries.get(token);
+    if (!entry || entry.expiresAt <= Date.now())
+      throw new ScrapeFailure(
+        'SESSION_EXPIRED',
+        'Session is unknown or expired',
+      );
+    if (entry.busy)
+      throw new ScrapeFailure(
+        'SESSION_BUSY',
+        'Session already has an active request',
+      );
+    this.fence(entry, revision);
+    entry.busy = true;
+    try {
+      return await run(entry.value);
+    } catch (error) {
+      await this.release(token, true);
+      throw error;
+    } finally {
+      await this.release(token);
+    }
+  }
   async release(token: string, discard = false) {
     const entry = this.entries.get(token);
     if (!entry) return;
