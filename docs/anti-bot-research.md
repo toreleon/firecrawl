@@ -184,3 +184,43 @@ consent/navigation flows, browser-fingerprint investigations, full API-adapter
 integration of optional session/readiness controls, and distributed scheduling
 or session ownership for multiple browser-service instances. Interactive
 verification remains an explicit failure; no CAPTCHA solver is implemented.
+
+### Observed results
+
+Replaying the 272 retained failures from the original run recognized 68
+additional challenge responses across 15 targets and found five normalized
+marker matches (all arXiv). This is an accounting/detection result, not five
+new retrievals; the original 500-request report remains unchanged.
+
+The controlled 120-request experiment used 12 sites, two requests per profile
+per site, shared Vietnam egress, and identical two-CPU/3-GiB container limits:
+
+| Profile | Normalized content matches |
+| --- | --- |
+| Original service, load + two-second wait | 6/24 (25.0%) |
+| Revised service, compatible waits | 6/24 (25.0%) |
+| Revised service, text readiness | 10/24 (41.7%) |
+| Readiness with ad filtering disabled | 10/24 (41.7%) |
+| Readiness, no ad filter, session reuse | 10/24 (41.7%) |
+
+The four additional matches were Booking.com and TikTok on both rounds. All
+three previously successful control targets stayed successful. Removing the
+ad filter and reusing contexts yielded no additional normalized matches in
+this sample. Twelve session-profile requests reused contexts from round one.
+These results support the readiness strategy on these cases, not general
+coverage or a new whole-portfolio success rate. Dynamic content and shared-IP
+interference remain limitations.
+
+All 120 service responses were retained (capability tokens omitted), their
+content hashes and unique profile/target/round pairs verified, and all services
+ended healthy with zero active pages or sessions. No timing gaps, PID-limit
+hits or memory/OOM events occurred. Receipts are retained outside Git in
+`_local/anti-bot/reliability-paired-2026-11-03/`; the failure replay is
+`_local/anti-bot/reliability-replay-2026-11-03.json`.
+
+The experimental runtime is pinned to `a6c0912f5`; a subsequent cleanup-only
+fix at `cdde87d6f` bounds page/context closure after expired requests. The
+[focused CI for that fix](https://github.com/toreleon/firecrawl/actions/runs/41570715167)
+passed the build, 32 helper tests, 42 HTTP/CLI integration tests and production
+dependency audit. The experimental results are not relabeled as measurements
+of the subsequent commit.
