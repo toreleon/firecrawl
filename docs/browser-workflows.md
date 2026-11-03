@@ -218,6 +218,12 @@ the original product. It checks origin and product identity again at capture;
 another product is an explicit `WORKFLOW_NAVIGATION_MISMATCH` failure. Visible
 answer fields and other interactive verification remain unresolved for handoff.
 The diagnostic step is `amazon-continue@1`, not a new public workflow value.
+If automatic readiness discovers this form after the initial workflow probe,
+stateless requests without caller actions can check the same recipe once more.
+It still submits at most once per browser attempt. Retained/continuing sessions
+and explicit readiness do not perform this late check. Any subsequent rendered
+readiness wait uses the remaining original allowance; the recipe's navigation
+and settle work stays within the original scrape deadline.
 The recipe registers the main-frame navigation listener before its GET click,
 then waits for the submission's navigation commit. It samples the resulting URL
 and unresolved form controls together in one renderer call, allowing up to five

@@ -155,7 +155,7 @@ export const scrapePage = async (
   }
   const verificationPending = (status = state.response?.status() ?? 0) =>
     passiveVerification && !(status >= 200 && status < 300);
-  const automatic =
+  let automatic =
     automaticRequested &&
     (passiveVerification ||
       ((state.response?.status() ?? 0) >= 200 &&
@@ -168,6 +168,46 @@ export const scrapePage = async (
           verificationPending,
         )
       : undefined;
+  // The first workflow probe can precede hydration or a passive redirect.
+  // Recheck only the existing answer-free recipe, once, when readiness found
+  // an Amazon gate on the original product. Never replay actions or mutate a
+  // retained/handoff tab after its initial workflow phase.
+  if (
+    automatic?.outcome === 'verification' &&
+    originalProduct &&
+    !options.retained &&
+    !options.continueSession &&
+    !options.actions?.length &&
+    workflow.steps.length === 0 &&
+    automatic.waitMs < automatic.timeoutMs &&
+    new URL(page.url()).origin === originalProduct.origin &&
+    amazonProductIdentity(page.url()) === originalProduct.asin
+  ) {
+    state.phase = 'workflow-late';
+    const late = await deadline.run(applyWorkflow(page, 'auto', deadline));
+    if (late.steps.length) {
+      workflow.steps.push(...late.steps);
+      Object.assign(workflow.observations, late.observations);
+      await deadline.run(
+        applyConsent(page, options.consent ?? 'off', deadline),
+      );
+      state.phase = 'readiness';
+      const resumed = await waitForRenderedBody(
+        page,
+        deadline,
+        Math.max(0, automatic.timeoutMs - automatic.waitMs),
+        () => state.response?.headers() ?? {},
+        verificationPending,
+      );
+      automatic = {
+        ...resumed,
+        timeoutMs: automatic.timeoutMs,
+        waitMs: automatic.waitMs + resumed.waitMs,
+        maxBusyCount: Math.max(automatic.maxBusyCount, resumed.maxBusyCount),
+      };
+    }
+    state.phase = 'readiness';
+  }
   let staticHttpError = false;
   const response = state.response;
   if (
