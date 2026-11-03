@@ -1,0 +1,103 @@
+{
+  "checkedAt": "2026-11-03T22:44:49.196221+00:00",
+  "sourceCommit": "89887a22bc356e8c4316a76e67cee8b8548baa5c",
+  "scope": "The capped actual hosted comparison used existing browser images. All three created browser containers were removed, task PostgreSQL/Redis/RabbitMQ stopped, and the temporary hosted credential and private location file removed. No new image/cache was created and no global prune was needed.",
+  "taskBrowserContainersRemoved": 3,
+  "containerCleanup": {
+    "primary-a": {
+      "image": "sha256:cbff34eac3e1296b9ea7a980b9007ef5b6f881e0c56aaffa93f8ed87a8e63fda",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 143,
+        "Error": "",
+        "StartedAt": "2026-11-03T22:29:50.103259759Z",
+        "FinishedAt": "2026-11-03T22:43:54.235792886Z"
+      },
+      "cpuNano": 2000000000,
+      "memoryBytes": 2684354560,
+      "containerRemovedAfterReceipt": true
+    },
+    "fallback-a": {
+      "image": "sha256:cbff34eac3e1296b9ea7a980b9007ef5b6f881e0c56aaffa93f8ed87a8e63fda",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 143,
+        "Error": "",
+        "StartedAt": "2026-11-03T22:29:51.86931926Z",
+        "FinishedAt": "2026-11-03T22:43:54.450584678Z"
+      },
+      "cpuNano": 2000000000,
+      "memoryBytes": 2147483648,
+      "containerRemovedAfterReceipt": true
+    },
+    "fallback-b": {
+      "image": "sha256:cbff34eac3e1296b9ea7a980b9007ef5b6f881e0c56aaffa93f8ed87a8e63fda",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 143,
+        "Error": "",
+        "StartedAt": "2026-11-03T22:29:55.97276922Z",
+        "FinishedAt": "2026-11-03T22:43:54.667712011Z"
+      },
+      "cpuNano": 2000000000,
+      "memoryBytes": 2147483648,
+      "containerRemovedAfterReceipt": true
+    }
+  },
+  "taskInfrastructureStopped": [
+    "autogtm-firecrawl-workflows-rabbit-20261103",
+    "autogtm-firecrawl-workflows-redis-20261103",
+    "autogtm-firecrawl-workflows-pg-20261103"
+  ],
+  "credentialRedactionAndRemoval": {
+    "keyAbsentFromArtifacts": true,
+    "temporaryKeyFileRemoved": true,
+    "privateCredentialDirectoryRemoved": true,
+    "privateLocationFileRemoved": true
+  },
+  "imageIdsUnchanged": true,
+  "buildCacheIdsUnchanged": true,
+  "remainingCacheRecords": 59,
+  "dataVolumesDeleted": 0,
+  "volumeNamesUnchanged": true,
+  "dataVolumeCountAfter": 114,
+  "unrelatedRunningServicesPreserved": [
+    "lead-data-postgres",
+    "lead-data-redis",
+    "lead-data-web",
+    "opengtm-agent-runtime-1",
+    "opengtm-agent-test-pg",
+    "opengtm-api-go-1",
+    "opengtm-browser-1",
+    "opengtm-scheduler-go-1",
+    "opengtm-worker-go-1"
+  ],
+  "globalPruneUsed": false,
+  "dockerSystemDfAfter": "TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE\nImages          53        10        28.92GB   11.29GB (39%)\nContainers      13        9         360.4kB   28.67kB (7%)\nLocal Volumes   114       5         6.325GB   6.151GB (97%)\nBuild Cache     59        0         2.132GB   0B\n",
+  "hostDiskAfter": "Filesystem      Size    Used   Avail Capacity iused ifree %iused  Mounted on\n/dev/disk3s5   460Gi   312Gi   124Gi    72%    5.4M  1.3G    0%   /System/Volumes/Data\n",
+  "rawEvidencePreserved": true,
+  "evidenceHashes": {
+    "_local/anti-bot/fresh-current-hosted-full-api-harness-2026-11-04/cleanup.json": "e3149e5929cb247f38f9627ec11392ad9622709c9b11353b86ab86205a477cc9",
+    "_local/anti-bot/fresh-current-hosted-full-api-harness-2026-11-04/credential-redaction-audit.json": "0b3fc911de9ee35a72a1a0cc275ae78810d00bd57528317fc7fb0349a12431a7",
+    "_local/anti-bot/fresh-current-hosted-full-api-harness-2026-11-04/result.json": "176b55945baa264c5dc0253a8f2ac07e0da93052cccdd00fd34aa229cc9ed2fa",
+    "_local/anti-bot/fresh-hosted-preflight-2026-11-04/docker-before.json": "b478fc8b075e63d9c7efdd6a620b053df4222859cd35f2a3b0610c1700eb61a8"
+  }
+}

@@ -2685,3 +2685,82 @@ on `4c3e920a9` remain the implementation verification. They were not rerun for
 this evidence/documentation update. The results do not support hard-coding a
 Vietnam time zone, migrating to native browsers or treating a hidden success
 label as clearance.
+
+## Refreshed actual hosted comparison on the repaired source (November 4)
+
+The earlier hosted 81/100 reference predated the navigation and rendered-body
+repairs. A fresh comparison now uses evidence/source head `89887a22b`, whose
+production implementation is unchanged from `4c3e920a9`, and the existing
+`cbff34eac` browser image. The [current comparison receipt](../apps/playwright-service-ts/benchmarks/fresh-current-hosted-api-results-2026-11-04.json)
+records all 100 frozen targets once against the fork and once against the actual
+hosted API, with fresh rawHTML/Markdown and no expected-text hint.
+
+The fork stayed on direct VN egress. Hosted routing and internal attempts remain
+provider controlled. Firecrawl documents its [default managed proxy strategy](https://docs.firecrawl.dev/features/enhanced-mode);
+that provider default was left in place for the hosted control, without adding
+a proxy to the fork. The user's subsequent instruction to keep local/fork tests
+proxy-free is preserved. Hosted response routing labels are retained verbatim;
+they do not expose physical egress IPs or establish why a target succeeded.
+
+Four global HTTP workers, two slots per profile and seven-second per-profile
+dispatch pacing capped the run at 200 scrape requests, including at most 100
+hosted requests. There was no client retry. Both profiles used the same
+85-second API request timeout; the fork additionally used its existing
+30-second initial-navigation cap and opt-in alternate-engine recovery. Its one
+Chromium primary and two Firefox alternates retained the 6.5 GiB aggregate
+browser limit. Hosted capacity/routing and backend attempts are not matched.
+
+| Fresh API outcomes, 100 targets/profile | Direct-egress fork | Hosted |
+| --- | --- | --- |
+| Raw HTML substring matches | 57 | 82 |
+| Screened matches | 55 | 81 |
+| Normalized matches | 56 | 82 |
+| Normalized matches also containing the supplementary Markdown marker | 53 | 76 |
+
+There were 45 common normalized matches, 37 hosted-only, eleven fork-only and
+seven matching neither. Ten explicit hosted unsupported-site responses remain
+failures in the original denominator. No API-level HTTP 429 occurred; target
+HTTP 429 remains a separate failure. Among hosted-only cases, the fork returned
+sixteen recognized challenge failures, thirteen other HTTP 403 responses, three
+target rate limits, one each of HTTP 405/406/417, one missing marker and one
+timeout. Those observations do not identify a single causal failure mechanism.
+
+All 200 payload hashes, scores and output metrics replayed with valid timing and
+concurrency bounds. Owner logs account for 100 primary calls and 49 alternate
+calls, split 24/25, without repeating an alternate target. Ninety-nine fork
+records returned fallback metadata; Roblox's timeout did not, so that record's
+returned recovery details remain unknown. Nine reported backend recoveries
+produced eight normalized marker matches.
+
+On the 45 common normalized successes, nearest-rank p50/p95 was 3.34/9.01 seconds
+for the fork and 7.58/31.78 seconds for hosted. The complete run took 814.0 seconds,
+including deliberate dispatch pacing and the final pending hosted request.
+These are cohort-specific observations on different infrastructure; they do not
+establish an equal-resource speed advantage. Fork memory peaked at
+732/923/1,157 MiB, with zero observed memory-boundary/OOM/PID or socket-throttling
+events. All owners ended healthy with zero pages/sessions.
+
+Hosted metadata reported `basic` on 82 responses (78 normalized matches),
+`stealth` on four (four matches), and no routing value on fourteen (zero matches).
+The fork's legacy `basic` output label does not mean it used an upstream proxy;
+direct operation was verified from configuration and network preflights. The
+actual hosted routing implementation is unknown. The hosted account balance
+decreased by 116 credits; 86 responses reported 115 credits in total. Balance
+changes can include concurrent account activity and are not an exact invoice.
+Absolute account balances remain private.
+
+The previous actual comparison was fork 54/100 versus hosted 81/100 on
+`da4bb50c9`. Source, browser identities, topology, navigation policy and live
+epoch differ, so the change to 56/82 is not a controlled code-gain estimate.
+The repaired source's earlier fork-only result of 55/100 also used different
+pacing. The current direct-egress fork remains below actual hosted coverage;
+neither a new score definition nor a reduced denominator is used to claim parity.
+
+The [cleanup receipt](../apps/playwright-service-ts/benchmarks/fresh-current-hosted-cleanup-results-2026-11-04.json)
+verifies all three created browser containers removed and task infrastructure
+stopped. The temporary hosted credential, its private directory and location
+file were removed, and retained artifacts passed credential-redaction checks.
+No image or build cache was created. Existing image/cache IDs, nine unrelated
+running services and all 114 volume names were preserved. No global prune was
+used. Production code was unchanged, so focused source suites were not repeated
+for this live-comparison/evidence update.
