@@ -296,8 +296,9 @@ CAPTCHA or model services were excluded.
 The overall unattended marker rate did not improve in this observation. Best Buy
 improved from 0/5 to 2/5 normalized matches: both successful attempts recorded
 navigation to the original product after the country selection. Its other three
-attempts failed before navigation with network errors. The delayed country prompt
-and asynchronously rewritten product link have controlled browser regressions.
+attempts returned network errors without retaining the navigation phase. The
+delayed country prompt and asynchronously rewritten product link have controlled
+browser regressions.
 Canada Goose expanded details on all five attempts but still failed body-text
 readiness; expansion alone did not establish retrieval of the expected text.
 Consent diagnostics recorded 11 applied choices, six unresolved choices, 455
@@ -334,3 +335,167 @@ is tracked without response bodies. Full local evidence, timing/resource receipt
 score replay and per-target comparison are retained in
 `_local/anti-bot/waf-workflows-navigation-full-2026-11-03/`. API receipts are in
 `_local/anti-bot/api-workflow-harness-2026-11-03-creation-close/`.
+
+
+### Failed-target investigation and repairs
+
+The 42.6% to 39.8% normalized-rate change was a net loss of 14 matches: 24 lost
+matches across regressing targets, offset by 10 gains. The lost matches break down
+as follows; these are observed response differences, rather than proof of cause.
+
+| Lost normalized matches | Target and response observed in workflow run |
+| --- | --- |
+| 13 | Louis Vuitton (5), eBay (4), Mouser (2), Apartments.com (2): HTTP 403 |
+| 4 | Lululemon: HTTP 400 with `GE401001` |
+| 3 | Yahoo Finance: `ERR_EMPTY_RESPONSE` |
+| 2 | Zoopla: recognized verification responses |
+| 1 | Yellow Pages: HTTP 503 |
+| 1 | TikTok: expected profile body did not render |
+
+A new 78-request interleaved diagnostic tested 13 targets twice with the earlier
+readiness image, the workflow image with controls off, and that same workflow
+image with consent/recipes on. Profile order rotated by target and round, with
+two workers and fresh contexts on shared direct host egress. All response hashes
+and 78 unique profile/target/round pairs were audited; timing had no invalid gaps.
+
+| Profile | Normalized matches |
+| --- | --- |
+| Earlier readiness image | 7/26 |
+| Workflow image, controls off | 9/26 |
+| Workflow image, controls on | 9/26 |
+
+All three profiles failed on Apartments.com, eBay, Louis Vuitton, Lululemon and
+Mouser in both rounds. Consent did not reduce the observed match count in this
+small test. This supports live origin/edge and network variability as the main
+observed explanation for the earlier decline; it does not establish a causal
+vendor reason or exclude all effects of the new code. The controls-on profile
+had a higher screened-success median latency (3,981 vs 2,624 ms with controls off).
+The subset is selected and shares egress, so its rate is not a portfolio estimate.
+
+The investigation read all 301 failed normalized attempts across 67 targets.
+The [target-by-target receipt](../apps/playwright-service-ts/benchmarks/failed-target-analysis-2026-11-03.json)
+records counts, outcomes, findings and representative evidence hashes without
+copying page bodies into Git. It identified these repairable issues:
+
+- Facebook application scripts/styles were blocked by the broad `fbcdn.net` ad
+  rule, leaving zero rendered body characters on all five attempts. The filter
+  now allows this content CDN and preserves requested documents/first-party
+  resources. Third-party ad filtering and the SSRF boundary remain in force.
+  A live no-ad-filter control retrieved the profile, and the repaired pilot
+  retrieved it on 2/2 attempts with ad filtering enabled.
+- CoinMarketCap's public About content was present in server HTML but hydrated
+  on viewport intersection. A real scroll grew rendered text from 7,664 to
+  27,247 characters and exposed the expected marker. The bounded `auto` recipe
+  scrolls the observed About section into view, then applies the ordinary body
+  readiness check. It matched on 2/2 repaired pilot attempts.
+- Small static HTTP denial documents consumed the full readiness window while
+  they had no active content capable of producing the requested body. The
+  service now inspects the original response, including chunked responses, and
+  skips that poll only for small static HTTP errors. Script/iframe/event-handler
+  or refresh-bearing error responses retain the wait; a controlled delayed
+  redirect regression verifies that they can still reach ready content.
+- The network-error regex truncated numeric names such as
+  `ERR_HTTP2_PROTOCOL_ERROR` to `ERR_HTTP`. Diagnostics now retain the complete
+  name, operation phase and recent main-document/network events even when no DOM
+  capture is possible. This improves diagnosis rather than claiming new retrieval.
+
+Several failed markers still have useful but different evidence. Bing and
+Zillow rendered result content whose expected string was confined to the title
+or differed from the body heading. Canada Goose expanded details, but the exact
+expected sentence remained metadata-only. Allmenus returned an explicit location
+restriction. Temu presented interactive image verification. The NYT response
+contained a subscription/sign-in gate and an expected paragraph outside the
+rendered body. Roblox exhausted navigation deadlines without a captured document;
+a separate diagnostic was stopped without a DOM result, so its underlying cause
+remains unconfirmed. These cases retain their frozen failure outcomes. No title
+fallback, hidden-text success rule, geographic routing or automated verification
+solver was added.
+
+The previous Best Buy description saying all three network failures occurred
+before navigation was too specific: the retained container log also includes a
+follow-up country/product-navigation failure and preflight requests, while the
+old failed responses omitted phase information. The historical counts are
+unchanged; new phase diagnostics address that evidence gap.
+
+The rendering investigation follows the distinction between navigation and
+application hydration in [Playwright's navigation documentation](https://playwright.dev/docs/navigations)
+and its [HTTP-status behavior](https://playwright.dev/docs/api/class-page#page-goto).
+Viewport-triggered content is consistent with the browser behavior documented by
+[MDN's Intersection Observer reference](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API).
+The distinct network errors are defined in
+[Chromium's error catalog](https://github.com/chromium/chromium/blob/main/net/base/net_error_list.h);
+the code does not infer a WAF vendor from a transport error.
+
+Local diagnostic receipts: `_local/anti-bot/workflow-regression-ablation-2026-11-03/`,
+`workflow-failure-analysis-2026-11-03.json`, `deep-probe-cmc-2026-11-03.json`,
+`facebook-adblock-disabled-probe-2026-11-03.json` and
+`regression-repair-pilot-ready-2026-11-03/`, all under `_local/anti-bot/`.
+
+
+### Completed repair benchmark
+
+The repaired browser runtime `f47d7085ce6a07be1ce38fc523a10533648b9f36` was measured
+from **07:07:10 to 07:34:31 UTC on November 3, 2026**. Its image is
+`sha256:9a97a3c48ff12f8ec20518f769f620d31516262daa2a3636ba679ae87695d94d`.
+The frozen targets, graders and body-text assertions were unchanged: 100 targets,
+five attempts, two workers, fresh contexts, one service attempt, the same
+90/85-second client/service deadlines and five-second readiness budget. The
+worker kept two CPUs and 4 GiB, direct Vietnam egress and no upstream proxy.
+Human assistance and commercial scraping/verification/model APIs were excluded.
+
+| Check | Initial readiness run | Workflow run | Repaired run |
+| --- | --- | --- | --- |
+| Raw substring | 246/500 (49.2%) | 232/500 (46.4%) | 230/500 (46.0%) |
+| Screened marker | 208/500 (41.6%) | 194/500 (38.8%) | 204/500 (40.8%) |
+| Normalized marker | 213/500 (42.6%) | 199/500 (39.8%) | 209/500 (41.8%) |
+
+Facebook and CoinMarketCap each improved from 0/5 to 5/5 normalized matches,
+accounting for ten additional matches. The other 98 targets had no aggregate net
+change, although individual outcomes varied. Best Buy moved from 2/5 to 3/5;
+Yahoo Finance from 2/5 to 5/5; Target from 5/5 to 0/5, with all five new attempts
+returning HTTP 429. Those changes illustrate the continuing live-site variation.
+Raw substring matches fell by two, while screened and normalized matches rose
+by ten: metadata/script substrings and rendered-content retrieval are different
+checks. The repaired normalized rate is still 0.8 percentage points below the
+initial readiness run. No general WAF-bypass gain is established.
+
+| Publisher WAF label | Workflow normalized matches | Repaired normalized matches |
+| --- | --- | --- |
+| Cloudflare | 30/75 (40.0%) | 33/75 (44.0%) |
+| DataDome | 20/100 (20.0%) | 20/100 (20.0%) |
+| Akamai | 26/100 (26.0%) | 26/100 (26.0%) |
+
+Wall time was 27m21s versus 29m01s previously. Forty-four small static HTTP errors
+skipped the futile readiness wait; their median end-to-end latency was 733.5 ms.
+Screened-success latency p50 was 3,172 ms (previously 3,222) and p95 was 5,543 ms
+(previously 6,740). These are observed serial-run timings, with live-site and
+shared-egress confounding. The 291 normalized failures still include 109
+recognized challenges, 81 HTTP 403 responses, 32 readiness failures, 22 rate
+limits, 19 network failures, nine timeouts and smaller status-error groups.
+
+The new diagnostics show CarGurus receiving HTTP 406 before Chromium reports
+`ERR_HTTP_RESPONSE_CODE_FAILURE`. Roblox receives an initial 301 and then times
+out without a final-document response; no captured evidence establishes a
+renderer cause. Both remain failures rather than being retried or reclassified
+as successful retrieval.
+
+Build, 37 helper checks, 53 browser integration checks and the production
+dependency audit passed locally and in
+[CI for the measured runtime](https://github.com/toreleon/firecrawl/actions/runs/41594178283).
+All 500 response hashes, unique target/attempt pairs and replayed scores matched.
+Grader bytes matched both earlier runs. Source/compiled hashes and browser owner
+identity matched the recorded deployment, no invalid timing gaps or cgroup
+memory/OOM/PID-limit events occurred, and the service ended healthy with zero
+active pages or sessions. Task-owned diagnostic and benchmark services were
+stopped. No API/SDK behavior was changed in this repair; their earlier focused
+checks are not relabeled as newly run checks.
+
+The [repair result receipt](../apps/playwright-service-ts/benchmarks/regression-repair-results-2026-11-03.json)
+contains the full metrics and limits. Full response evidence, per-target deltas,
+resource/timing checks and score replay are retained in
+`_local/anti-bot/waf-regression-repair-full-2026-11-03/`.
+
+This comparison stayed at two workers. Four-worker runs are a separate
+throughput profile: increase both the runner's `--concurrency` and the service's
+`MAX_CONCURRENT_PAGES`, budget CPU/memory accordingly, and measure changes in
+throttling and success instead of mixing concurrency levels within one run.

@@ -1,0 +1,345 @@
+{
+  "status": "complete",
+  "startedAt": "2026-11-03T07:07:10.939Z",
+  "finishedAt": "2026-11-03T07:34:31.947Z",
+  "browserRuntimeCommit": "f47d7085ce6a07be1ce38fc523a10533648b9f36",
+  "imageId": "sha256:9a97a3c48ff12f8ec20518f769f620d31516262daa2a3636ba679ae87695d94d",
+  "fixtureSha256": "a886fb57087e842c2857b89a7669e31d2fb7b98d6bd7deb60a2329f29581b76a",
+  "sourceBenchmark": "https://github.com/usestring/web-data-frontier-benchmark/blob/1ae0cf5fa11f6a80587fdba57cac3efbb75836df/src/tests.const.ts",
+  "scope": "Unattended browser-backend benchmark, fresh context per request; no human handoff or paid provider.",
+  "setup": {
+    "country": "VN",
+    "upstreamProxy": false,
+    "targets": 100,
+    "attemptsPerTarget": 5,
+    "workers": 2,
+    "serviceMaxAttempts": 1,
+    "clientTimeoutMs": 90000,
+    "serviceTimeoutMs": 85000,
+    "waitUntil": "domcontentloaded",
+    "readinessScope": "body",
+    "readinessTimeoutMs": 5000,
+    "postLoadWaitMs": 0,
+    "consent": "rejectNonEssential",
+    "workflow": "auto",
+    "cpuCount": 2,
+    "memoryBytes": 4294967296
+  },
+  "originalReadinessRun": {
+    "startedAt": "2026-11-03T03:37:24.052Z",
+    "overall": {
+      "requests": 500,
+      "uniqueTargets": 100,
+      "frontierPasses": 246,
+      "screenedPasses": 208,
+      "normalizedPasses": 213,
+      "frontierSuccessRate": 0.492,
+      "screenedSuccessRate": 0.416,
+      "normalizedSuccessRate": 0.426,
+      "successfulLatencyP50Ms": 2630,
+      "successfulLatencyP95Ms": 7040,
+      "allAttemptLatencyP95Ms": 7735,
+      "failures": {
+        "content_not_ready": 49,
+        "challenge": 115,
+        "target_status_403": 67,
+        "rate_limited": 20,
+        "timeout": 8,
+        "target_status_511": 5,
+        "network_error": 12,
+        "target_status_417": 5,
+        "target_status_405": 5,
+        "missing_expected_marker": 5,
+        "target_status_400": 1
+      }
+    }
+  },
+  "previousWorkflowRun": {
+    "startedAt": "2026-11-03T06:09:45.921Z",
+    "overall": {
+      "requests": 500,
+      "uniqueTargets": 100,
+      "frontierPasses": 232,
+      "screenedPasses": 194,
+      "normalizedPasses": 199,
+      "frontierSuccessRate": 0.464,
+      "screenedSuccessRate": 0.388,
+      "normalizedSuccessRate": 0.398,
+      "successfulLatencyP50Ms": 3222,
+      "successfulLatencyP95Ms": 6740,
+      "allAttemptLatencyP95Ms": 8830,
+      "failures": {
+        "content_not_ready": 43,
+        "challenge": 111,
+        "target_status_403": 82,
+        "timeout": 8,
+        "target_status_400": 5,
+        "rate_limited": 16,
+        "target_status_511": 5,
+        "network_error": 20,
+        "target_status_417": 5,
+        "target_status_405": 5,
+        "missing_expected_marker": 5,
+        "target_status_503": 1
+      }
+    }
+  },
+  "repairedRun": {
+    "overall": {
+      "requests": 500,
+      "uniqueTargets": 100,
+      "frontierPasses": 230,
+      "screenedPasses": 204,
+      "normalizedPasses": 209,
+      "frontierSuccessRate": 0.46,
+      "screenedSuccessRate": 0.408,
+      "normalizedSuccessRate": 0.418,
+      "successfulLatencyP50Ms": 3172,
+      "successfulLatencyP95Ms": 5543,
+      "allAttemptLatencyP95Ms": 8676,
+      "failures": {
+        "content_not_ready": 32,
+        "challenge": 109,
+        "target_status_403": 81,
+        "network_error": 19,
+        "target_status_400": 5,
+        "rate_limited": 22,
+        "timeout": 9,
+        "target_status_511": 5,
+        "target_status_417": 4,
+        "target_status_405": 5,
+        "missing_expected_marker": 5
+      }
+    },
+    "byPublisherWafLabel": {
+      "cloudflare": {
+        "requests": 75,
+        "uniqueTargets": 15,
+        "frontierPasses": 34,
+        "screenedPasses": 33,
+        "normalizedPasses": 33,
+        "frontierSuccessRate": 0.4533333333333333,
+        "screenedSuccessRate": 0.44,
+        "normalizedSuccessRate": 0.44,
+        "successfulLatencyP50Ms": 3549,
+        "successfulLatencyP95Ms": 6586,
+        "allAttemptLatencyP95Ms": 8350,
+        "failures": {
+          "challenge": 41,
+          "content_not_ready": 1
+        }
+      },
+      "datadome": {
+        "requests": 100,
+        "uniqueTargets": 20,
+        "frontierPasses": 25,
+        "screenedPasses": 20,
+        "normalizedPasses": 20,
+        "frontierSuccessRate": 0.25,
+        "screenedSuccessRate": 0.2,
+        "normalizedSuccessRate": 0.2,
+        "successfulLatencyP50Ms": 3146,
+        "successfulLatencyP95Ms": 4885,
+        "allAttemptLatencyP95Ms": 9479,
+        "failures": {
+          "network_error": 12,
+          "challenge": 51,
+          "timeout": 2,
+          "target_status_403": 10,
+          "content_not_ready": 5
+        }
+      },
+      "akamai": {
+        "requests": 100,
+        "uniqueTargets": 20,
+        "frontierPasses": 26,
+        "screenedPasses": 26,
+        "normalizedPasses": 26,
+        "frontierSuccessRate": 0.26,
+        "screenedSuccessRate": 0.26,
+        "normalizedSuccessRate": 0.26,
+        "successfulLatencyP50Ms": 3365,
+        "successfulLatencyP95Ms": 5117,
+        "allAttemptLatencyP95Ms": 7353,
+        "failures": {
+          "target_status_403": 60,
+          "target_status_400": 5,
+          "rate_limited": 2,
+          "target_status_417": 4,
+          "network_error": 2,
+          "timeout": 1
+        }
+      }
+    }
+  },
+  "deltaFromWorkflowPercentagePoints": {
+    "raw": -0.4,
+    "screened": 2.0,
+    "normalized": 2.0
+  },
+  "deltaFromOriginalNormalizedPercentagePoints": -0.8,
+  "durationSeconds": 1641.008,
+  "previousDurationSeconds": 1741.042,
+  "recoveredTargets": {
+    "Facebook": {
+      "previous": 0,
+      "repaired": 5
+    },
+    "CoinMarketCap": {
+      "previous": 0,
+      "repaired": 5
+    }
+  },
+  "staticHttpErrorReadiness": {
+    "skippedWaits": 44,
+    "latencyP50Ms": 733.5
+  },
+  "normalizedTargetChanges": [
+    {
+      "target": "Amazon",
+      "prior": 5,
+      "current": 4
+    },
+    {
+      "target": "Best Buy",
+      "prior": 2,
+      "current": 3
+    },
+    {
+      "target": "CoinMarketCap",
+      "prior": 0,
+      "current": 5
+    },
+    {
+      "target": "Facebook",
+      "prior": 0,
+      "current": 5
+    },
+    {
+      "target": "LinkedIn",
+      "prior": 1,
+      "current": 0
+    },
+    {
+      "target": "TikTok",
+      "prior": 4,
+      "current": 5
+    },
+    {
+      "target": "Yahoo Finance",
+      "prior": 2,
+      "current": 5
+    },
+    {
+      "target": "Yellow Pages",
+      "prior": 4,
+      "current": 5
+    },
+    {
+      "target": "Zoopla",
+      "prior": 3,
+      "current": 4
+    },
+    {
+      "target": "ashleyfurniture",
+      "prior": 4,
+      "current": 3
+    },
+    {
+      "target": "expedia",
+      "prior": 4,
+      "current": 3
+    },
+    {
+      "target": "ralphlauren",
+      "prior": 4,
+      "current": 5
+    },
+    {
+      "target": "stackoverflow",
+      "prior": 3,
+      "current": 4
+    },
+    {
+      "target": "target",
+      "prior": 5,
+      "current": 0
+    }
+  ],
+  "consentOutcomes": {
+    "not_detected": 457,
+    "applied": 13,
+    "unresolved": 2,
+    "not_recorded": 28
+  },
+  "workflowSteps": {
+    "product-details:expanded": 5,
+    "country-selection:navigated-original-product": 3,
+    "coin-about@1:scrolled-into-view": 5
+  },
+  "validation": {
+    "browserBuildPassed": true,
+    "helperTests": 37,
+    "integrationTests": 53,
+    "productionDependencyAuditPassed": true,
+    "browserCi": "https://github.com/toreleon/firecrawl/actions/runs/41594178283",
+    "uniqueAttemptPairs": 500,
+    "contentHashesVerified": 500,
+    "scoresReplayedAndVerified": 500,
+    "graderUnchangedFromBothEarlierRuns": true,
+    "timingIntegrity": {
+      "valid": true,
+      "sampleIntervalMs": 1000,
+      "maximumAllowedGapMs": 10000,
+      "maximumObservedGapMs": 1029,
+      "gaps": []
+    },
+    "memoryOomOrPidLimitEvents": 0,
+    "finalHealth": {
+      "status": "healthy",
+      "browserEngine": "rebrowser",
+      "headless": false,
+      "maxConcurrentPages": 2,
+      "activePages": 0,
+      "browserSessions": 0,
+      "blockAds": true,
+      "ownerBootId": "a6ce13e6-ce4f-4a8e-b048-db49d4ef4889",
+      "capabilities": {
+        "version": 1,
+        "readiness": true,
+        "actions": [
+          "click",
+          "wait",
+          "write",
+          "press",
+          "scroll",
+          "scrape"
+        ],
+        "workflows": [
+          "none",
+          "auto",
+          "bestbuy-us@1",
+          "product-details@1"
+        ],
+        "consent": true,
+        "retainedPages": true,
+        "fencedSessions": true,
+        "pageScopedHandoff": true
+      },
+      "serviceWorkers": "block"
+    },
+    "sourceAndCompiledRuntimeHashesMatch": true,
+    "ownerBootIdentityUnchanged": true,
+    "normalizedPassesAllContentReady": true,
+    "taskContainerStopped": true
+  },
+  "failureAnalysis": "failed-target-analysis-2026-11-03.json",
+  "localEvidence": "_local/anti-bot/waf-regression-repair-full-2026-11-03/",
+  "limits": [
+    "Historical observations at different times, not a randomized paired portfolio experiment.",
+    "Publisher labels do not verify active live vendor rules.",
+    "Marker checks are not field completeness or CSS visibility.",
+    "Selected 78-request ablation is separate from this 500-attempt run.",
+    "No changes to grader, title/body predicate or retry budget."
+  ]
+}

@@ -75,7 +75,9 @@ site's stored choice.
 
 `workflow` is `none` (default), `auto`, `bestbuy-us@1` or `product-details@1`.
 The current recipes select the original Best Buy product's US destination and
-expand an observed Canada Goose details control. A recipe and caller actions
+expand an observed Canada Goose details control. `auto` also scrolls an observed
+CoinMarketCap About section into view to trigger public, viewport-based hydration.
+A recipe and caller actions
 cannot be combined. Version recipes deliberately as sites change.
 
 Alternatively supply existing `actions` with `browserControls: {}`. Supported
@@ -191,9 +193,25 @@ screened and normalized graders. Run on an awake host and retain image/source,
 full response evidence, hashes, timing and resource receipts. Do not treat a
 title/body predicate correction as a new WAF bypass.
 
+The resource filter keeps application content from `fbcdn.net`, requested main
+documents and first-party resources. Third-party advertising domains remain
+filtered; bounded blocked-host counts are included in diagnostics. On small,
+static HTTP error documents the browser skips a futile text-readiness poll.
+The original response must contain no executable scripts, frame content,
+event handlers or refresh directive; active error pages retain their full wait.
+Error responses preserve the operation phase, recent navigation/failure events
+and complete Chromium network-error names, including numeric protocol names.
+
 The [November 3 workflow rerun](anti-bot-research.md#browser-workflows-and-distributed-ownership)
 completed all 500 attempts with no upstream proxy. Normalized marker matches
 were 199/500 (39.8%), compared with 213/500 (42.6%) in the earlier full run.
 Best Buy's country recipe retrieved the product on 2/5 attempts; the aggregate
 unattended rate did not improve. The report records limits and separate API,
 ownership and handoff validation.
+
+The subsequent [failed-target investigation and repaired rerun](anti-bot-research.md#failed-target-investigation-and-repairs)
+found and fixed application-CDN blocking and viewport-triggered content loading.
+Both Facebook and CoinMarketCap moved from 0/5 to 5/5 normalized matches. The
+complete repaired run matched on 209/500 (41.8%) with the frozen grader and no
+upstream proxy. The report includes the 78-request controls-on/off comparison,
+all failed-target findings, timing and remaining origin/verification failures.

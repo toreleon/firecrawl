@@ -1,0 +1,1281 @@
+{
+  "basis": "Previous readiness full run 213/500 normalized; workflow full run 199/500 normalized. Historical observations, not randomized causal pairs.",
+  "candidateRuntimeCommit": "f47d7085ce6a07be1ce38fc523a10533648b9f36",
+  "auditedWorkflowAttempts": 500,
+  "normalizedFailures": 301,
+  "targetsWithAnyNormalizedFailure": 67,
+  "lostMatches": 24,
+  "gainedMatches": 10,
+  "netChange": -14,
+  "lostMatchFailureResponses": {
+    "target_status_400": 4,
+    "target_status_403": 13,
+    "content_not_ready": 1,
+    "network_error": 3,
+    "challenge": 2,
+    "target_status_503": 1
+  },
+  "failureReasons": {
+    "content_not_ready": 43,
+    "challenge": 111,
+    "target_status_403": 82,
+    "timeout": 8,
+    "target_status_400": 5,
+    "rate_limited": 16,
+    "target_status_511": 5,
+    "network_error": 20,
+    "target_status_417": 5,
+    "target_status_405": 5,
+    "target_status_503": 1
+  },
+  "controlledAblation": {
+    "requests": 78,
+    "targets": 13,
+    "rounds": 2,
+    "ordering": "rotated profiles, two workers, shared direct host egress",
+    "normalizedMatches": {
+      "prior_readiness": 7,
+      "current_controls_off": 9,
+      "current_controls_on": 9
+    },
+    "requestsPerProfile": 26,
+    "byTarget": {
+      "Apartments.com": {
+        "prior_readiness": 0,
+        "current_controls_off": 0,
+        "current_controls_on": 0
+      },
+      "ebay": {
+        "prior_readiness": 0,
+        "current_controls_off": 0,
+        "current_controls_on": 0
+      },
+      "louisvuitton": {
+        "prior_readiness": 0,
+        "current_controls_off": 0,
+        "current_controls_on": 0
+      },
+      "lululemon": {
+        "prior_readiness": 0,
+        "current_controls_off": 0,
+        "current_controls_on": 0
+      },
+      "mouser": {
+        "prior_readiness": 0,
+        "current_controls_off": 0,
+        "current_controls_on": 0
+      },
+      "Yahoo Finance": {
+        "prior_readiness": 1,
+        "current_controls_off": 1,
+        "current_controls_on": 1
+      },
+      "TikTok": {
+        "prior_readiness": 1,
+        "current_controls_off": 2,
+        "current_controls_on": 2
+      },
+      "Zoopla": {
+        "prior_readiness": 1,
+        "current_controls_off": 2,
+        "current_controls_on": 2
+      },
+      "Yellow Pages": {
+        "prior_readiness": 2,
+        "current_controls_off": 2,
+        "current_controls_on": 2
+      },
+      "Facebook": {
+        "prior_readiness": 0,
+        "current_controls_off": 0,
+        "current_controls_on": 0
+      },
+      "canadagoose": {
+        "prior_readiness": 0,
+        "current_controls_off": 0,
+        "current_controls_on": 0
+      },
+      "bing": {
+        "prior_readiness": 0,
+        "current_controls_off": 0,
+        "current_controls_on": 0
+      },
+      "github": {
+        "prior_readiness": 2,
+        "current_controls_off": 2,
+        "current_controls_on": 2
+      }
+    },
+    "timingIntegrity": {
+      "valid": true,
+      "sampleIntervalMs": 1000,
+      "maximumAllowedGapMs": 10000,
+      "maximumObservedGapMs": 1004,
+      "gaps": []
+    },
+    "limits": [
+      "Selected regression subset, not a whole-portfolio score.",
+      "Rotating profile order; shared egress can still cause interference.",
+      "Older and newer capture implementations differ; controls-off isolates consent/workflow within the same newer image."
+    ]
+  },
+  "failedTargets": [
+    {
+      "target": "allegro",
+      "publisherWafLabel": "datadome",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "timeout": 3,
+        "challenge": 2
+      },
+      "interactionStates": {
+        "not_recorded": 3,
+        "VERIFICATION_REQUIRED": 2
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/001-allegro-1.json",
+      "contentSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "target": "canadagoose",
+      "publisherWafLabel": "kasada",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "content_not_ready": 5
+      },
+      "interactionStates": {
+        "CONTENT_NOT_READY": 5
+      },
+      "finding": "Product details expanded, but the expected sentence remained metadata-only. Do not count metadata as rendered product text.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/003-canadagoose-1.json",
+      "contentSha256": "3c3afd92d939d929da94a4615362e3df1b055ae57c3037438302e86ea7173836"
+    },
+    {
+      "target": "indeed",
+      "publisherWafLabel": "cloudflare",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "challenge": 5
+      },
+      "interactionStates": {
+        "VERIFICATION_REQUIRED": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/004-indeed-1.json",
+      "contentSha256": "2dba5c0d70f25fe833ce8f2a18acb6ee0abde41b42656656e8425c3dc48f22c4"
+    },
+    {
+      "target": "lowes",
+      "publisherWafLabel": "akamai",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "target_status_403": 5
+      },
+      "interactionStates": {
+        "ACCESS_DENIED": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/005-lowes-1.json",
+      "contentSha256": "2a310bb66f661d31cc4e206955adf611b15c1ff2549a103f25c31f4e6ecd574f"
+    },
+    {
+      "target": "safeway",
+      "publisherWafLabel": "incapsula",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "target_status_403": 5
+      },
+      "interactionStates": {
+        "ACCESS_DENIED": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/006-safeway-1.json",
+      "contentSha256": "1f4aed174fadaf08d6c08b4f88cb23936e4a80642b9817bc906459dd27c3c2d3"
+    },
+    {
+      "target": "zillow",
+      "publisherWafLabel": "perimeterx",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "content_not_ready": 5
+      },
+      "interactionStates": {
+        "CONTENT_NOT_READY": 5
+      },
+      "finding": "Listings rendered, but expected title phrase differed from the visible body heading. Frozen body-text criterion remains unchanged.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/008-zillow-1.json",
+      "contentSha256": "ed41ca8df926521214ceeb6672d2a6528bfc9212119b3d6ba54175650ecacd7e"
+    },
+    {
+      "target": "saksfifthavenue",
+      "publisherWafLabel": "datadome",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "challenge": 2,
+        "network_error": 3
+      },
+      "interactionStates": {
+        "VERIFICATION_REQUIRED": 2,
+        "not_recorded": 3
+      },
+      "finding": "Three ERR_EMPTY_RESPONSE failures and two recognized challenge responses.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/009-saksfifthavenue-1.json",
+      "contentSha256": "4d13f4ceebbc25033a1ea3fd1a6e10aac37bc78e31cadad8d093e4011d72f669"
+    },
+    {
+      "target": "neimanmarcus",
+      "publisherWafLabel": "datadome",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "challenge": 3,
+        "network_error": 2
+      },
+      "interactionStates": {
+        "VERIFICATION_REQUIRED": 3,
+        "not_recorded": 2
+      },
+      "finding": "Two ERR_EMPTY_RESPONSE failures and three recognized challenge responses.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/010-neimanmarcus-1.json",
+      "contentSha256": "37fe6fbdd3c2ba6ee49d1598093c2802ea27bc7d683c577342e7785130d6d429"
+    },
+    {
+      "target": "g2",
+      "publisherWafLabel": "datadome",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "challenge": 5
+      },
+      "interactionStates": {
+        "VERIFICATION_REQUIRED": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/011-g2-1.json",
+      "contentSha256": "dd92110d579552a2bf2c8f9cdaeda7236013eaf4a8be8e3940a96b3bf8045fd9"
+    },
+    {
+      "target": "aa",
+      "publisherWafLabel": "akamai",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "target_status_403": 5
+      },
+      "interactionStates": {
+        "ACCESS_DENIED": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/012-aa-1.json",
+      "contentSha256": "7544bf38dbfd63908ac51cd7dcf2f42358df8b5381299e4bc8f86dc73cb19c61"
+    },
+    {
+      "target": "lululemon",
+      "publisherWafLabel": "akamai",
+      "priorNormalizedMatches": 4,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "target_status_400": 5
+      },
+      "interactionStates": {
+        "CONTENT_NOT_READY": 5
+      },
+      "finding": "HTTP 400 with GE401001 appeared in both historical runs and every interleaved profile. No authoritative mapping of that code was found; no confirmed vendor cause is inferred.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/014-lululemon-1.json",
+      "contentSha256": "df4c8fcd391f5f8007766061c298573f6e7a96c4c0b49e5a9c7dbfac90205ae0"
+    },
+    {
+      "target": "hyatt",
+      "publisherWafLabel": "kasada",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "rate_limited": 5
+      },
+      "interactionStates": {
+        "CONTENT_NOT_READY": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/015-hyatt-1.json",
+      "contentSha256": "71b0fa83dcbbd0215fb324d3780d8c876866a674a51a3bdb4d1cd71afd5c3cf9"
+    },
+    {
+      "target": "macys",
+      "publisherWafLabel": "akamai",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "target_status_403": 5
+      },
+      "interactionStates": {
+        "ACCESS_DENIED": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/016-macys-1.json",
+      "contentSha256": "c3a4d5b63bda4aa26ee1402e6703e5e7093b09502047f258e3725ad7df75b625"
+    },
+    {
+      "target": "yelp",
+      "publisherWafLabel": "datadome",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "challenge": 5
+      },
+      "interactionStates": {
+        "VERIFICATION_REQUIRED": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/018-yelp-1.json",
+      "contentSha256": "94a5c79337ee274c52b430542f959372e1833e0f89d523e059d1db3da0da9f63"
+    },
+    {
+      "target": "louisvuitton",
+      "publisherWafLabel": "akamai",
+      "priorNormalizedMatches": 5,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "target_status_403": 5
+      },
+      "interactionStates": {
+        "ACCESS_DENIED": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/020-louisvuitton-1.json",
+      "contentSha256": "293f39a53f9f712de68221b31a4443d910f821ffee78509ea0cad0cae74b8ced"
+    },
+    {
+      "target": "autozone",
+      "publisherWafLabel": "datadome",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "target_status_403": 5
+      },
+      "interactionStates": {
+        "ACCESS_DENIED": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/021-autozone-1.json",
+      "contentSha256": "927a93e3842d39fabce6bd7e77d51bc846b8a63568644a790cd68558bed57bab"
+    },
+    {
+      "target": "homedepot",
+      "publisherWafLabel": "akamai",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "target_status_403": 5
+      },
+      "interactionStates": {
+        "ACCESS_DENIED": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/022-homedepot-1.json",
+      "contentSha256": "4739b3c5571d6d55e515dfc4cb944ec8494fa14c52eb1567786151a3d36badaf"
+    },
+    {
+      "target": "ashleyfurniture",
+      "publisherWafLabel": "perimeterx",
+      "priorNormalizedMatches": 3,
+      "workflowNormalizedMatches": 4,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "challenge": 1
+      },
+      "interactionStates": {
+        "VERIFICATION_REQUIRED": 1
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/423-ashleyfurniture-5.json",
+      "contentSha256": "192c2c650050ead0db60ad8cb73caedde619c7d4aae1105d94d6216c7e1a008f"
+    },
+    {
+      "target": "emag",
+      "publisherWafLabel": "aws-waf",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "target_status_511": 5
+      },
+      "interactionStates": {
+        "CONTENT_NOT_READY": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/028-emag-1.json",
+      "contentSha256": "acc2f5cb5bb6210a7178d4fd38540fb09a19398ea1b53d3b4add594f906cbb8a"
+    },
+    {
+      "target": "expedia",
+      "publisherWafLabel": "akamai",
+      "priorNormalizedMatches": 2,
+      "workflowNormalizedMatches": 4,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "rate_limited": 1
+      },
+      "interactionStates": {
+        "CONTENT_NOT_READY": 1
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/029-expedia-1.json",
+      "contentSha256": "d9423f04a090c2440e5cb054a8775cb310a822185f4a32f4e669c567b878360b"
+    },
+    {
+      "target": "marketwatch",
+      "publisherWafLabel": "datadome",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "challenge": 5
+      },
+      "interactionStates": {
+        "VERIFICATION_REQUIRED": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/031-marketwatch-1.json",
+      "contentSha256": "ad6a92f12914d0e8a089f559001fa432edb85e655379f66d3d8188df40ee9ae2"
+    },
+    {
+      "target": "barrons",
+      "publisherWafLabel": "datadome",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "challenge": 5
+      },
+      "interactionStates": {
+        "VERIFICATION_REQUIRED": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/032-barrons-1.json",
+      "contentSha256": "4ea8cdcebdcb04b7403dc561227c912cb6acaed0be330c813ecf7428cc53a315"
+    },
+    {
+      "target": "monster",
+      "publisherWafLabel": "datadome",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "target_status_403": 5
+      },
+      "interactionStates": {
+        "ACCESS_DENIED": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/033-monster-1.json",
+      "contentSha256": "935649112b96b4a87d82880808946a01715bef0022cfc8d831a148e48fa30708"
+    },
+    {
+      "target": "mouser",
+      "publisherWafLabel": "akamai",
+      "priorNormalizedMatches": 2,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "target_status_403": 5
+      },
+      "interactionStates": {
+        "ACCESS_DENIED": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/034-mouser-1.json",
+      "contentSha256": "cd853ad8511dd493fe9d23120ad4ea067caa55b9df0caf4ccd3666d355badfa1"
+    },
+    {
+      "target": "nytimes",
+      "publisherWafLabel": "datadome",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "content_not_ready": 5
+      },
+      "interactionStates": {
+        "CONTENT_NOT_READY": 5
+      },
+      "finding": "Expected historical live-post paragraph was outside rendered body; response also showed a subscription/sign-in gate. No gate bypass was added.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/035-nytimes-1.json",
+      "contentSha256": "62acc42329a6438bb4df4bc5b8897a2bfa281e54034c63141bd3bbe1692f05ad"
+    },
+    {
+      "target": "ralphlauren",
+      "publisherWafLabel": "perimeterx",
+      "priorNormalizedMatches": 4,
+      "workflowNormalizedMatches": 4,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "challenge": 1
+      },
+      "interactionStates": {
+        "VERIFICATION_REQUIRED": 1
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/036-ralphlauren-1.json",
+      "contentSha256": "3245919b79dcb7f69c0bbed218bb8e0257b100ad74472705fb398e5942cf7492"
+    },
+    {
+      "target": "realtor",
+      "publisherWafLabel": "aws-waf",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "rate_limited": 5
+      },
+      "interactionStates": {
+        "CONTENT_NOT_READY": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/037-realtor-1.json",
+      "contentSha256": "d7367fcb517104fdf5b2ac83c54a80e1339adf5782ed2701b8c68542e705dfd6"
+    },
+    {
+      "target": "tripadvisor",
+      "publisherWafLabel": "datadome",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "challenge": 5
+      },
+      "interactionStates": {
+        "VERIFICATION_REQUIRED": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/038-tripadvisor-1.json",
+      "contentSha256": "6fce8d5faa6265b88a635a18cc2a9d6a321607e0ce60dcc3ac7227124cadffa1"
+    },
+    {
+      "target": "wsj",
+      "publisherWafLabel": "datadome",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "challenge": 5
+      },
+      "interactionStates": {
+        "VERIFICATION_REQUIRED": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/039-wsj-1.json",
+      "contentSha256": "9940e67be5851411d969f29b09e83e55a2e31b02b3088a3989f54e170b1f11f7"
+    },
+    {
+      "target": "bloomberg",
+      "publisherWafLabel": "perimeterx",
+      "priorNormalizedMatches": 2,
+      "workflowNormalizedMatches": 3,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "target_status_403": 2
+      },
+      "interactionStates": {
+        "ACCESS_DENIED": 2
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/040-bloomberg-1.json",
+      "contentSha256": "445b412fa60119788c2c22443d3cdb494e93c969b7a0df6606161b458b77176c"
+    },
+    {
+      "target": "reuters",
+      "publisherWafLabel": "datadome",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "challenge": 5
+      },
+      "interactionStates": {
+        "VERIFICATION_REQUIRED": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/041-reuters-1.json",
+      "contentSha256": "8c860c36b4e748c4800c8b9c42b3b13a4fdab3d61ababcbc9e910b864d323498"
+    },
+    {
+      "target": "coupang",
+      "publisherWafLabel": "akamai",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "target_status_403": 5
+      },
+      "interactionStates": {
+        "ACCESS_DENIED": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/043-coupang-1.json",
+      "contentSha256": "5c58afc5ac31b970a6a0021ba976a3cfca71d884900749778ceba154602bd167"
+    },
+    {
+      "target": "ebay",
+      "publisherWafLabel": "akamai",
+      "priorNormalizedMatches": 4,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "target_status_403": 5
+      },
+      "interactionStates": {
+        "ACCESS_DENIED": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/044-ebay-1.json",
+      "contentSha256": "a76339ccc19c0681993971a321d3c8c8f4c6b7dbcf83a82e0fa82fc536661e8e"
+    },
+    {
+      "target": "stockx",
+      "publisherWafLabel": "cloudflare",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "challenge": 5
+      },
+      "interactionStates": {
+        "HUMAN_REQUIRED": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/047-stockx-1.json",
+      "contentSha256": "42346bbda419f8978307a10c1b327d1b56f7c61b16da86703e45de991528ff60"
+    },
+    {
+      "target": "cargurus",
+      "publisherWafLabel": "datadome",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "network_error": 5
+      },
+      "interactionStates": {
+        "not_recorded": 5
+      },
+      "finding": "Navigation reported ERR_HTTP_RESPONSE_CODE_FAILURE in five attempts. New error diagnostics retain the available response status and phase.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/048-cargurus-1.json",
+      "contentSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "target": "cars.com",
+      "publisherWafLabel": "cloudflare",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "challenge": 5
+      },
+      "interactionStates": {
+        "HUMAN_REQUIRED": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/049-cars_com-1.json",
+      "contentSha256": "23dd5f1f2df6c64c086b73910493902d81da5aa8096c271459323aea491c696f"
+    },
+    {
+      "target": "crunchbase",
+      "publisherWafLabel": "cloudflare",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "challenge": 5
+      },
+      "interactionStates": {
+        "VERIFICATION_REQUIRED": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/050-crunchbase-1.json",
+      "contentSha256": "56fcb7a9b6c02f2c81dfb20a4630fbc609301d5e996d30bdf9174ddc76171ebd"
+    },
+    {
+      "target": "verizon",
+      "publisherWafLabel": "akamai",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "target_status_417": 5
+      },
+      "interactionStates": {
+        "CONTENT_NOT_READY": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/051-verizon-1.json",
+      "contentSha256": "f9390819ecf9a9825d60afff00bed4797beabd4c394435080ee7d6bf27fc3275"
+    },
+    {
+      "target": "att",
+      "publisherWafLabel": "akamai",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "target_status_403": 5
+      },
+      "interactionStates": {
+        "ACCESS_DENIED": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/052-att-1.json",
+      "contentSha256": "76dbd428803b0584a11a75f1c1c1fb757bd30954a1abd48c486ee97b6a88bdb2"
+    },
+    {
+      "target": "goodrx",
+      "publisherWafLabel": "perimeterx",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "challenge": 5
+      },
+      "interactionStates": {
+        "VERIFICATION_REQUIRED": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/053-goodrx-1.json",
+      "contentSha256": "2902f3e2cac12fb4a5ccd225a98c0222003b8ccadf5c71f33bef8d3199325812"
+    },
+    {
+      "target": "LinkedIn",
+      "publisherWafLabel": "custom",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 1,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "network_error": 4
+      },
+      "interactionStates": {
+        "not_recorded": 4
+      },
+      "finding": "Four network failures reported ERR_CONNECTION_CLOSED; one company page matched.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/054-LinkedIn-1.json",
+      "contentSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "target": "Capterra",
+      "publisherWafLabel": "cloudflare",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "challenge": 5
+      },
+      "interactionStates": {
+        "HUMAN_REQUIRED": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/058-Capterra-1.json",
+      "contentSha256": "1c42b145115295d48e120fe7ab4cc796f2dce8530cb1a386e1106c475471f0eb"
+    },
+    {
+      "target": "Reddit",
+      "publisherWafLabel": "custom",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "challenge": 5
+      },
+      "interactionStates": {
+        "HUMAN_REQUIRED": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/059-Reddit-1.json",
+      "contentSha256": "16bf9c4207ec0d01c52c600c6b720db00da40f1ec22c44cfd0b6f060df295177"
+    },
+    {
+      "target": "Google Search",
+      "publisherWafLabel": "custom",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "rate_limited": 5
+      },
+      "interactionStates": {
+        "CONTENT_READY": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/060-Google_Search-1.json",
+      "contentSha256": "e286c9e8a340db25c68171fd37006e00104d34962c4386e355a6b1346e2ddc62"
+    },
+    {
+      "target": "TikTok",
+      "publisherWafLabel": "custom",
+      "priorNormalizedMatches": 5,
+      "workflowNormalizedMatches": 4,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "content_not_ready": 1
+      },
+      "interactionStates": {
+        "CONTENT_NOT_READY": 1
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/262-TikTok-3.json",
+      "contentSha256": "70a85560f68019af4d79c961939401f774eec7377ad984f656c0bf6bde3aca31"
+    },
+    {
+      "target": "Best Buy",
+      "publisherWafLabel": "akamai",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 2,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "network_error": 3
+      },
+      "interactionStates": {
+        "not_recorded": 3
+      },
+      "finding": "Two product navigations matched. Three network failures were recorded; container logs include a failed follow-up country/product navigation. Previous summary saying all failed before navigation was too strong.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/064-Best_Buy-1.json",
+      "contentSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "target": "Redfin",
+      "publisherWafLabel": "aws-waf",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "target_status_405": 5
+      },
+      "interactionStates": {
+        "CONTENT_NOT_READY": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/065-Redfin-1.json",
+      "contentSha256": "349fe8cd960427925d6cbc8e24f80d1c07314cfc98b08063081d5018ec43fc93"
+    },
+    {
+      "target": "SeatGeek",
+      "publisherWafLabel": "datadome",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "challenge": 5
+      },
+      "interactionStates": {
+        "VERIFICATION_REQUIRED": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/067-SeatGeek-1.json",
+      "contentSha256": "150c01797793dacd7c07b3222b798a456b4e032d86eeaf11a94107314fcfc53e"
+    },
+    {
+      "target": "Facebook",
+      "publisherWafLabel": "custom",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "content_not_ready": 5
+      },
+      "interactionStates": {
+        "CONTENT_NOT_READY": 5
+      },
+      "finding": "All five captures had an empty rendered body and blocked first-party application CDN assets. Allowing fbcdn.net produced rendered NASA content in the live control and 2/2 repaired pilot attempts.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/068-Facebook-1.json",
+      "contentSha256": "d93fbd4d1bbe260fbba239c6e0fa260ea7e79ff4d2f1dfd5c2481c873b59abc0"
+    },
+    {
+      "target": "Yahoo Finance",
+      "publisherWafLabel": "unclassified",
+      "priorNormalizedMatches": 5,
+      "workflowNormalizedMatches": 2,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "network_error": 3
+      },
+      "interactionStates": {
+        "not_recorded": 3
+      },
+      "finding": "Three lost matches correspond to ERR_EMPTY_RESPONSE, not an HTTP/2 protocol error.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/170-Yahoo_Finance-2.json",
+      "contentSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "target": "ZipRecruiter",
+      "publisherWafLabel": "cloudflare",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "challenge": 5
+      },
+      "interactionStates": {
+        "HUMAN_REQUIRED": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/075-ZipRecruiter-1.json",
+      "contentSha256": "18e0fd472919e8f762ef0527bf366c39206da57b47135002fdbb0343890bf980"
+    },
+    {
+      "target": "Idealista",
+      "publisherWafLabel": "datadome",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "challenge": 5
+      },
+      "interactionStates": {
+        "VERIFICATION_REQUIRED": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/077-Idealista-1.json",
+      "contentSha256": "e7a4f92b582b8390208a2c17a5eb7502c61f184a1af1d94ff7e8a5759c3489f3"
+    },
+    {
+      "target": "Skyscanner",
+      "publisherWafLabel": "perimeterx",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "challenge": 5
+      },
+      "interactionStates": {
+        "VERIFICATION_REQUIRED": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/080-Skyscanner-1.json",
+      "contentSha256": "e1bd27b4af214a972b3a45165ed81985c7ecc2e7f47f1129717c5e481f3137b1"
+    },
+    {
+      "target": "Congress.gov",
+      "publisherWafLabel": "cloudflare",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "challenge": 5
+      },
+      "interactionStates": {
+        "HUMAN_REQUIRED": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/081-Congress_gov-1.json",
+      "contentSha256": "5ac99e7c74982f52ac6faf25edfe94d0d75d6f96ba44043799340ced8af7a039"
+    },
+    {
+      "target": "CoinMarketCap",
+      "publisherWafLabel": "unclassified",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "content_not_ready": 5
+      },
+      "interactionStates": {
+        "CONTENT_NOT_READY": 5
+      },
+      "finding": "Public About section used viewport-triggered hydration. A real scroll exposed the expected text; 2/2 repaired pilot attempts matched.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/083-CoinMarketCap-1.json",
+      "contentSha256": "5e482d9ecd7cc0baac97c09c3d721063981f9cbc0ae174cec68675d21eaa4709"
+    },
+    {
+      "target": "Apartments.com",
+      "publisherWafLabel": "akamai",
+      "priorNormalizedMatches": 2,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "target_status_403": 5
+      },
+      "interactionStates": {
+        "ACCESS_DENIED": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/084-Apartments_com-1.json",
+      "contentSha256": "e15bdc1d8025c5e28542a90b20a813710282b82cdfdfd3f0110dbf941ca45f94"
+    },
+    {
+      "target": "Zoopla",
+      "publisherWafLabel": "cloudflare",
+      "priorNormalizedMatches": 5,
+      "workflowNormalizedMatches": 3,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "challenge": 2
+      },
+      "interactionStates": {
+        "HUMAN_REQUIRED": 2
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/085-Zoopla-1.json",
+      "contentSha256": "d96129f6707dcf148f4ac64340ddd42ad512a1f7d66a968f41beaac9c0eb8e3c"
+    },
+    {
+      "target": "Yellow Pages",
+      "publisherWafLabel": "cloudflare",
+      "priorNormalizedMatches": 5,
+      "workflowNormalizedMatches": 4,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "target_status_503": 1
+      },
+      "interactionStates": {
+        "CONTENT_READY": 1
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/487-Yellow_Pages-5.json",
+      "contentSha256": "09160d1f3ab6d3f2457c91cea91791ce539ac5c82a5ba6c5b1b49ee72cf69f80"
+    },
+    {
+      "target": "Allmenus",
+      "publisherWafLabel": "unclassified",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "content_not_ready": 5
+      },
+      "interactionStates": {
+        "REGION_UNAVAILABLE": 5
+      },
+      "finding": "Response explicitly reports location unavailability. No content was retrieved from this egress.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/089-Allmenus-1.json",
+      "contentSha256": "a6b9e1b3444491bddf3eb31993e3f5d06d4436d333c1c7d1c6a2cedacdc7f751"
+    },
+    {
+      "target": "temu",
+      "publisherWafLabel": "temu",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "content_not_ready": 5
+      },
+      "interactionStates": {
+        "HUMAN_REQUIRED": 3,
+        "CONTENT_NOT_READY": 2
+      },
+      "finding": "Rendered interactive image-verification instructions and a discontinued-item title; no automated verification was attempted.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/090-temu-1.json",
+      "contentSha256": "303e910ccf14d7aa77b75b41d47a222bb3ae4d0cce677a80822cc98902ac59bc"
+    },
+    {
+      "target": "kroger",
+      "publisherWafLabel": "akamai",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "target_status_403": 5
+      },
+      "interactionStates": {
+        "ACCESS_DENIED": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/092-kroger-1.json",
+      "contentSha256": "cde62f4a4b1e21876e183db62732b4124f58ac28c6c08b83fded38db3be38548"
+    },
+    {
+      "target": "axs",
+      "publisherWafLabel": "cloudflare",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "challenge": 5
+      },
+      "interactionStates": {
+        "VERIFICATION_REQUIRED": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/093-axs-1.json",
+      "contentSha256": "985550db0aad4195eb661a6394d9451b32bb743599ad81bf8ef07dcda1870325"
+    },
+    {
+      "target": "roblox",
+      "publisherWafLabel": "fastly",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "timeout": 5
+      },
+      "interactionStates": {
+        "not_recorded": 5
+      },
+      "finding": "All five attempts exhausted the navigation deadline. A separate diagnostic stopped without a DOM result; underlying cause remains unconfirmed.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/094-roblox-1.json",
+      "contentSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "target": "draftkings",
+      "publisherWafLabel": "akamai",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "target_status_403": 5
+      },
+      "interactionStates": {
+        "ACCESS_DENIED": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/095-draftkings-1.json",
+      "contentSha256": "55dd0cb4550754e097c756b542e70470b238d245de77bb3a1154f639f75b32da"
+    },
+    {
+      "target": "bing",
+      "publisherWafLabel": "unclassified",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "content_not_ready": 5
+      },
+      "interactionStates": {
+        "CONTENT_NOT_READY": 5
+      },
+      "finding": "Expected string was in the document title, while search results rendered in the body. Frozen body-text criterion remains unchanged.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/096-bing-1.json",
+      "contentSha256": "db331d457f45dff6bd7e8af722cfbd614bf1d0eb658338cddfabe0b3daec1079"
+    },
+    {
+      "target": "stackoverflow",
+      "publisherWafLabel": "cloudflare",
+      "priorNormalizedMatches": 3,
+      "workflowNormalizedMatches": 3,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "content_not_ready": 2
+      },
+      "interactionStates": {
+        "CONTENT_NOT_READY": 2
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/298-stackoverflow-3.json",
+      "contentSha256": "b340cce64cb7305925484d94d117790f6ab2a5026e41d077a4c18856edadeadb"
+    },
+    {
+      "target": "buybuybaby",
+      "publisherWafLabel": "unclassified",
+      "priorNormalizedMatches": 0,
+      "workflowNormalizedMatches": 0,
+      "attemptsPerTarget": 5,
+      "failureReasons": {
+        "target_status_403": 5
+      },
+      "interactionStates": {
+        "ACCESS_DENIED": 5
+      },
+      "finding": "Responses did not meet the frozen unattended retrieval criterion; see reason counts and retained evidence. Interactive verification and denied origin responses remain explicit failures.",
+      "representativeEvidence": "_local/anti-bot/waf-workflows-navigation-full-2026-11-03/evidence/100-buybuybaby-1.json",
+      "contentSha256": "8c82d1f860372ad379688ea808620856d092e18fc10d2f84180b7a4816d05236"
+    }
+  ],
+  "primaryReferences": [
+    "https://playwright.dev/docs/navigations",
+    "https://playwright.dev/docs/api/class-page#page-goto",
+    "https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API",
+    "https://github.com/chromium/chromium/blob/main/net/base/net_error_list.h"
+  ],
+  "limits": [
+    "Response class is observed evidence, not proof of a vendor policy or reason for denial.",
+    "The ablation is small and shares an IP; it does not exclude timing or cross-request interference.",
+    "Container service logs also include preflight requests; benchmark counts come from the 500 append-log records.",
+    "Title/metadata-only markers, region restrictions and interactive challenges are not converted into successes."
+  ],
+  "previousCheckoutCommit": "8555184f61a92ac3c129e991e91863ca1f343e69",
+  "previousBrowserRuntimeCommit": "5eecbf75553d55957e8614695ba97377ca7b1329",
+  "challengeResponseAudit": {
+    "recognizedChallenges": 111,
+    "normalizedTextMarkerMatches": 0,
+    "groups": {
+      "cloudflareChallengeHeader": 42,
+      "datadomeBootstrap": 52,
+      "humanPerimeterXInterstitial": 12,
+      "redditHumanVerification": 5
+    }
+  },
+  "candidateDiagnosticExamples": [
+    {
+      "target": "cargurus",
+      "runtimeCommit": "f47d7085ce6a07be1ce38fc523a10533648b9f36",
+      "failureReason": "network_error",
+      "pageStatus": null,
+      "networkErrorCode": "ERR_HTTP_RESPONSE_CODE_FAILURE",
+      "operationDocument": {
+        "phase": "navigation",
+        "url": "about:blank",
+        "lastResponseStatus": 406,
+        "recentNavigations": [
+          {
+            "url": "https://www.cargurus.com/details/440130010",
+            "status": 406
+          }
+        ],
+        "recentFailedRequests": [
+          "net::ERR_HTTP_RESPONSE_CODE_FAILURE"
+        ]
+      },
+      "evidenceFile": "_local/anti-bot/waf-regression-repair-full-2026-11-03/evidence/048-cargurus-1.json"
+    },
+    {
+      "target": "roblox",
+      "runtimeCommit": "f47d7085ce6a07be1ce38fc523a10533648b9f36",
+      "failureReason": "timeout",
+      "pageStatus": null,
+      "networkErrorCode": null,
+      "operationDocument": {
+        "phase": "navigation",
+        "url": "about:blank",
+        "lastResponseStatus": null,
+        "recentNavigations": [
+          {
+            "url": "https://www.roblox.com/discover",
+            "status": 301
+          }
+        ],
+        "recentFailedRequests": []
+      },
+      "evidenceFile": "_local/anti-bot/waf-regression-repair-full-2026-11-03/evidence/094-roblox-1.json"
+    },
+    {
+      "target": "target",
+      "runtimeCommit": "f47d7085ce6a07be1ce38fc523a10533648b9f36",
+      "failureReason": "rate_limited",
+      "pageStatus": 429,
+      "networkErrorCode": null,
+      "operationDocument": null,
+      "evidenceFile": "_local/anti-bot/waf-regression-repair-full-2026-11-03/evidence/045-target-1.json"
+    }
+  ],
+  "completedRepairResults": "regression-repair-results-2026-11-03.json"
+}
