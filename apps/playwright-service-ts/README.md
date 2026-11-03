@@ -1,14 +1,15 @@
 # Browser scrape service
 
-The existing Firecrawl Playwright HTTP adapter can use three open-source drivers:
+The existing Firecrawl Playwright HTTP adapter supports these browser backends:
 
 | `BROWSER_ENGINE`      | Driver                          | Use                                                                       |
 | --------------------- | ------------------------------- | ------------------------------------------------------------------------- |
 | `rebrowser` (default) | `rebrowser-playwright` 1.64.101 | Patched Chromium automation, including CDP and storage-partitioning fixes |
 | `patchright`          | Patchright 1.64.2               | Alternative patched Chromium driver                                       |
 | `playwright`          | Playwright 1.64.1 (lockfile)    | Stock driver for compatibility and comparison                             |
+| `camoufox`            | Camoufox 0.5.9, Firefox 158.0.1-beta.41 | Optional Firefox backend, using its supported Playwright core 1.62.0 |
 
-The service keeps a native browser identity instead of generating a random
+The Chromium backends keep a native browser identity instead of generating a random
 Safari/mobile user-agent on desktop Chromium. It uses full Chromium, a native
 viewport, isolated request contexts, and the existing SSRF-checking proxy.
 Explicit caller-supplied headers and user-agents are still honored. A custom UA
@@ -22,7 +23,7 @@ signals; it does not identify every possible challenge.
 
 ## Install and run locally
 
-Use Node >=22.13 and the pinned pnpm 11.4.0 from this directory:
+Use Node >=22.15 and the pinned pnpm 11.4.0 from this directory:
 
 ```sh
 pnpm install --frozen-lockfile
@@ -45,6 +46,22 @@ BROWSER_ENGINE=rebrowser BROWSER_HEADLESS=false BROWSER_CHANNEL=chrome pnpm dev
 `BROWSER_CHANNEL` defaults to `chromium`. The `chrome` channel requires a separate
 Chrome installation. Invalid engine/headless values fail at startup.
 
+Camoufox generates an OS-matched Firefox identity. Provision its pinned browser
+and identity model before starting an owner:
+
+```sh
+pnpm prepare:camoufox
+BROWSER_ENGINE=camoufox BROWSER_CHANNEL= pnpm dev
+```
+
+It uses a separate Playwright core; stock Playwright and patched Chromium keep
+their existing dependency versions. The factory selects the pinned installed
+build and fails if it is missing. `BROWSER_CHANNEL` is only a Chromium option.
+The bundled ad-blocking addon is disabled so the service's resource policy stays
+in control. WebRTC and alternate DNS are disabled, and localhost requests still
+pass through the pinned filtering proxy. Neither backend guarantees access to
+a protected target. Rebrowser remains the default.
+
 ## Docker and Firecrawl
 
 The Docker image and root Compose service default to Rebrowser with headful
@@ -55,6 +72,11 @@ signal handling and process reaping. Include `--init` with a standalone image:
 docker build -t firecrawl-browser apps/playwright-service-ts
 docker run --rm --init -e PORT=3000 -p 127.0.0.1:3003:3000 firecrawl-browser
 ```
+
+For a Camoufox owner, build with `--build-arg INSTALL_CAMOUFOX=true`, then set
+`BROWSER_ENGINE=camoufox` and leave `BROWSER_CHANNEL` empty. This explicitly adds
+the Firefox distribution and its data files to the image; ordinary builds do
+not download them.
 
 The existing Compose `PLAYWRIGHT_MICROSERVICE_URL` already points to this
 service. For a host-based Firecrawl API, set

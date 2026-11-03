@@ -34,3 +34,22 @@ test('invalid engine and headless configuration fail instead of silently downgra
     /BROWSER_HEADLESS/,
   );
 });
+
+test('Camoufox is an explicit Firefox choice without Chromium launch flags', () => {
+  const config = browserConfiguration({
+    BROWSER_ENGINE: 'camoufox',
+    BROWSER_HEADLESS: 'false',
+  });
+  assert.equal(config.engine, 'camoufox');
+  assert.equal(config.launchOptions.headless, false);
+  assert.equal(config.launchOptions.channel, undefined);
+  assert.deepEqual(config.launchOptions.args, []);
+  assert.throws(
+    () =>
+      browserConfiguration({
+        BROWSER_ENGINE: 'camoufox',
+        BROWSER_CHANNEL: 'chrome',
+      }),
+    /BROWSER_CHANNEL/,
+  );
+});

@@ -28,8 +28,19 @@ ENV BROWSER_HEADLESS=false
 
 RUN pnpm run build
 
+# The Firefox binary and identity model are provisioned only for owners that
+# opt in; ordinary Chromium images keep their existing browser installation.
+ARG INSTALL_CAMOUFOX=false
+ENV XDG_CACHE_HOME=/usr/local/share/browser-cache
+RUN if [ "$INSTALL_CAMOUFOX" = "true" ]; then \
+      node node_modules/playwright-core/cli.js install-deps firefox && \
+      node dist/scripts/prepare-camoufox.js; \
+    fi
+
 RUN chown -R node:node /usr/src/app \
   && chmod -R a+rX /usr/local/share/playwright
+RUN mkdir -p /usr/local/share/browser-cache \
+  && chown -R node:node /usr/local/share/browser-cache
 
 ARG PORT
 ENV PORT=${PORT}

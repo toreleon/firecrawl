@@ -39,6 +39,12 @@ jobs:
           node node_modules/patchright/cli.js install chromium
           node node_modules/rebrowser-playwright/cli.js install chromium
       - run: pnpm build
+      - name: Prepare the pinned optional Firefox backend
+        run: |
+          node node_modules/playwright-core/cli.js install-deps firefox
+          node dist/scripts/prepare-camoufox.js
       - run: pnpm test
       - run: pnpm test:integration
+        env:
+          TEST_CAMOUFOX: 'true'
       - run: pnpm audit --prod
