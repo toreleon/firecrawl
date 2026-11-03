@@ -274,19 +274,38 @@ export const createLocalBrowser = async (
     ].includes(result.interaction?.state)
       ? "WAITING_HUMAN"
       : "READY";
-    await localPool().query(
-      "UPDATE firecrawl_local_browser_sessions SET state=$2,private_data=$3,expires_at=LEAST(expires_at,to_timestamp($4::double precision/1000)),updated_at=clock_timestamp() WHERE id=$1 AND state='CREATING'",
+    const activated = await localPool().query<{ expires_at: string }>(
+      "UPDATE firecrawl_local_browser_sessions SET state=$2,private_data=$3,expires_at=LEAST(expires_at,to_timestamp($4::double precision/1000)),updated_at=clock_timestamp() WHERE id=$1 AND state='CREATING' AND expires_at>clock_timestamp() RETURNING expires_at",
       [id, state, seal(privateData), result.sessionExpiresAt],
     );
+    if (!activated.rowCount) {
+      // A close/expiry may win while initial navigation is in flight. The newly
+      // returned capability was never published, so dispose it directly without
+      // reviving or overwriting the directory record that won the race.
+      await browserRpc(
+        owner.base,
+        `/sessions/${privateData.token}`,
+        undefined,
+        {
+          boot: owner.boot,
+          method: "DELETE",
+          timeout: 5000,
+        },
+      ).catch(() => {});
+      throw new LocalBrowserError(
+        "SESSION_STALE",
+        "Session closed or expired during creation",
+      );
+    }
     return {
       id,
       state,
-      expiresAt: (await getLocalSession(team, id)).expires_at,
+      expiresAt: activated.rows[0].expires_at,
       interaction: result.interaction,
     };
   } catch (error) {
     await localPool().query(
-      "UPDATE firecrawl_local_browser_sessions SET state='LOST' WHERE id=$1",
+      "UPDATE firecrawl_local_browser_sessions SET state='LOST',updated_at=clock_timestamp() WHERE id=$1 AND state='CREATING'",
       [id],
     );
     throw error;

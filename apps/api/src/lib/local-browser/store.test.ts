@@ -1,6 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { spawn } from "node:child_process";
 import { config } from "../../config";
+import { closeLocalBrowser, createLocalBrowser } from "./client";
 import {
   closeLocalStore,
   getLocalSession,
@@ -152,5 +153,60 @@ describe.skipIf(
     const encrypted = seal({ token: "private-secret" });
     expect(encrypted).not.toContain("private-secret");
     expect(unseal(encrypted)).toEqual({ token: "private-secret" });
+  });
+  it("lets close win an in-flight creation and disposes a late capability", async () => {
+    const originalOwners = config.LOCAL_BROWSER_OWNER_URLS;
+    config.LOCAL_BROWSER_OWNER_URLS = "http://creation-race-owner.test";
+    const disposed: string[] = [];
+    let closedId = "";
+    let loseResponse = false;
+    const fetch = vi
+      .spyOn(globalThis, "fetch")
+      .mockImplementation(async (url, init) => {
+        const path = new URL(String(url)).pathname;
+        if (path === "/health")
+          return Response.json({
+            status: "healthy",
+            ownerBootId: "creation-race-owner",
+            capabilities: { version: 1, actions: [] },
+          });
+        if (init?.method === "DELETE") {
+          disposed.push(path);
+          return new Response(null, { status: 204 });
+        }
+        expect(path).toBe("/scrape");
+        const pending = await localPool().query(
+          "SELECT id FROM firecrawl_local_browser_sessions WHERE team_id=$1 AND state='CREATING'",
+          [team],
+        );
+        expect(pending.rowCount).toBe(1);
+        closedId = pending.rows[0].id;
+        await closeLocalBrowser(team, closedId);
+        if (loseResponse) throw Error("creation response lost after close");
+        return Response.json({
+          content: "late document",
+          pageStatusCode: 200,
+          sessionId: "a".repeat(64),
+          sessionExpiresAt: Date.now() + 60000,
+        });
+      });
+    try {
+      await expect(
+        createLocalBrowser(team, { url: "https://example.com" }),
+      ).rejects.toMatchObject({ code: "SESSION_STALE" });
+      expect(disposed).toEqual([`/sessions/${"a".repeat(64)}`]);
+      expect((await getLocalSession(team, closedId)).state).toBe("CLOSED");
+      expect(
+        unseal((await getLocalSession(team, closedId)).private_data),
+      ).toEqual({});
+      loseResponse = true;
+      await expect(
+        createLocalBrowser(team, { url: "https://example.com" }),
+      ).rejects.toMatchObject({ code: "BROWSER_OUTCOME_UNKNOWN" });
+      expect((await getLocalSession(team, closedId)).state).toBe("CLOSED");
+    } finally {
+      fetch.mockRestore();
+      config.LOCAL_BROWSER_OWNER_URLS = originalOwners;
+    }
   });
 });
