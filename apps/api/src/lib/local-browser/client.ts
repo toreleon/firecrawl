@@ -601,7 +601,7 @@ export const scrapeLocalBrowser = async (
         primary.errorCode === "CONTENT_NOT_READY" ||
         // proxy-chain surfaces a reset of an HTTP target as its own 595
         // response. It remains a failed status with confirmed page cleanup.
-        [403, 406, 417, 429, 502, 503, 504, 595].includes(
+        [400, 403, 406, 417, 429, 502, 503, 504, 595].includes(
           primary.pageStatusCode,
         ));
     if (!eligible) return stop(proof ? "not_needed" : "completion_unconfirmed");

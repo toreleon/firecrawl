@@ -153,6 +153,40 @@ describe("Explicit stateless browser-engine fallback", () => {
     );
     expect([primary.calls.scrape, fallback.calls.scrape]).toEqual([1, 1]);
   });
+  it("can recover a completed target HTTP 400 without treating browser-service validation errors as target failures", async () => {
+    const pair = await configure({ status: 400 });
+    const result = await request();
+    expect(result.pageStatusCode).toBe(200);
+    expect(result.diagnostics.engineFallback.recovered).toBe(true);
+    expect(result.diagnostics.engineFallback.attempts[0].pageStatusCode).toBe(
+      400,
+    );
+    expect([pair.primary.calls.scrape, pair.fallback.calls.scrape]).toEqual([
+      1, 1,
+    ]);
+    const invalid = await configure({
+      apiStatus: 400,
+      code: "INVALID_OPTIONS",
+    });
+    await expect(request()).rejects.toMatchObject({ code: "INVALID_OPTIONS" });
+    expect([
+      invalid.primary.calls.scrape,
+      invalid.fallback.calls.scrape,
+    ]).toEqual([1, 0]);
+  });
+  it("keeps target HTTP 400 terminal without opt-in or confirmed cleanup and owner identity", async () => {
+    for (const options of [
+      { status: 400, closed: false },
+      { status: 400, wrongBoot: true },
+    ]) {
+      const pair = await configure(options);
+      expect((await request()).pageStatusCode).toBe(400);
+      expect(pair.fallback.calls.scrape).toBe(0);
+    }
+    const pair = await configure({ status: 400 });
+    expect((await request({ controls: {} })).pageStatusCode).toBe(400);
+    expect(pair.fallback.calls.scrape).toBe(0);
+  });
   it("recovers a confirmed HTTP reset response from the filtering proxy", async () => {
     const { primary, fallback } = await configure({ status: 595 });
     const result = await request();
