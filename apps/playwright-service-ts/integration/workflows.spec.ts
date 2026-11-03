@@ -20,27 +20,34 @@ test(
     try {
       const page = await browser.newPage();
       let requests = 0;
+      let phase = 'prompt';
       await page.route('**/*', async (route) => {
-      if (!route.request().isNavigationRequest()) return route.abort();
+        if (!route.request().isNavigationRequest()) return route.abort();
         requests++;
         const url = new URL(route.request().url());
         const body =
           url.searchParams.get('intl') === 'nosplash'
             ? '<title>Product 42</title><main>Original product 42</main>'
-            : `<title>Country selector</title><main>Loading</main><script>setTimeout(()=>{document.body.innerHTML='<h1>Choose a country</h1><a href="?skuId=42&amp;intl=nosplash">United States</a>'},400)</script>`;
+            : phase === 'prompt'
+              ? `<title>Country selector</title><main>Loading</main><script>setTimeout(()=>{document.body.innerHTML='<h1>Choose a country</h1><a href="?skuId=42&amp;intl=nosplash">United States</a>'},400)</script>`
+              : `<title>Country selector</title><h1>Choose a country</h1><a id="country" href="/?intl=nosplash">United States</a><script>setTimeout(()=>{document.querySelector('#country').href='?skuId=42&intl=nosplash'},400)</script>`;
         await route.fulfill({ contentType: 'text/html', body });
       });
-      await page.goto('https://www.bestbuy.com/site/product/42.p?skuId=42', {
-        waitUntil: 'domcontentloaded',
-      });
-      const result = await applyWorkflow(page, 'auto', new Deadline(5000));
-      assert.equal(result.steps[0]?.outcome, 'navigated-original-product');
-      assert.equal(new URL(page.url()).searchParams.get('skuId'), '42');
-      assert.match(
-        await page.locator('body').innerText(),
-        /Original product 42/,
-      );
-      assert.equal(requests, 2);
+      for (const stage of ['prompt', 'destination']) {
+        phase = stage;
+        requests = 0;
+        await page.goto('https://www.bestbuy.com/site/product/42.p?skuId=42', {
+          waitUntil: 'domcontentloaded',
+        });
+        const result = await applyWorkflow(page, 'auto', new Deadline(5000));
+        assert.equal(result.steps[0]?.outcome, 'navigated-original-product');
+        assert.equal(new URL(page.url()).searchParams.get('skuId'), '42');
+        assert.match(
+          await page.locator('body').innerText(),
+          /Original product 42/,
+        );
+        assert.equal(requests, 2);
+      }
     } finally {
       await browser.close();
     }

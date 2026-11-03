@@ -299,50 +299,68 @@ export const applyWorkflow = async (
 ) => {
   const steps: { type: string; outcome: string }[] = [];
   const url = new URL(page.url());
+  const observations: {
+    entryHost: string;
+    countrySelection?: {
+      observed: boolean;
+      candidateCount: number;
+      waitMs: number;
+    };
+  } = { entryHost: url.hostname };
   if (
     (workflow === 'auto' || workflow === 'bestbuy-us@1') &&
     url.hostname === 'www.bestbuy.com'
   ) {
-    // DOMContentLoaded can precede the country chooser's hydration. Observe
-    // both its rendered prompt and destination link before deciding it is absent.
-    await page
-      .waitForFunction(
-        () =>
-          /choose\s+a\s+country|select\s+your\s+country/i.test(
-            document.body?.innerText ?? '',
-          ) &&
-          Array.from(document.querySelectorAll('a[href]')).some((link) =>
-            (link as HTMLAnchorElement).href.includes('intl=nosplash'),
-          ),
-        undefined,
-        { timeout: Math.min(5000, Math.max(1, deadline.remaining() - 300)) },
-      )
-      .catch((error) => {
-        if (!/Timeout/i.test(String(error))) throw error;
-      });
-    if (
-      /choose\s+a\s+country|select\s+your\s+country/i.test(
-        await page.locator('body').innerText(),
-      )
-    ) {
-      for (const href of await page
-        .locator('a[href]')
-        .evaluateAll((links) =>
-          links.map((link) => (link as HTMLAnchorElement).href),
-        )) {
-        const next = countryDestination(page.url(), href);
-        if (!next) continue;
-        await page.goto(next, {
-          waitUntil: 'domcontentloaded',
-          timeout: deadline.remaining(),
-        });
-        steps.push({
-          type: 'country-selection',
-          outcome: 'navigated-original-product',
-        });
-        break;
+    // Prompt hydration and deep-link rewriting are separate. Wait for a link
+    // that passes the same identity check used for navigation, not any US link.
+    const started = Date.now();
+    const end =
+      started + Math.min(5000, Math.max(1, deadline.remaining() - 300));
+    let destination: string | null = null;
+    let observed = false;
+    let candidateCount = 0;
+    do {
+      const text = await deadline.run(
+        page.evaluate(() => document.body?.innerText ?? ''),
+      );
+      if (/choose\s+a\s+country|select\s+your\s+country/i.test(text)) {
+        observed = true;
+        const links = await deadline.run(
+          page
+            .locator('a[href]')
+            .evaluateAll((links) =>
+              links.map((link) => (link as HTMLAnchorElement).href),
+            ),
+        );
+        candidateCount = links.length;
+        for (const href of links) {
+          destination = countryDestination(url.href, href);
+          if (destination) break;
+        }
       }
-    }
+      if (destination) break;
+      if (Date.now() < end)
+        await deadline.sleep(Math.min(100, end - Date.now()));
+    } while (Date.now() < end);
+    observations.countrySelection = {
+      observed,
+      candidateCount,
+      waitMs: Date.now() - started,
+    };
+    if (destination) {
+      await page.goto(destination, {
+        waitUntil: 'domcontentloaded',
+        timeout: deadline.remaining(),
+      });
+      steps.push({
+        type: 'country-selection',
+        outcome: 'navigated-original-product',
+      });
+    } else if (observed)
+      steps.push({
+        type: 'country-selection',
+        outcome: 'destination_not_ready',
+      });
   }
   if (
     (workflow === 'auto' || workflow === 'product-details@1') &&
@@ -358,7 +376,7 @@ export const applyWorkflow = async (
       }
     }
   }
-  return { id: workflow, steps };
+  return { id: workflow, steps, observations };
 };
 
 export const runActions = async (
