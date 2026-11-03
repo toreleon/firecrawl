@@ -821,3 +821,102 @@ The [compact receipt](../apps/playwright-service-ts/benchmarks/worker-routing-me
 pins all three experiments and local evidence hashes. Hosted parity remains open;
 the last direct hosted comparison is still the separately pinned 45% versus 80%
 API pilot, not a measurement of this newer source.
+
+## Primary content loading and an automatic API wait budget
+
+Saved Airbnb failures exposed a gap in the body-text readiness rule: search
+navigation and a footer were rendered while result placeholders still carried
+`aria-busy="true"`. Any nonempty body text was sufficient, so the browser captured
+the shell before result hydration. WAI-ARIA defines `aria-busy` as an element
+being modified. We use that author-provided state as a bounded loading hint,
+not as proof that every site implements it correctly. This is an inference from
+the [W3C state semantics](https://www.w3.org/TR/wai-aria-1.2/#aria-busy).
+
+Automatic readiness now checks viewport-visible busy regions inside a visible
+main landmark, or the body when no visible main exists. Busy ancestors of a main
+landmark also count. Hidden/inert/accessibility-hidden and offscreen regions are
+ignored. Content, text and the final busy observation are captured together,
+under the existing document revision/origin checks. Explicit caller readiness
+and raw JSON/text handling keep their separate contracts. No expected fixture
+marker is supplied to this mechanism.
+
+The first complete comparison on `7c3b35864` returned 83/200 baseline versus
+87/200 candidate normalized matches, but also revealed a real regression:
+Bloomberg's editorial content was loaded while a labeled advertisement remained
+busy. The new readiness flag incorrectly rejected two captures. The source was
+corrected to ignore an explicit advertising region with `data-ad-status`,
+`role="region"` and an advertisement accessibility label. Generic busy content
+still counts. Failure-first HTTP fixtures and the full API fixture cover both
+cases. That initial 400-request run is retained with its original source pin;
+it is not a result for the corrected source.
+
+The v2 API also rejected timeout-only readiness objects. `5b2efe29d` permits
+`browserControls: {workflow: "auto", readiness: {timeoutMs: 1500}}` without a
+selector/text predicate, and forwards that budget to the existing browser
+control. Timeout-only objects without automatic workflow, empty readiness
+objects and title-only automatic budgets remain invalid. The existing JS/Python
+SDK types already support the optional fields. The API harness proves budget
+forwarding at 1,200 ms, bounded unresolved content at 250 ms, and rejection before
+navigation for an invalid combination. Partial nonempty content can retain an
+HTTP 200 response with `CONTENT_NOT_READY` metadata; that is not completion proof.
+
+Google's observed unusual-traffic form is now classified as verification using
+its form, widget and visible message together. An ordinary CAPTCHA widget or a
+documentation sample alone does not trigger it. A controlled HTTP 429 fixture
+with two attempts allowed issues only one navigation. This avoids a futile
+retry; it does not solve the verification or increase Google's retrieval rate.
+The frozen benchmark grader and fallback classifier remain unchanged.
+
+### Corrected comparison and outcome
+
+The corrected source `38546557c` ran against `ac228cbf0` on all 100 frozen targets,
+twice per profile. Both images used the same Linux ARM64 headful browser/base,
+two CPUs/3 GiB/two pages per owner, four total client workers, direct Vietnam
+egress, media enabled, consent rejection, automatic workflows, one attempt and
+no expected-text readiness hint. The API budget addition does not alter this
+browser-service comparison's five-second readiness budget.
+
+| Check | Baseline, 200 requests | Corrected candidate, 200 requests |
+| --- | --- | --- |
+| Raw substring | 92 (46.0%) | 91 (45.5%) |
+| Screened marker | 86 (43.0%) | 86 (43.0%) |
+| Normalized marker | 88 (44.0%) | 88 (44.0%) |
+| Screened-success p50 | 3,212 ms | 3,381 ms |
+| Screened-success p95 | 6,752 ms | 8,767 ms |
+
+There were 87 paired normalized matches, one candidate-only match, one
+baseline-only match and 111 pairs matching neither. Airbnb increased from one
+to two matches; Ashley Furniture decreased from two to one. Bloomberg passed
+both rounds on both profiles after the advertisement correction. Candidate
+loading signals were observed on Airbnb twice, Best Buy and Yahoo Finance;
+all four completed within budget, with no remaining busy outcomes. The Ashley
+loss timed out after about 84.9 seconds in the consent phase, before automatic
+readiness started, with a recorded HTTP 200 document. This identifies a stalled
+phase, not its cause.
+
+The 87 common normalized-success pairs also had higher candidate latency:
+nearest-rank p50 3,193→3,375 ms and p95 6,752→8,767 ms. Loading waits have a real
+cost, and live-network/shared-host variation remains a confounder. Neither this
+comparison nor the earlier superseded run supports claiming an aggregate
+performance improvement. The implemented gains are a specific hydration
+recovery, truthful loading/verification states and a configurable API wait budget.
+
+All 400 records, hashes and scores replayed offline with unique target/round/profile
+keys and unchanged grader/fallback bytes. Timing had no suspension gaps; peak
+sampled memory was 1,503/1,141 MiB, resource-limit counters stayed zero, and both
+owners ended healthy with zero pages/sessions before being stopped. The final
+source passed [browser CI](https://github.com/toreleon/firecrawl/actions/runs/41622740722):
+build, 49 helper checks, 67 integration checks and production dependency audit.
+The final native API harness passed five real API checks and four contract checks,
+including hydration while an advertisement remains busy, forwarded timeout-only
+budgets, unresolved partial capture and invalid-input rejection before navigation.
+An extract-worker AMQP closing error appeared during teardown; tests and harness
+exited zero, and task infrastructure was stopped. Broader custom-runner server/SDK
+CI remains queued. No hosted requests or credits were used.
+
+The [final compact receipt](../apps/playwright-service-ts/benchmarks/primary-loading-results-2026-11-03.json)
+contains source/image pins, both completed run references, audit hashes and the
+common-success latency cohort. Hosted parity remains unproven. The last hosted
+API pilot is still the separately pinned older comparison; these browser results
+are not a refreshed hosted score, extraction F1 or proof of a complete crawl and
+refresh system.

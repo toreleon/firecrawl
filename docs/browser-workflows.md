@@ -113,6 +113,35 @@ shells remain verification states. Short real text is accepted. Explicit
 readiness and JSON/plain-text response handling keep their separate contracts.
 This is a text-readiness check, not proof that every field or lazy section loaded.
 
+Automatic readiness also waits for visible `aria-busy="true"` regions inside a
+visible `main` or `[role="main"]`, including a busy ancestor of that main region.
+If there is no visible main region, it checks the body. Hidden, inert,
+accessibility-hidden and offscreen busy elements are ignored, as are explicit
+advertisement regions with `data-ad-status` and an advertising accessibility label. Busy navigation
+outside an existing main region does not delay it. The final capture checks the
+signal again. Metadata includes `busyCount`, `maxBusyCount` and `busyScope` in
+`readiness.automatic`. A remaining busy region yields outcome `busy` and
+`CONTENT_NOT_READY`, within the shared request deadline.
+
+Tune this budget through v2 without supplying a selector or expected text:
+
+```json
+{
+  "browserControls": {
+    "workflow": "auto",
+    "readiness": { "timeoutMs": 1500 }
+  }
+}
+```
+
+A timeout-only readiness object requires `workflow: "auto"` and uses body scope.
+Explicit selector/text conditions retain their own contract and take precedence.
+Nonempty partial captures may still return HTTP 200 with unresolved browser
+metadata; inspect readiness and interaction state before treating them as complete.
+Recognized Google unusual-traffic forms remain verification states, and are not
+automatically retried as ordinary HTTP 429 responses. They require explicit
+verification handling rather than an automatic form submission.
+
 `maxAttempts` defaults to one. Opt-in retries recognize coded phase deadlines
 and transient connection/HTTP2 errors, while cancellation, session errors,
 workflow identity mismatches and hard status failures remain terminal. Attempt
