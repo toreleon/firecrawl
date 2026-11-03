@@ -164,7 +164,7 @@ describe("Self-hosted local browser controls", () => {
         expect(fallback.attempts[1].engine).toBe("camoufox");
         expect(fallback.attempts.every((a: any) => a.pageClosed)).toBe(true);
         if (path === "/engine-network")
-          expect(fallback.attempts[0].errorCode).toBe("NETWORK_ERROR");
+          expect(fallback.attempts[0].pageStatusCode).toBe(595);
       }
       const failed = await request("/v2/scrape", {
         url: origin + "/engine-denied",

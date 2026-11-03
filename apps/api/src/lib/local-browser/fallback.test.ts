@@ -151,6 +151,15 @@ describe("Explicit stateless browser-engine fallback", () => {
     );
     expect([primary.calls.scrape, fallback.calls.scrape]).toEqual([1, 1]);
   });
+  it("recovers a confirmed HTTP reset response from the filtering proxy", async () => {
+    const { primary, fallback } = await configure({ status: 595 });
+    const result = await request();
+    expect(result.pageStatusCode).toBe(200);
+    expect(result.diagnostics.engineFallback.attempts[0].pageStatusCode).toBe(
+      595,
+    );
+    expect([primary.calls.scrape, fallback.calls.scrape]).toEqual([1, 1]);
+  });
   it("does not activate after primary success or without the opt-in", async () => {
     let pair = await configure();
     expect((await request()).pageStatusCode).toBe(200);
