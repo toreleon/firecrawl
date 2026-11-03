@@ -58,7 +58,7 @@ describe("Self-hosted local browser controls", () => {
       }
       if (req.url === "/busy" || req.url === "/busy-forever")
         return res.end(
-          '<header>Search navigation</header><main><h1>Search results</h1><div role="region" aria-label="Leaderboard advertisement" data-ad-status="rendering" aria-busy="true" style="height:40px;width:300px"></div><div id="results" aria-busy="true" style="height:40px;width:300px"></div></main><footer>Site footer</footer>' +
+          '<header>Search navigation</header><main><h1>Search results</h1><div role="region" aria-label="Leaderboard advertisement" data-ad-status="rendering" aria-busy="true" style="height:40px;width:300px"></div><div id="results" aria-busy="true" style="height:40px;width:300px"></div><aside aria-label="Supporting dock"><ul aria-busy="true" style="height:40px;width:300px"><li>Supporting widgets loading</li></ul></aside></main><footer>Site footer</footer>' +
             (req.url === "/busy"
               ? '<script>setTimeout(()=>{document.querySelector("#results").innerHTML="<article>Hydrated API results 42</article>";document.querySelector("#results").setAttribute("aria-busy","false")},350)</script>'
               : ""),
@@ -227,6 +227,10 @@ describe("Self-hosted local browser controls", () => {
       expect(
         hydrated.body.data.metadata.browser.readiness.automatic.timeoutMs,
       ).toBe(1200);
+      expect(
+        hydrated.body.data.metadata.browser.readiness.automatic
+          .ignoredComplementaryBusyCount,
+      ).toBe(1);
       for (const [path, code] of [
         ["/empty", "CONTENT_NOT_READY"],
         ["/verification", "VERIFICATION_REQUIRED"],

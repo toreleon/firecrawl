@@ -86,6 +86,7 @@ export function captureRenderedPage({
     }
   }
   let busyCount = 0;
+  let ignoredComplementaryBusyCount = 0;
   let busyScope: 'main' | 'body' = 'body';
   if (automatic) {
     const primary = Array.from(
@@ -129,8 +130,28 @@ export function captureRenderedPage({
             r.top < innerHeight &&
             r.left < innerWidth,
         )
-      )
+      ) {
+        // Supporting landmarks can sit inside a site's broad main wrapper.
+        // They do not describe primary loading, but body fallback and any
+        // primary landmark nested inside them must retain the busy signal.
+        const supporting = element.closest(
+          'aside:not([role]),[role="complementary"]',
+        );
+        const contexts = primary.filter(
+          (main) => main.contains(element) || element.contains(main),
+        );
+        if (
+          supporting &&
+          contexts.length &&
+          contexts.every(
+            (main) => main !== supporting && main.contains(supporting),
+          )
+        ) {
+          ignoredComplementaryBusyCount++;
+          continue;
+        }
         busyCount++;
+      }
     }
   }
   const renderedText = document.body?.innerText ?? '';
@@ -140,6 +161,7 @@ export function captureRenderedPage({
     title: document.title,
     url: location.href,
     busyCount,
+    ignoredComplementaryBusyCount,
     busyScope,
     ready:
       selectorReady &&
@@ -170,6 +192,7 @@ export const waitForRenderedBody = async (
     | 'navigating' = 'empty';
   let busyCount = 0,
     maxBusyCount = 0;
+  let ignoredComplementaryBusyCount = 0;
   let busyScope: 'main' | 'body' = 'body';
   do {
     try {
@@ -177,6 +200,7 @@ export const waitForRenderedBody = async (
         page.evaluate(captureRenderedPage, { automatic: true }),
       );
       busyCount = snapshot.busyCount;
+      ignoredComplementaryBusyCount = snapshot.ignoredComplementaryBusyCount;
       maxBusyCount = Math.max(maxBusyCount, busyCount);
       busyScope = snapshot.busyScope;
       outcome = busyCount ? 'busy' : renderedBodyState(snapshot.renderedText);
@@ -205,6 +229,7 @@ export const waitForRenderedBody = async (
     waitMs: Date.now() - started,
     timeoutMs: budget,
     busyCount,
+    ignoredComplementaryBusyCount,
     maxBusyCount,
     busyScope,
   };

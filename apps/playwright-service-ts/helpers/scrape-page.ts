@@ -293,6 +293,8 @@ export const scrapePage = async (
             automatic: {
               ...automatic,
               busyCount: snapshot.busyCount,
+              ignoredComplementaryBusyCount:
+                snapshot.ignoredComplementaryBusyCount,
               busyScope: snapshot.busyScope,
               ...(automaticOutcome && { outcome: automaticOutcome }),
             },
