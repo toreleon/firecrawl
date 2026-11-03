@@ -36,8 +36,10 @@ For stateless requests with `browserControls`, the API rotates across
 `LOCAL_BROWSER_OWNER_URLS` per API process, with a randomized starting position.
 It can choose another owner if health discovery fails before dispatch. Discovery
 shares the caller's deadline and cancellation; a shared health probe is not
-cancelled by one caller. Once a scrape is dispatched, its failure or lost response
-is returned without replay on another owner. Retained sessions continue to use
+cancelled by one caller. By default, a dispatched scrape's failure is returned
+without replay on another owner. A lost response is always terminal. The explicit
+stateless engine fallback described below can retry a confirmed, closed-page
+failure once on a distinct engine. Retained sessions continue to use
 their recorded owner. `metadata.browser.diagnostics.ownerBootId` identifies the
 process that executed a capture. Requests without `browserControls` retain their
 existing engine path. This is round-robin distribution, not a distributed load
@@ -51,6 +53,63 @@ human handoff screenshots. `/health` exposes the effective `blockMedia` value.
 
 Do not configure `PROXY_SERVER` for direct-egress operation. No proxy pool,
 rotation, external CAPTCHA solver or paid model is required by this feature.
+
+## Optional alternative browser
+
+Chromium remains the default. Build a Firefox-capable browser image with
+`--build-arg INSTALL_CAMOUFOX=true`, then set `BROWSER_ENGINE=camoufox` on that
+owner, with `BROWSER_CHANNEL` empty. The pinned launcher is `camoufox@0.5.9`,
+with `playwright-core@1.62.0` and browser `official/158.0.1-beta.41`.
+For a host installation, run `pnpm prepare:camoufox` in the browser service
+before starting the owner. The binary and identity model are provisioned before
+serving requests; a missing pinned binary fails startup. Firefox ignores the
+Chromium launch arguments and uses the host OS identity, with WebRTC and alternate
+DNS disabled. The existing filtering proxy checks every destination, including
+localhost; it is not an upstream egress proxy.
+
+Configure a separate internal owner pool on the API and workers:
+
+```dotenv
+LOCAL_BROWSER_OWNER_URLS=http://chromium-a:3003,http://chromium-b:3003
+LOCAL_BROWSER_FALLBACK_OWNER_URLS=http://firefox-a:3003
+```
+
+Opt in on an individual scrape:
+
+```json
+{
+  "url": "https://example.com/product/42",
+  "formats": ["rawHtml", "markdown"],
+  "timeout": 90000,
+  "browserControls": {
+    "workflow": "auto",
+    "consent": "rejectNonEssential",
+    "maxAttempts": 1,
+    "engineFallback": true
+  }
+}
+```
+
+Fallback requires a stateless request without actions and `maxAttempts: 1`.
+Session creation and session scrapes reject it. Missing alternate configuration
+fails before primary dispatch. A successful primary response uses no alternate.
+Eligible failures are recognized verification/loading states, selected HTTP
+denials/transient statuses (403, 406, 417, 429, 502, 503, 504), the filtering
+proxy's connection-reset status 595, or a structured network/timeout error.
+Before another dispatch the API requires one completed primary attempt,
+`pageClosed: true` and matching owner boot identity. An ambiguous response,
+transport loss, failed cleanup, or exhausted budget is never replayed.
+
+At most one healthy owner with a different boot identity **and** browser engine
+can run the second attempt. Both attempts and owner discovery share the original
+deadline; the alternate needs enough remaining time for the requested wait and
+readiness budget. Known primary failure content is preserved if the alternate
+also fails. `metadata.browser.diagnostics.engineFallback` reports attempted,
+usedSecondary, recovered, skipped and completed attempt receipts when available.
+`usedSecondary` alone does not mean content recovery. Errors may have no returned
+fallback diagnostics; use owner logs to account for those dispatches. No CAPTCHA
+answers are generated or submitted. A browser change cannot promise access or
+content completeness, and an additional owner consumes additional resources.
 
 ## Scrape controls
 

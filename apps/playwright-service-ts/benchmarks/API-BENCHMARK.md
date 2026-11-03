@@ -9,7 +9,8 @@ HTML checks; an API-level `success: true` does not override this.
 
 Copy `api-profiles.example.json` to a local configuration. It names environment
 variables for credentials; it must not contain key values. Configure
-`HOSTED_FIRECRAWL_API_KEY` in the runner's environment. Self-hosted deployments
+`HOSTED_FIRECRAWL_API_KEY` in the runner's environment when using the hosted
+profile. Self-hosted deployments
 with authentication can set their own `apiKeyEnv` too. All URLs are API base
 URLs, without `/v2/scrape`. HTTPS is required for credentials except on loopback.
 HTTP redirects are not followed.
@@ -67,6 +68,46 @@ pacing wait are recorded separately and excluded from HTTP latency. Dispatch
 and response completion carry a monotonic lifecycle order, so the offline
 audit can verify actual overlap without ambiguity from millisecond ties.
 Profiles without this option retain the global concurrency behavior.
+
+For a local-only policy experiment, two profiles can use the same API URL and
+credentials. Keep all options equal except the policy under test, for example:
+
+```json
+[
+  {
+    "name": "baseline",
+    "baseUrl": "http://127.0.0.1:3002",
+    "maxConcurrentRequests": 2,
+    "browserControls": {
+      "waitUntil": "domcontentloaded",
+      "workflow": "auto",
+      "consent": "rejectNonEssential",
+      "maxAttempts": 1,
+      "engineFallback": false
+    }
+  },
+  {
+    "name": "adaptive",
+    "baseUrl": "http://127.0.0.1:3002",
+    "maxConcurrentRequests": 2,
+    "browserControls": {
+      "waitUntil": "domcontentloaded",
+      "workflow": "auto",
+      "consent": "rejectNonEssential",
+      "maxAttempts": 1,
+      "engineFallback": true
+    }
+  }
+]
+```
+
+The adaptive profile requires a separately configured, healthy alternate engine
+pool; see [configuration and constraints](../../../docs/browser-workflows.md#optional-alternative-browser).
+No hosted credential or billing call is needed for local-only profiles. Count
+alternate browser dispatches separately from API requests and disclose the extra
+owner resources. `recovered` metadata is a backend content check, not the frozen
+marker score. Missing diagnostics on API failures remain unknown; retain owner
+logs for dispatch accounting. Preserve incomplete runs as excluded evidence.
 
 This measures retrieval and one expected snippet per target. A Markdown marker
 match does not establish extraction recall, precision, table fidelity, field

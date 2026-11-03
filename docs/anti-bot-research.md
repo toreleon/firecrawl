@@ -1121,3 +1121,192 @@ records the exact source/image pins, loss diagnostics, supporting-region cases,
 current checks and separate historical classifier audit. The hosted API score
 remains 42/100 versus 80/100 on the separately pinned `4a363134f` deployment;
 it is not a refreshed score for `8daec7135`. No hosted parity is claimed.
+
+## Optional Firefox backend and confirmed-failure fallback
+
+The all-target hosted comparison left 46 hosted-only matches, including 18
+verification outcomes and 17 target HTTP 403 failures on the fork. Readiness and
+consent repairs do not account for this remaining access gap. The next bounded
+experiment therefore changes browser implementation while retaining direct VN
+egress, resource policy, consent and frozen scoring.
+
+The [official TypeScript launcher](https://github.com/daijro/camoufox/tree/main/typescript)
+supports a Firefox alternative. The package registry checked on November 3
+reported `camoufox@0.5.9`, published November 1, requiring Node >=22.15 and
+`playwright-core <1.63`. The fork pins core 1.62.0 independently of the existing
+Chromium drivers. The [browser release](https://github.com/daijro/camoufox/releases/tag/v158.0.1-beta.41)
+is pinned to `official/158.0.1-beta.41`; the Linux ARM64 asset's published SHA-256
+is `60e25f6eb95e13d9ec655bc02913d51057e669cb31542e6ace9d2190ab5380af`.
+The launcher verifies the downloaded asset against its manifest. Browser code is
+MPL-2.0, launcher code MIT, with additional vendored notices. These software
+licenses do not grant rights to collected site data.
+
+The [usage documentation](https://camoufox.com/python/usage/) explains generated
+browser identity and browser options; it is not evidence that a particular WAF
+will accept a request. The integration chooses the actual host OS, disables
+GeoIP matching, WebRTC and alternate DNS, and excludes the bundled ad blocker
+so the service keeps its existing resource policy. Firefox uses no Chromium
+arguments or channel. Localhost and resolved destinations must traverse the
+same pinned filtering proxy, with SSRF checks enabled by default. No upstream
+proxy or challenge-answering service was used.
+
+### Isolated feasibility pilot
+
+Before changing production dependencies, an isolated image overlaid only the
+compiled browser factory. Source and compiled hashes identify that prototype
+explicitly; it is not relabeled as integrated production support. A controlled
+probe verified Firefox page/worker identity, the existing explicit consent
+choice, and denial of localhost and a test DNS name resolving to loopback with
+zero private-fixture hits.
+
+Twenty selected frozen targets, including hard failures and several positive
+controls, ran twice per profile: 80 total browser-service requests, four global
+workers, two pages per owner, 2 CPUs/3 GiB each, headful Linux ARM64, media enabled,
+fresh contexts, consent rejection and automatic workflow. No expected text was
+sent to the service. Both profiles used direct VN egress and the unchanged grader.
+
+| Pilot outcome, 40 requests/profile | Chromium | Firefox prototype |
+| --- | --- | --- |
+| Raw substring | 5 | 8 |
+| Screened marker | 5 | 8 |
+| Normalized marker | 7 | 10 |
+| Peak sampled memory | 815 MiB | 1,834 MiB |
+
+Five normalized matches were common, five Firefox-only and two Chromium-only;
+28 pairs matched neither. Firefox added Amazon 2/2, Indeed 2/2 and Google Search
+1/2, but lost Zoopla 2/2. Among the five common matches, p50 was 2,549→1,976 ms
+and p95 44,027→9,260 ms. This small selected cohort cannot establish a stable
+latency gain or full-dataset success rate. Every record, hash and score replayed;
+timing was valid, no resource-limit events occurred, and owners finished with
+zero pages and sessions. The initial launcher startup race dispatched zero
+scrapes and is excluded. The [pilot receipt](../apps/playwright-service-ts/benchmarks/camoufox-pilot-results-2026-11-03.json)
+preserves the prototype distinction, exact pins and audit digests.
+
+### Integration and retry contract
+
+Production support is opt-in with `BROWSER_ENGINE=camoufox`; Chromium remains
+the default. Provision the pinned browser and model before serving work. The
+optional Docker build downloads as the runtime user: a recursive ownership
+change after extraction copied several GB into another layer during the initial
+experiment. The compact experimental image uses actual compiled production
+source, with no browser-factory overlay.
+
+Compatibility tests exercise identity, headers/cookies/redirects, fresh-context
+isolation, verification/status failures, short-deadline cleanup and the private
+network guard. CI exposed a real Firefox allocation race: a 250 ms deadline
+could expire while `newPage()` was still allocating, and context close then
+blocked subsequent health discovery. The fix drains and closes a late page
+within the cleanup budget before context cleanup. Three repeated short
+deadlines now release capacity; the six Firefox checks also passed at 0.5 CPU
+locally. This is a browser lifecycle repair, not a WAF success claim.
+
+The full v2 API can opt in with `browserControls.engineFallback: true` and a
+separate `LOCAL_BROWSER_FALLBACK_OWNER_URLS` pool. It allows at most one distinct
+engine after a recognized failure with one completed attempt, page-closed proof
+and matching process boot ID. Owner discovery and both attempts share the
+original deadline. A lost response or unconfirmed cleanup never authorizes
+another dispatch. Interactive actions, retained sessions and multi-attempt
+retries reject this option. Successful primary results do not touch the alternate.
+Both engines receive the same explicit consent/navigation policy and no answer
+strings. Known primary failures are preserved when the alternate also fails;
+metadata distinguishes selecting the secondary from recovering usable content.
+
+The installed filtering proxy maps HTTP connection resets to status 595. A real
+API fixture caught this case after the initial unit design; the policy now
+recognizes that confirmed closed-page status without inventing a successful
+network result. The corrected seven-check API harness passed on source
+`90cd76c6ca877a41bc62fac2ca8ff09839456a83`, including alternate recovery,
+denial preservation, action/session rejection and existing workflow/session
+contracts. Twenty focused API client/contract checks, five JS scrape tests plus
+SDK build, and two Python serialization checks passed. Extract-worker still
+logged an AMQP closing error during harness teardown; tests and harness exited
+zero. Broader custom-runner server and SDK CI remain separately queued.
+
+The [browser CI on the measured source](https://github.com/toreleon/firecrawl/actions/runs/41649010785)
+passed build, helper/integration checks and the production dependency audit.
+Configuration and diagnostic limits are in [browser workflows](browser-workflows.md#optional-alternative-browser).
+
+### Completed full API policy comparison
+
+Source `90cd76c6ca877a41bc62fac2ca8ff09839456a83` completed 200 fresh v2 API
+requests: one per frozen target for each of two profiles on the same API. Both
+used automatic workflows, consent rejection, DOM-content-loaded navigation,
+one service attempt per dispatch, media enabled and no marker readiness hint.
+Only `engineFallback` differed. Four global HTTP workers and two slots per
+profile stayed within the user's eight-worker ceiling. There were no hosted
+requests or upstream proxies; browser egress was checked as VN.
+
+Two Chromium owners served both profiles. The adaptive profile could also use
+one separate Firefox owner; each owner had 2 CPUs, 3 GiB and two page slots.
+All three used image
+`sha256:30a3d3a0988726a9724e88623e28290faac94f10d8bd03cab818aa8e1cdb8ba0`.
+Twenty-six source/compiled browser hashes matched the checkout before dispatch,
+and API source/compiled hashes remained unchanged across the run. This compares
+an extra sequential attempt and extra owner capacity, not equal-cost engines.
+
+| All 100 targets, one request/profile | Baseline | Opt-in fallback |
+| --- | --- | --- |
+| Raw substring | 46/100 | 57/100 |
+| Screened marker | 44/100 | 54/100 |
+| Normalized marker | 45/100 | 55/100 |
+| Screened-success p50 | 3,073 ms | 3,981 ms |
+| Screened-success p95 | 7,120 ms | 10,791 ms |
+| Primary browser dispatches | 100 | 100 |
+| Additional Firefox dispatches | 0 | 48 |
+| API quota 429 responses | 0 | 0 |
+
+There were 45 common normalized matches, ten adaptive-only, zero baseline-only
+and 45 matching neither. Nine added matches used a confirmed successful Firefox
+attempt: Indeed, Louis Vuitton, Expedia, MarketWatch, Barron's, Reuters,
+Capterra, SeatGeek and Apartments.com. Google Search also matched only in the
+adaptive profile, but its primary Chromium attempt succeeded without fallback;
+that difference cannot be attributed to Firefox. Amazon succeeded in both
+profiles on this run. Among the 45 common matches, p50 increased
+3,073→3,772 ms and p95 7,120→9,475 ms. More coverage came with added time and
+browser work; there is no aggregate speedup claim.
+
+Backend logs account for exactly 200 primary dispatches, 100 per owner, plus 48
+alternate calls with no target sent to the alternate twice. Returned fallback
+metadata exists on 97 adaptive responses: 46 report an attempted alternate,
+13 report backend recovery, and nine of those meet the frozen normalized marker.
+Canada Goose, American Airlines, eBay and Skyscanner returned usable alternate
+content without the expected marker and remain failures. Three API errors have
+no returned fallback diagnostics; their secondary-dispatch state is not inferred
+from that absence. Owner logs provide total dispatch accounting.
+
+The first monitoring run stopped at 24 completed results because it treated
+`memory.events:sock_throttled` as a fatal resource-limit event. That partial run
+is retained and excluded. The corrected monitor still stops on memory/process
+limits and OOM, but records socket throttling separately, following the
+[kernel counter definitions](https://www.kernel.org/doc/html/latest/admin-guide/cgroup-v2.html).
+In the completed run, socket-throttling counters reached 473/1,017/563 for the
+two primary owners and Firefox. Other memory/process-limit and OOM counters
+were zero. Peak sampled memory was 1,054/1,043/2,697 MiB. Socket throttling,
+shared-host contention and live-site variation limit causal latency conclusions.
+
+All 200 unique records, payload/content hashes, scores and summary metrics
+replayed offline. Lifecycle overlap peaked at four globally and two per
+profile; timing gaps stayed below 1,025 ms. All owners finished healthy with
+zero pages/sessions, then were stopped and removed. Task database/queue/cache
+containers were stopped. The [full API fallback receipt](../apps/playwright-service-ts/benchmarks/api-engine-fallback-results-2026-11-03.json)
+includes owner-log dispatch accounting, returned-versus-missing metadata,
+resource counters, exact pins and validation digests.
+
+This is a measured ten-point coverage gain on the current fork, not hosted
+parity. The separately pinned hosted run remains 80/100 normalized matches on
+the earlier `4a363134f` comparison; it was not refreshed for this source.
+One live round and one marker per site do not establish stable WAF-brand
+success, extraction fidelity or complete crawl/refresh behavior.
+
+### Docker storage hygiene
+
+The task removed 50 older stopped benchmark containers and obsolete Firecrawl
+image tags after preserving logs and image/source digests. New harness and
+benchmark launchers archive logs/state and remove their browser containers in
+cleanup. The Dockerfile provisions optional Firefox as the runtime user to avoid
+duplicating its extracted browser/font bundle in an ownership-change layer.
+Reported image usage fell from 37.6 GB to 28.89 GB; this is Docker accounting,
+not proof that its host VM disk file shrank by that amount. The current compact
+image and small stopped test infrastructure remain available. Unrelated running
+services, images and data volumes were not pruned. Shared build cache and
+unidentified volumes are retained; no global prune was used.

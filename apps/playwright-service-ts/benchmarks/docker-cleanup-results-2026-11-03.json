@@ -1,0 +1,55 @@
+{
+  "checkedAt": "2026-11-03T14:17:47.344927+00:00",
+  "scope": "Only this Firecrawl task; unrelated Docker services, images and data volumes untouched.",
+  "olderStoppedContainersRemoved": 50,
+  "initialObsoleteImageTagsRemoved": 20,
+  "laterExperimentalImagesRemoved": [
+    "autogtm/firecrawl-browser:camoufox-integrated-2026-11-03"
+  ],
+  "createdBrowserContainersAfterCleanupRemoved": true,
+  "remainingTaskContainers": [
+    {
+      "name": "autogtm-firecrawl-workflows-rabbit-20261103",
+      "state": "exited"
+    },
+    {
+      "name": "autogtm-firecrawl-workflows-redis-20261103",
+      "state": "exited"
+    },
+    {
+      "name": "autogtm-firecrawl-workflows-pg-20261103",
+      "state": "exited"
+    }
+  ],
+  "remainingTaskImages": [
+    "autogtm/firecrawl-browser:camoufox-compact-2026-11-03 30a3d3a09887 6.91GB",
+    "autogtm/firecrawl-browser:complementary-readiness-2026-11-03 8d4106b10c71 2.3GB",
+    "autogtm/firecrawl-workflow-postgres:2026-11-03 ac8174df1841 664MB"
+  ],
+  "unrelatedRunningContainers": [
+    "opengtm-api-go-1",
+    "opengtm-scheduler-go-1",
+    "opengtm-worker-go-1",
+    "opengtm-agent-runtime-1",
+    "opengtm-agent-test-pg",
+    "lead-data-web",
+    "lead-data-postgres",
+    "opengtm-browser-1",
+    "lead-data-redis"
+  ],
+  "reportedImageUsageBefore": "37.6GB",
+  "reportedImageUsageAfter": "28.89GB",
+  "reportedContainerWritableUsageBefore": "371.8MB",
+  "reportedContainerWritableUsageAfter": "360.4kB",
+  "globalPruneUsed": false,
+  "volumesRemoved": 0,
+  "sharedOrUnidentifiedBuildCacheRemoved": false,
+  "hostVmFileShrinkVerified": false,
+  "temporaryHostedKeyFileAbsent": true,
+  "evidence": {
+    "initialCleanupReceiptSha256": "562375cedbace4bb45709faaba5eccfd4c5efa75a86de8e3e9dc7f6364a9bbbe",
+    "beforeSummarySha256": "50cd31345006fee3ca95ab616550f9131b79e3c9c882c6f398371374095a2e05",
+    "afterSummarySha256": "55e7f12e349c0e041a325e809d1c9e49a1b083644583d655f5adfbc6ebc76b39",
+    "completedBenchmarkCleanupSha256": "98e92703c96fa4839ee95b64c0561b86b465048b944577e6016bc86d9ff7c7eb"
+  }
+}
