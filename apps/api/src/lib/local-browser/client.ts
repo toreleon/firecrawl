@@ -17,8 +17,54 @@ import {
 type Owner = {
   base: string;
   boot: string;
+  engine?: string;
   capabilities: { version: number; actions: string[] };
 };
+type CompletedReceipt = {
+  engine: string;
+  ownerBootId: string;
+  pageClosed: true;
+  pageStatusCode?: number;
+  errorCode?: string;
+};
+const completedErrors = new WeakMap<LocalBrowserError, CompletedReceipt>();
+const completedReceipt = (
+  result: any,
+  boot?: string,
+  engine = "unknown",
+): CompletedReceipt | undefined => {
+  const attempts = result?.diagnostics?.attempts;
+  if (
+    !boot ||
+    result?.diagnostics?.ownerBootId !== boot ||
+    result.sessionId !== undefined ||
+    !Array.isArray(attempts) ||
+    attempts.length !== 1 ||
+    attempts[0]?.pageClosed !== true
+  )
+    return;
+  return {
+    engine,
+    ownerBootId: boot,
+    pageClosed: true,
+    ...(Number.isInteger(result.pageStatusCode) && {
+      pageStatusCode: result.pageStatusCode,
+    }),
+    ...(["NETWORK_ERROR", "SCRAPE_TIMEOUT", "CONTENT_NOT_READY"].includes(
+      result.errorCode,
+    ) && { errorCode: result.errorCode }),
+  };
+};
+const fallbackOwners = () =>
+  (config.LOCAL_BROWSER_FALLBACK_OWNER_URLS ?? "")
+    .split(",")
+    .map(value =>
+      value
+        .trim()
+        .replace(/\/scrape\/?$/, "")
+        .replace(/\/$/, ""),
+    )
+    .filter(Boolean);
 const owners = () => {
   const list = config.LOCAL_BROWSER_OWNER_URLS?.split(",") ?? [
     config.PLAYWRIGHT_MICROSERVICE_URL ?? "",
@@ -74,14 +120,19 @@ export const browserRpc = async (
     });
     if (response.status === 204) return {};
     const result: any = await response.json();
-    if (!response.ok)
-      throw new LocalBrowserError(
+    if (!response.ok) {
+      const error = new LocalBrowserError(
         typeof result.errorCode === "string"
           ? result.errorCode
           : "BROWSER_OPERATION_FAILED",
         "Local browser operation failed",
         response.status,
       );
+      const proof = completedReceipt(result, options.boot);
+      if (proof && ["NETWORK_ERROR", "SCRAPE_TIMEOUT"].includes(error.code))
+        completedErrors.set(error, { ...proof, errorCode: error.code });
+      throw error;
+    }
     return result;
   } catch (error) {
     if (error instanceof LocalBrowserError) throw error;
@@ -112,6 +163,10 @@ export const inspectBrowserOwner = async (base: string): Promise<Owner> => {
     return {
       base,
       boot: result.ownerBootId,
+      ...(typeof result.browserEngine === "string" &&
+      /^[a-z0-9_.-]{1,64}$/i.test(result.browserEngine)
+        ? { engine: result.browserEngine }
+        : {}),
       capabilities: result.capabilities,
     };
   });
@@ -237,6 +292,12 @@ export const createLocalBrowser = async (
     creationId?: string;
   },
 ) => {
+  if (input.controls?.engineFallback)
+    throw new LocalBrowserError(
+      "BROWSER_FALLBACK_UNSUPPORTED",
+      "Retained session creation cannot use engine fallback",
+      400,
+    );
   const privateData: SessionPrivate = {
     url: input.url,
     controls: input.controls ?? {},
@@ -387,6 +448,24 @@ export const scrapeLocalBrowser = async (
     signal?: AbortSignal;
   },
 ) => {
+  const fallbackEnabled = input.controls.engineFallback === true;
+  if (
+    fallbackEnabled &&
+    (input.controls.sessionId ||
+      input.actions?.length ||
+      (input.controls.maxAttempts ?? 1) !== 1)
+  )
+    throw new LocalBrowserError(
+      "BROWSER_FALLBACK_UNSUPPORTED",
+      "Engine fallback requires a stateless scrape without interactive actions or retries",
+      400,
+    );
+  if (fallbackEnabled && !fallbackOwners().length)
+    throw new LocalBrowserError(
+      "BROWSER_FALLBACK_NOT_CONFIGURED",
+      "Configure alternate browser owners before requesting engine fallback",
+      503,
+    );
   const body = {
     url: input.url,
     timeout: Math.min(120000, Math.max(100, input.timeout - 500)),
@@ -411,13 +490,139 @@ export const scrapeLocalBrowser = async (
     const remaining = until - Date.now();
     if (remaining < 100) throw discoveryError(false);
     body.timeout = Math.min(120000, Math.max(100, remaining - 500));
-    return validateResponse(
-      await browserRpc(owner.base, "/scrape", body, {
-        boot: owner.boot,
-        timeout: remaining,
-        signal: input.signal,
-      }),
+    const dispatch = async (selected: Owner) => {
+      if (input.signal?.aborted) throw discoveryError(true);
+      const left = until - Date.now();
+      if (left < 100) throw discoveryError(false);
+      return validateResponse(
+        await browserRpc(
+          selected.base,
+          "/scrape",
+          {
+            ...body,
+            timeout: Math.min(120000, Math.max(100, left - 500)),
+            ...(fallbackEnabled ? { max_attempts: 1 } : {}),
+          },
+          {
+            boot: selected.boot,
+            timeout: left,
+            signal: input.signal,
+          },
+        ),
+      );
+    };
+    if (!fallbackEnabled) return dispatch(owner);
+    let primary: any;
+    let failure: LocalBrowserError | undefined;
+    let proof: CompletedReceipt | undefined;
+    try {
+      primary = await dispatch(owner);
+      proof = completedReceipt(primary, owner.boot, owner.engine);
+    } catch (error) {
+      if (!(error instanceof LocalBrowserError) || !completedErrors.has(error))
+        throw error;
+      failure = error;
+      proof = {
+        ...completedErrors.get(error)!,
+        engine: owner.engine ?? "unknown",
+      };
+    }
+    const annotate = (response: any, details: Record<string, unknown>) => ({
+      ...response,
+      diagnostics: { ...response.diagnostics, engineFallback: details },
+    });
+    const stop = (skipped: string) => {
+      if (failure) throw failure;
+      return annotate(primary, {
+        attempted: false,
+        usedSecondary: false,
+        skipped,
+        attempts: proof ? [proof] : [],
+      });
+    };
+    const eligible =
+      proof &&
+      (failure ||
+        primary.botDetection ||
+        primary.errorCode === "CONTENT_NOT_READY" ||
+        [403, 406, 417, 429, 502, 503, 504].includes(primary.pageStatusCode));
+    if (!eligible) return stop(proof ? "not_needed" : "completion_unconfirmed");
+    const minimum = Math.max(
+      1000,
+      (input.waitFor ?? 0) +
+        (input.controls.readiness?.timeoutMs ??
+          (input.controls.workflow === "auto" ? 5000 : 0)) +
+        750,
     );
+    if (until - Date.now() < minimum) return stop("insufficient_budget");
+    let alternate: Owner | undefined;
+    for (const base of fallbackOwners()) {
+      if (base === owner.base) continue;
+      try {
+        const candidate = await inspectWithinDeadline(
+          base,
+          until,
+          input.signal,
+        );
+        if (
+          candidate.boot !== owner.boot &&
+          candidate.engine &&
+          owner.engine &&
+          candidate.engine !== owner.engine
+        ) {
+          alternate = candidate;
+          break;
+        }
+      } catch {
+        if (input.signal?.aborted) throw discoveryError(true);
+        if (Date.now() >= until) throw discoveryError(false);
+      }
+    }
+    if (!alternate) return stop("no_distinct_healthy_backend");
+    if (until - Date.now() < minimum) return stop("insufficient_budget");
+    let secondary: any;
+    let secondaryProof: CompletedReceipt;
+    try {
+      secondary = await dispatch(alternate);
+      const receipt = completedReceipt(
+        secondary,
+        alternate.boot,
+        alternate.engine,
+      );
+      if (!receipt)
+        throw new LocalBrowserError(
+          "BROWSER_INVALID_RESPONSE",
+          "Alternate browser completion was not confirmed",
+          502,
+        );
+      secondaryProof = receipt;
+    } catch (error) {
+      if (!(error instanceof LocalBrowserError) || !completedErrors.has(error))
+        throw error;
+      if (!primary) throw error;
+      secondaryProof = {
+        ...completedErrors.get(error)!,
+        engine: alternate.engine ?? "unknown",
+      };
+    }
+    const useSecondary =
+      !!secondary &&
+      secondary.content.trim().length > 0 &&
+      (secondary.renderedText === undefined ||
+        secondary.renderedText.trim().length > 0) &&
+      secondary.pageStatusCode >= 200 &&
+      secondary.pageStatusCode < 300 &&
+      !secondary.botDetection &&
+      !secondary.pageError &&
+      !secondary.errorCode &&
+      secondary.readiness?.satisfied !== false;
+    const selected = useSecondary || !primary ? secondary : primary;
+    return annotate(selected, {
+      attempted: true,
+      usedSecondary: selected === secondary,
+      recovered: useSecondary,
+      attempts: [proof, secondaryProof],
+    });
   }
   if (!team)
     throw new LocalBrowserError(

@@ -39,6 +39,16 @@ class _FakeClient:
 
 class TestScrapeRequestPreparation:
     """Unit tests for scrape request preparation."""
+    def test_stateless_engine_fallback_alias(self):
+        from firecrawl.v2.types import BrowserControls
+        options = ScrapeOptions(browser_controls=BrowserControls(
+            workflow="auto", engine_fallback=True, max_attempts=1,
+        ))
+        data = _prepare_scrape_request("https://example.com", options)
+        assert data["browserControls"]["engineFallback"] is True
+        assert data["browserControls"]["maxAttempts"] == 1
+        assert "engine_fallback" not in data["browserControls"]
+
     def test_local_browser_controls_nested_aliases(self):
         from firecrawl.v2.types import BrowserControls, BrowserReadiness
         controls = BrowserControls(

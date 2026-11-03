@@ -89,6 +89,7 @@ const createSchema = z.strictObject({
       value =>
         !value?.sessionId &&
         !value?.continueSession &&
+        !value?.engineFallback &&
         (value?.maxAttempts ?? 1) === 1,
       "Cannot reuse or retry during creation",
     ),

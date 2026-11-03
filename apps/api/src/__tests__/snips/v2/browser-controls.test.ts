@@ -9,6 +9,7 @@ describe("Self-hosted local browser controls", () => {
   let embedded: http.Server | undefined;
   let embeddedOrigin: string;
   let origin: string;
+  const fixtureHost = process.env.TEST_BROWSER_FIXTURE_HOST ?? "127.0.0.1";
   const fixtureRequests = new Map<string, number>();
   const blockedEmbedded = new Set<string>();
   const bootstrapResponses = new Map<string, http.ServerResponse>();
@@ -40,6 +41,21 @@ describe("Self-hosted local browser controls", () => {
         (fixtureRequests.get(req.url ?? "") ?? 0) + 1,
       );
       res.setHeader("content-type", "text/html");
+      if (
+        req.url === "/engine-gate" ||
+        req.url === "/engine-network" ||
+        req.url === "/engine-denied"
+      ) {
+        const firefox = /Firefox\//.test(req.headers["user-agent"] ?? "");
+        if (req.url === "/engine-network" && !firefox)
+          return req.socket.destroy();
+        if (req.url !== "/engine-denied" && firefox)
+          return res.end("<main>Alternative engine API content 42</main>");
+        res.statusCode = 403;
+        return res.end(
+          '<title>Just a moment...</title><main>Checking your browser</main><div id="cf-chl-widget"></div><script src="/cdn-cgi/challenge-platform/check.js"></script>',
+        );
+      }
       if (req.url?.startsWith("/consent-bootstrap?")) {
         const caseId = new URL(req.url, "http://fixture.test").searchParams.get(
           "case",
@@ -85,8 +101,8 @@ describe("Self-hosted local browser controls", () => {
         "<title>Workflow</title><main id=state>Initial content</main><button id=next onclick=\"sessionStorage.setItem('state','42');document.querySelector('#state').textContent='API retained tab 42'\">Next</button>",
       );
     });
-    await new Promise<void>(resolve => fixture.listen(0, "127.0.0.1", resolve));
-    origin = `http://127.0.0.1:${(fixture.address() as any).port}`;
+    await new Promise<void>(resolve => fixture.listen(0, fixtureHost, resolve));
+    origin = `http://${fixtureHost}:${(fixture.address() as any).port}`;
   });
   afterAll(async () => {
     fixture.closeAllConnections();
@@ -111,6 +127,84 @@ describe("Self-hosted local browser controls", () => {
     };
   };
   const enabled = TEST_SELF_HOST && !!config.PLAYWRIGHT_MICROSERVICE_URL;
+  itIf(enabled && !!config.LOCAL_BROWSER_FALLBACK_OWNER_URLS)(
+    "uses one distinct backend only for explicitly opted-in stateless completed failures",
+    async () => {
+      const plain = await request("/v2/scrape", {
+        url: origin + "/engine-gate",
+        formats: ["rawHtml"],
+        maxAge: 0,
+        timeout: scrapeTimeout,
+        browserControls: { waitUntil: "domcontentloaded" },
+      });
+      expect(plain.body.data.metadata.statusCode).toBe(403);
+      for (const path of ["/engine-gate", "/engine-network"]) {
+        const result = await request("/v2/scrape", {
+          url: origin + path,
+          formats: ["rawHtml", "markdown"],
+          maxAge: 0,
+          timeout: scrapeTimeout,
+          browserControls: {
+            waitUntil: "domcontentloaded",
+            workflow: "auto",
+            engineFallback: true,
+          },
+        });
+        expect(result.status).toBe(200);
+        expect(result.body.data.markdown).toContain(
+          "Alternative engine API content 42",
+        );
+        const fallback =
+          result.body.data.metadata.browser.diagnostics.engineFallback;
+        expect(fallback.attempted).toBe(true);
+        expect(fallback.usedSecondary).toBe(true);
+        expect(fallback.recovered).toBe(true);
+        expect(fallback.attempts).toHaveLength(2);
+        expect(fallback.attempts[0].engine).toBe("rebrowser");
+        expect(fallback.attempts[1].engine).toBe("camoufox");
+        expect(fallback.attempts.every((a: any) => a.pageClosed)).toBe(true);
+        if (path === "/engine-network")
+          expect(fallback.attempts[0].errorCode).toBe("NETWORK_ERROR");
+      }
+      const failed = await request("/v2/scrape", {
+        url: origin + "/engine-denied",
+        formats: ["rawHtml"],
+        maxAge: 0,
+        timeout: scrapeTimeout,
+        browserControls: { engineFallback: true },
+      });
+      expect(failed.body.data.metadata.statusCode).toBe(403);
+      expect(
+        failed.body.data.metadata.browser.diagnostics.engineFallback
+          .usedSecondary,
+      ).toBe(false);
+      expect(
+        failed.body.data.metadata.browser.diagnostics.engineFallback.attempts,
+      ).toHaveLength(2);
+      for (const [path, body] of [
+        [
+          "/v2/scrape",
+          {
+            url: origin + "/engine-gate",
+            browserControls: { engineFallback: true },
+            actions: [{ type: "wait", milliseconds: 1 }],
+          },
+        ],
+        [
+          "/v2/browser/sessions",
+          {
+            url: origin + "/engine-gate",
+            browserControls: { engineFallback: true },
+          },
+        ],
+      ] as const) {
+        const before = fixtureRequests.get("/engine-gate") ?? 0;
+        expect((await request(path, body)).status).toBe(400);
+        expect(fixtureRequests.get("/engine-gate") ?? 0).toBe(before);
+      }
+    },
+    scrapeTimeout,
+  );
   itIf(enabled)(
     "bounds stalled-frame consent discovery through the API without claiming an unresolved choice was applied",
     async () => {

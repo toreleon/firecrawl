@@ -826,6 +826,7 @@ const configSchema = z.object({
   LOCAL_BROWSER_DATABASE_URL: emptyStringAsUndefined(z.string()),
   LOCAL_BROWSER_SESSION_SECRET: emptyStringAsUndefined(z.string().min(32)),
   LOCAL_BROWSER_OWNER_URLS: emptyStringAsUndefined(z.string()),
+  LOCAL_BROWSER_FALLBACK_OWNER_URLS: emptyStringAsUndefined(z.string()),
   BROWSER_SERVICE_AUTH_TOKEN: z.string().optional(),
 
   // Audio (avgrab)

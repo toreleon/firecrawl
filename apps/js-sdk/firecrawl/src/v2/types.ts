@@ -257,6 +257,7 @@ export interface BrowserControls {
   consent?: "off" | "rejectNonEssential" | "acceptAll";
   workflow?: "none" | "auto" | "bestbuy-us@1" | "product-details@1";
   maxAttempts?: 1 | 2 | 3;
+  engineFallback?: boolean;
   sessionId?: string;
   continueSession?: boolean;
 }

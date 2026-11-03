@@ -952,6 +952,14 @@ const baseScrapeOptions = scrapeOptionFields
   )
   .refine(
     options =>
+      !(options.actions?.length && options.browserControls?.engineFallback),
+    {
+      message: "Interactive actions cannot use engine fallback.",
+      path: ["browserControls"],
+    },
+  )
+  .refine(
+    options =>
       !options.browserControls ||
       !options.formats.some(format =>
         ["screenshot", "branding", "rawBase64", "audio", "video"].includes(

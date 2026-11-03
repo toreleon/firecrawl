@@ -895,6 +895,7 @@ class BrowserControls(BaseModel):
     consent: Optional[Literal["off", "rejectNonEssential", "acceptAll"]] = None
     workflow: Optional[Literal["none", "auto", "bestbuy-us@1", "product-details@1"]] = None
     max_attempts: Optional[int] = Field(default=None, alias="maxAttempts")
+    engine_fallback: Optional[bool] = Field(default=None, alias="engineFallback")
     session_id: Optional[str] = Field(default=None, alias="sessionId")
     continue_session: Optional[bool] = Field(default=None, alias="continueSession")
     model_config = {"populate_by_name": True, "extra": "forbid"}

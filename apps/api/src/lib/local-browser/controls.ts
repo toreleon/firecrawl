@@ -16,6 +16,7 @@ export const browserControlsSchema = z
       .enum(["none", "auto", "bestbuy-us@1", "product-details@1"])
       .optional(),
     maxAttempts: z.int().min(1).max(3).optional(),
+    engineFallback: z.boolean().optional(),
     sessionId: z.uuid().optional(),
     continueSession: z.boolean().optional(),
   })
@@ -35,6 +36,12 @@ export const browserControlsSchema = z
   .refine(
     value => !value.sessionId || (value.maxAttempts ?? 1) === 1,
     "Session commands cannot be retried",
+  )
+  .refine(
+    value =>
+      !value.engineFallback ||
+      (!value.sessionId && (value.maxAttempts ?? 1) === 1),
+    "Engine fallback requires a stateless scrape with one attempt per backend",
   );
 export type BrowserControls = z.infer<typeof browserControlsSchema>;
 export const LOCAL_ACTION_TYPES = [
