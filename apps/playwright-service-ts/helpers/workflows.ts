@@ -1,7 +1,7 @@
 import type { Page, Frame } from 'playwright';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
-import { Deadline, ScrapeFailure } from './scrape-control';
+import { Deadline, ScrapeFailure, errorCode } from './scrape-control';
 import { waitForRenderedBody } from './page-readiness';
 
 export type ConsentPolicy = 'off' | 'rejectNonEssential' | 'acceptAll';
@@ -76,6 +76,14 @@ type ConsentResult = {
   cmp?: string;
   selfTest?: boolean;
   version: string;
+  diagnostics?: {
+    framesScanned: number;
+    probeTimeouts: number;
+    probeErrors: number;
+    actionErrors: number;
+    limited: boolean;
+    durationMs: number;
+  };
 };
 type ConsentBridge = {
   policy: ConsentPolicy;
@@ -120,7 +128,7 @@ export const prepareConsent = async (
   const result: ConsentResult = {
     policy,
     outcome: policy === 'off' ? 'off' : 'not_detected',
-    version: 'autoconsent-17.3.0+local-1',
+    version: 'autoconsent-17.3.0+local-2',
   };
   let stopped = false;
   bridges.set(page, {
@@ -252,28 +260,110 @@ export const applyConsent = async (
           ['#didomi-host', '#didomi-notice-agree-button', 'Didomi'],
           ['#bnp_container', '#bnp_btn_accept', 'Bing'],
         ];
-  for (const frame of page.frames())
-    for (const [container, button, cmp] of controls) {
-      const overlay = frame.locator(container);
-      if (!(await overlay.isVisible().catch(() => false))) continue;
-      result.cmp = cmp;
-      result.outcome = 'unresolved';
-      const control = frame.locator(button);
-      if ((await control.count()) !== 1 || !(await control.isVisible()))
-        continue;
-      await control
-        .click({ timeout: Math.min(1500, deadline.remaining()) })
-        .catch(() => {});
-      await overlay
-        .waitFor({
-          state: 'hidden',
-          timeout: Math.min(1000, deadline.remaining()),
-        })
-        .catch(() => {});
-      if (!(await overlay.isVisible().catch(() => false)))
-        result.outcome = 'applied';
+  const started = Date.now();
+  const scan = new Deadline(
+    Math.min(5000, Math.max(1, deadline.remaining() - 300)),
+  );
+  const diagnostics = {
+    framesScanned: 0,
+    probeTimeouts: 0,
+    probeErrors: 0,
+    actionErrors: 0,
+    limited: false,
+    durationMs: 0,
+  };
+  result.diagnostics = diagnostics;
+  // Only read-only discovery is raced. An expired query has no continuation
+  // that can click later, including after a retained tab enters human handoff.
+  const probe = async <T>(
+    operation: (budget: Deadline) => Promise<T>,
+  ): Promise<{ value: T } | null> => {
+    const remaining = deadline.remaining();
+    let left = 0;
+    try {
+      left = scan.remaining();
+    } catch {
+      /* The discovery window ended. */
     }
-  return result;
+    if (remaining <= 300 || left <= 0) {
+      diagnostics.limited = true;
+      if (result.outcome === 'not_detected') result.outcome = 'unresolved';
+      return null;
+    }
+    const budget = new Deadline(Math.min(1000, left, remaining - 300));
+    try {
+      return { value: await budget.run(operation(budget)) };
+    } catch (error) {
+      deadline.remaining(); // Propagate caller expiry/cancellation instead of hiding it.
+      if (errorCode(error) === 'SCRAPE_TIMEOUT') diagnostics.probeTimeouts++;
+      else diagnostics.probeErrors++;
+      if (result.outcome === 'not_detected') result.outcome = 'unresolved';
+      return null;
+    }
+  };
+  try {
+    for (const frame of page.frames()) {
+      if (diagnostics.limited) break;
+      if (frame.isDetached()) continue;
+      diagnostics.framesScanned++;
+      const remaining = [...controls];
+      while (remaining.length) {
+        const found = await probe(async (budget) => {
+          const check = () => {
+            deadline.remaining();
+            budget.remaining();
+          };
+          // One utility-world query replaces four separate visibility RPCs on
+          // frames without a CMP. Preserve shadow-root locator semantics.
+          const visible = frame
+            .locator(remaining.map((c) => c[0]).join(','))
+            .filter({ visible: true })
+            .first();
+          if (!(await visible.isVisible())) return null;
+          check();
+          const id = await visible.getAttribute('id', {
+            timeout: budget.remaining(),
+          });
+          check();
+          const choice = remaining.find((c) => c[0] === '#' + id);
+          if (!choice) return null;
+          const control = frame.locator(choice[1]);
+          const count = await control.count();
+          check();
+          const clickable = count === 1 && (await control.isVisible());
+          check();
+          return { choice, control, clickable };
+        });
+        if (!found?.value) break;
+        const { choice, control, clickable } = found.value;
+        remaining.splice(remaining.indexOf(choice), 1);
+        const [container, , cmp] = choice;
+        result.cmp = cmp;
+        result.outcome = 'unresolved';
+        if (!clickable) continue;
+        deadline.remaining();
+        await control
+          .click({ timeout: Math.min(1500, deadline.remaining()) })
+          .catch(() => {
+            diagnostics.actionErrors++;
+          });
+        const hidden = await frame
+          .locator(container)
+          .waitFor({
+            state: 'hidden',
+            timeout: Math.min(1000, deadline.remaining()),
+          })
+          .then(
+            () => true,
+            () => false,
+          );
+        if (hidden) result.outcome = 'applied';
+      }
+    }
+    return result;
+  } finally {
+    diagnostics.durationMs = Date.now() - started;
+  }
 };
 
 export const countryDestination = (

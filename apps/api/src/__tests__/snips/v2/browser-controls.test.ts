@@ -6,15 +6,33 @@ import { itIf, TEST_API_URL, TEST_SELF_HOST } from "../lib";
 
 describe("Self-hosted local browser controls", () => {
   let fixture: http.Server;
+  let embedded: http.Server | undefined;
+  let embeddedOrigin: string;
   let origin: string;
   const fixtureRequests = new Map<string, number>();
   beforeAll(async () => {
+    if (enabled) {
+      embedded = http.createServer((_req, res) => {
+        res.setHeader("content-type", "text/html");
+        res.end(
+          "<script>const end=Date.now()+4500;while(Date.now()<end){}</script><p>Unresponsive auxiliary frame</p>",
+        );
+      });
+      await new Promise<void>(resolve => embedded!.listen(0, "::1", resolve));
+      embeddedOrigin = `http://[::1]:${(embedded.address() as any).port}`;
+    }
     fixture = http.createServer((req, res) => {
       fixtureRequests.set(
         req.url ?? "",
         (fixtureRequests.get(req.url ?? "") ?? 0) + 1,
       );
       res.setHeader("content-type", "text/html");
+      if (req.url === "/consent-ready" || req.url === "/consent-stalled") {
+        const choosing = req.url === "/consent-ready";
+        return res.end(
+          `<main id="consent-content" ${choosing ? "hidden" : ""}>Public consent content 42</main>${choosing ? "<div id=\"onetrust-banner-sdk\"><button id=\"onetrust-reject-all-handler\" onclick=\"document.cookie='choice=necessary; path=/';document.querySelector('#consent-content').hidden=false;document.querySelector('#onetrust-banner-sdk').remove()\">Reject All</button></div>" : ""}<iframe src="${embeddedOrigin}/"></iframe><script>const end=Date.now()+150;while(Date.now()<end){}</script>`,
+        );
+      }
       if (req.url === "/busy" || req.url === "/busy-forever")
         return res.end(
           '<header>Search navigation</header><main><h1>Search results</h1><div role="region" aria-label="Leaderboard advertisement" data-ad-status="rendering" aria-busy="true" style="height:40px;width:300px"></div><div id="results" aria-busy="true" style="height:40px;width:300px"></div></main><footer>Site footer</footer>' +
@@ -50,6 +68,10 @@ describe("Self-hosted local browser controls", () => {
   afterAll(async () => {
     fixture.closeAllConnections();
     await new Promise<void>(resolve => fixture.close(() => resolve()));
+    if (embedded) {
+      embedded.closeAllConnections();
+      await new Promise<void>(resolve => embedded!.close(() => resolve()));
+    }
   });
   const request = async (path: string, body?: unknown, method = "POST") => {
     const response = await fetch(`${TEST_API_URL}${path}`, {
@@ -66,6 +88,36 @@ describe("Self-hosted local browser controls", () => {
     };
   };
   const enabled = TEST_SELF_HOST && !!config.PLAYWRIGHT_MICROSERVICE_URL;
+  itIf(enabled)(
+    "bounds stalled-frame consent discovery through the API without claiming an unresolved choice was applied",
+    async () => {
+      for (const [path, outcome] of [
+        ["/consent-ready", "applied"],
+        ["/consent-stalled", "unresolved"],
+      ]) {
+        const result = await request("/v2/scrape", {
+          url: origin + path,
+          formats: ["rawHtml", "markdown"],
+          maxAge: 0,
+          timeout: scrapeTimeout,
+          browserControls: {
+            workflow: "auto",
+            waitUntil: "domcontentloaded",
+            consent: "rejectNonEssential",
+          },
+        });
+        expect(result.status).toBe(200);
+        expect(result.body.data.markdown).toContain(
+          "Public consent content 42",
+        );
+        const consent = result.body.data.metadata.browser.interaction.consent;
+        expect(consent.outcome).toBe(outcome);
+        expect(consent.diagnostics.probeTimeouts).toBe(1);
+        expect(consent.diagnostics.durationMs).toBeLessThan(3000);
+      }
+    },
+    scrapeTimeout,
+  );
   itIf(enabled && config.LOCAL_BROWSER_OWNER_URLS?.split(",").length === 2)(
     "uses both configured owners for stateless scrapes through the full API",
     async () => {
