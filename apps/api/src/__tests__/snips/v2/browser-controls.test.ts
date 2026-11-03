@@ -69,6 +69,32 @@ describe("Self-hosted local browser controls", () => {
           '<main>\u200b\u200d\u2060</main><script>setTimeout(()=>document.querySelector("main").textContent="Automatic API content 42",350)</script>',
         );
       }
+      if (req.url === "/streaming-entry-api")
+        return res.end(
+          '<main>Loading...</main><script>setTimeout(()=>location.href="/streaming-product-api",100)</script>',
+        );
+      if (req.url === "/streaming-product-api") {
+        res.write(
+          "<html><head><title>Streamed public product</title></head><body><main><h1>Product heading</h1>",
+        );
+        const timer = setTimeout(
+          () =>
+            res.end(
+              "<p>Complete streamed API product 42</p></main></body></html>",
+            ),
+          600,
+        );
+        res.once("close", () => clearTimeout(timer));
+        return;
+      }
+      if (req.url === "/hidden-script-api")
+        return res.end(
+          '<body style="display:none"><script>var bootstrap="not product content";setTimeout(()=>{document.body.style.display="block";document.body.innerHTML="<main>Visible API product 42</main>"},350)</script></body>',
+        );
+      if (req.url === "/hidden-script-empty-api")
+        return res.end(
+          '<title>Metadata only</title><body style="display:none"><script>var bootstrap="not product content";</script></body>',
+        );
       if (req.url === "/aws-captcha-api") {
         res.statusCode = 405;
         res.setHeader("x-amzn-waf-action", "captcha");
@@ -535,6 +561,53 @@ describe("Self-hosted local browser controls", () => {
         expect(failed.body.code).toBe(code);
         expect(fixtureRequests.get(path)).toBe(1);
       }
+    },
+    scrapeTimeout,
+  );
+  itIf(enabled)(
+    "waits for streamed and hidden browser bodies and rejects a script-only shell",
+    async () => {
+      for (const [path, expected] of [
+        ["/streaming-entry-api", "Complete streamed API product 42"],
+        ["/hidden-script-api", "Visible API product 42"],
+      ]) {
+        const result = await request("/v2/scrape", {
+          url: origin + path,
+          formats: ["rawHtml", "markdown"],
+          maxAge: 0,
+          timeout: scrapeTimeout,
+          browserControls: {
+            workflow: "auto",
+            waitUntil: "domcontentloaded",
+            readiness: { timeoutMs: 1800 },
+          },
+        });
+        expect(result.status).toBe(200);
+        expect(result.body.data.markdown).toContain(expected);
+        expect(result.body.data.metadata.browser.readiness.satisfied).toBe(
+          true,
+        );
+        expect(
+          result.body.data.metadata.browser.readiness.automatic
+            .documentReadyState,
+        ).not.toBe("loading");
+        expect(fixtureRequests.get(path)).toBe(1);
+      }
+      expect(fixtureRequests.get("/streaming-product-api")).toBe(1);
+      const empty = await request("/v2/scrape", {
+        url: origin + "/hidden-script-empty-api",
+        formats: ["rawHtml", "markdown"],
+        maxAge: 0,
+        timeout: scrapeTimeout,
+        browserControls: {
+          workflow: "auto",
+          waitUntil: "domcontentloaded",
+          readiness: { timeoutMs: 250 },
+        },
+      });
+      expect(empty.status).toBe(422);
+      expect(empty.body.code).toBe("CONTENT_NOT_READY");
+      expect(fixtureRequests.get("/hidden-script-empty-api")).toBe(1);
     },
     scrapeTimeout,
   );

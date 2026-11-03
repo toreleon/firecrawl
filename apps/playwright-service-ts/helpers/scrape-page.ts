@@ -208,20 +208,11 @@ export const scrapePage = async (
     )
       return false;
     if (options.waitForText) {
-      const actual = await page.evaluate(
-        (scope) =>
-          scope === 'title' ? document.title : (document.body?.innerText ?? ''),
-        options.readinessScope,
-      );
-      if (
-        !actual
-          .toLowerCase()
-          .replace(/\s+/g, ' ')
-          .includes(
-            options.waitForText.toLowerCase().replace(/\s+/g, ' ').trim(),
-          )
-      )
-        return false;
+      const snapshot = await page.evaluate(captureRenderedPage, {
+        text: options.waitForText,
+        scope: options.readinessScope,
+      });
+      if (!snapshot.ready) return false;
     }
     return true;
   };
@@ -301,9 +292,11 @@ export const scrapePage = async (
           ? verificationPending(current?.status() ?? 0) ||
             detectPageProtection(snapshot.content, headers, snapshot.url)
             ? 'verification'
-            : snapshot.busyCount
-              ? 'busy'
-              : renderedBodyState(snapshot.renderedText)
+            : snapshot.documentReadyState === 'loading'
+              ? 'loading'
+              : snapshot.busyCount
+                ? 'busy'
+                : renderedBodyState(snapshot.renderedText)
           : undefined;
       const readinessSatisfied =
         rawBody && options.waitForText
@@ -337,6 +330,7 @@ export const scrapePage = async (
               ignoredComplementaryBusyCount:
                 snapshot.ignoredComplementaryBusyCount,
               busyScope: snapshot.busyScope,
+              documentReadyState: snapshot.documentReadyState,
               ...(automaticOutcome && { outcome: automaticOutcome }),
             },
           }),

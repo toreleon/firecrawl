@@ -256,12 +256,25 @@ export function captureRenderedPage({
       }
     }
   }
-  const renderedText = document.body?.innerText ?? '';
+  const body = document.body;
+  const bodyStyle = body && getComputedStyle(body);
+  // innerText falls back to textContent for an unrendered element, including
+  // inline script text. That fallback must not make a hidden/bootstrap body
+  // ready. display:contents can have rendered children without its own box.
+  const bodyRendered =
+    !!body &&
+    bodyStyle?.display !== 'none' &&
+    bodyStyle?.contentVisibility !== 'hidden' &&
+    (body.getClientRects().length > 0 ||
+      (bodyStyle?.display === 'contents' &&
+        document.documentElement.getClientRects().length > 0));
+  const renderedText = bodyRendered ? body.innerText : '';
   return {
     content: document.documentElement?.outerHTML ?? '',
     renderedText,
     title: document.title,
     url: location.href,
+    documentReadyState: document.readyState,
     busyCount,
     ignoredComplementaryBusyCount,
     busyScope,
@@ -301,6 +314,7 @@ export const waitForRenderedBody = async (
     maxBusyCount = 0;
   let ignoredComplementaryBusyCount = 0;
   let busyScope: 'main' | 'body' = 'body';
+  let documentReadyState: DocumentReadyState | undefined;
   do {
     try {
       const snapshot = await deadline.run(
@@ -311,9 +325,13 @@ export const waitForRenderedBody = async (
         snapshot.ignoredComplementaryBusyCount;
       maxBusyCount = Math.max(maxBusyCount, busyCount);
       busyScope = snapshot.busyScope;
-      outcome = busyCount
-        ? 'busy'
-        : renderedBodyState(snapshot.renderedText);
+      documentReadyState = snapshot.documentReadyState;
+      outcome =
+        documentReadyState === 'loading'
+          ? 'loading'
+          : busyCount
+            ? 'busy'
+            : renderedBodyState(snapshot.renderedText);
       const protection = detectPageProtection(
         snapshot.content,
         headers(),
@@ -352,5 +370,6 @@ export const waitForRenderedBody = async (
     ignoredComplementaryBusyCount,
     maxBusyCount,
     busyScope,
+    documentReadyState,
   };
 };
