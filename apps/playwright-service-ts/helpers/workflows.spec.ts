@@ -6,6 +6,7 @@ import {
   interactionState,
   amazonContinuationAllowed,
   amazonProductIdentity,
+  amazonHomepageNavigationInterruption,
 } from './workflows';
 
 test('country navigation preserves origin, product path and SKU', () => {
@@ -20,6 +21,31 @@ test('country navigation preserves origin, product path and SKU', () => {
     url.replace('skuId=123', 'skuId=456') + '&intl=nosplash',
   ])
     assert.equal(countryDestination(url, next), null);
+});
+test('only the observed original-product return interrupted by its own homepage is a known identity failure', () => {
+  const product = 'https://www.amazon.com/Test/dp/B000000042';
+  const home = 'https://www.amazon.com/';
+  const interrupted = new Error(
+    `page.goto: Navigation to "${product}" is interrupted by another navigation to "${home}"\nCall log:`,
+  );
+  assert.equal(
+    amazonHomepageNavigationInterruption(interrupted, product, home),
+    true,
+  );
+  for (const [error, requested, landed] of [
+    [new Error('page.goto: net::ERR_CONNECTION_RESET'), product, home],
+    [new Error('page.goto: Timeout 30000ms exceeded'), product, home],
+    [interrupted, product.replace('B000000042', 'B000000043'), home],
+    [interrupted, product, product],
+    [interrupted, product, 'https://attacker.test/'],
+    [interrupted, product, 'https://www.amazon.com/ap/signin'],
+    [interrupted, 'not a URL', home],
+    [interrupted, product, 'not a URL'],
+  ])
+    assert.equal(
+      amazonHomepageNavigationInterruption(error, requested as string, landed as string),
+      false,
+    );
 });
 test('Amazon continuation permits only the observed answer-free GET form on the requested product', () => {
   const url = 'https://www.amazon.com/Test/dp/B000000042';

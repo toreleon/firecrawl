@@ -429,6 +429,29 @@ export const amazonProductIdentity = (value: string): string | null => {
   );
 };
 
+export const amazonHomepageNavigationInterruption = (
+  error: unknown,
+  requested: string,
+  landed: string,
+) => {
+  if (!(error instanceof Error) || !amazonProductIdentity(requested))
+    return false;
+  try {
+    const entry = new URL(requested);
+    const after = new URL(landed);
+    return (
+      after.origin === entry.origin &&
+      after.pathname === '/' &&
+      !after.username &&
+      !after.password &&
+      error.message.split('\n')[0] ===
+        `page.goto: Navigation to "${entry.href}" is interrupted by another navigation to "${after.href}"`
+    );
+  } catch {
+    return false;
+  }
+};
+
 export const amazonContinuationAllowed = (
   current: string,
   form: {
@@ -751,10 +774,25 @@ export const applyWorkflow = async (
         else {
           if (after.pathname === '/') {
             await waitForRenderedBody(page, deadline, 1500);
-            await page.goto(url.href, {
-              waitUntil: 'domcontentloaded',
-              timeout: deadline.remaining(),
-            });
+            try {
+              await page.goto(url.href, {
+                waitUntil: 'domcontentloaded',
+                timeout: deadline.remaining(),
+              });
+            } catch (error) {
+              deadline.remaining();
+              // WebKit can report the homepage's overlapping navigation before
+              // the final identity check runs. Preserve this known mismatch so
+              // the API can use its existing closed-Page alternate policy.
+              if (
+                amazonHomepageNavigationInterruption(error, url.href, page.url())
+              )
+                throw new ScrapeFailure(
+                  'WORKFLOW_NAVIGATION_MISMATCH',
+                  'Amazon original-product return was interrupted by its homepage',
+                );
+              throw error;
+            }
           }
           if (
             amazonProductIdentity(page.url()) !==
