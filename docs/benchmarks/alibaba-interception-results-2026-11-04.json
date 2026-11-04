@@ -1,0 +1,909 @@
+{
+  "recordedAt": "2026-11-04T05:19:39.777052+00:00",
+  "sourceCommit": "c63cbda30868dfc3edd5ba48d06204e6fce5da3e",
+  "scope": "Runtime recognition and recovery of the observed large HTTP 200 Alibaba CAPTCHA interception. One selected four-target, proxy-free full-API cohort; not a new 100-target score or hosted comparison.",
+  "rootCause": {
+    "savedDocumentCharacters": 98702,
+    "savedDocumentSHA256": "5127ef1acdc9f34076db2f8c05d33c701a94e90a798a593398de93b6128d749f",
+    "beforeClassification": null,
+    "afterClassification": {
+      "provider": "alibaba",
+      "reason": "Alibaba CAPTCHA interception document",
+      "interactive": true
+    },
+    "finding": "The prior generic runtime signatures skipped documents above 65,536 characters. The observed interception contains 98,702 characters of inline assets and was incorrectly treated as ready product content, preventing opt-in engine fallback."
+  },
+  "implementation": {
+    "maximumDocumentCharacters": 262144,
+    "requiredSignals": [
+      "Exact Captcha Interception title outside comments and inline script bodies",
+      "baxia-punish container",
+      "nc-verify-form with same-origin _____tmd_____/verify/ action",
+      "Short non-script body text matching the observed unusual-traffic warning",
+      "Both observed AWSC CAPTCHA and sufei-punish script paths on the exact trusted CDN host"
+    ],
+    "outcome": "HUMAN_REQUIRED, unsatisfied readiness and explicit Alibaba interception metadata. Existing stateless opt-in fallback may dispatch one distinct engine after closure proof.",
+    "verificationControlAutomationAdded": false,
+    "defaultRetriesAdded": false,
+    "frozenGradingFilesUnchanged": {
+      "apps/playwright-service-ts/helpers/bot-detection.ts": "3111f011045834a040e5497825cd0bf2c698a3fa8ca77a48c8479dddf2348817",
+      "apps/playwright-service-ts/helpers/waf-benchmark.ts": "ffd9f0d2e5996825aa77cb71b600a6667558e166d4471a084c20638bab9171d6",
+      "apps/playwright-service-ts/helpers/api-benchmark.ts": "2e48cf7bc3ef5f3f691e0eff899fbb71f0d067411c504a038164347f37232c91",
+      "apps/playwright-service-ts/scripts/benchmark-api.ts": "0b42fef70efaade1e3ad4c5e2e8a6759d8ce8fe2b70cbe314bf889139e4027ed",
+      "apps/playwright-service-ts/benchmarks/frontier-2026-10-30.json": "a886fb57087e842c2857b89a7669e31d2fb7b98d6bd7deb60a2329f29581b76a"
+    }
+  },
+  "fullApiCohort": {
+    "checkedAt": "2026-11-04T05:14:18.563652+00:00",
+    "sourceCommit": "c63cbda30868dfc3edd5ba48d06204e6fce5da3e",
+    "productionRuntimeCommit": "c63cbda30868dfc3edd5ba48d06204e6fce5da3e",
+    "profile": "webkit-firefox",
+    "requests": 4,
+    "backendCaptures": 5,
+    "backendCapturesByOwner": {
+      "primary-a": 4,
+      "fallback-a": 0,
+      "fallback-b": 1
+    },
+    "normalizedPasses": 3,
+    "screenedPasses": 2,
+    "frontierPasses": 2,
+    "normalizedAndMarkdownPasses": 3,
+    "latency": {
+      "successfulP50Ms": 3175,
+      "successfulP95Ms": 4591,
+      "allAttemptsP95Ms": 4591
+    },
+    "failures": {
+      "missing_expected_marker": 1
+    },
+    "states": {
+      "CONTENT_READY": 3,
+      "REGION_UNAVAILABLE": 1
+    },
+    "apiErrors": {},
+    "proofs": {
+      "responsesWithClosedReceipts": 4,
+      "closedAttemptReceipts": 5,
+      "contextClosedReceipts": 5,
+      "CONTENT_NOT_READY": 1
+    },
+    "fallback": {
+      "returned": 4,
+      "closedAttemptReceipts": 5,
+      "attempted": 1,
+      "recovered": 1,
+      "normalizedRecovered": 1
+    },
+    "fallbackSkipped": {
+      "not_needed": 3
+    },
+    "resources": {
+      "primary-a": {
+        "peakBytes": 845496320,
+        "sampledPeakBytes": 517595136,
+        "events": {
+          "memory.events:low": 0,
+          "memory.events:high": 0,
+          "memory.events:max": 0,
+          "memory.events:oom": 0,
+          "memory.events:oom_kill": 0,
+          "memory.events:oom_group_kill": 0,
+          "memory.events:sock_throttled": 0,
+          "pids.events:max": 0
+        }
+      },
+      "fallback-a": {
+        "peakBytes": 694210560,
+        "sampledPeakBytes": 676704256,
+        "events": {
+          "memory.events:low": 0,
+          "memory.events:high": 0,
+          "memory.events:max": 0,
+          "memory.events:oom": 0,
+          "memory.events:oom_kill": 0,
+          "memory.events:oom_group_kill": 0,
+          "memory.events:sock_throttled": 0,
+          "pids.events:max": 0
+        }
+      },
+      "fallback-b": {
+        "peakBytes": 1004937216,
+        "sampledPeakBytes": 793387008,
+        "events": {
+          "memory.events:low": 0,
+          "memory.events:high": 0,
+          "memory.events:max": 0,
+          "memory.events:oom": 0,
+          "memory.events:oom_kill": 0,
+          "memory.events:oom_group_kill": 0,
+          "memory.events:sock_throttled": 0,
+          "pids.events:max": 0
+        }
+      }
+    },
+    "pacing": {
+      "configuredReservationIntervalMs": 7000,
+      "minimumObservedDispatchGapMs": 7002,
+      "strict7000msDispatchFloorMet": true,
+      "limit": "Slot reservation precedes fetch. Observed gaps are retained; configuration is not an exact dispatch floor."
+    },
+    "timingIntegrity": {
+      "valid": true,
+      "sampleIntervalMs": 1000,
+      "maximumAllowedGapMs": 10000,
+      "maximumObservedGapMs": 1003,
+      "gaps": []
+    },
+    "replay": {
+      "status": "complete",
+      "attempts": 4,
+      "uniquePairs": true,
+      "allEvidenceHashesMatch": true,
+      "allScoresReplay": true,
+      "sourceHashesMatch": true,
+      "networkRequests": 0,
+      "lifecycleLedgerVerified": true,
+      "profileConcurrencyLimitsChecked": 1,
+      "maxObservedConcurrency": 1,
+      "maxObservedConcurrencyByProfile": {
+        "webkit-firefox": 1
+      }
+    },
+    "byTarget": [
+      {
+        "target": "alibaba",
+        "url": "https://www.alibaba.com/product-detail/Composite-Material-Breathable-Lumbar-Back-Brace_1601619518415.html",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 4591,
+        "markdownMarkerPresent": true,
+        "markdownChars": 13151,
+        "payloadSha256": "eb611d5bb4fa29a0ffa546cc2b98fc242be645e44234a65af0c047d1121065b4",
+        "browserState": "CONTENT_READY",
+        "apiErrorCode": null,
+        "selectedAttemptCleanup": [
+          {
+            "attempt": 1,
+            "pageClosed": true,
+            "contextClosed": true,
+            "cleanupFinished": true,
+            "cleanupDurationMs": 4
+          }
+        ],
+        "closedAttemptReceipts": [
+          {
+            "engine": "webkit",
+            "ownerBootId": "9507a688-099f-4d08-9ad1-2337759f803d",
+            "pageClosed": true,
+            "contextClosed": true,
+            "pageStatusCode": 200,
+            "errorCode": "CONTENT_NOT_READY"
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "65c7d415-338c-43c9-bb01-bb32894a04c3",
+            "pageClosed": true,
+            "contextClosed": true,
+            "pageStatusCode": 200
+          }
+        ],
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": true,
+          "recovered": true,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "9507a688-099f-4d08-9ad1-2337759f803d",
+              "pageClosed": true,
+              "contextClosed": true,
+              "pageStatusCode": 200,
+              "errorCode": "CONTENT_NOT_READY"
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "65c7d415-338c-43c9-bb01-bb32894a04c3",
+              "pageClosed": true,
+              "contextClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "Allmenus",
+        "url": "https://www.allmenus.com/il/chicago/223447-chicagoland-pizza-pasta/menu/",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "missing_expected_marker",
+        "apiStatus": 200,
+        "latencyMs": 950,
+        "markdownMarkerPresent": false,
+        "markdownChars": 60,
+        "payloadSha256": "c82d43aa5c93e56ff482662c94eec5f7b0d9ce7c70d0e4769726ff9847f6a6bd",
+        "browserState": "REGION_UNAVAILABLE",
+        "apiErrorCode": null,
+        "selectedAttemptCleanup": [
+          {
+            "attempt": 1,
+            "pageClosed": true,
+            "contextClosed": true,
+            "cleanupFinished": true,
+            "cleanupDurationMs": 2
+          }
+        ],
+        "closedAttemptReceipts": [
+          {
+            "engine": "webkit",
+            "ownerBootId": "9507a688-099f-4d08-9ad1-2337759f803d",
+            "pageClosed": true,
+            "contextClosed": true,
+            "pageStatusCode": 200
+          }
+        ],
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "9507a688-099f-4d08-9ad1-2337759f803d",
+              "pageClosed": true,
+              "contextClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "github",
+        "url": "https://github.com/facebook/react",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 3175,
+        "markdownMarkerPresent": true,
+        "markdownChars": 26110,
+        "payloadSha256": "e63fadd15bfe00b7bb83453b520e03bd7c020344b428377f502d48cc894639db",
+        "browserState": "CONTENT_READY",
+        "apiErrorCode": null,
+        "selectedAttemptCleanup": [
+          {
+            "attempt": 1,
+            "pageClosed": true,
+            "contextClosed": true,
+            "cleanupFinished": true,
+            "cleanupDurationMs": 5
+          }
+        ],
+        "closedAttemptReceipts": [
+          {
+            "engine": "webkit",
+            "ownerBootId": "9507a688-099f-4d08-9ad1-2337759f803d",
+            "pageClosed": true,
+            "contextClosed": true,
+            "pageStatusCode": 200
+          }
+        ],
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "9507a688-099f-4d08-9ad1-2337759f803d",
+              "pageClosed": true,
+              "contextClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "arxiv",
+        "url": "https://arxiv.org/abs/1706.03762",
+        "normalizedPass": true,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "missing_expected_marker",
+        "apiStatus": 200,
+        "latencyMs": 1203,
+        "markdownMarkerPresent": true,
+        "markdownChars": 10469,
+        "payloadSha256": "d50a3b47a33b6da425a83d3e562e77b4e353823337aae17a2fad53b0a13aa5a4",
+        "browserState": "CONTENT_READY",
+        "apiErrorCode": null,
+        "selectedAttemptCleanup": [
+          {
+            "attempt": 1,
+            "pageClosed": true,
+            "contextClosed": true,
+            "cleanupFinished": true,
+            "cleanupDurationMs": 3
+          }
+        ],
+        "closedAttemptReceipts": [
+          {
+            "engine": "webkit",
+            "ownerBootId": "9507a688-099f-4d08-9ad1-2337759f803d",
+            "pageClosed": true,
+            "contextClosed": true,
+            "pageStatusCode": 200
+          }
+        ],
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "9507a688-099f-4d08-9ad1-2337759f803d",
+              "pageClosed": true,
+              "contextClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      }
+    ],
+    "comparisonLimit": "Four-target selected cohort after an Alibaba interception classification repair, not a full 100-target result, paired old-code test or hosted comparison. No population coverage or standalone primary-only score is inferred.",
+    "evidenceHashes": {
+      "_local/anti-bot/alibaba-cohort-api-2026-11-04/report.json": "0319f3796e8a248469b2832f64a4d9e5b58cbdc527e7d7123e7ee11f5bfb8f32",
+      "_local/anti-bot/alibaba-cohort-api-2026-11-04/score-replay-audit.json": "c924afb83e7c5e4e66b9499a434ba9dd302ec6d0b9516a40902fc2e4046b5d53",
+      "_local/anti-bot/alibaba-cohort-api-harness-2026-11-04/deployment.json": "d24f5ec693abd91965546bdebe470928cec5e0b795d85498c9d2c48322c89bda",
+      "_local/anti-bot/alibaba-cohort-api-harness-2026-11-04/result.json": "1d5f5fda4a1718d63b9239147c51e616c9ec1a144dfd9d8b3484a22b7b93be8a",
+      "_local/anti-bot/alibaba-cohort-api-harness-2026-11-04/cleanup.json": "6c6b85d1670a5a6cd70269a66d840c1d1b3d924cfe3e9843a3e13601a67aed03"
+    }
+  },
+  "alibabaObservedRecovery": {
+    "target": "alibaba",
+    "url": "https://www.alibaba.com/product-detail/Composite-Material-Breathable-Lumbar-Back-Brace_1601619518415.html",
+    "normalizedPass": true,
+    "screenedPass": true,
+    "frontierPass": true,
+    "failureReason": null,
+    "apiStatus": 200,
+    "latencyMs": 4591,
+    "markdownMarkerPresent": true,
+    "markdownChars": 13151,
+    "payloadSha256": "eb611d5bb4fa29a0ffa546cc2b98fc242be645e44234a65af0c047d1121065b4",
+    "browserState": "CONTENT_READY",
+    "apiErrorCode": null,
+    "selectedAttemptCleanup": [
+      {
+        "attempt": 1,
+        "pageClosed": true,
+        "contextClosed": true,
+        "cleanupFinished": true,
+        "cleanupDurationMs": 4
+      }
+    ],
+    "closedAttemptReceipts": [
+      {
+        "engine": "webkit",
+        "ownerBootId": "9507a688-099f-4d08-9ad1-2337759f803d",
+        "pageClosed": true,
+        "contextClosed": true,
+        "pageStatusCode": 200,
+        "errorCode": "CONTENT_NOT_READY"
+      },
+      {
+        "engine": "camoufox",
+        "ownerBootId": "65c7d415-338c-43c9-bb01-bb32894a04c3",
+        "pageClosed": true,
+        "contextClosed": true,
+        "pageStatusCode": 200
+      }
+    ],
+    "engineFallback": {
+      "attempted": true,
+      "usedSecondary": true,
+      "recovered": true,
+      "attempts": [
+        {
+          "engine": "webkit",
+          "ownerBootId": "9507a688-099f-4d08-9ad1-2337759f803d",
+          "pageClosed": true,
+          "contextClosed": true,
+          "pageStatusCode": 200,
+          "errorCode": "CONTENT_NOT_READY"
+        },
+        {
+          "engine": "camoufox",
+          "ownerBootId": "65c7d415-338c-43c9-bb01-bb32894a04c3",
+          "pageClosed": true,
+          "contextClosed": true,
+          "pageStatusCode": 200
+        }
+      ]
+    }
+  },
+  "populationCoverageClaim": false,
+  "fresh100TargetMeasurement": false,
+  "lastFull100TargetMeasurement": {
+    "sourceCommit": "39aef2a7815f40498dd639633c9e6689111295b6",
+    "normalizedMatches": 54,
+    "requests": 100,
+    "backendCaptures": 159,
+    "receipt": "docs/benchmarks/context-finalization-api-results-2026-11-04.json",
+    "limit": "Precedes this repair. Do not add the new Alibaba observation to this older aggregate or relabel it as the candidate score."
+  },
+  "gapReview": {
+    "forkFullSource": "39aef2a7815f40498dd639633c9e6689111295b6",
+    "historicalHostedSource": "89887a22bc356e8c4316a76e67cee8b8548baa5c",
+    "historicalHostedMeasuredAt": "2026-11-03T22:43:40.238Z",
+    "historicalHostedReceiptSHA256": "0ad4115ff098b7804a138e121afc216e34729a1839fe8ff8ffd0582def25a343",
+    "commonNormalizedMatches": 44,
+    "forkOnly": 10,
+    "historicalHostedOnly": 38,
+    "neither": 8,
+    "historicalOnlyFailureCounts": {
+      "challenge": 13,
+      "target_status_403": 13,
+      "network_error": 2,
+      "rate_limited": 3,
+      "missing_expected_marker": 2,
+      "target_status_406": 1,
+      "target_status_417": 1,
+      "target_status_405": 1,
+      "content_not_ready": 1,
+      "timeout": 1
+    },
+    "limit": "Different live epochs. Categories describe saved responses, not causal IP/WAF diagnoses or current hosted coverage."
+  },
+  "deployment": {
+    "imageId": "sha256:bfc6b0a2dd676cdafb88297294f452d4512ffc5a67f51c8f8bcd2953f1ceeb92",
+    "globalHttpConcurrency": 4,
+    "aggregateBrowserMemoryLimitMiB": 6656,
+    "limitsPerOwner": {
+      "primary-a": {
+        "cpus": 2,
+        "memoryMiB": 2560,
+        "pageCapacity": 2
+      },
+      "fallback-a": {
+        "cpus": 2,
+        "memoryMiB": 2048,
+        "pageCapacity": 1
+      },
+      "fallback-b": {
+        "cpus": 2,
+        "memoryMiB": 2048,
+        "pageCapacity": 1
+      }
+    },
+    "browserRuntimeHashesPerOwner": {
+      "primary-a": {
+        "api.ts": "09148862be222a3263d82473eb6d918d554aabc07e1f40227056f5c98e538e1c",
+        "helpers/browser.ts": "df8cea26bc7291f16c651daa1c2961e51342adc61b17836857687f62345a5a10",
+        "helpers/browser-sessions.ts": "d67253bc869f97206083c7fa7c2c2ae9d711005960c8590ad44725fb12ceb41f",
+        "helpers/cookies.ts": "94736b093cf95fe8244f52c6e8ee9925cdd39ea7cd64cf08156be05a45240dcb",
+        "helpers/get_error.ts": "1c15475f5f048c869be847c62dbfb9610cf4130ab93538db2c00dbd567d01aea",
+        "helpers/resource-policy.ts": "7c54984bc6187baf1c0ce2ff18cb50373109c8dcd961edc65b9186d5d2e2e774",
+        "helpers/webkit.ts": "93771af70a8d2a2fe126d6bcd8ef4b8794ece9add16613a220b37acaed6b2e33",
+        "helpers/scrape-control.ts": "06facddd72e027792c7f527a671b50e32bd4d5389a98a6af7720577eca66e9e0",
+        "helpers/page-cleanup.ts": "e0e798de0db771202e7663f3d34227c2937f277d9093b4c0df65425e1dbf43a4",
+        "helpers/scrape-page.ts": "55bdfa6d6a54192a0048f9cea60df73f3de950585158ca61ca685a82a5565785",
+        "helpers/ssrf.ts": "dd50cd35b42a39474dcef16481c8bbba308b5f5290645ca680cfb50bcf35ae14",
+        "helpers/workflows.ts": "a5af44f2d178c42763221f1f93e2cc2c05a8f4e9d9a4f3566885f9d663ed64ef",
+        "helpers/page-readiness.ts": "dd46314bf69e20a879da1d4e36d62e3d511de6b326f8dba760f72a1b6ac7c680",
+        "helpers/waf-benchmark.ts": "ffd9f0d2e5996825aa77cb71b600a6667558e166d4471a084c20638bab9171d6",
+        "helpers/bot-detection.ts": "3111f011045834a040e5497825cd0bf2c698a3fa8ca77a48c8479dddf2348817",
+        "dist/api.js": "25af6072cea948acf7a4406aeaebef1fe912a78a6c85864d22d16c04eb79e122",
+        "dist/helpers/browser.js": "9e2a6dd9fb0adbef04d7e6845593484dc060f0208a4c95cf7c3e631063452ddd",
+        "dist/helpers/browser-sessions.js": "715e61bf0a2fe9b43de9ab1dc733f5f775e0a92e60c5268dbe6e0b8620f9f549",
+        "dist/helpers/cookies.js": "0d7a5e0f76b861992a1b304b6acf6f70eacaaa7a09f8269d93434dcdbc23bc57",
+        "dist/helpers/get_error.js": "5edbde83afd8bceb2280455d500bdb7c3d62f5318d54c82cc01629c6681cd6a7",
+        "dist/helpers/resource-policy.js": "3c079ef3d980dde1a91090007396929a506962a57ee1cd83a9baa48fc7bce2f1",
+        "dist/helpers/webkit.js": "7700d1b1a53f29abece85053fec39abe301b22768db4989698f9e5a894a4a078",
+        "dist/helpers/scrape-control.js": "cf3862ccedf93c1f73a84471f558241d63cb5f9fb62d95881f2c3aad5fd4abfd",
+        "dist/helpers/page-cleanup.js": "89896b2084177a69e6a8d7ed26f6bd6b052e631c6692e26f84111e2d745912eb",
+        "dist/helpers/scrape-page.js": "792565e78b04c0bb83ec626c3e362be8c675aeef163069bb3ce2cdafa1e2a341",
+        "dist/helpers/ssrf.js": "c5a7425cd6dca38a721186621e7fe1752314bb4e1cf12e6f39a49b67ea3ea87c",
+        "dist/helpers/workflows.js": "e562e95cbb811a11356215928f0f4f466c529e41f51f0a786fd4bd63a2e7c59f",
+        "dist/helpers/page-readiness.js": "bd5062d3699969bd4553e43b07fd7843abe22711b05c6a370dfb9c88d6236729",
+        "dist/helpers/waf-benchmark.js": "4eea26db4617351a9daa9ad546c8d9d16983d2d736f5a1d435a3159fe7a96f4d",
+        "dist/helpers/bot-detection.js": "77a197cbbe0942b6106db2eb2579fc1af8dc7a167e3e959de51a89f8ed7a746e",
+        "scripts/webkit-entrypoint.sh": "b0fd23edbeae9b2ec4d4d0724af52f8fe23bb93891c8e052a708be5e76a8d60e",
+        "scripts/webkit-launcher.sh": "97f7408a15e2a714ed351c865b45294468b22da1eaa14eba1ab260d66e5ad305",
+        "docker-entrypoint.sh": "55aa3489e4db96d2b71e75fab1a1b443fd30051f33b6ebcfc98b7b672c4422ae"
+      },
+      "fallback-a": {
+        "api.ts": "09148862be222a3263d82473eb6d918d554aabc07e1f40227056f5c98e538e1c",
+        "helpers/browser.ts": "df8cea26bc7291f16c651daa1c2961e51342adc61b17836857687f62345a5a10",
+        "helpers/browser-sessions.ts": "d67253bc869f97206083c7fa7c2c2ae9d711005960c8590ad44725fb12ceb41f",
+        "helpers/cookies.ts": "94736b093cf95fe8244f52c6e8ee9925cdd39ea7cd64cf08156be05a45240dcb",
+        "helpers/get_error.ts": "1c15475f5f048c869be847c62dbfb9610cf4130ab93538db2c00dbd567d01aea",
+        "helpers/resource-policy.ts": "7c54984bc6187baf1c0ce2ff18cb50373109c8dcd961edc65b9186d5d2e2e774",
+        "helpers/webkit.ts": "93771af70a8d2a2fe126d6bcd8ef4b8794ece9add16613a220b37acaed6b2e33",
+        "helpers/scrape-control.ts": "06facddd72e027792c7f527a671b50e32bd4d5389a98a6af7720577eca66e9e0",
+        "helpers/page-cleanup.ts": "e0e798de0db771202e7663f3d34227c2937f277d9093b4c0df65425e1dbf43a4",
+        "helpers/scrape-page.ts": "55bdfa6d6a54192a0048f9cea60df73f3de950585158ca61ca685a82a5565785",
+        "helpers/ssrf.ts": "dd50cd35b42a39474dcef16481c8bbba308b5f5290645ca680cfb50bcf35ae14",
+        "helpers/workflows.ts": "a5af44f2d178c42763221f1f93e2cc2c05a8f4e9d9a4f3566885f9d663ed64ef",
+        "helpers/page-readiness.ts": "dd46314bf69e20a879da1d4e36d62e3d511de6b326f8dba760f72a1b6ac7c680",
+        "helpers/waf-benchmark.ts": "ffd9f0d2e5996825aa77cb71b600a6667558e166d4471a084c20638bab9171d6",
+        "helpers/bot-detection.ts": "3111f011045834a040e5497825cd0bf2c698a3fa8ca77a48c8479dddf2348817",
+        "dist/api.js": "25af6072cea948acf7a4406aeaebef1fe912a78a6c85864d22d16c04eb79e122",
+        "dist/helpers/browser.js": "9e2a6dd9fb0adbef04d7e6845593484dc060f0208a4c95cf7c3e631063452ddd",
+        "dist/helpers/browser-sessions.js": "715e61bf0a2fe9b43de9ab1dc733f5f775e0a92e60c5268dbe6e0b8620f9f549",
+        "dist/helpers/cookies.js": "0d7a5e0f76b861992a1b304b6acf6f70eacaaa7a09f8269d93434dcdbc23bc57",
+        "dist/helpers/get_error.js": "5edbde83afd8bceb2280455d500bdb7c3d62f5318d54c82cc01629c6681cd6a7",
+        "dist/helpers/resource-policy.js": "3c079ef3d980dde1a91090007396929a506962a57ee1cd83a9baa48fc7bce2f1",
+        "dist/helpers/webkit.js": "7700d1b1a53f29abece85053fec39abe301b22768db4989698f9e5a894a4a078",
+        "dist/helpers/scrape-control.js": "cf3862ccedf93c1f73a84471f558241d63cb5f9fb62d95881f2c3aad5fd4abfd",
+        "dist/helpers/page-cleanup.js": "89896b2084177a69e6a8d7ed26f6bd6b052e631c6692e26f84111e2d745912eb",
+        "dist/helpers/scrape-page.js": "792565e78b04c0bb83ec626c3e362be8c675aeef163069bb3ce2cdafa1e2a341",
+        "dist/helpers/ssrf.js": "c5a7425cd6dca38a721186621e7fe1752314bb4e1cf12e6f39a49b67ea3ea87c",
+        "dist/helpers/workflows.js": "e562e95cbb811a11356215928f0f4f466c529e41f51f0a786fd4bd63a2e7c59f",
+        "dist/helpers/page-readiness.js": "bd5062d3699969bd4553e43b07fd7843abe22711b05c6a370dfb9c88d6236729",
+        "dist/helpers/waf-benchmark.js": "4eea26db4617351a9daa9ad546c8d9d16983d2d736f5a1d435a3159fe7a96f4d",
+        "dist/helpers/bot-detection.js": "77a197cbbe0942b6106db2eb2579fc1af8dc7a167e3e959de51a89f8ed7a746e",
+        "scripts/webkit-entrypoint.sh": "b0fd23edbeae9b2ec4d4d0724af52f8fe23bb93891c8e052a708be5e76a8d60e",
+        "scripts/webkit-launcher.sh": "97f7408a15e2a714ed351c865b45294468b22da1eaa14eba1ab260d66e5ad305",
+        "docker-entrypoint.sh": "55aa3489e4db96d2b71e75fab1a1b443fd30051f33b6ebcfc98b7b672c4422ae"
+      },
+      "fallback-b": {
+        "api.ts": "09148862be222a3263d82473eb6d918d554aabc07e1f40227056f5c98e538e1c",
+        "helpers/browser.ts": "df8cea26bc7291f16c651daa1c2961e51342adc61b17836857687f62345a5a10",
+        "helpers/browser-sessions.ts": "d67253bc869f97206083c7fa7c2c2ae9d711005960c8590ad44725fb12ceb41f",
+        "helpers/cookies.ts": "94736b093cf95fe8244f52c6e8ee9925cdd39ea7cd64cf08156be05a45240dcb",
+        "helpers/get_error.ts": "1c15475f5f048c869be847c62dbfb9610cf4130ab93538db2c00dbd567d01aea",
+        "helpers/resource-policy.ts": "7c54984bc6187baf1c0ce2ff18cb50373109c8dcd961edc65b9186d5d2e2e774",
+        "helpers/webkit.ts": "93771af70a8d2a2fe126d6bcd8ef4b8794ece9add16613a220b37acaed6b2e33",
+        "helpers/scrape-control.ts": "06facddd72e027792c7f527a671b50e32bd4d5389a98a6af7720577eca66e9e0",
+        "helpers/page-cleanup.ts": "e0e798de0db771202e7663f3d34227c2937f277d9093b4c0df65425e1dbf43a4",
+        "helpers/scrape-page.ts": "55bdfa6d6a54192a0048f9cea60df73f3de950585158ca61ca685a82a5565785",
+        "helpers/ssrf.ts": "dd50cd35b42a39474dcef16481c8bbba308b5f5290645ca680cfb50bcf35ae14",
+        "helpers/workflows.ts": "a5af44f2d178c42763221f1f93e2cc2c05a8f4e9d9a4f3566885f9d663ed64ef",
+        "helpers/page-readiness.ts": "dd46314bf69e20a879da1d4e36d62e3d511de6b326f8dba760f72a1b6ac7c680",
+        "helpers/waf-benchmark.ts": "ffd9f0d2e5996825aa77cb71b600a6667558e166d4471a084c20638bab9171d6",
+        "helpers/bot-detection.ts": "3111f011045834a040e5497825cd0bf2c698a3fa8ca77a48c8479dddf2348817",
+        "dist/api.js": "25af6072cea948acf7a4406aeaebef1fe912a78a6c85864d22d16c04eb79e122",
+        "dist/helpers/browser.js": "9e2a6dd9fb0adbef04d7e6845593484dc060f0208a4c95cf7c3e631063452ddd",
+        "dist/helpers/browser-sessions.js": "715e61bf0a2fe9b43de9ab1dc733f5f775e0a92e60c5268dbe6e0b8620f9f549",
+        "dist/helpers/cookies.js": "0d7a5e0f76b861992a1b304b6acf6f70eacaaa7a09f8269d93434dcdbc23bc57",
+        "dist/helpers/get_error.js": "5edbde83afd8bceb2280455d500bdb7c3d62f5318d54c82cc01629c6681cd6a7",
+        "dist/helpers/resource-policy.js": "3c079ef3d980dde1a91090007396929a506962a57ee1cd83a9baa48fc7bce2f1",
+        "dist/helpers/webkit.js": "7700d1b1a53f29abece85053fec39abe301b22768db4989698f9e5a894a4a078",
+        "dist/helpers/scrape-control.js": "cf3862ccedf93c1f73a84471f558241d63cb5f9fb62d95881f2c3aad5fd4abfd",
+        "dist/helpers/page-cleanup.js": "89896b2084177a69e6a8d7ed26f6bd6b052e631c6692e26f84111e2d745912eb",
+        "dist/helpers/scrape-page.js": "792565e78b04c0bb83ec626c3e362be8c675aeef163069bb3ce2cdafa1e2a341",
+        "dist/helpers/ssrf.js": "c5a7425cd6dca38a721186621e7fe1752314bb4e1cf12e6f39a49b67ea3ea87c",
+        "dist/helpers/workflows.js": "e562e95cbb811a11356215928f0f4f466c529e41f51f0a786fd4bd63a2e7c59f",
+        "dist/helpers/page-readiness.js": "bd5062d3699969bd4553e43b07fd7843abe22711b05c6a370dfb9c88d6236729",
+        "dist/helpers/waf-benchmark.js": "4eea26db4617351a9daa9ad546c8d9d16983d2d736f5a1d435a3159fe7a96f4d",
+        "dist/helpers/bot-detection.js": "77a197cbbe0942b6106db2eb2579fc1af8dc7a167e3e959de51a89f8ed7a746e",
+        "scripts/webkit-entrypoint.sh": "b0fd23edbeae9b2ec4d4d0724af52f8fe23bb93891c8e052a708be5e76a8d60e",
+        "scripts/webkit-launcher.sh": "97f7408a15e2a714ed351c865b45294468b22da1eaa14eba1ab260d66e5ad305",
+        "docker-entrypoint.sh": "55aa3489e4db96d2b71e75fab1a1b443fd30051f33b6ebcfc98b7b672c4422ae"
+      }
+    },
+    "apiSourceHashes": {
+      "apps/api/src/controllers/v2/scrape.ts": "5d6f51665c80fbfc6e8968f5a18b6e2dd591fc2fa7051ed0147e3799acd05ed4",
+      "apps/api/src/lib/local-browser/store.ts": "3fc2d6c0f846112ada94f21db6965354e466a7fe0c576b2fc2082509ed22d4c4",
+      "apps/api/src/lib/error.ts": "cff0c1e7a4d35f05fb6d1c907ab3769fa610d66118d9d24be6d4508e0718ea33",
+      "apps/api/src/lib/error-serde.ts": "577afcca02649788bb52157b21b8eefa91f14581fe0353a1228ec939fe180e44",
+      "apps/api/src/config.ts": "ff0125914ec73e0ef0d49e1d3e09777f71e43f1a62fae7b9cb1c209724ddba4e",
+      "apps/api/src/controllers/v2/types.ts": "7a8553a2d1b95d4b81960d1cf366a2ff8f7048c34ccd55c3b7b6f4e11ad288a7",
+      "apps/api/src/controllers/v2/local-browser.ts": "247b0f403c6a332cb38b0ba95efef12f648ba00731133f4bcc0c51d12e0b6c48",
+      "apps/api/src/lib/local-browser/client.ts": "4daeb41b17e08667d3752f94d41663fea8428e25d7e4047890e5361d4e81d28a",
+      "apps/api/src/lib/local-browser/controls.ts": "d76525c7c691460d74efb53acc54318817ddcbbdf1c184ff848989220eafd7fa",
+      "apps/api/src/scraper/scrapeURL/engines/playwright/index.ts": "b08ecf7316c656866f04be9a1e96e1b19b64bfac3a83d15d595b2cb107e550a4"
+    },
+    "apiCompiledHashes": {
+      "controllers/v2/scrape": "3a130b81176092593376b53d2da18a2bf12269f916914eb8345242fb8540f37d",
+      "lib/local-browser/store": "f0948ec39ad3595a246fa49ba73ff8e0c27094823b29e2fa3c28141797e91fb2",
+      "lib/error": "44be52ea4c884fe07a2e30021f47403611869c1c5efa8647718143a12b9770ea",
+      "lib/error-serde": "10dac52367b057ab8603113a7475fe1a14e014ae360dffac9f532f7a094140d3",
+      "config": "1aa5cec1540fa41a5cdd0c08b06b1bac1bc8ffc9532ce269de358689f43bc26e",
+      "controllers/v2/types": "862e1cdcd553037a23a4d3ca8eebfce8fd0b21da7e8e9c3662fcc6773bae0ce8",
+      "controllers/v2/local-browser": "cc944c2b23df86abe50be2d3ac2cd828cdf8bb284ce60f43c0a701d513be0ab6",
+      "lib/local-browser/client": "020dceafc5773d8fabcea64f9621ca3bcafd23ddc72cd8fb21fabd23cc7450b0",
+      "lib/local-browser/controls": "278e8a852637bd1cd83448751eb13508898d779e505b2b31ff66bd1da0318c18",
+      "scraper/scrapeURL/engines/playwright/index": "436dbbb27bcec5cfa7ee73aafaee4cffe682fc70d2e45c611afdf69c4eabf8f3"
+    },
+    "upstreamProxy": false,
+    "hostedCalls": 0
+  },
+  "validation": {
+    "helpersPassed": 75,
+    "localOrdinaryDriverChecksPassed": 5,
+    "localWebkitChecksPassed": 2,
+    "realEngines": [
+      "playwright",
+      "patchright",
+      "rebrowser",
+      "camoufox",
+      "webkit"
+    ],
+    "ownedFullApiSnips": {
+      "passed": 3,
+      "harnessExitCode": 0,
+      "cases": [
+        "One distinct-engine recovery after a real browser classifies the HTTP 200 owned interception",
+        "Opt-out and still-challenged alternate remain unresolved without submitting verification",
+        "Ordinary content stays ready with no alternate"
+      ]
+    },
+    "apiTypecheckExitCode": 0,
+    "browserCi": {
+      "sourceCommit": "c63cbda30868dfc3edd5ba48d06204e6fce5da3e",
+      "runId": 41777849186,
+      "url": "https://github.com/toreleon/firecrawl/actions/runs/41777849186",
+      "jobs": [
+        {
+          "id": 126402257921,
+          "name": "contained-webkit",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 41777849186,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Build the optional WebKit image",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Exercise the production UID boundary and HTTP/session contract",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Refuse startup without the required UID or namespace capability",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            }
+          ]
+        },
+        {
+          "id": 126402258192,
+          "name": "browser-engines",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 41777849186,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Run pnpm install --frozen-lockfile",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Install browser dependencies for all three drivers",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Run pnpm build",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Prepare the pinned optional Firefox backend",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Run pnpm test",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Run pnpm test:integration",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Run pnpm audit --prod",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            },
+            {
+              "name": "Post Run actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 20
+            },
+            {
+              "name": "Post Run pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 21
+            },
+            {
+              "name": "Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 22
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 23
+            }
+          ]
+        }
+      ],
+      "inspectedLogLines": [
+        {
+          "id": 126402257921,
+          "lines": [
+            "2026-11-04T05:12:47.4819728Z HEAD is now at 85f72ba Merge c63cbda30868dfc3edd5ba48d06204e6fce5da3e into 32119bd8a6553a98546a35864acc0cbd72b75b0b",
+            "2026-11-04T05:14:50.7447530Z # tests 19",
+            "2026-11-04T05:14:50.7448905Z # pass 19",
+            "2026-11-04T05:14:50.7449272Z # fail 0",
+            "2026-11-04T05:14:50.7450117Z # skipped 0"
+          ]
+        },
+        {
+          "id": 126402258192,
+          "lines": [
+            "2026-11-04T05:12:51.5136913Z HEAD is now at 85f72ba Merge c63cbda30868dfc3edd5ba48d06204e6fce5da3e into 32119bd8a6553a98546a35864acc0cbd72b75b0b",
+            "2026-11-04T05:14:54.8391434Z # tests 75",
+            "2026-11-04T05:14:54.8391864Z # pass 75",
+            "2026-11-04T05:14:54.8392116Z # fail 0",
+            "2026-11-04T05:14:54.8392550Z # skipped 0",
+            "2026-11-04T05:16:50.5677632Z # tests 162",
+            "2026-11-04T05:16:50.5677997Z # pass 156",
+            "2026-11-04T05:16:50.5678177Z # fail 0",
+            "2026-11-04T05:16:50.5678758Z # skipped 6",
+            "2026-11-04T05:16:50.9629117Z No known vulnerabilities found"
+          ]
+        }
+      ],
+      "scope": "Browser integration workflow only; broader server/SDK workflows are not claimed."
+    },
+    "teardownLimit": "Harness exited zero and reported all processes terminated, but extract-worker teardown still logged a channel-closing error. Clean shutdown is not established.",
+    "broaderServerSdkWorkflowsClaimed": false
+  },
+  "requestAccounting": {
+    "publicApiRequests": 4,
+    "publicBrowserCaptures": 5,
+    "maximumPlannedCaptures": 8,
+    "clientRetries": 0,
+    "expectedTextHintsSent": false,
+    "upstreamProxy": false,
+    "hostedCalls": 0,
+    "offlineSavedResponseReplays": 2,
+    "ownedFixtureTrafficSeparate": true
+  },
+  "cleanup": {
+    "taskContainersRemoved": 9,
+    "candidateImageRetained": "sha256:bfc6b0a2dd676cdafb88297294f452d4512ffc5a67f51c8f8bcd2953f1ceeb92",
+    "imagesRemoved": 0,
+    "obsoleteImageCreated": false,
+    "baselineImagesPreserved": true,
+    "cache": {
+      "taskRecordsRemoved": 52,
+      "baselineRecordsPreserved": 128,
+      "unrelatedNewRecordsPreserved": 0,
+      "remainingRecords": 128,
+      "dockerReportedPruneTotal": [
+        "Total:\t328.2MB"
+      ],
+      "physicalBytesFreedNotMeasured": true
+    },
+    "taskInfrastructureStopped": [
+      "autogtm-firecrawl-workflows-pg-20261103",
+      "autogtm-firecrawl-workflows-redis-20261103",
+      "autogtm-firecrawl-workflows-rabbit-20261103"
+    ],
+    "taskPortsClosed": true,
+    "volumeNamesUnchanged": true,
+    "dataVolumesPreserved": 114,
+    "volumesDeleted": 0,
+    "rawEvidenceAndBuildContextsPreserved": true,
+    "globalPruneUsed": false
+  },
+  "remainingWork": [
+    "Run a fresh complete 100-target benchmark on this candidate before claiming an aggregate coverage or latency improvement.",
+    "Hosted parity remains unproven; the historical 82/100 reference was not refreshed.",
+    "Origin denial, other verification, rate limiting, region restrictions, transport failures and the previously unconfirmed context-close operation remain separate issues."
+  ],
+  "research": [
+    {
+      "url": "https://www.alibabacloud.com/help/en/captcha/web-and-h5-client-v2-architecture-access",
+      "use": "First-party CAPTCHA integration context; loading an SDK alone is insufficient to identify an interception. This runtime signature is grounded in the retained actual Alibaba response and owned regressions, not a claim of universal CAPTCHA-version support."
+    }
+  ],
+  "evidence": {
+    "retainedRawResponses": true,
+    "hashes": {
+      "_local/anti-bot/alibaba-interception-2026-11-04/saved-before.json": "2b330484431d0797b424c0368fa17f6f8530625e35f2d25b3d9ad5dfcf9db0f8",
+      "_local/anti-bot/alibaba-interception-2026-11-04/saved-after.json": "489e16fb1a619e4631d34e611448b5f743429c8efa418c318d0effd45d4b7b6f",
+      "_local/anti-bot/alibaba-interception-2026-11-04/build-manifest.json": "9978d6116e131cc306593c79ce0cca8c4dbe53c37e785583ca70aa90879ca323",
+      "_local/anti-bot/alibaba-interception-2026-11-04/build-source-hashes.json": "16da913084e82d0c9f5897a246a5aaf784121dd1acac1acacce6a41638a99f9b",
+      "_local/anti-bot/alibaba-interception-2026-11-04/helpers.log": "942b6a4167d91fb6f5fe1dc4895c9971062cf40b3b99b9d5f3315f114ba40b0c",
+      "_local/anti-bot/alibaba-interception-2026-11-04/webkit-integration.log": "3037fc4e8a4c37ebe5634236c8919545c1d26a2f016983d73f4566234b02c517",
+      "_local/anti-bot/alibaba-interception-2026-11-04/driver-integration.log": "6935b59cefcafaf2925cecd601e811432610299d75fe1d5310eaf047a06c12be",
+      "_local/anti-bot/alibaba-interception-2026-11-04/api-typecheck.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "_local/anti-bot/alibaba-interception-2026-11-04/ci.json": "e1bc4cdb648e33e73462de38e53c3602bd009f7d31d5e0bc858e9cdf62146708",
+      "_local/anti-bot/alibaba-api-harness-2026-11-04/result.json": "31afa0b02877417699fa1dd034ca6ec147e6316052e8f3ac8050dc4888b940d9",
+      "_local/anti-bot/alibaba-api-harness-2026-11-04/deployment.json": "a1435086a7b8fd3f32f45304458254745dfa97175d9eeb12b4b55c012fc9da46",
+      "_local/anti-bot/alibaba-api-harness-2026-11-04/harness.log": "7450050ad72571f4def25a1c660651f54dbcf89263f26c2dd1a07b00d0987166",
+      "_local/anti-bot/alibaba-api-harness-2026-11-04/final-health.json": "d41f16851a8fb2f50ab18f9d16bf1563e4ee53ea51cefbab6ce4e897e1c48af6",
+      "_local/anti-bot/alibaba-api-harness-2026-11-04/cleanup.json": "5e12f6be8b32442b8c553722feb38c53a239a6471f38c3035dc11b9790876324",
+      "_local/anti-bot/alibaba-cohort-api-harness-2026-11-04/audited-results.json": "4efbfa9ea5d058fe69343ea2510b08cca29093dc23bffacabec152cc2245b00b",
+      "_local/anti-bot/alibaba-cohort-api-harness-2026-11-04/deployment.json": "d24f5ec693abd91965546bdebe470928cec5e0b795d85498c9d2c48322c89bda",
+      "_local/anti-bot/alibaba-cohort-api-harness-2026-11-04/result.json": "1d5f5fda4a1718d63b9239147c51e616c9ec1a144dfd9d8b3484a22b7b93be8a",
+      "_local/anti-bot/alibaba-cohort-api-harness-2026-11-04/final-health.json": "e7e3cac919e8bfcaa72333dec0843ac3737c4d9eb4d5f0d360a609a0bc58f1fa",
+      "_local/anti-bot/alibaba-cohort-api-harness-2026-11-04/cleanup.json": "6c6b85d1670a5a6cd70269a66d840c1d1b3d924cfe3e9843a3e13601a67aed03",
+      "_local/anti-bot/alibaba-cohort-api-harness-2026-11-04/resource-samples.jsonl": "0418b8181c49d4727f57534e704bf357cf83011dffacd90b42e4e4d3f2837c12",
+      "_local/anti-bot/alibaba-cohort-api-2026-11-04/report.json": "0319f3796e8a248469b2832f64a4d9e5b58cbdc527e7d7123e7ee11f5bfb8f32",
+      "_local/anti-bot/alibaba-cohort-api-2026-11-04/attempts.jsonl": "1ef2ba4944b6d8af4982e78afa6b74abeb296f6abcc5723d4c51362e093e5883",
+      "_local/anti-bot/alibaba-cohort-api-2026-11-04/score-replay-audit.json": "c924afb83e7c5e4e66b9499a434ba9dd302ec6d0b9516a40902fc2e4046b5d53",
+      "_local/anti-bot/alibaba-interception-cleanup-2026-11-04/receipt.json": "5444fa7008ea6d013f905fc93d6433a9a307175e83f62c5eeaab8c453dc80394"
+    }
+  }
+}

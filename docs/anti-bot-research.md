@@ -3502,3 +3502,71 @@ evidence remain. Task infrastructure is stopped and ports are closed; no global
 prune or volume removal was used.
 
 [Full measurement, per-target receipts, validation, source/image hashes and cleanup](benchmarks/context-finalization-api-results-2026-11-04.json).
+
+## Large Alibaba interception recognition and a selected recovery
+
+Candidate implementation: `c63cbda30868dfc3edd5ba48d06204e6fce5da3e`. A read-only gap review compared the
+most recent full fork result (54/100, source `39aef2a781`) with the older
+hosted 82/100 observation. It found 44 common matches, ten fork-only matches,
+38 historical-hosted-only matches and eight matches in neither epoch. These
+are saved-response comparisons, not current or causal hosted measurements.
+Most historical-hosted-only failures were recognized challenges or HTTP denials;
+Alibaba exposed a concrete runtime-recognition gap.
+
+The retained WebKit response was a 98,702-character `Captcha Interception`
+document, including large inline assets. The prior runtime signatures skipped
+documents above 65,536 characters. Its HTTP 200 warning therefore became
+`CONTENT_READY`, preventing the otherwise permitted alternate request. Offline
+replay on the exact same HTML hash changed from no classification to an explicit
+Alibaba interception; no new network request was used for that comparison.
+
+A bounded, separate signature now requires the exact title, short non-script
+body warning, Baxia container, same-origin verification form and both observed
+trusted CDN script paths. Comments and script bodies are stripped before the
+structural checks. SDK assets alone and partial signatures stay insufficient.
+The result is `HUMAN_REQUIRED` with unsatisfied readiness. Verification controls
+are not operated; the existing opt-in single-alternate policy still requires
+matching owner boot, Page-close proof, a distinct engine and remaining budget.
+The [first-party integration documentation](https://www.alibabacloud.com/help/en/captcha/web-and-h5-client-v2-architecture-access)
+provides CAPTCHA integration context; this exact legacy document signature is
+grounded in retained runtime evidence rather than a claim of universal vendor
+version support. Frozen datasets, marker graders and hint isolation are unchanged.
+
+A fresh selected full-API cohort used a four-worker cap and five total browser
+captures across Alibaba, Allmenus, GitHub and arXiv. It retained the full policy's
+controls, deadlines, pacing and 6,656-MiB aggregate browser cap, with direct VN
+egress, no client retries, no upstream proxy and no hosted calls.
+
+| Selected target | Normalized marker | Screened marker | Observation |
+| --- | --- | --- | --- |
+| Alibaba | Match | Match | WebKit interception was followed by exactly one Firefox capture containing the product marker in HTML and Markdown. |
+| Allmenus | Missing | Missing | The returned document remained region-unavailable; no alternate was requested. |
+| GitHub | Match | Match | Primary capture passed without fallback. |
+| arXiv | Match | Missing | Normalized and Markdown markers matched; the frozen screened criterion did not. |
+
+All four payload hashes/scores replayed. Backend logs accounted for all five
+captures and returned five closed-Page/fulfilled-context receipts. Final owners
+had zero pages/sessions and no OOM, memory-boundary or PID-limit events. The
+selected 3/4 normalized result is not a population rate or a replacement for the
+previous 54/100 result. Do not add one new Alibaba observation to that older
+aggregate; a fresh complete 100-target run on this candidate is still required.
+Hosted parity remains unproven.
+
+Validation passed 75 helpers, seven local real-browser parent/child checks
+across all five engines and three owned full-API snips via `pnpm harness`. The
+snips cover one alternate recovery, opt-out, an unresolved alternate, ordinary
+content and zero verification submissions. Owned fixture CSP prevents real
+third-party SDK execution. [Browser CI](https://github.com/toreleon/firecrawl/actions/runs/41777849186) passed both jobs: 75 helpers,
+156 ordinary integration checks (six optional skips), production dependency
+audit and 19 contained WebKit checks from a fresh Docker build. API type checking
+passed. Broader server/SDK workflows are not claimed. Harness commands returned
+zero and reported all processes terminated, but extract-worker teardown still
+logged a channel-closing error; clean shutdown is not established.
+
+Scoped cleanup removed 9 task containers and 52 exact task cache
+records; Docker reported about 328 MB reclaimed. No obsolete image was created,
+and the measured image was retained. All baseline images, 128 baseline cache
+records, nine unrelated services, all 114 volumes and raw evidence remain. Task
+infrastructure is stopped and ports are closed; no global prune was used.
+
+[Selected result, offline replay, source/image hashes, gap review, validation and cleanup](benchmarks/alibaba-interception-results-2026-11-04.json).

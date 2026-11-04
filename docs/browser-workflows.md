@@ -385,6 +385,16 @@ clicking or answering a challenge. Ordinary pages embedding SDK widgets are not
 classified from the SDK alone. Unicode format characters alone cannot satisfy
 body readiness; real text must appear or the bounded wait stays unresolved.
 
+The observed large Alibaba `Captcha Interception` document is also an explicit
+verification outcome. Its title, short non-script body text, Baxia container,
+same-origin verification form and both specific trusted CDN script paths must
+agree. The check is bounded to 262,144 characters; ordinary SDK use, quoted
+examples, comments and partial signatures do not establish interception.
+It reports `HUMAN_REQUIRED` and unsatisfied readiness without operating any
+verification control. With `engineFallback: true`, the existing stateless,
+closed-page, distinct-engine and deadline rules may allow one alternate.
+This is recognition of an observed document, not universal Alibaba coverage.
+
 `maxAttempts` defaults to one. Opt-in retries recognize coded phase deadlines
 and transient connection/HTTP2 errors, while cancellation, session errors,
 workflow identity mismatches and hard status failures remain terminal. Attempt
