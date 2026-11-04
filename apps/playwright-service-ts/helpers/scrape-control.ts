@@ -7,7 +7,7 @@ export class ScrapeFailure extends Error {
   }
 }
 
-/** Cleanup must not prevent an error response or hold a concurrency permit. */
+/** Bound the caller's wait; resource ownership must survive a timeout. */
 export const boundedClose = async (
   operation: Promise<unknown>,
   timeoutMs = 1000,

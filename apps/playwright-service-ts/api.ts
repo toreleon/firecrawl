@@ -30,7 +30,7 @@ import {
   attemptBudgetMs,
 } from './helpers/scrape-control';
 import { scrapePage, documentDiagnostics } from './helpers/scrape-page';
-import { closeScrapePage } from './helpers/page-cleanup';
+import { closeScrapePage, contextDisposal } from './helpers/page-cleanup';
 import { BrowserSessions } from './helpers/browser-sessions';
 import { OwnerHealthProbe } from './helpers/owner-health';
 import { randomUUID, timingSafeEqual } from 'node:crypto';
@@ -308,7 +308,8 @@ const ownerHealth = new OwnerHealthProbe<Browser>(async (scope) => {
   scope.check();
   const page = await context.newPage();
   scope.check();
-  if (page.isClosed()) throw new Error('Browser health page closed prematurely');
+  if (page.isClosed())
+    throw new Error('Browser health page closed prematurely');
   return selected;
 });
 
@@ -535,7 +536,9 @@ app.post('/scrape', async (req: Request, res: Response) => {
     max_attempts > 3 ||
     !['load', 'domcontentloaded'].includes(wait_until) ||
     (navigation_timeout !== undefined &&
-      (!Number.isInteger(navigation_timeout) || navigation_timeout < 100 || navigation_timeout > 120000)) ||
+      (!Number.isInteger(navigation_timeout) ||
+        navigation_timeout < 100 ||
+        navigation_timeout > 120000)) ||
     typeof skip_tls_verification !== 'boolean' ||
     typeof create_session !== 'boolean' ||
     (wait_for_text !== undefined &&
@@ -615,7 +618,7 @@ app.post('/scrape', async (req: Request, res: Response) => {
   const attempts: Record<string, unknown>[] = [];
 
   let requestContext: BrowserContext | null = null;
-  let requestContextClosed = false;
+  let finishStatelessContext: (() => Promise<void>) | undefined;
   let securityState: ContextSecurityState | null = null;
   let page: Page | null = null;
   const disconnected = () => {
@@ -661,12 +664,32 @@ app.post('/scrape', async (req: Request, res: Response) => {
         : undefined;
     sessionToken = lease?.token;
     sessionExpiresAt = lease?.expiresAt;
-    const contextBundle =
-      lease?.value ??
-      (await deadline.run(
-        createContext(skip_tls_verification, userAgentOverride, block_ads),
-        async (late) => late.context.close(),
-      ));
+    let contextBundle: Awaited<ReturnType<typeof createContext>>;
+    if (lease) contextBundle = lease.value;
+    else {
+      let adopt!: (disposal?: ReturnType<typeof contextDisposal>) => void;
+      const allocated = new Promise<
+        ReturnType<typeof contextDisposal> | undefined
+      >((resolve) => {
+        adopt = resolve;
+      });
+      // The request owns even a late allocation or a context whose route setup
+      // fails. Register the event before setup, and settle allocation failure
+      // without a context so its admission permit can be returned.
+      const allocation = createContext(
+        skip_tls_verification,
+        userAgentOverride,
+        block_ads,
+        undefined,
+        (context) => adopt(contextDisposal(context)),
+      );
+      void allocation.catch(() => adopt());
+      finishStatelessContext = async () => {
+        const disposal = await allocated;
+        await disposal?.close();
+      };
+      contextBundle = await deadline.run(allocation);
+    }
     requestContext = contextBundle.context;
     securityState = contextBundle.securityState;
     securityState.blockedNavigationRequestUrl = null;
@@ -843,10 +866,10 @@ app.post('/scrape', async (req: Request, res: Response) => {
               ? requestContext
               : undefined;
           const cleanup = await closeScrapePage(
-            page, terminalContext ?? undefined,
+            page,
+            terminalContext ?? undefined,
           );
           Object.assign(entry, cleanup);
-          if (cleanup.contextClosed) requestContextClosed = true;
           cleanupHealthy =
             cleanup.cleanupFinished && cleanup.pageClosed && cleanupHealthy;
           page = null;
@@ -960,8 +983,16 @@ app.post('/scrape', async (req: Request, res: Response) => {
             cancellation.signal.aborted,
         )
         .catch(() => {});
-    else if (requestContext && !requestContextClosed)
-      await boundedClose(requestContext.close());
+    else if (finishStatelessContext) {
+      const disposed = finishStatelessContext();
+      await boundedClose(disposed);
+      if (permit) {
+        permit = false;
+        // Return the bounded HTTP response, but do not admit another context
+        // while this request still owns an unfinished allocation or disposal.
+        void disposed.then(() => pageSemaphore.release());
+      }
+    }
     if (permit) pageSemaphore.release();
   }
 });
