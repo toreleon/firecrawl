@@ -105,7 +105,10 @@ termination is reported as `NETWORK_ERROR` with
 `networkErrorCode: WEBKIT_CONNECTION_TERMINATED`, making it eligible for the same
 bounded opt-in fallback as other transport failures. This classification does
 not cover certificate rejection, other TLS failures, page crashes or evaluation
-exceptions.
+exceptions. A separate exact WebKit navigation message for premature TLS
+handshake termination maps to `NETWORK_ERROR` /
+`WEBKIT_TLS_HANDSHAKE_TERMINATED`. It preserves TLS verification and does not
+classify certificate rejection, other TLS errors or evaluation exceptions.
 
 Configure a separate internal owner pool on the API and workers:
 
@@ -141,6 +144,15 @@ A `PAGE_CRASHED` failure also qualifies only when the owner observed the Page
 crash event and its document receipt includes `rendererCrashed: true`. A driver
 error mentioning a crash is insufficient. Crashes do not add an internal service
 retry; the explicit one-alternate policy and original deadline still apply.
+For the final attempt of an owned stateless request, the service attempts bounded
+disposal of the whole context before returning completion. `contextClosed: true` records
+a fulfilled context-close operation; `pageClosed` still comes from the Page
+close observation and remains mandatory for fallback. The context flag alone
+does not authorize another fetch. A context-close timeout may still be followed
+by independently confirmed Page closure; keep the two observations separate.
+Intermediate retries and retained cookie leases close only their current page,
+while retained workflow tabs stay open.
+Unfinished cleanup stays unconfirmed and is bounded rather than awaited forever.
 Before another dispatch the API requires one completed primary attempt,
 `pageClosed: true` and matching owner boot identity. An ambiguous response,
 transport loss, failed cleanup, or exhausted budget is never replayed.

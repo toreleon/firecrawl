@@ -3418,3 +3418,87 @@ error prose. Access denials, verification, marker-only markup and rate limits
 still need separate treatment under the proxy-free constraint.
 
 [Complete result, per-target receipts, source/image hashes, validation and cleanup](benchmarks/renderer-recovery-api-results-2026-11-04.json).
+
+## Stateless context disposal and premature TLS-handshake termination
+
+Measured production source: `39aef2a7815f40498dd639633c9e6689111295b6`. Target's prior Firefox capture logged
+success, but its returned Page-close proof was unconfirmed. The context was
+disposed only after the HTTP response, so later cleanup could not repair the
+returned completion receipt. Terminal stateless requests now attempt bounded disposal of their
+owned context before returning. A fulfilled context-close operation records
+`contextClosed: true`; the Page-close observation is still mandatory. This
+does not weaken matching-boot, one-alternate, deadline or unknown-outcome guards.
+Retained workflow tabs, retained cookie leases and intermediate retries keep
+their existing context lifecycle.
+
+[Playwright documents](https://playwright.dev/docs/api/class-browsercontext#browser-context-close)
+that context disposal closes its pages. The owned regression uses actual
+Chromium and Firefox contexts with two owned pages and a deliberately stalled
+Page-close command. Context disposal closes both pages; unavailable or rejected
+cleanup does not invent proof. Retained tab continuation and intermediate retry
+state are checked separately.
+
+An owned raw TCP endpoint closed after ClientHello, before a certificate or HTTP
+response. With TLS verification enabled, WebKit reproduced the exact public
+non-proper TLS-termination message and returned generic `BROWSER_ERROR` before
+the classification fix. [GnuTLS](https://www.gnutls.org/manual/html_node/Error-codes.html)
+identifies the underlying wording as premature termination. Only that exact
+`page.goto` first line now maps to `NETWORK_ERROR` /
+`WEBKIT_TLS_HANDSHAKE_TERMINATED`. Certificate rejection, other TLS messages,
+evaluation errors and arbitrary suffix/prefix variants remain outside the rule.
+There is no TLS exception or new default retry. Existing opt-in stateless
+fallback can dispatch one distinct engine after verified cleanup.
+
+| Frozen 100 targets, WebKit with optional Firefox alternate | Result |
+| --- | ---: |
+| Normalized content-marker matches | 54/100 |
+| Screened matches | 53/100 |
+| Normalized matches also containing supplementary Markdown marker | 51/100 |
+| Successful-request p50 / p95 | 4.37 s / 8.79 s |
+| All-request p95 | 12.64 s |
+
+The run used 100 API RPCs and 159 browser captures, four workers,
+one request per target, direct VN egress, no expected-text hints, no client
+retries, no upstream proxy and no hosted calls. Controls, seven-second reservation
+pacing, deadlines and the 6,656-MiB aggregate browser cap match the previous
+policy. All 100 payload hashes/scores replayed; backend logs account for every
+capture. The three owners' 33 source/compiled runtime hashes matched the frozen
+checkout. Returned Page-close proofs: 159, including
+158 fulfilled-context receipts. Selected responses with an explicitly unconfirmed
+context-close operation: 1. A closed Page
+is still required; its confirmation is separate from whole-context disposal.
+Unconfirmed alternate targets: none.
+
+| Target | Capture outcome | Cleanup and transport observations |
+| --- | --- | --- |
+| Target | Expected marker matched on the Firefox alternate. | Both pages closed. The WebKit context close completed; Firefox context disposal was unconfirmed when the response returned (1,365 ms cleanup). |
+| LinkedIn | Network failure after one alternate. | WebKit reported `WEBKIT_TLS_HANDSHAKE_TERMINATED`; Firefox reported `NS_ERROR_NET_RESET`. Both pages and context-close operations were confirmed. |
+
+These are stage observations. A changed live epoch is not a paired old-code test
+or proof of an aggregate causal gain. The previous run matched 52/100. New-only
+matches: louisvuitton, autotrader, target, Capterra. Previous-only matches: Best Buy, Leboncoin. The historical hosted reference
+remains 82/100 and was not refreshed; comparable hosted performance is unproven.
+
+Final owners had zero pages/sessions and no OOM, memory-boundary or PID-limit
+events. Socket-throttling counter maxima: `{'primary-a': 0, 'fallback-a': 1010, 'fallback-b': 133}`. Their counts are retained
+as a resource caveat, without attributing a target-specific failure or timing
+effect. No kernel setting or resource cap changed during measurement.
+
+Validation: 45 focused real-browser checks, 17 final contained WebKit checks,
+71 helper checks, 42 API fallback unit checks and API type checking passed.
+Six full-API snips passed via `pnpm harness`, including strict-TLS premature
+termination, opt-out, one alternate, invalid certificate rejection, actual crash
+and EOF recovery, plus context receipt propagation.
+[Browser CI](https://github.com/toreleon/firecrawl/actions/runs/41775037012) rebuilt the optional WebKit image and passed both jobs.
+The receipt records exact suite totals and optional skips. Broader server/SDK
+workflows are not claimed. Harness commands returned zero and reported processes
+terminated, but extract-worker teardown still logged a channel-closing error;
+clean shutdown is not established.
+
+Scoped cleanup removed 10 task containers, one obsolete task image
+and 47 exact task cache records. The measured reusable
+image, baseline images/cache, nine unrelated services, all 114 volumes and raw
+evidence remain. Task infrastructure is stopped and ports are closed; no global
+prune or volume removal was used.
+
+[Full measurement, per-target receipts, validation, source/image hashes and cleanup](benchmarks/context-finalization-api-results-2026-11-04.json).
