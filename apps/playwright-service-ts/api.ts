@@ -32,6 +32,7 @@ import {
 import { scrapePage, documentDiagnostics } from './helpers/scrape-page';
 import { closeScrapePage } from './helpers/page-cleanup';
 import { BrowserSessions } from './helpers/browser-sessions';
+import { OwnerHealthProbe } from './helpers/owner-health';
 import { randomUUID, timingSafeEqual } from 'node:crypto';
 import {
   BrowserAction,
@@ -197,6 +198,7 @@ const createContext = async (
   userAgentOverride?: string,
   blockAds = BLOCK_ADS,
   workflowOrigin?: string,
+  onAllocated?: (context: BrowserContext) => void,
 ): Promise<{
   context: BrowserContext;
   securityState: ContextSecurityState;
@@ -222,6 +224,8 @@ const createContext = async (
   };
 
   const newContext = await browser.newContext(contextOptions);
+  // Health owns late allocations even when asynchronous route setup fails.
+  onAllocated?.(newContext);
 
   // Intercept all requests to avoid loading ads
   await newContext.route(
@@ -288,6 +292,25 @@ const createContext = async (
 
   return { context: newContext, securityState };
 };
+
+const ownerHealth = new OwnerHealthProbe<Browser>(async (scope) => {
+  if (!browser) await initializeBrowser();
+  scope.check();
+  const selected = browser;
+  if (!selected.isConnected()) throw new Error('Browser is disconnected');
+  const { context } = await createContext(
+    false,
+    undefined,
+    BLOCK_ADS,
+    undefined,
+    scope.adopt,
+  );
+  scope.check();
+  const page = await context.newPage();
+  scope.check();
+  if (page.isClosed()) throw new Error('Browser health page closed prematurely');
+  return selected;
+});
 
 const shutdownBrowser = async () => {
   if (browser) {
@@ -425,14 +448,9 @@ app.post('/sessions/:token/input', async (req, res) => {
 
 app.get('/health', async (req: Request, res: Response) => {
   try {
-    if (!browser) {
-      await initializeBrowser();
-    }
-
-    const { context: testContext } = await createContext();
-    const testPage = await testContext.newPage();
-    await testPage.close();
-    await testContext.close();
+    const selected = await ownerHealth.check();
+    if (selected !== browser || !selected.isConnected())
+      throw new Error('Browser changed during health probe');
 
     res.status(200).json({
       status: 'healthy',

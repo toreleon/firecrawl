@@ -15,25 +15,34 @@ export const closeServer = (server: http.Server): Promise<void> =>
     server.closeAllConnections();
   });
 
-export const startService = async (env: NodeJS.ProcessEnv = {}) => {
+export const startService = async (
+  env: NodeJS.ProcessEnv = {},
+  options: { compiledEntrypoint?: string } = {},
+) => {
   const reservation = net.createServer();
   const port = await listen(reservation);
   await new Promise<void>((resolve) => reservation.close(() => resolve()));
-  const child = spawn(process.execPath, ['--import', 'tsx', 'api.ts'], {
-    cwd: path.resolve(__dirname, '..'),
-    env: {
-      ...process.env,
-      PROXY_SERVER: '',
-      PROXY_USERNAME: '',
-      PROXY_PASSWORD: '',
-      PORT: String(port),
-      ALLOW_LOCAL_WEBHOOKS: 'true',
-      BROWSER_HEADLESS: 'true',
-      BROWSER_CHANNEL: 'chromium',
-      ...env,
+  const child = spawn(
+    process.execPath,
+    options.compiledEntrypoint
+      ? [options.compiledEntrypoint]
+      : ['--import', 'tsx', 'api.ts'],
+    {
+      cwd: path.resolve(__dirname, '..'),
+      env: {
+        ...process.env,
+        PROXY_SERVER: '',
+        PROXY_USERNAME: '',
+        PROXY_PASSWORD: '',
+        PORT: String(port),
+        ALLOW_LOCAL_WEBHOOKS: 'true',
+        BROWSER_HEADLESS: 'true',
+        BROWSER_CHANNEL: 'chromium',
+        ...env,
+      },
+      stdio: ['ignore', 'pipe', 'pipe'],
     },
-    stdio: ['ignore', 'pipe', 'pipe'],
-  });
+  );
   let logs = '';
   child.stdout?.on('data', (chunk) => {
     logs = (logs + chunk.toString()).slice(-20000);
@@ -58,6 +67,11 @@ export const startService = async (env: NodeJS.ProcessEnv = {}) => {
       }
       try {
         const response = await fetch(`${baseUrl}/health`, {
+          ...(env.BROWSER_SERVICE_AUTH_TOKEN && {
+            headers: {
+              authorization: 'Bearer ' + env.BROWSER_SERVICE_AUTH_TOKEN,
+            },
+          }),
           signal: AbortSignal.timeout(1000),
         });
         if (response.ok) return { baseUrl, child, stop, logs: () => logs };

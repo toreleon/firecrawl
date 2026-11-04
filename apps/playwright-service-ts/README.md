@@ -102,6 +102,20 @@ Optional fields include `headers`, `check_selector`, and
 optional `botDetection`. `/health` includes the engine, headless mode, and
 active-page count.
 
+Concurrent `/health` callers share one in-flight browser probe. It opens a
+separate isolated context/page with the normal destination policy, then requires
+an observed context close before reporting healthy. This adds at most one health
+context outside `MAX_CONCURRENT_PAGES`; successful results are not cached by the
+owner, and each response assembles current capacity/session counts and boot ID.
+
+The probe has a five-second deadline. A timeout returns HTTP 503 while an
+unfinished allocation or unconfirmed close keeps the health slot occupied.
+Further callers receive the same unhealthy result until that operation drains;
+late allocations are closed without starting another page. If cleanup never
+confirms, the owner stays unhealthy for its supervisor/operator to replace.
+Scheduling or transport delays can extend observed response time beyond the
+configured deadline. This changes health-probe allocation, not target access.
+
 ## Verify
 
 ```sh
