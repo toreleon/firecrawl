@@ -3,6 +3,10 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { Deadline, ScrapeFailure, errorCode } from './scrape-control';
 import { waitForRenderedBody } from './page-readiness';
+import {
+  rejectOneTrustPreferences,
+  OneTrustPreferencesResult,
+} from './onetrust-preferences';
 
 export type ConsentPolicy = 'off' | 'rejectNonEssential' | 'acceptAll';
 export type Workflow = 'none' | 'auto' | 'bestbuy-us@1' | 'product-details@1';
@@ -75,6 +79,7 @@ type ConsentResult = {
   outcome: 'off' | 'not_detected' | 'applied' | 'unresolved';
   cmp?: string;
   selfTest?: boolean;
+  preferenceCenter?: OneTrustPreferencesResult;
   version: string;
   diagnostics?: {
     framesScanned: number;
@@ -130,7 +135,7 @@ export const prepareConsent = async (
   const result: ConsentResult = {
     policy,
     outcome: policy === 'off' ? 'off' : 'not_detected',
-    version: 'autoconsent-17.3.0+local-2',
+    version: 'autoconsent-17.3.0+local-3',
   };
   let stopped = false;
   bridges.set(page, {
@@ -350,7 +355,17 @@ export const applyConsent = async (
         const [container, , cmp] = choice;
         result.cmp = cmp;
         result.outcome = 'unresolved';
-        if (!clickable) continue;
+        if (!clickable) {
+          if (cmp === 'OneTrust' && policy === 'rejectNonEssential') {
+            result.preferenceCenter = await rejectOneTrustPreferences(
+              frame,
+              deadline,
+            );
+            if (result.preferenceCenter.outcome === 'applied')
+              result.outcome = 'applied';
+          }
+          continue;
+        }
         deadline.remaining();
         await control
           .click({ timeout: Math.min(1500, deadline.remaining()) })

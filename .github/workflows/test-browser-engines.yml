@@ -64,7 +64,7 @@ jobs:
             --add-host webkit-fixture.test:127.0.0.1 --add-host owned.canadagoose.com:127.0.0.1 --add-host www.bestbuy.com:127.0.0.1 \
             -e BROWSER_ENGINE=webkit -e BROWSER_HEADLESS=false -e TEST_WEBKIT=true \
             --entrypoint sh firecrawl-webkit-test scripts/webkit-entrypoint.sh \
-            node --import tsx --test --test-concurrency=1 integration/webkit.spec.ts integration/webkit-resources.spec.ts integration/webkit-crash.spec.ts integration/webkit-tls.spec.ts integration/alibaba-interception.spec.ts integration/autotrader-block.spec.ts integration/product-details.spec.ts integration/country-budget.spec.ts
+            node --import tsx --test --test-concurrency=1 integration/webkit.spec.ts integration/webkit-resources.spec.ts integration/webkit-crash.spec.ts integration/webkit-tls.spec.ts integration/alibaba-interception.spec.ts integration/autotrader-block.spec.ts integration/product-details.spec.ts integration/country-budget.spec.ts integration/onetrust-preferences.spec.ts
       - name: Refuse startup without the required UID or namespace capability
         run: |
           if docker run --rm --network none --user node -e BROWSER_ENGINE=webkit firecrawl-webkit-test; then
