@@ -395,6 +395,18 @@ verification control. With `engineFallback: true`, the existing stateless,
 closed-page, distinct-engine and deadline rules may allow one alternate.
 This is recognition of an observed document, not universal Alibaba coverage.
 
+The observed Autotrader HTTP 200 unavailability block is an explicit denial.
+Its exact title, short non-script warning, incident reference, support-form ID
+and both local block-page asset paths must agree within the existing
+65,536-character signature cap. It reports `ACCESS_DENIED`, unsatisfied
+readiness and `readiness.automatic.outcome: "blocked"`; automatic readiness
+stops polling that known block. Ordinary vehicle content, isolated maintenance
+text, a contact CAPTCHA, quoted examples and partial signatures do not establish
+this denial. Support and verification forms are not operated. Existing opted-in
+stateless fallback may still use one distinct engine after confirmed Page
+closure, subject to its original deadline. This is an observed document
+signature rather than universal Autotrader or Akamai coverage.
+
 `maxAttempts` defaults to one. Opt-in retries recognize coded phase deadlines
 and transient connection/HTTP2 errors, while cancellation, session errors,
 workflow identity mismatches and hard status failures remain terminal. Attempt

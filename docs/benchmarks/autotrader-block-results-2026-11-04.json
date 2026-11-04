@@ -1,0 +1,875 @@
+{
+  "recordedAt": "2026-11-04T05:58:29.377986+00:00",
+  "sourceCommit": "37df06d0849e8abae9fa79c9cf8d6580653dd275",
+  "scope": "Runtime recognition and recovery of the observed HTTP 200 Autotrader access-block document. One selected four-target proxy-free full-API cohort, not a new full 100-target score or hosted comparison.",
+  "rootCause": {
+    "savedDocumentCharacters": 4093,
+    "savedDocumentSHA256": "41fd0aa171df41c43c8b2f2a33d3bfa7244071653ca38c6a85d27c0d94733fa8",
+    "beforeClassification": null,
+    "afterClassification": {
+      "provider": "autotrader",
+      "reason": "Autotrader unavailability block document",
+      "denied": true
+    },
+    "finding": "The saved HTTP 200 unavailability document was incorrectly treated as CONTENT_READY. It contained no requested vehicle content, so the optional distinct-engine fallback was not dispatched. This is a false-ready classification, not proof of an exact WAF rule or causal IP diagnosis."
+  },
+  "implementation": {
+    "maximumDocumentCharacters": 65536,
+    "maximumNonScriptBodyCharactersExclusive": 3000,
+    "requiredSignals": [
+      "Exact Autotrader - page unavailable title outside comments and inline script bodies",
+      "Observed unavailability warning in non-script markup",
+      "Incident Number with observed 18. prefix",
+      "Actual atcform element",
+      "Exact local /akamai-block/block-images/css/app.css stylesheet",
+      "Exact local /akamai-block/block-images/js/app.js script path, optionally followed by query or fragment"
+    ],
+    "outcome": "ACCESS_DENIED, readiness.satisfied false, readiness.automatic.outcome blocked, and explicit Autotrader metadata. Recognized denial stops automatic polling. Existing opted-in fallback may use one distinct engine after confirmed Page closure.",
+    "supportOrVerificationAutomationAdded": false,
+    "defaultRetriesAdded": false,
+    "frozenGradingFilesUnchanged": {
+      "apps/playwright-service-ts/helpers/bot-detection.ts": "3111f011045834a040e5497825cd0bf2c698a3fa8ca77a48c8479dddf2348817",
+      "apps/playwright-service-ts/helpers/waf-benchmark.ts": "ffd9f0d2e5996825aa77cb71b600a6667558e166d4471a084c20638bab9171d6",
+      "apps/playwright-service-ts/helpers/api-benchmark.ts": "2e48cf7bc3ef5f3f691e0eff899fbb71f0d067411c504a038164347f37232c91",
+      "apps/playwright-service-ts/scripts/benchmark-api.ts": "0b42fef70efaade1e3ad4c5e2e8a6759d8ce8fe2b70cbe314bf889139e4027ed",
+      "apps/playwright-service-ts/benchmarks/frontier-2026-10-30.json": "a886fb57087e842c2857b89a7669e31d2fb7b98d6bd7deb60a2329f29581b76a"
+    }
+  },
+  "fullApiCohort": {
+    "checkedAt": "2026-11-04T05:53:50.321000+00:00",
+    "sourceCommit": "37df06d0849e8abae9fa79c9cf8d6580653dd275",
+    "productionRuntimeCommit": "37df06d0849e8abae9fa79c9cf8d6580653dd275",
+    "profile": "webkit-firefox",
+    "requests": 4,
+    "backendCaptures": 5,
+    "backendCapturesByOwner": {
+      "primary-a": 4,
+      "fallback-a": 1,
+      "fallback-b": 0
+    },
+    "normalizedPasses": 3,
+    "screenedPasses": 2,
+    "frontierPasses": 2,
+    "normalizedAndMarkdownPasses": 3,
+    "latency": {
+      "successfulP50Ms": 3072,
+      "successfulP95Ms": 6181,
+      "allAttemptsP95Ms": 6181
+    },
+    "failures": {
+      "missing_expected_marker": 1
+    },
+    "states": {
+      "CONTENT_READY": 3,
+      "REGION_UNAVAILABLE": 1
+    },
+    "apiErrors": {},
+    "proofs": {
+      "responsesWithClosedReceipts": 4,
+      "closedAttemptReceipts": 5,
+      "contextClosedReceipts": 5,
+      "CONTENT_NOT_READY": 1
+    },
+    "fallback": {
+      "returned": 4,
+      "closedAttemptReceipts": 5,
+      "attempted": 1,
+      "recovered": 1,
+      "normalizedRecovered": 1
+    },
+    "fallbackSkipped": {
+      "not_needed": 3
+    },
+    "resources": {
+      "primary-a": {
+        "peakBytes": 837689344,
+        "sampledPeakBytes": 509915136,
+        "events": {
+          "memory.events:low": 0,
+          "memory.events:high": 0,
+          "memory.events:max": 0,
+          "memory.events:oom": 0,
+          "memory.events:oom_kill": 0,
+          "memory.events:oom_group_kill": 0,
+          "memory.events:sock_throttled": 0,
+          "pids.events:max": 0
+        }
+      },
+      "fallback-a": {
+        "peakBytes": 1140662272,
+        "sampledPeakBytes": 789405696,
+        "events": {
+          "memory.events:low": 0,
+          "memory.events:high": 0,
+          "memory.events:max": 0,
+          "memory.events:oom": 0,
+          "memory.events:oom_kill": 0,
+          "memory.events:oom_group_kill": 0,
+          "memory.events:sock_throttled": 0,
+          "pids.events:max": 0
+        }
+      },
+      "fallback-b": {
+        "peakBytes": 688447488,
+        "sampledPeakBytes": 677531648,
+        "events": {
+          "memory.events:low": 0,
+          "memory.events:high": 0,
+          "memory.events:max": 0,
+          "memory.events:oom": 0,
+          "memory.events:oom_kill": 0,
+          "memory.events:oom_group_kill": 0,
+          "memory.events:sock_throttled": 0,
+          "pids.events:max": 0
+        }
+      }
+    },
+    "pacing": {
+      "configuredReservationIntervalMs": 7000,
+      "minimumObservedDispatchGapMs": 7001,
+      "strict7000msDispatchFloorMet": true,
+      "limit": "Slot reservation precedes fetch. Observed gaps are retained; configuration is not an exact dispatch floor."
+    },
+    "timingIntegrity": {
+      "valid": true,
+      "sampleIntervalMs": 1000,
+      "maximumAllowedGapMs": 10000,
+      "maximumObservedGapMs": 1003,
+      "gaps": []
+    },
+    "replay": {
+      "status": "complete",
+      "attempts": 4,
+      "uniquePairs": true,
+      "allEvidenceHashesMatch": true,
+      "allScoresReplay": true,
+      "sourceHashesMatch": true,
+      "networkRequests": 0,
+      "lifecycleLedgerVerified": true,
+      "profileConcurrencyLimitsChecked": 1,
+      "maxObservedConcurrency": 1,
+      "maxObservedConcurrencyByProfile": {
+        "webkit-firefox": 1
+      }
+    },
+    "byTarget": [
+      {
+        "target": "autotrader",
+        "url": "https://www.autotrader.com/cars-for-sale/vehicle/763249459",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 6181,
+        "markdownMarkerPresent": true,
+        "markdownChars": 16133,
+        "payloadSha256": "da194dea0ed6720f309759781637dd26291ae2976f6528b0c8c2b7ad3bd956af",
+        "browserState": "CONTENT_READY",
+        "apiErrorCode": null,
+        "selectedAttemptCleanup": [
+          {
+            "attempt": 1,
+            "pageClosed": true,
+            "contextClosed": true,
+            "cleanupFinished": true,
+            "cleanupDurationMs": 3
+          }
+        ],
+        "closedAttemptReceipts": [
+          {
+            "engine": "webkit",
+            "ownerBootId": "92194e57-e0a0-4b71-9e23-5edf4be82dc5",
+            "pageClosed": true,
+            "contextClosed": true,
+            "pageStatusCode": 200,
+            "errorCode": "CONTENT_NOT_READY"
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "ebc1336a-45e0-4c18-8cc4-fc52e9f71515",
+            "pageClosed": true,
+            "contextClosed": true,
+            "pageStatusCode": 200
+          }
+        ],
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": true,
+          "recovered": true,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "92194e57-e0a0-4b71-9e23-5edf4be82dc5",
+              "pageClosed": true,
+              "contextClosed": true,
+              "pageStatusCode": 200,
+              "errorCode": "CONTENT_NOT_READY"
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "ebc1336a-45e0-4c18-8cc4-fc52e9f71515",
+              "pageClosed": true,
+              "contextClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "Allmenus",
+        "url": "https://www.allmenus.com/il/chicago/223447-chicagoland-pizza-pasta/menu/",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "missing_expected_marker",
+        "apiStatus": 200,
+        "latencyMs": 958,
+        "markdownMarkerPresent": false,
+        "markdownChars": 60,
+        "payloadSha256": "8a8602cae44ceb5d4e479682ad2e3b056eaba5efd4a9d6be724fa8fa6e17df3d",
+        "browserState": "REGION_UNAVAILABLE",
+        "apiErrorCode": null,
+        "selectedAttemptCleanup": [
+          {
+            "attempt": 1,
+            "pageClosed": true,
+            "contextClosed": true,
+            "cleanupFinished": true,
+            "cleanupDurationMs": 2
+          }
+        ],
+        "closedAttemptReceipts": [
+          {
+            "engine": "webkit",
+            "ownerBootId": "92194e57-e0a0-4b71-9e23-5edf4be82dc5",
+            "pageClosed": true,
+            "contextClosed": true,
+            "pageStatusCode": 200
+          }
+        ],
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "92194e57-e0a0-4b71-9e23-5edf4be82dc5",
+              "pageClosed": true,
+              "contextClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "github",
+        "url": "https://github.com/facebook/react",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 3072,
+        "markdownMarkerPresent": true,
+        "markdownChars": 26110,
+        "payloadSha256": "00547cc35452a97dc86859dbdddbec81b2662d1945904909a622b150b50f9c67",
+        "browserState": "CONTENT_READY",
+        "apiErrorCode": null,
+        "selectedAttemptCleanup": [
+          {
+            "attempt": 1,
+            "pageClosed": true,
+            "contextClosed": true,
+            "cleanupFinished": true,
+            "cleanupDurationMs": 11
+          }
+        ],
+        "closedAttemptReceipts": [
+          {
+            "engine": "webkit",
+            "ownerBootId": "92194e57-e0a0-4b71-9e23-5edf4be82dc5",
+            "pageClosed": true,
+            "contextClosed": true,
+            "pageStatusCode": 200
+          }
+        ],
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "92194e57-e0a0-4b71-9e23-5edf4be82dc5",
+              "pageClosed": true,
+              "contextClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "arxiv",
+        "url": "https://arxiv.org/abs/1706.03762",
+        "normalizedPass": true,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "missing_expected_marker",
+        "apiStatus": 200,
+        "latencyMs": 1193,
+        "markdownMarkerPresent": true,
+        "markdownChars": 10469,
+        "payloadSha256": "1191c90029ae92758c008280247f632b7d994e00f5c363de16b69891379f6d53",
+        "browserState": "CONTENT_READY",
+        "apiErrorCode": null,
+        "selectedAttemptCleanup": [
+          {
+            "attempt": 1,
+            "pageClosed": true,
+            "contextClosed": true,
+            "cleanupFinished": true,
+            "cleanupDurationMs": 5
+          }
+        ],
+        "closedAttemptReceipts": [
+          {
+            "engine": "webkit",
+            "ownerBootId": "92194e57-e0a0-4b71-9e23-5edf4be82dc5",
+            "pageClosed": true,
+            "contextClosed": true,
+            "pageStatusCode": 200
+          }
+        ],
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "92194e57-e0a0-4b71-9e23-5edf4be82dc5",
+              "pageClosed": true,
+              "contextClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      }
+    ],
+    "comparisonLimit": "Four-target selected cohort after an Autotrader access-block classification repair, not a full 100-target result, paired old-code test or hosted comparison. No population coverage or standalone primary-only score is inferred.",
+    "evidenceHashes": {
+      "_local/anti-bot/autotrader-cohort-api-2026-11-04/report.json": "4a643a6e78b0f73a2d0959847dcb6a545cef8b7d8c4e3a3d9dc6b2e050521be8",
+      "_local/anti-bot/autotrader-cohort-api-2026-11-04/score-replay-audit.json": "c924afb83e7c5e4e66b9499a434ba9dd302ec6d0b9516a40902fc2e4046b5d53",
+      "_local/anti-bot/autotrader-cohort-api-harness-2026-11-04/deployment.json": "40b3ec256927361aaf84b0e564f79ee73e5a7f6ea18e72bcce2ce2e70024b13b",
+      "_local/anti-bot/autotrader-cohort-api-harness-2026-11-04/result.json": "f90b549091a76241a708bbd21290ebc0e5d3724f6bd78b7cfef73cb69f75451d",
+      "_local/anti-bot/autotrader-cohort-api-harness-2026-11-04/cleanup.json": "35ca0297fc16c14bcfaed2fea521ade805b9adfba4fd138ec170f0916d0b046f"
+    }
+  },
+  "autotraderObservedRecovery": {
+    "target": "autotrader",
+    "url": "https://www.autotrader.com/cars-for-sale/vehicle/763249459",
+    "normalizedPass": true,
+    "screenedPass": true,
+    "frontierPass": true,
+    "failureReason": null,
+    "apiStatus": 200,
+    "latencyMs": 6181,
+    "markdownMarkerPresent": true,
+    "markdownChars": 16133,
+    "payloadSha256": "da194dea0ed6720f309759781637dd26291ae2976f6528b0c8c2b7ad3bd956af",
+    "browserState": "CONTENT_READY",
+    "apiErrorCode": null,
+    "selectedAttemptCleanup": [
+      {
+        "attempt": 1,
+        "pageClosed": true,
+        "contextClosed": true,
+        "cleanupFinished": true,
+        "cleanupDurationMs": 3
+      }
+    ],
+    "closedAttemptReceipts": [
+      {
+        "engine": "webkit",
+        "ownerBootId": "92194e57-e0a0-4b71-9e23-5edf4be82dc5",
+        "pageClosed": true,
+        "contextClosed": true,
+        "pageStatusCode": 200,
+        "errorCode": "CONTENT_NOT_READY"
+      },
+      {
+        "engine": "camoufox",
+        "ownerBootId": "ebc1336a-45e0-4c18-8cc4-fc52e9f71515",
+        "pageClosed": true,
+        "contextClosed": true,
+        "pageStatusCode": 200
+      }
+    ],
+    "engineFallback": {
+      "attempted": true,
+      "usedSecondary": true,
+      "recovered": true,
+      "attempts": [
+        {
+          "engine": "webkit",
+          "ownerBootId": "92194e57-e0a0-4b71-9e23-5edf4be82dc5",
+          "pageClosed": true,
+          "contextClosed": true,
+          "pageStatusCode": 200,
+          "errorCode": "CONTENT_NOT_READY"
+        },
+        {
+          "engine": "camoufox",
+          "ownerBootId": "ebc1336a-45e0-4c18-8cc4-fc52e9f71515",
+          "pageClosed": true,
+          "contextClosed": true,
+          "pageStatusCode": 200
+        }
+      ]
+    }
+  },
+  "populationCoverageClaim": false,
+  "fresh100TargetMeasurement": false,
+  "lastFull100TargetMeasurement": {
+    "sourceCommit": "eb140020ccca24cf919949877641a94be1e37579",
+    "implementationByteEquivalentTo": "c63cbda30868dfc3edd5ba48d06204e6fce5da3e",
+    "normalizedMatches": 59,
+    "requests": 100,
+    "backendCaptures": 157,
+    "receipt": "docs/benchmarks/alibaba-full-api-results-2026-11-04.json",
+    "limit": "Precedes this repair. Do not add this selected Autotrader observation to the older aggregate or relabel 59/100 as the candidate score."
+  },
+  "deployment": {
+    "imageId": "sha256:a9babb8204d9d8395d2198193d4eb3a5841de1cd0d5d1ce3b18c74e18270fa0e",
+    "globalHttpConcurrency": 4,
+    "aggregateBrowserMemoryLimitMiB": 6656,
+    "limitsPerOwner": {
+      "primary-a": {
+        "cpus": 2,
+        "memoryMiB": 2560,
+        "pageCapacity": 2
+      },
+      "fallback-a": {
+        "cpus": 2,
+        "memoryMiB": 2048,
+        "pageCapacity": 1
+      },
+      "fallback-b": {
+        "cpus": 2,
+        "memoryMiB": 2048,
+        "pageCapacity": 1
+      }
+    },
+    "browserRuntimeHashesPerOwner": {
+      "primary-a": {
+        "api.ts": "f55ea246626825f739f76cfb2c9342706806e42fe84e416d998966b4c8efe72e",
+        "helpers/browser.ts": "df8cea26bc7291f16c651daa1c2961e51342adc61b17836857687f62345a5a10",
+        "helpers/browser-sessions.ts": "d67253bc869f97206083c7fa7c2c2ae9d711005960c8590ad44725fb12ceb41f",
+        "helpers/cookies.ts": "94736b093cf95fe8244f52c6e8ee9925cdd39ea7cd64cf08156be05a45240dcb",
+        "helpers/get_error.ts": "1c15475f5f048c869be847c62dbfb9610cf4130ab93538db2c00dbd567d01aea",
+        "helpers/resource-policy.ts": "7c54984bc6187baf1c0ce2ff18cb50373109c8dcd961edc65b9186d5d2e2e774",
+        "helpers/webkit.ts": "93771af70a8d2a2fe126d6bcd8ef4b8794ece9add16613a220b37acaed6b2e33",
+        "helpers/scrape-control.ts": "06facddd72e027792c7f527a671b50e32bd4d5389a98a6af7720577eca66e9e0",
+        "helpers/page-cleanup.ts": "e0e798de0db771202e7663f3d34227c2937f277d9093b4c0df65425e1dbf43a4",
+        "helpers/scrape-page.ts": "3125e449d89931f071e0b7be74b9f8d0852f9b5318fbbf73d140166dc7002961",
+        "helpers/ssrf.ts": "dd50cd35b42a39474dcef16481c8bbba308b5f5290645ca680cfb50bcf35ae14",
+        "helpers/workflows.ts": "0bd4d6c8bbe4731f33cc1a8ff4fb7cec7cb647bc607f178a9e7a7d876223f8fd",
+        "helpers/page-readiness.ts": "5b43a83d23d6c3b39ac58fd1e8dc45c65f57c7b43e7dc9f69e26ba4db976e6c8",
+        "helpers/waf-benchmark.ts": "ffd9f0d2e5996825aa77cb71b600a6667558e166d4471a084c20638bab9171d6",
+        "helpers/bot-detection.ts": "3111f011045834a040e5497825cd0bf2c698a3fa8ca77a48c8479dddf2348817",
+        "dist/api.js": "bce94b46aa5d642d6e3d8bacd5fab9e16c3ae0ce10a39f903f7bfc9a3eb8fd03",
+        "dist/helpers/browser.js": "9e2a6dd9fb0adbef04d7e6845593484dc060f0208a4c95cf7c3e631063452ddd",
+        "dist/helpers/browser-sessions.js": "715e61bf0a2fe9b43de9ab1dc733f5f775e0a92e60c5268dbe6e0b8620f9f549",
+        "dist/helpers/cookies.js": "0d7a5e0f76b861992a1b304b6acf6f70eacaaa7a09f8269d93434dcdbc23bc57",
+        "dist/helpers/get_error.js": "5edbde83afd8bceb2280455d500bdb7c3d62f5318d54c82cc01629c6681cd6a7",
+        "dist/helpers/resource-policy.js": "3c079ef3d980dde1a91090007396929a506962a57ee1cd83a9baa48fc7bce2f1",
+        "dist/helpers/webkit.js": "7700d1b1a53f29abece85053fec39abe301b22768db4989698f9e5a894a4a078",
+        "dist/helpers/scrape-control.js": "cf3862ccedf93c1f73a84471f558241d63cb5f9fb62d95881f2c3aad5fd4abfd",
+        "dist/helpers/page-cleanup.js": "89896b2084177a69e6a8d7ed26f6bd6b052e631c6692e26f84111e2d745912eb",
+        "dist/helpers/scrape-page.js": "1c40b3d59beb5c15d038f9579d6f94aca332f77cc04ba666ca1bc2b9723697ed",
+        "dist/helpers/ssrf.js": "c5a7425cd6dca38a721186621e7fe1752314bb4e1cf12e6f39a49b67ea3ea87c",
+        "dist/helpers/workflows.js": "a3b1531cafaa17cb28307d84b4b072853f3966686c539d503cb9d6eed346a8af",
+        "dist/helpers/page-readiness.js": "eb9d291a95830e1d245c1221aa689d822262b9b0afd54ec85b6dcc3304e8b64f",
+        "dist/helpers/waf-benchmark.js": "4eea26db4617351a9daa9ad546c8d9d16983d2d736f5a1d435a3159fe7a96f4d",
+        "dist/helpers/bot-detection.js": "77a197cbbe0942b6106db2eb2579fc1af8dc7a167e3e959de51a89f8ed7a746e",
+        "scripts/webkit-entrypoint.sh": "b0fd23edbeae9b2ec4d4d0724af52f8fe23bb93891c8e052a708be5e76a8d60e",
+        "scripts/webkit-launcher.sh": "97f7408a15e2a714ed351c865b45294468b22da1eaa14eba1ab260d66e5ad305",
+        "docker-entrypoint.sh": "55aa3489e4db96d2b71e75fab1a1b443fd30051f33b6ebcfc98b7b672c4422ae"
+      },
+      "fallback-a": {
+        "api.ts": "f55ea246626825f739f76cfb2c9342706806e42fe84e416d998966b4c8efe72e",
+        "helpers/browser.ts": "df8cea26bc7291f16c651daa1c2961e51342adc61b17836857687f62345a5a10",
+        "helpers/browser-sessions.ts": "d67253bc869f97206083c7fa7c2c2ae9d711005960c8590ad44725fb12ceb41f",
+        "helpers/cookies.ts": "94736b093cf95fe8244f52c6e8ee9925cdd39ea7cd64cf08156be05a45240dcb",
+        "helpers/get_error.ts": "1c15475f5f048c869be847c62dbfb9610cf4130ab93538db2c00dbd567d01aea",
+        "helpers/resource-policy.ts": "7c54984bc6187baf1c0ce2ff18cb50373109c8dcd961edc65b9186d5d2e2e774",
+        "helpers/webkit.ts": "93771af70a8d2a2fe126d6bcd8ef4b8794ece9add16613a220b37acaed6b2e33",
+        "helpers/scrape-control.ts": "06facddd72e027792c7f527a671b50e32bd4d5389a98a6af7720577eca66e9e0",
+        "helpers/page-cleanup.ts": "e0e798de0db771202e7663f3d34227c2937f277d9093b4c0df65425e1dbf43a4",
+        "helpers/scrape-page.ts": "3125e449d89931f071e0b7be74b9f8d0852f9b5318fbbf73d140166dc7002961",
+        "helpers/ssrf.ts": "dd50cd35b42a39474dcef16481c8bbba308b5f5290645ca680cfb50bcf35ae14",
+        "helpers/workflows.ts": "0bd4d6c8bbe4731f33cc1a8ff4fb7cec7cb647bc607f178a9e7a7d876223f8fd",
+        "helpers/page-readiness.ts": "5b43a83d23d6c3b39ac58fd1e8dc45c65f57c7b43e7dc9f69e26ba4db976e6c8",
+        "helpers/waf-benchmark.ts": "ffd9f0d2e5996825aa77cb71b600a6667558e166d4471a084c20638bab9171d6",
+        "helpers/bot-detection.ts": "3111f011045834a040e5497825cd0bf2c698a3fa8ca77a48c8479dddf2348817",
+        "dist/api.js": "bce94b46aa5d642d6e3d8bacd5fab9e16c3ae0ce10a39f903f7bfc9a3eb8fd03",
+        "dist/helpers/browser.js": "9e2a6dd9fb0adbef04d7e6845593484dc060f0208a4c95cf7c3e631063452ddd",
+        "dist/helpers/browser-sessions.js": "715e61bf0a2fe9b43de9ab1dc733f5f775e0a92e60c5268dbe6e0b8620f9f549",
+        "dist/helpers/cookies.js": "0d7a5e0f76b861992a1b304b6acf6f70eacaaa7a09f8269d93434dcdbc23bc57",
+        "dist/helpers/get_error.js": "5edbde83afd8bceb2280455d500bdb7c3d62f5318d54c82cc01629c6681cd6a7",
+        "dist/helpers/resource-policy.js": "3c079ef3d980dde1a91090007396929a506962a57ee1cd83a9baa48fc7bce2f1",
+        "dist/helpers/webkit.js": "7700d1b1a53f29abece85053fec39abe301b22768db4989698f9e5a894a4a078",
+        "dist/helpers/scrape-control.js": "cf3862ccedf93c1f73a84471f558241d63cb5f9fb62d95881f2c3aad5fd4abfd",
+        "dist/helpers/page-cleanup.js": "89896b2084177a69e6a8d7ed26f6bd6b052e631c6692e26f84111e2d745912eb",
+        "dist/helpers/scrape-page.js": "1c40b3d59beb5c15d038f9579d6f94aca332f77cc04ba666ca1bc2b9723697ed",
+        "dist/helpers/ssrf.js": "c5a7425cd6dca38a721186621e7fe1752314bb4e1cf12e6f39a49b67ea3ea87c",
+        "dist/helpers/workflows.js": "a3b1531cafaa17cb28307d84b4b072853f3966686c539d503cb9d6eed346a8af",
+        "dist/helpers/page-readiness.js": "eb9d291a95830e1d245c1221aa689d822262b9b0afd54ec85b6dcc3304e8b64f",
+        "dist/helpers/waf-benchmark.js": "4eea26db4617351a9daa9ad546c8d9d16983d2d736f5a1d435a3159fe7a96f4d",
+        "dist/helpers/bot-detection.js": "77a197cbbe0942b6106db2eb2579fc1af8dc7a167e3e959de51a89f8ed7a746e",
+        "scripts/webkit-entrypoint.sh": "b0fd23edbeae9b2ec4d4d0724af52f8fe23bb93891c8e052a708be5e76a8d60e",
+        "scripts/webkit-launcher.sh": "97f7408a15e2a714ed351c865b45294468b22da1eaa14eba1ab260d66e5ad305",
+        "docker-entrypoint.sh": "55aa3489e4db96d2b71e75fab1a1b443fd30051f33b6ebcfc98b7b672c4422ae"
+      },
+      "fallback-b": {
+        "api.ts": "f55ea246626825f739f76cfb2c9342706806e42fe84e416d998966b4c8efe72e",
+        "helpers/browser.ts": "df8cea26bc7291f16c651daa1c2961e51342adc61b17836857687f62345a5a10",
+        "helpers/browser-sessions.ts": "d67253bc869f97206083c7fa7c2c2ae9d711005960c8590ad44725fb12ceb41f",
+        "helpers/cookies.ts": "94736b093cf95fe8244f52c6e8ee9925cdd39ea7cd64cf08156be05a45240dcb",
+        "helpers/get_error.ts": "1c15475f5f048c869be847c62dbfb9610cf4130ab93538db2c00dbd567d01aea",
+        "helpers/resource-policy.ts": "7c54984bc6187baf1c0ce2ff18cb50373109c8dcd961edc65b9186d5d2e2e774",
+        "helpers/webkit.ts": "93771af70a8d2a2fe126d6bcd8ef4b8794ece9add16613a220b37acaed6b2e33",
+        "helpers/scrape-control.ts": "06facddd72e027792c7f527a671b50e32bd4d5389a98a6af7720577eca66e9e0",
+        "helpers/page-cleanup.ts": "e0e798de0db771202e7663f3d34227c2937f277d9093b4c0df65425e1dbf43a4",
+        "helpers/scrape-page.ts": "3125e449d89931f071e0b7be74b9f8d0852f9b5318fbbf73d140166dc7002961",
+        "helpers/ssrf.ts": "dd50cd35b42a39474dcef16481c8bbba308b5f5290645ca680cfb50bcf35ae14",
+        "helpers/workflows.ts": "0bd4d6c8bbe4731f33cc1a8ff4fb7cec7cb647bc607f178a9e7a7d876223f8fd",
+        "helpers/page-readiness.ts": "5b43a83d23d6c3b39ac58fd1e8dc45c65f57c7b43e7dc9f69e26ba4db976e6c8",
+        "helpers/waf-benchmark.ts": "ffd9f0d2e5996825aa77cb71b600a6667558e166d4471a084c20638bab9171d6",
+        "helpers/bot-detection.ts": "3111f011045834a040e5497825cd0bf2c698a3fa8ca77a48c8479dddf2348817",
+        "dist/api.js": "bce94b46aa5d642d6e3d8bacd5fab9e16c3ae0ce10a39f903f7bfc9a3eb8fd03",
+        "dist/helpers/browser.js": "9e2a6dd9fb0adbef04d7e6845593484dc060f0208a4c95cf7c3e631063452ddd",
+        "dist/helpers/browser-sessions.js": "715e61bf0a2fe9b43de9ab1dc733f5f775e0a92e60c5268dbe6e0b8620f9f549",
+        "dist/helpers/cookies.js": "0d7a5e0f76b861992a1b304b6acf6f70eacaaa7a09f8269d93434dcdbc23bc57",
+        "dist/helpers/get_error.js": "5edbde83afd8bceb2280455d500bdb7c3d62f5318d54c82cc01629c6681cd6a7",
+        "dist/helpers/resource-policy.js": "3c079ef3d980dde1a91090007396929a506962a57ee1cd83a9baa48fc7bce2f1",
+        "dist/helpers/webkit.js": "7700d1b1a53f29abece85053fec39abe301b22768db4989698f9e5a894a4a078",
+        "dist/helpers/scrape-control.js": "cf3862ccedf93c1f73a84471f558241d63cb5f9fb62d95881f2c3aad5fd4abfd",
+        "dist/helpers/page-cleanup.js": "89896b2084177a69e6a8d7ed26f6bd6b052e631c6692e26f84111e2d745912eb",
+        "dist/helpers/scrape-page.js": "1c40b3d59beb5c15d038f9579d6f94aca332f77cc04ba666ca1bc2b9723697ed",
+        "dist/helpers/ssrf.js": "c5a7425cd6dca38a721186621e7fe1752314bb4e1cf12e6f39a49b67ea3ea87c",
+        "dist/helpers/workflows.js": "a3b1531cafaa17cb28307d84b4b072853f3966686c539d503cb9d6eed346a8af",
+        "dist/helpers/page-readiness.js": "eb9d291a95830e1d245c1221aa689d822262b9b0afd54ec85b6dcc3304e8b64f",
+        "dist/helpers/waf-benchmark.js": "4eea26db4617351a9daa9ad546c8d9d16983d2d736f5a1d435a3159fe7a96f4d",
+        "dist/helpers/bot-detection.js": "77a197cbbe0942b6106db2eb2579fc1af8dc7a167e3e959de51a89f8ed7a746e",
+        "scripts/webkit-entrypoint.sh": "b0fd23edbeae9b2ec4d4d0724af52f8fe23bb93891c8e052a708be5e76a8d60e",
+        "scripts/webkit-launcher.sh": "97f7408a15e2a714ed351c865b45294468b22da1eaa14eba1ab260d66e5ad305",
+        "docker-entrypoint.sh": "55aa3489e4db96d2b71e75fab1a1b443fd30051f33b6ebcfc98b7b672c4422ae"
+      }
+    },
+    "apiSourceHashes": {
+      "apps/api/src/controllers/v2/scrape.ts": "5d6f51665c80fbfc6e8968f5a18b6e2dd591fc2fa7051ed0147e3799acd05ed4",
+      "apps/api/src/lib/local-browser/store.ts": "3fc2d6c0f846112ada94f21db6965354e466a7fe0c576b2fc2082509ed22d4c4",
+      "apps/api/src/lib/error.ts": "cff0c1e7a4d35f05fb6d1c907ab3769fa610d66118d9d24be6d4508e0718ea33",
+      "apps/api/src/lib/error-serde.ts": "577afcca02649788bb52157b21b8eefa91f14581fe0353a1228ec939fe180e44",
+      "apps/api/src/config.ts": "ff0125914ec73e0ef0d49e1d3e09777f71e43f1a62fae7b9cb1c209724ddba4e",
+      "apps/api/src/controllers/v2/types.ts": "7a8553a2d1b95d4b81960d1cf366a2ff8f7048c34ccd55c3b7b6f4e11ad288a7",
+      "apps/api/src/controllers/v2/local-browser.ts": "247b0f403c6a332cb38b0ba95efef12f648ba00731133f4bcc0c51d12e0b6c48",
+      "apps/api/src/lib/local-browser/client.ts": "4daeb41b17e08667d3752f94d41663fea8428e25d7e4047890e5361d4e81d28a",
+      "apps/api/src/lib/local-browser/controls.ts": "d76525c7c691460d74efb53acc54318817ddcbbdf1c184ff848989220eafd7fa",
+      "apps/api/src/scraper/scrapeURL/engines/playwright/index.ts": "b08ecf7316c656866f04be9a1e96e1b19b64bfac3a83d15d595b2cb107e550a4"
+    },
+    "apiCompiledHashes": {
+      "controllers/v2/scrape": "3a130b81176092593376b53d2da18a2bf12269f916914eb8345242fb8540f37d",
+      "lib/local-browser/store": "f0948ec39ad3595a246fa49ba73ff8e0c27094823b29e2fa3c28141797e91fb2",
+      "lib/error": "44be52ea4c884fe07a2e30021f47403611869c1c5efa8647718143a12b9770ea",
+      "lib/error-serde": "10dac52367b057ab8603113a7475fe1a14e014ae360dffac9f532f7a094140d3",
+      "config": "1aa5cec1540fa41a5cdd0c08b06b1bac1bc8ffc9532ce269de358689f43bc26e",
+      "controllers/v2/types": "862e1cdcd553037a23a4d3ca8eebfce8fd0b21da7e8e9c3662fcc6773bae0ce8",
+      "controllers/v2/local-browser": "cc944c2b23df86abe50be2d3ac2cd828cdf8bb284ce60f43c0a701d513be0ab6",
+      "lib/local-browser/client": "020dceafc5773d8fabcea64f9621ca3bcafd23ddc72cd8fb21fabd23cc7450b0",
+      "lib/local-browser/controls": "278e8a852637bd1cd83448751eb13508898d779e505b2b31ff66bd1da0318c18",
+      "scraper/scrapeURL/engines/playwright/index": "436dbbb27bcec5cfa7ee73aafaee4cffe682fc70d2e45c611afdf69c4eabf8f3"
+    },
+    "upstreamProxy": false,
+    "hostedCalls": 0
+  },
+  "validation": {
+    "helpersPassed": 78,
+    "localOrdinaryDriverChecksPassed": 5,
+    "localWebkitChecksPassed": 2,
+    "realEngines": [
+      "playwright",
+      "patchright",
+      "rebrowser",
+      "camoufox",
+      "webkit"
+    ],
+    "ownedFullApiSnips": {
+      "passed": 3,
+      "harnessExitCode": 0,
+      "cases": [
+        "One distinct-engine recovery after a real browser classifies an HTTP 200 owned access block",
+        "Opt-out and still-blocked alternate remain ACCESS_DENIED without submitting support or verification",
+        "Ordinary content stays ready with no alternate"
+      ]
+    },
+    "apiTypecheckExitCode": 0,
+    "browserCi": {
+      "sourceCommit": "37df06d0849e8abae9fa79c9cf8d6580653dd275",
+      "runId": 41781905522,
+      "url": "https://github.com/toreleon/firecrawl/actions/runs/41781905522",
+      "jobs": [
+        {
+          "id": 126415142513,
+          "name": "browser-engines",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 41781905522,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Run pnpm install --frozen-lockfile",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Install browser dependencies for all three drivers",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Run pnpm build",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Prepare the pinned optional Firefox backend",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Run pnpm test",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Run pnpm test:integration",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Run pnpm audit --prod",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            },
+            {
+              "name": "Post Run actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 20
+            },
+            {
+              "name": "Post Run pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 21
+            },
+            {
+              "name": "Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 22
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 23
+            }
+          ]
+        },
+        {
+          "id": 126415142660,
+          "name": "contained-webkit",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 41781905522,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Build the optional WebKit image",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Exercise the production UID boundary and HTTP/session contract",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Refuse startup without the required UID or namespace capability",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            }
+          ]
+        }
+      ],
+      "counts": {
+        "helpersPassed": 78,
+        "ordinaryIntegrationPassed": 161,
+        "ordinaryIntegrationSkipped": 6,
+        "containedWebkitPassed": 21,
+        "productionDependencyAuditPassed": true
+      }
+    },
+    "localImageTestFormattingLimit": "One indentation-only edit in the integration test followed the local image check. Runtime/compiled bytes were unchanged; fresh CI checks the committed source.",
+    "teardownLimit": "Harness commands exited zero and reported all processes terminated, but extract-worker teardown logged a channel-closing error. Clean shutdown is not established.",
+    "broaderServerSdkWorkflowsClaimed": false
+  },
+  "requestAccounting": {
+    "publicApiRequests": 4,
+    "publicBrowserCaptures": 5,
+    "maximumPlannedCaptures": 8,
+    "clientRetries": 0,
+    "expectedTextHintsSent": false,
+    "upstreamProxy": false,
+    "hostedCalls": 0,
+    "offlineSavedResponseReplays": 2,
+    "ownedFixtureTrafficSeparate": true
+  },
+  "cleanup": {
+    "taskContainersRemoved": 9,
+    "candidateImageRetained": "sha256:a9babb8204d9d8395d2198193d4eb3a5841de1cd0d5d1ce3b18c74e18270fa0e",
+    "imagesRemoved": 0,
+    "obsoleteImageCreated": false,
+    "baselineImagesPreserved": true,
+    "cache": {
+      "taskRecordsRemoved": 63,
+      "baselineRecordsPreserved": 128,
+      "unrelatedNewRecordsPreserved": 0,
+      "remainingRecords": 128,
+      "dockerReportedPruneTotal": [
+        "Total:\t328.8MB"
+      ],
+      "physicalBytesFreedNotMeasured": true
+    },
+    "taskInfrastructureStopped": [
+      "autogtm-firecrawl-workflows-pg-20261103",
+      "autogtm-firecrawl-workflows-redis-20261103",
+      "autogtm-firecrawl-workflows-rabbit-20261103"
+    ],
+    "taskPortsClosed": true,
+    "volumeNamesUnchanged": true,
+    "dataVolumesPreserved": 114,
+    "volumesDeleted": 0,
+    "rawEvidenceAndBuildContextsPreserved": true,
+    "globalPruneUsed": false
+  },
+  "remainingWork": [
+    "Run a fresh complete 100-target benchmark on this candidate before claiming aggregate coverage or latency improvement.",
+    "Hosted parity remains unproven; historical 82/100 reference was not refreshed.",
+    "Other denials, verification, region restrictions, rate limits and transport failures remain separate issues."
+  ],
+  "research": [
+    {
+      "url": "https://community.akamai.com/customers/s/article/Reference-Error-18-x-x-x-Access-Denied-403-Forbidden?language=en_US",
+      "use": "First-party reference-error context. The implementation recognizes the retained actual Autotrader document using multiple agreeing signals; an incident number alone does not identify an exact rule or cause."
+    },
+    {
+      "url": "https://community.akamai.com/customers/s/article/How-to-confirm-if-a-request-has-been-blocked-by-Akamai-Web-Application-Firewall-WAF-and-determine-the-rule-triggered?language=en_US",
+      "use": "First-party operational context for confirming a block and its rule; no origin-side security logs or rule-level confirmation are available in this experiment."
+    }
+  ],
+  "evidence": {
+    "retainedRawResponses": true,
+    "hashes": {
+      "_local/anti-bot/autotrader-block-2026-11-04/saved-before.json": "d1095553dd816c13e889100de79fa7303f20b886c249f7c84aae8ae13ce88347",
+      "_local/anti-bot/autotrader-block-2026-11-04/saved-after.json": "0f69e40883485d959698d3083ac674242b0e78e96aa82631259b91e994343658",
+      "_local/anti-bot/autotrader-block-2026-11-04/build-manifest.json": "f5691185645d164e13244dcc97ad13f88e51d3bac79c0ee16090d9a57bd2b412",
+      "_local/anti-bot/autotrader-block-2026-11-04/build-source-hashes.json": "f50559441734f06c962282ed5afd223520b80ad68b48e1a1bc904ea4e2d3a61f",
+      "_local/anti-bot/autotrader-block-2026-11-04/helpers.log": "55d34636834adea5c0cdb0e16382d3adc432b883a5f8bd7e99c6c9394901545e",
+      "_local/anti-bot/autotrader-block-2026-11-04/webkit-integration.log": "1d37a6c151a96d797eee221a2f0cdb436496c03c8c2f9cd1280b17bbd2121931",
+      "_local/anti-bot/autotrader-block-2026-11-04/driver-integration.log": "070d1ade5bacbd5dc30e212eaeec2c60f16bfbe2750ddb5b57d8f78eb736193c",
+      "_local/anti-bot/autotrader-block-2026-11-04/api-typecheck.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "_local/anti-bot/autotrader-block-2026-11-04/ci.json": "9ca2232feef5ee7bce3e8a80acf49216ca01d7e916fe2098718afccb7b9de9c1",
+      "_local/anti-bot/autotrader-block-2026-11-04/ci-webkit.log": "a041fec9982280cd6498b87dfd934d15ca19a0f61255d0b1b4ac2044f8d06aa3",
+      "_local/anti-bot/autotrader-block-2026-11-04/ci-engines.log": "a4b0c19adb8c6a39a1a551a2db23ca0df48ee7289786ac9a771a1850b6db5a3e",
+      "_local/anti-bot/autotrader-api-harness-2026-11-04/result.json": "31afa0b02877417699fa1dd034ca6ec147e6316052e8f3ac8050dc4888b940d9",
+      "_local/anti-bot/autotrader-api-harness-2026-11-04/deployment.json": "8dbf204b44151721764252df8e8eaaa2dc552f43a2b72fa086e76e3fb76d7e49",
+      "_local/anti-bot/autotrader-api-harness-2026-11-04/harness.log": "74db769c6ba891b1f2e1166d649e3823d30eaaa84967b260c5fbab4b1d3a1dd4",
+      "_local/anti-bot/autotrader-api-harness-2026-11-04/final-health.json": "8aa16f62edf3ad3b49ec67410c280b236f3ec3a4eb9ab2308cf0bf9b972fdb6d",
+      "_local/anti-bot/autotrader-api-harness-2026-11-04/cleanup.json": "e8cc93bd57f5bd8bb90b9c09a9bf7033299ba49e04b1d26093b7d85bd44199ec",
+      "_local/anti-bot/autotrader-cohort-api-harness-2026-11-04/audited-results.json": "6fa39be934da0da44a28d230f878427f21d42e4ea0b53984aa3f3ba29a996d9a",
+      "_local/anti-bot/autotrader-cohort-api-harness-2026-11-04/deployment.json": "40b3ec256927361aaf84b0e564f79ee73e5a7f6ea18e72bcce2ce2e70024b13b",
+      "_local/anti-bot/autotrader-cohort-api-harness-2026-11-04/result.json": "f90b549091a76241a708bbd21290ebc0e5d3724f6bd78b7cfef73cb69f75451d",
+      "_local/anti-bot/autotrader-cohort-api-harness-2026-11-04/final-health.json": "68f78ed1f13c7816f2cc80e2951bf2ec5519697ac235af45e572c02a94673f9f",
+      "_local/anti-bot/autotrader-cohort-api-harness-2026-11-04/cleanup.json": "35ca0297fc16c14bcfaed2fea521ade805b9adfba4fd138ec170f0916d0b046f",
+      "_local/anti-bot/autotrader-cohort-api-harness-2026-11-04/resource-samples.jsonl": "7d514ccbdd27bf92a34facf4dd06140ddc576b530f82dab9f0ed5103cd036054",
+      "_local/anti-bot/autotrader-cohort-api-2026-11-04/report.json": "4a643a6e78b0f73a2d0959847dcb6a545cef8b7d8c4e3a3d9dc6b2e050521be8",
+      "_local/anti-bot/autotrader-cohort-api-2026-11-04/attempts.jsonl": "568f6d1a2141d5a373099d88202af05543111ca68a9e62b74f3339f5550d53b5",
+      "_local/anti-bot/autotrader-cohort-api-2026-11-04/score-replay-audit.json": "c924afb83e7c5e4e66b9499a434ba9dd302ec6d0b9516a40902fc2e4046b5d53",
+      "_local/anti-bot/autotrader-block-cleanup-2026-11-04/receipt.json": "27263997627b4b7eaf27f7908842c3a4388d4123a4fc1bfe8a9a16614f95a7cd"
+    }
+  }
+}

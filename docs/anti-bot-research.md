@@ -3633,3 +3633,60 @@ all baseline images/cache, nine unrelated services, all 114 volumes and evidence
 remain. No global prune was used.
 
 [Full result, per-target failures, completion receipts, equivalence proof, deployment hashes and cleanup](benchmarks/alibaba-full-api-results-2026-11-04.json).
+
+## Autotrader HTTP 200 block recognition and selected recovery
+
+Candidate implementation: `37df06d0849e8abae9fa79c9cf8d6580653dd275`. Review of the failed targets in the
+latest complete 59/100 run found an actual false-ready response: Autotrader
+returned HTTP 200 with a 4,093-character unavailability block instead of the
+requested vehicle. The title, incident reference, support form and local
+block-page assets were retained in raw evidence. The old runtime classified
+this as ready, preventing the otherwise permitted optional alternate capture.
+Offline replay of the exact same HTML hash changes from no protection
+classification to an explicit denial. This comparison required no target call.
+
+Recognition now requires all observed structural signals under the existing
+65,536-character cap and less than 3,000 characters of non-script body markup.
+It returns `ACCESS_DENIED`, unsatisfied readiness and automatic outcome
+`blocked`, stopping futile readiness polling. Isolated maintenance text,
+incident references, a contact CAPTCHA, quoted examples and partial signatures
+stay insufficient. The support and verification forms are not operated.
+The existing opted-in stateless fallback keeps the original deadline, one
+alternate, distinct-engine/boot and Page-close requirements. The signature is
+site-specific; it neither identifies an exact Akamai rule nor proves an IP cause.
+[First-party reference-error context](https://community.akamai.com/customers/s/article/Reference-Error-18-x-x-x-Access-Denied-403-Forbidden?language=en_US)
+and [block/rule confirmation guidance](https://community.akamai.com/customers/s/article/How-to-confirm-if-a-request-has-been-blocked-by-Akamai-Web-Application-Firewall-WAF-and-determine-the-rule-triggered?language=en_US)
+are distinct from origin-side rule logs, which this experiment does not have.
+
+A fresh four-target full-API cohort used the same controls, deadlines, pacing
+and 6,656-MiB aggregate browser cap, with four worker slots, direct VN egress,
+no client retries, no expected-text hints, no upstream proxy and no hosted calls.
+All four requests completed using five total browser captures. Autotrader's
+recognized WebKit block was followed by exactly one Firefox capture; the frozen
+marker matched HTML and Markdown in 6,181 ms. GitHub and arXiv also matched
+normalized markers; Allmenus remained region-unavailable. The selected result
+was 3/4 normalized and 2/4 screened. It is not a population rate, a paired old-code
+test, or a fresh hosted comparison. The last full score remains the earlier
+59/100; do not add this Autotrader observation to that aggregate.
+
+All four score/hash/lifecycle replays passed. All five capture receipts confirmed
+Page and context closure; final owners had zero pages/sessions and no observed
+OOM, memory-limit, PID-limit or socket-throttling events. Validation passed
+78 helper checks, seven local real-browser parent/child checks across all five
+engines, API type checking, and three owned full-API snips via `pnpm harness`.
+The snips cover recovery, opt-out, unresolved denial, ordinary content and zero
+support/verification submissions. [Fresh browser CI](https://github.com/toreleon/firecrawl/actions/runs/41781905522) passed
+78 helpers, 161 ordinary integration checks (six optional skips), production
+dependency audit and 21 contained WebKit checks. Broader server/SDK workflows
+are not claimed. Harness commands exited zero and reported processes terminated,
+but extract-worker teardown still logged a channel-closing error; clean shutdown
+is not established.
+
+Scoped cleanup removed nine task containers and 63 exact task cache records
+(Docker-reported 328.8 MB). It retained the candidate image, baseline images,
+128 baseline cache records, nine unrelated services, all 114 volumes and raw
+evidence. Task infrastructure is stopped and task ports are closed; no global
+prune or image/volume removal was used. A fresh full 100-target benchmark on
+this candidate is still required before claiming aggregate improvement.
+
+[Selected result, offline replay, deployment hashes, CI and cleanup](benchmarks/autotrader-block-results-2026-11-04.json).
