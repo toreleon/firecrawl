@@ -22,6 +22,73 @@ export const detectPageProtection = (
     return ['perimeterx', 'captcha', 'reddit'].includes(known.provider)
       ? { ...known, interactive: true }
       : known;
+  // The observed Alibaba interception includes ~98 KB of inline assets. Keep
+  // this bounded check separate from the small-document signatures below.
+  // A product page loading a CAPTCHA SDK is not an interception document.
+  if (
+    html.length <= 262144 &&
+    /<title\b[^>]*>\s*Captcha Interception\s*<\/title>/i.test(html)
+  ) {
+    const structure = html
+      .replace(/<!--[\s\S]*?-->/g, ' ')
+      .replace(
+        /<(script|style|noscript)\b([^>]*)>[\s\S]*?<\/\1\s*>/gi,
+        (_, tag: string, attrs: string) =>
+          tag.toLowerCase() === 'script' ? `<script${attrs}></script>` : ' ',
+      );
+    const text = structure
+      .replace(/<head\b[^>]*>[\s\S]*?<\/head>/gi, ' ')
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+    const scripts = Array.from(
+      structure.matchAll(/<script\b[^>]*\bsrc\s*=\s*(["'])(.*?)\1/gi),
+      (match) => match[2],
+    );
+    const form = structure.match(
+      /<form\b[^>]*\bid=["']nc-verify-form["'][^>]*>/i,
+    )?.[0];
+    const action = form?.match(/\baction=(["'])(.*?)\1/i)?.[2];
+    let verificationPath = false;
+    try {
+      if (
+        action &&
+        (url || (action.startsWith('/') && !action.startsWith('//')))
+      ) {
+        const base = new URL(url ?? 'https://fixture.invalid');
+        const destination = new URL(action, base);
+        verificationPath =
+          destination.origin === base.origin &&
+          /\/_____tmd_____\/verify\/$/.test(destination.pathname);
+      }
+    } catch {
+      /* An invalid action cannot establish the verification route. */
+    }
+    if (
+      /<title\b[^>]*>\s*Captcha Interception\s*<\/title>/i.test(structure) &&
+      /<div\b[^>]*\bid=["']baxia-punish["']/i.test(structure) &&
+      verificationPath &&
+      text.length < 2000 &&
+      /sorry,\s*we have detected unusual traffic from your network\./i.test(
+        text,
+      ) &&
+      scripts.some((src) =>
+        /^(?:https:)?\/\/g\.alicdn\.com\/AWSC\/CAPTCHA\/[^?#]+\/awsc\.js(?:[?#]|$)/i.test(
+          src,
+        ),
+      ) &&
+      scripts.some((src) =>
+        /^(?:https:)?\/\/g\.alicdn\.com\/bsop-static\/sufei-punish\/[^?#]+\/build\/punishpage\.min\.js(?:[?#]|$)/i.test(
+          src,
+        ),
+      )
+    )
+      return {
+        provider: 'alibaba',
+        reason: 'Alibaba CAPTCHA interception document',
+        interactive: true,
+      };
+  }
   if (html.length > 65536) return;
   const markup = html.replace(
     /<!--[\s\S]*?-->|<(script|style|noscript)\b[^>]*>[\s\S]*?<\/\1\s*>/gi,
