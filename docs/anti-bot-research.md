@@ -3144,3 +3144,98 @@ evidence, all 128 baseline cache records, nine unrelated running services and al
 bounded cache removal. Shared browser caches were untouched; no global prune was
 used. No production source changed, so the prior 205-check browser CI remains
 production-runtime evidence, not validation of the experimental WebKit launcher.
+
+### Opt-in WebKit integration and full API evaluation (November 4)
+
+The [implementation receipt](benchmarks/webkit-implementation-api-results-2026-11-04.json)
+records the production integration and a fresh hundred-target run. WebKit is now
+an explicit optional engine, installed with `INSTALL_WEBKIT=true`. Its ordinary
+container entrypoint installs the UID network policy before serving requests,
+then removes NET_ADMIN/NET_RAW from the trusted service's capability bounding
+set. Browser children use UID 1000, zero capabilities and NoNewPrivs, with a
+restricted environment that excludes service credentials and loader overrides.
+Root ownership protects the application and executable. The configured filter
+port must match the listening SSRF proxy. This mode requires a dedicated Docker
+network namespace; it is not supported on the host or in a shared namespace.
+[Deployment details](browser-workflows.md#optional-alternative-browser) describe
+the remaining trusted-root capability requirements. Chromium remains the default.
+
+The API's existing generic owner discovery and distinct-engine/boot guards work
+with WebKit. Focused checks passed for page/worker scripts, headers, redirects,
+cookie isolation, retained-context deletion, denials, timeout cleanup and the
+network boundary. Owned IPv4/IPv6 STUN/TURN constructions sent no packets, and a
+same-UID IPv6 TCP attempt was rejected after a successful trusted-UID control.
+Two full API snips passed through `pnpm harness`, using actual Chromium/WebKit
+owners: consent/readiness forwarding recovered a closed primary denial; opt-out
+sent no alternate request and unresolved alternate denial remained a failure.
+The harness command returned zero and terminated its processes, but its extract
+worker logged `IllegalOperationError: Channel closing` during teardown. These
+receipts do not prove clean worker shutdown.
+
+[Browser CI on the measured source](https://github.com/toreleon/firecrawl/actions/runs/41765568461)
+passed build, 65 helper checks, 142 ordinary integration checks and the production
+dependency audit. Two optional WebKit parent tests are skipped in that ordinary
+suite. The separate WebKit job built the full optional Docker image, passed all
+nine checks including parent/child tests, and refused startup without the
+required UID or startup capability. The local ARM64 image was built by an
+overlay on the retained prototype, with source/compiled hashes checked; CI also
+verified the committed Dockerfile from scratch. Early local failures and their
+repairs are retained separately, including unsafe old binary ownership and two
+incorrect test expectations. Broader server/SDK jobs are not verified here.
+
+| Fresh full API policy: WebKit primary, optional Firefox alternate | Result |
+| --- | ---: |
+| Normalized HTML marker matches | 56 / 100 |
+| Screened matches | 55 / 100 |
+| Normalized matches also containing the supplementary Markdown marker | 53 / 100 |
+| Successful-request p50 / p95 | 4.93 s / 8.42 s |
+| All-request p95 | 9.74 s |
+
+The run made 100 API requests and **153 backend captures**: 100 WebKit, 27 and
+26 on the two Firefox owners. There were four HTTP workers, one API request per frozen
+target, no client retries, expected-text hints, upstream proxies or hosted calls.
+Direct VN egress, the original 85-second API deadline, 30-second navigation cap,
+automatic workflow, consent policy and aggregate 6,656-MiB browser cap were kept.
+The configured seven-second reservation pacer recorded a minimum actual gap of
+6.999 seconds. Source `4106cb18e` differs from runtime `2fef32b3e` only in
+single-profile benchmark validation and its tests; six focused harness checks
+passed. An initial two-profile validation rejection stopped before any target
+request and was archived before the repaired run.
+
+All hundred payload hashes and scores replayed, and backend URL logs accounted
+for every capture. Ninety-four API responses returned fallback diagnostics,
+including 145 closed-attempt proofs. Six responses lacked those diagnostics.
+Backend logs show 53 alternate dispatches while 51 returned fallback receipts;
+these are recorded separately. Sixteen returned alternates were internally
+accepted as recovered, of which fifteen matched the frozen target text. Final
+owners were healthy with zero pages/sessions. OOM, OOM-kill and PID-limit counters
+were zero. Socket-throttling counters were 199/2,902/656; these do not establish a
+target failure's cause or that an individual owner reached its own memory cap.
+
+The total equals the historical Chromium/Firefox fallback score of 56. Four
+targets succeeded only in this run (Louis Vuitton, Expedia, eBay, Apartments.com),
+while four historical successes failed (Alibaba, GoodRx, Capterra, YouTube).
+Different live epoch and engine bundles prevent a causal comparison. No new
+primary-only score is inferred from these fallback responses, and hosted 82
+remains a separate historical reference. WebKit stays opt-in; an overall
+improvement and hosted parity remain unproven. The earlier five Saks contexts
+shared one browser owner, not five independent browser boots. Saks failed with
+a connection-termination error in this fresh full API run.
+
+Saved logs identified two navigation connection-termination errors, a separate
+non-proper TLS termination, a page-process crash and 32 blocked blob resource
+requests. Upstream [libsoup 3.2.3](https://github.com/GNOME/libsoup/blob/3.2.3/libsoup/http2/soup-client-message-io-http2.c)
+uses the observed connection-termination wording for HTTP/2 EOF; the installed
+package reports `3.2.3-0+deb12u2`, without a downstream-patch audit. The
+[File API blob model](https://w3c.github.io/FileAPI/#url-model) defines browser
+store and origin restrictions. Next work is controlled regression coverage for
+these errors and valid blob resources, preserving certificate validation and
+private-destination checks. Those observations do not prove that either repair
+will recover a public target.
+
+Cleanup verified all nineteen task containers absent and task infrastructure
+stopped, with task ports closed. Two overwritten prototype image references
+were already absent, so no explicit image removal was needed. Thirty exact task
+cache records were pruned (Docker-reported 1.017 GB); all 128 baseline cache
+records, working image `032721e8…`, prior images, nine unrelated services, all
+114 volumes and raw evidence were preserved. No global prune was used.

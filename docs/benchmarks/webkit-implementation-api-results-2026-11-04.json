@@ -1,0 +1,3284 @@
+{
+  "recordedAt": "2026-11-04T03:14:35.315888+00:00",
+  "sourceCommit": "4106cb18eb125bc4363869322b40a450929193f9",
+  "productionRuntimeCommit": "2fef32b3e432271e8e802a85e0f1b20f9de4b851",
+  "implementation": {
+    "optInEngine": "webkit",
+    "installBuildArgument": "INSTALL_WEBKIT=true",
+    "defaultEngineUnchanged": "rebrowser",
+    "mandatoryDeployment": "Dedicated Docker network namespace; startup UID root and container-local NET_ADMIN. The startup policy is installed before the API/browser starts. NET_ADMIN/NET_RAW are removed from the API bounding set; browser UID1000 has zero capabilities and NoNewPrivs. Fixed loopback filter port defaults3004 and must match the running destination filter. Root-owned code/binary; restricted child environment; no unsafe host-mode deployment is supported.",
+    "apiRouting": "Existing dynamic owner discovery, distinct-engine/boot and closed-attempt proofs route opt-in fallback to WebKit without an API schema change. The same retained-context HTTP interface works. A heterogeneous alternate list still selects at most one owner, not every engine.",
+    "limits": "This adds an optional engine and a bounded network boundary, not hosted parity or an enterprise certification."
+  },
+  "fullApiBenchmark": {
+    "checkedAt": "2026-11-04T03:13:14.290537+00:00",
+    "sourceCommit": "4106cb18eb125bc4363869322b40a450929193f9",
+    "productionRuntimeCommit": "2fef32b3e432271e8e802a85e0f1b20f9de4b851",
+    "profile": "webkit-firefox",
+    "requests": 100,
+    "backendCaptures": 153,
+    "backendCapturesByOwner": {
+      "primary-a": 100,
+      "fallback-a": 27,
+      "fallback-b": 26
+    },
+    "normalizedPasses": 56,
+    "screenedPasses": 55,
+    "frontierPasses": 56,
+    "normalizedAndMarkdownPasses": 53,
+    "latency": {
+      "successfulP50Ms": 4930,
+      "successfulP95Ms": 8424,
+      "allAttemptsP95Ms": 9735
+    },
+    "failures": {
+      "challenge": 13,
+      "timeout": 2,
+      "target_status_403": 14,
+      "service_error": 4,
+      "marker_only_in_noncontent_markup": 1,
+      "rate_limited": 2,
+      "target_status_511": 1,
+      "missing_expected_marker": 3,
+      "target_status_406": 1,
+      "target_status_417": 1,
+      "target_status_405": 1,
+      "content_not_ready": 1
+    },
+    "states": {
+      "VERIFICATION_REQUIRED": 13,
+      "CONTENT_READY": 62,
+      "not_returned": 6,
+      "ACCESS_DENIED": 13,
+      "HUMAN_REQUIRED": 5,
+      "REGION_UNAVAILABLE": 1
+    },
+    "fallback": {
+      "returned": 94,
+      "closedAttemptReceipts": 145,
+      "attempted": 51,
+      "recovered": 16,
+      "normalizedRecovered": 15,
+      "missing": 6
+    },
+    "fallbackSkipped": {
+      "not_needed": 43
+    },
+    "resources": {
+      "primary-a": {
+        "peakBytes": 2069983232,
+        "sampledPeakBytes": 1735876608,
+        "events": {
+          "memory.events:low": 0,
+          "memory.events:high": 0,
+          "memory.events:max": 0,
+          "memory.events:oom": 0,
+          "memory.events:oom_kill": 0,
+          "memory.events:oom_group_kill": 0,
+          "memory.events:sock_throttled": 199,
+          "pids.events:max": 0
+        }
+      },
+      "fallback-a": {
+        "peakBytes": 1564925952,
+        "sampledPeakBytes": 1453182976,
+        "events": {
+          "memory.events:low": 0,
+          "memory.events:high": 0,
+          "memory.events:max": 0,
+          "memory.events:oom": 0,
+          "memory.events:oom_kill": 0,
+          "memory.events:oom_group_kill": 0,
+          "memory.events:sock_throttled": 2902,
+          "pids.events:max": 0
+        }
+      },
+      "fallback-b": {
+        "peakBytes": 1803890688,
+        "sampledPeakBytes": 1480269824,
+        "events": {
+          "memory.events:low": 0,
+          "memory.events:high": 0,
+          "memory.events:max": 0,
+          "memory.events:oom": 0,
+          "memory.events:oom_kill": 0,
+          "memory.events:oom_group_kill": 0,
+          "memory.events:sock_throttled": 656,
+          "pids.events:max": 0
+        }
+      }
+    },
+    "pacing": {
+      "configuredReservationIntervalMs": 7000,
+      "minimumObservedDispatchGapMs": 6999,
+      "strict7000msDispatchFloorMet": false,
+      "limit": "Slot reservation precedes fetch. Observed gaps are retained; configuration is not an exact dispatch floor."
+    },
+    "timingIntegrity": {
+      "valid": true,
+      "sampleIntervalMs": 1000,
+      "maximumAllowedGapMs": 10000,
+      "maximumObservedGapMs": 1022,
+      "gaps": []
+    },
+    "replay": {
+      "status": "complete",
+      "attempts": 100,
+      "uniquePairs": true,
+      "allEvidenceHashesMatch": true,
+      "allScoresReplay": true,
+      "sourceHashesMatch": true,
+      "networkRequests": 0,
+      "lifecycleLedgerVerified": true,
+      "profileConcurrencyLimitsChecked": 1,
+      "maxObservedConcurrency": 3,
+      "maxObservedConcurrencyByProfile": {
+        "webkit-firefox": 3
+      }
+    },
+    "byTarget": [
+      {
+        "target": "allegro",
+        "url": "https://allegro.pl/oferta/bukiet-roz-roze-sztuczne-kwiaty-jak-zywe-prezent-walentynki-piekne-mydlane-16842279548",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "challenge",
+        "apiStatus": 200,
+        "latencyMs": 6897,
+        "markdownMarkerPresent": false,
+        "markdownChars": 0,
+        "payloadSha256": "7d7ae510a10fec0c6b98bc61c8074f92867c6329891f221330101cd141c4549f",
+        "browserState": "VERIFICATION_REQUIRED",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": false,
+          "recovered": false,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "11f5cd58-c429-45b3-929b-ea5c3f488b82",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            }
+          ]
+        }
+      },
+      {
+        "target": "Amazon",
+        "url": "https://www.amazon.com/Combination-Lock-Shackle-Security-Mounting-Bicycle-Secure/dp/B08KCWFMRS",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 5921,
+        "markdownMarkerPresent": true,
+        "markdownChars": 189375,
+        "payloadSha256": "5c82340c67c0b48cabbf5327a950953b7670d97e7007cb214a0371242a4ebe98",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "indeed",
+        "url": "https://www.indeed.com/l-chicago,-il-jobs.html",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 5317,
+        "markdownMarkerPresent": true,
+        "markdownChars": 36979,
+        "payloadSha256": "de43d6cde28f1e4454ce9c1399017844e17c6105559bb0607f1a39c5be1a652b",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": true,
+          "recovered": true,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "11f5cd58-c429-45b3-929b-ea5c3f488b82",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "canadagoose",
+        "url": "https://www.canadagoose.com/us/en/pr/macmillan-parka-2080M.html",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "timeout",
+        "apiStatus": 500,
+        "latencyMs": 15325,
+        "markdownMarkerPresent": false,
+        "markdownChars": 0,
+        "payloadSha256": "6babada434805dc775c5b1b1ae29229f9e6cd7639ab75e4ff59739ac71cdad89",
+        "browserState": "not_returned"
+      },
+      {
+        "target": "lowes",
+        "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "target_status_403",
+        "apiStatus": 200,
+        "latencyMs": 3256,
+        "markdownMarkerPresent": false,
+        "markdownChars": 355,
+        "payloadSha256": "b1f12061ca05c8e313fbfb901c19820a0f650fec1600a705790f4cc45590b6b5",
+        "browserState": "ACCESS_DENIED",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": false,
+          "recovered": false,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "7c4a651b-3178-4a53-a532-9363a528597f",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            }
+          ]
+        }
+      },
+      {
+        "target": "safeway",
+        "url": "https://www.safeway.com/shop/pd/waterfront-bistro-shrimp-coconut-with-sweet-chili-sauce-10-ct/960457331",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "target_status_403",
+        "apiStatus": 200,
+        "latencyMs": 2679,
+        "markdownMarkerPresent": false,
+        "markdownChars": 81,
+        "payloadSha256": "00a9a4bd9a9464d3364e2d73e780af6b702a75b1d4f807178147517e0d43e10c",
+        "browserState": "ACCESS_DENIED",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": false,
+          "recovered": false,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "11f5cd58-c429-45b3-929b-ea5c3f488b82",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            }
+          ]
+        }
+      },
+      {
+        "target": "walmart",
+        "url": "https://www.walmart.com/ip/Nike-Men-s-Short-Sleeve-Just-Do-It-Swoosh-Graphic-Active-T-Shirt-Navy-L/2501897203",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 5450,
+        "markdownMarkerPresent": true,
+        "markdownChars": 8894,
+        "payloadSha256": "13a7224ec75a0d02ed3fb120e9452890925749afbe5b467c08cbc204808a84b4",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "zillow",
+        "url": "https://www.zillow.com/new-york-ny/",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 4696,
+        "markdownMarkerPresent": false,
+        "markdownChars": 12610,
+        "payloadSha256": "cc02be3ab8100e0c62eef4caa0c69e39b19ffcfdd053dfc75949f1fdb98922cc",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "saksfifthavenue",
+        "url": "https://www.saksfifthavenue.com/product/loewe-striped-slim-zip-front-top-0400026423433.html",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "service_error",
+        "apiStatus": 500,
+        "latencyMs": 1554,
+        "markdownMarkerPresent": false,
+        "markdownChars": 0,
+        "payloadSha256": "797b5adcc4ca777221c82313fc9b68002d827a2684b2c7e7e58480e034025e62",
+        "browserState": "not_returned"
+      },
+      {
+        "target": "neimanmarcus",
+        "url": "https://www.neimanmarcus.com/p/gorski-reversible-toscana-lamb-shearling-jacket-prod282500173",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "service_error",
+        "apiStatus": 500,
+        "latencyMs": 1513,
+        "markdownMarkerPresent": false,
+        "markdownChars": 0,
+        "payloadSha256": "797b5adcc4ca777221c82313fc9b68002d827a2684b2c7e7e58480e034025e62",
+        "browserState": "not_returned"
+      },
+      {
+        "target": "g2",
+        "url": "https://www.g2.com/categories/emerging-ai-software?order=g2_score&page=92&_pjax=%23ajax-container#product-list",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "challenge",
+        "apiStatus": 200,
+        "latencyMs": 5095,
+        "markdownMarkerPresent": false,
+        "markdownChars": 0,
+        "payloadSha256": "b56907d33ad02523c8f98a7b94f9042a7c954b62d1b28dd6931da339b02daedf",
+        "browserState": "VERIFICATION_REQUIRED",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": false,
+          "recovered": false,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "7c4a651b-3178-4a53-a532-9363a528597f",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            }
+          ]
+        }
+      },
+      {
+        "target": "asda",
+        "url": "https://www.asda.com/groceries/product/frozen-waffles-shapes-wedges/mccain-potato-smiles-454g/478142",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 6548,
+        "markdownMarkerPresent": true,
+        "markdownChars": 12763,
+        "payloadSha256": "dda179b8b8b5faff3bc1c7123c56b99d0aadfef7b88fbb3d069bd3603693fd8d",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": true,
+          "recovered": true,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "7c4a651b-3178-4a53-a532-9363a528597f",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "aa",
+        "url": "https://www.aa.com/homePage.do",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": true,
+        "failureReason": "marker_only_in_noncontent_markup",
+        "apiStatus": 200,
+        "latencyMs": 13670,
+        "markdownMarkerPresent": false,
+        "markdownChars": 7433,
+        "payloadSha256": "1bc4ff90bf05d52b44e9f07a78a5a89e3a8fd6c1ebb33f1b2a8d610c72b71cc4",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": true,
+          "recovered": true,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200,
+              "errorCode": "CONTENT_NOT_READY"
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "11f5cd58-c429-45b3-929b-ea5c3f488b82",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "lululemon",
+        "url": "https://shop.lululemon.com/p/mens-jackets-and-hoodies-hoodies/Ease-The-Day-Hoodie/_/prod20009295",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 4166,
+        "markdownMarkerPresent": true,
+        "markdownChars": 37049,
+        "payloadSha256": "5da6879e4a22f5c339fc44c0595b9240e6cfe6b43cb01f64c9be46a445bf1b58",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "hyatt",
+        "url": "https://www.hyatt.com/park-hyatt/en-US/nycph-park-hyatt-new-york",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "rate_limited",
+        "apiStatus": 200,
+        "latencyMs": 7485,
+        "markdownMarkerPresent": false,
+        "markdownChars": 0,
+        "payloadSha256": "ee5e4fcc8d4e08b8a7d715c420ef4a61ea27e14b03730f8d40396674419db407",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": false,
+          "recovered": false,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 429
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "11f5cd58-c429-45b3-929b-ea5c3f488b82",
+              "pageClosed": true,
+              "pageStatusCode": 429
+            }
+          ]
+        }
+      },
+      {
+        "target": "macys",
+        "url": "https://www.macys.com/xapi/discover/v1/page?pathname=/shop/womens/clothing/pants/Upc_bops_purchasable/10&id=157&_navigationType=BROWSE&_shoppingMode=SITE&sortBy=BEST_SELLERS&productsPerPage=120&_application=SITE&_regionCode=US&currencyCode=USD&_deviceType=DESKTOP&_customerState=GUEST&_additionalStoreLocations=10&pageIndex=1",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "target_status_403",
+        "apiStatus": 200,
+        "latencyMs": 4375,
+        "markdownMarkerPresent": false,
+        "markdownChars": 241,
+        "payloadSha256": "e29c3e99be56f27b1a093f5abfb0ecfa13612e173fa70399a41b8bb57837c75a",
+        "browserState": "ACCESS_DENIED",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": false,
+          "recovered": false,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "7c4a651b-3178-4a53-a532-9363a528597f",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            }
+          ]
+        }
+      },
+      {
+        "target": "etsy",
+        "url": "https://www.etsy.com/listing/4409872205/linen-sheer-cafe-curtains-farmhouse",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 3591,
+        "markdownMarkerPresent": true,
+        "markdownChars": 40354,
+        "payloadSha256": "36f656d8600aed610bdf5ea33a01eadfe2bdc20e6724f2bc0bc63776675a5f8b",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "yelp",
+        "url": "https://www.yelp.com/search?find_desc=mexican+restuarant&find_loc=Chicago%2C+IL",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "challenge",
+        "apiStatus": 200,
+        "latencyMs": 3824,
+        "markdownMarkerPresent": false,
+        "markdownChars": 0,
+        "payloadSha256": "f6bbe4cccad807b54b7bd116e1bc22f1fb949765436c45608a39c238945514e1",
+        "browserState": "VERIFICATION_REQUIRED",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": false,
+          "recovered": false,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "11f5cd58-c429-45b3-929b-ea5c3f488b82",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            }
+          ]
+        }
+      },
+      {
+        "target": "zara",
+        "url": "https://www.zara.com/us/en/100-linen-zip-up-overshirt-p04410115.html",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 5762,
+        "markdownMarkerPresent": true,
+        "markdownChars": 17699,
+        "payloadSha256": "17a5c90e1a083e517292433ff03284aa5d1a4f63d3df2300cc1b21361f3cafbf",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "louisvuitton",
+        "url": "https://us.louisvuitton.com/eng-us/products/lv-tilted-sneaker-nvprod7310009v/1AJS39",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 2155,
+        "markdownMarkerPresent": true,
+        "markdownChars": 33079,
+        "payloadSha256": "53cfd8439d3d033ab715ed93604cabe908e773d44e309cb27efd49df882ceb9d",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "autozone",
+        "url": "https://www.autozone.com/p/valvoline-motor-oil-vv179/539362",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "target_status_403",
+        "apiStatus": 200,
+        "latencyMs": 2001,
+        "markdownMarkerPresent": false,
+        "markdownChars": 247,
+        "payloadSha256": "19ec08c79262598ea898c39db87bfb421d89252e0049a834ae5d41e452cbe0aa",
+        "browserState": "ACCESS_DENIED",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": false,
+          "recovered": false,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "7c4a651b-3178-4a53-a532-9363a528597f",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            }
+          ]
+        }
+      },
+      {
+        "target": "homedepot",
+        "url": "https://www.homedepot.com/p/Milwaukee-M18-FUEL-18-Volt-Lithium-Ion-Brushless-Cordless-Gen-II-18-Gauge-Brad-Nailer-Tool-Only-2746-20/309752194",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "target_status_403",
+        "apiStatus": 200,
+        "latencyMs": 1973,
+        "markdownMarkerPresent": false,
+        "markdownChars": 329,
+        "payloadSha256": "8feeb9a093016b0bfce6b8ffb1aeee59bc37d61b386e1810b789ba4767433a13",
+        "browserState": "ACCESS_DENIED",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": false,
+          "recovered": false,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "11f5cd58-c429-45b3-929b-ea5c3f488b82",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            }
+          ]
+        }
+      },
+      {
+        "target": "ashleyfurniture",
+        "url": "https://www.ashleyfurniture.com/p/roanhowe_dining_table_and_4_chairs/APG-D76935-5P.html",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 4876,
+        "markdownMarkerPresent": true,
+        "markdownChars": 28662,
+        "payloadSha256": "38916706d6ffec8414523baa3da4c47a57b8941ca92049bfc5dd38188fce9e44",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "autotrader",
+        "url": "https://www.autotrader.com/cars-for-sale/vehicle/763249459",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 5569,
+        "markdownMarkerPresent": true,
+        "markdownChars": 23730,
+        "payloadSha256": "fa136c2904db993315a10f4a08524196b93fc750adc1bf94c97eaf9d45eea331",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "databricks",
+        "url": "https://www.databricks.com/company/careers/open-positions?department=Engineering&location=all",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 1439,
+        "markdownMarkerPresent": true,
+        "markdownChars": 26095,
+        "payloadSha256": "537bd2850b0d57240411d25edf0065c0e79fece81f58968c02a60715696ca802",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "carters",
+        "url": "https://www.carters.com/p/toddler-boy-polo-shirt-made-with-organic-cotton-in-stripes/V_2U855510",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 9043,
+        "markdownMarkerPresent": true,
+        "markdownChars": 69211,
+        "payloadSha256": "9532567581b1a4d69a01a1fe1c51118602ac61aa082697c9c6c8f8d9f1e548c3",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": true,
+          "recovered": true,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "7c4a651b-3178-4a53-a532-9363a528597f",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "booking.com",
+        "url": "https://www.booking.com/hotel/us/the-plaza.html",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 16528,
+        "markdownMarkerPresent": true,
+        "markdownChars": 45885,
+        "payloadSha256": "f73691df9fe16f3930c09b7328490321669b21d5fdeb7b031fd3c46bac0599d2",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": true,
+          "recovered": true,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200,
+              "errorCode": "CONTENT_NOT_READY"
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "11f5cd58-c429-45b3-929b-ea5c3f488b82",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "emag",
+        "url": "https://www.emag.ro/telefon-mobil-apple-iphone-17-256gb-5g-black-mg6j4zd-a/pd/DGX9FV3BM/",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "target_status_511",
+        "apiStatus": 200,
+        "latencyMs": 4133,
+        "markdownMarkerPresent": false,
+        "markdownChars": 277,
+        "payloadSha256": "774e8dee72212f26b2c4662990e9faad258f43fc0ff3304a75e09e2ef50a10ed",
+        "browserState": "HUMAN_REQUIRED",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": false,
+          "recovered": false,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 511
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "7c4a651b-3178-4a53-a532-9363a528597f",
+              "pageClosed": true,
+              "pageStatusCode": 511
+            }
+          ]
+        }
+      },
+      {
+        "target": "expedia",
+        "url": "https://www.expedia.com/Hotel-Search?destination=Miami%20Beach",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 5299,
+        "markdownMarkerPresent": true,
+        "markdownChars": 8734,
+        "payloadSha256": "0c5248497cd21742fb383cdd59942d51df530d17e305d9f134f189a4af0c50ef",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "glassdoor",
+        "url": "https://www.glassdoor.com/Job/chicago-software-engineer-jobs-SRCH_IL.0,7_IC1128808_KO8,25.htm",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 4001,
+        "markdownMarkerPresent": true,
+        "markdownChars": 73127,
+        "payloadSha256": "723de029811c87da0dec67e33e787712577bb03442751c3379c2c15573b5d29f",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": true,
+          "recovered": true,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "11f5cd58-c429-45b3-929b-ea5c3f488b82",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "marketwatch",
+        "url": "https://www.marketwatch.com/investing/stock/aapl",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 5785,
+        "markdownMarkerPresent": false,
+        "markdownChars": 45898,
+        "payloadSha256": "73c02eed5a4965d2cbc0461e4cd10461700a4ff9349f6d34c6bcfb6182490d8f",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": true,
+          "recovered": true,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 401
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "7c4a651b-3178-4a53-a532-9363a528597f",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "barrons",
+        "url": "https://www.barrons.com/articles/micron-stock-price-memory-chips-trump-5c6f7870",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 6388,
+        "markdownMarkerPresent": true,
+        "markdownChars": 50309,
+        "payloadSha256": "ca3ca9346ad5b7ee3bb844d2bef7591908b358c4f0c00315c56c92425c1b1730",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": true,
+          "recovered": true,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 401
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "11f5cd58-c429-45b3-929b-ea5c3f488b82",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "monster",
+        "url": "https://www.monster.com/jobs/search?q=Software+Engineer&where=New+York%2C+NY&page=1&so=m.h.s",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "target_status_403",
+        "apiStatus": 200,
+        "latencyMs": 3062,
+        "markdownMarkerPresent": false,
+        "markdownChars": 47,
+        "payloadSha256": "5c4843403292ef189c309e4518ec2ef40a96e510d6aee431e082785d9a76328c",
+        "browserState": "ACCESS_DENIED",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": false,
+          "recovered": false,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "7c4a651b-3178-4a53-a532-9363a528597f",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            }
+          ]
+        }
+      },
+      {
+        "target": "mouser",
+        "url": "https://www.mouser.com/ProductDetail/DFRobot/FIT1030?qs=6avfeC6zeS76UUpWZZX%252B0w%3D%3D",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "target_status_403",
+        "apiStatus": 200,
+        "latencyMs": 11282,
+        "markdownMarkerPresent": false,
+        "markdownChars": 1169,
+        "payloadSha256": "41b746daecb5d17e4172b930aff9602b7bbf56f5d0dd9c08b333cfeb756b6ce8",
+        "browserState": "ACCESS_DENIED",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": false,
+          "recovered": false,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "11f5cd58-c429-45b3-929b-ea5c3f488b82",
+              "pageClosed": true,
+              "pageStatusCode": 403,
+              "errorCode": "CONTENT_NOT_READY"
+            }
+          ]
+        }
+      },
+      {
+        "target": "nytimes",
+        "url": "https://www.nytimes.com/live/2026/04/07/world/iran-war-trump-news",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 7876,
+        "markdownMarkerPresent": true,
+        "markdownChars": 76510,
+        "payloadSha256": "2d64f84048fda9d22bde30525c226f23f89afbf6536fe04b337a9b678fb63529",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "ralphlauren",
+        "url": "https://www.ralphlauren.com/men-clothing-button-down-shirts/garment-dyed-oxford-shirt/460022.html",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 6426,
+        "markdownMarkerPresent": true,
+        "markdownChars": 100594,
+        "payloadSha256": "0c986d48062baf4b862e8c3f93fcc363dddecf5c793056eab7879ddc8c6fd020",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "realtor",
+        "url": "https://www.realtor.com/realestateandhomes-search/Chicago_IL",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "rate_limited",
+        "apiStatus": 200,
+        "latencyMs": 9735,
+        "markdownMarkerPresent": false,
+        "markdownChars": 341,
+        "payloadSha256": "c27017192137233664eb8afb9588127876249e7c264bd218daf15103c5711b80",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": false,
+          "recovered": false,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 429
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "7c4a651b-3178-4a53-a532-9363a528597f",
+              "pageClosed": true,
+              "pageStatusCode": 429
+            }
+          ]
+        }
+      },
+      {
+        "target": "tripadvisor",
+        "url": "https://www.tripadvisor.com/Hotels-g35805-Chicago_Illinois-Hotels.html",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "challenge",
+        "apiStatus": 200,
+        "latencyMs": 5759,
+        "markdownMarkerPresent": false,
+        "markdownChars": 0,
+        "payloadSha256": "75dc95b490ff1a611701abfaafd1ce0f216b2ddd4ffb54c383b4703a43d87511",
+        "browserState": "VERIFICATION_REQUIRED",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": false,
+          "recovered": false,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "11f5cd58-c429-45b3-929b-ea5c3f488b82",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            }
+          ]
+        }
+      },
+      {
+        "target": "wsj",
+        "url": "https://www.wsj.com/livecoverage/iran-war-2026-trump-deadline-latest-news",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "challenge",
+        "apiStatus": 200,
+        "latencyMs": 4073,
+        "markdownMarkerPresent": false,
+        "markdownChars": 0,
+        "payloadSha256": "ce43fd5541f61a981ec27f821d5d3a89838abf02a5068986d1c0eb647fc3a042",
+        "browserState": "VERIFICATION_REQUIRED",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": false,
+          "recovered": false,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 401
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "7c4a651b-3178-4a53-a532-9363a528597f",
+              "pageClosed": true,
+              "pageStatusCode": 401
+            }
+          ]
+        }
+      },
+      {
+        "target": "bloomberg",
+        "url": "https://www.bloomberg.com/markets",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 3502,
+        "markdownMarkerPresent": true,
+        "markdownChars": 33181,
+        "payloadSha256": "20e363600d2e24785206a790d78eb84f84862018519d3355e8adac609918f60c",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "reuters",
+        "url": "https://www.reuters.com/",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 4930,
+        "markdownMarkerPresent": true,
+        "markdownChars": 49118,
+        "payloadSha256": "d04e63ece595a6657763f67af6c20106996de7dcb872b26a91a1b473391d8b08",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": true,
+          "recovered": true,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 401
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "11f5cd58-c429-45b3-929b-ea5c3f488b82",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "alibaba",
+        "url": "https://www.alibaba.com/product-detail/Composite-Material-Breathable-Lumbar-Back-Brace_1601619518415.html",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "missing_expected_marker",
+        "apiStatus": 200,
+        "latencyMs": 2048,
+        "markdownMarkerPresent": false,
+        "markdownChars": 1038,
+        "payloadSha256": "d7aeabc017f538e40f072b658d7b3d2a6f1dfcd5410aeb8f423746d7c49cbbea",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "coupang",
+        "url": "https://www.coupang.com/vp/products/7579231557",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "target_status_403",
+        "apiStatus": 200,
+        "latencyMs": 7855,
+        "markdownMarkerPresent": false,
+        "markdownChars": 234,
+        "payloadSha256": "a23366c1c4ac71542e98848a58b6ace58f15212bc4c9c7034eb90920a1afae66",
+        "browserState": "ACCESS_DENIED",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": false,
+          "recovered": false,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "7c4a651b-3178-4a53-a532-9363a528597f",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            }
+          ]
+        }
+      },
+      {
+        "target": "ebay",
+        "url": "https://www.ebay.com/itm/227305215584",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 7927,
+        "markdownMarkerPresent": true,
+        "markdownChars": 28025,
+        "payloadSha256": "4a5d7a39410a94ddd8fd3ef75783e3c0693a15e1307c3d2640bac66e921f1a92",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": true,
+          "recovered": true,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "11f5cd58-c429-45b3-929b-ea5c3f488b82",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "target",
+        "url": "https://www.target.com/p/1-39-6-34-x2-39-6-34-so-happy-you-39-re-here-doormat-natural-threshold-8482/-/A-82253413",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 5912,
+        "markdownMarkerPresent": true,
+        "markdownChars": 7661,
+        "payloadSha256": "d64ec35c2bccfc911a235c3e2a85624c47ff7e4b2be5186e7707cd9531d0ac16",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "nike",
+        "url": "https://www.nike.com/t/kd19-purple-stuff-basketball-shoes-vrLfPVAT/IH1117-500",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 3733,
+        "markdownMarkerPresent": true,
+        "markdownChars": 35946,
+        "payloadSha256": "1b2dc1591baa2cc3b2648b5e1d52cab92f22c5cee9858464596f604be0fd1a6d",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "stockx",
+        "url": "https://stockx.com/air-jordan-5-retro-black-university-blue-2026",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "target_status_403",
+        "apiStatus": 200,
+        "latencyMs": 2199,
+        "markdownMarkerPresent": false,
+        "markdownChars": 329,
+        "payloadSha256": "73e92c5bb5fe5ca5c0dfe4949ffb75ae1a21f06238bd59879b11e8be526587b4",
+        "browserState": "ACCESS_DENIED",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": false,
+          "recovered": false,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "7c4a651b-3178-4a53-a532-9363a528597f",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            }
+          ]
+        }
+      },
+      {
+        "target": "cargurus",
+        "url": "https://www.cargurus.com/details/440130010",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "target_status_406",
+        "apiStatus": 200,
+        "latencyMs": 2330,
+        "markdownMarkerPresent": false,
+        "markdownChars": 0,
+        "payloadSha256": "26836936fc927b2732b4883b0a4973557dd1636f71b51d80f1539aaaad06d59a",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": false,
+          "recovered": false,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 406
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "11f5cd58-c429-45b3-929b-ea5c3f488b82",
+              "pageClosed": true,
+              "pageStatusCode": 406
+            }
+          ]
+        }
+      },
+      {
+        "target": "cars.com",
+        "url": "https://www.cars.com/vehicledetail/31cd78d0-912d-4453-8a36-11d2714eb76e/",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "challenge",
+        "apiStatus": 200,
+        "latencyMs": 2358,
+        "markdownMarkerPresent": false,
+        "markdownChars": 930,
+        "payloadSha256": "2121a3bc3c271bc25790b6ce37c0574dc2dbf02dbd1fb9ec6da1d5c1b12195dc",
+        "browserState": "VERIFICATION_REQUIRED",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": false,
+          "recovered": false,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "7c4a651b-3178-4a53-a532-9363a528597f",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            }
+          ]
+        }
+      },
+      {
+        "target": "crunchbase",
+        "url": "https://www.crunchbase.com/organization/string-ai-5443",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "challenge",
+        "apiStatus": 200,
+        "latencyMs": 2489,
+        "markdownMarkerPresent": false,
+        "markdownChars": 908,
+        "payloadSha256": "8cf467b17e5d0bf36a8207d251d500fe4f0b521a38e8dd0ad4b5165b0c5f6eb0",
+        "browserState": "VERIFICATION_REQUIRED",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": false,
+          "recovered": false,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "11f5cd58-c429-45b3-929b-ea5c3f488b82",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            }
+          ]
+        }
+      },
+      {
+        "target": "verizon",
+        "url": "https://www.verizon.com/smartphones/apple-iphone-17-pro-max/",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "target_status_417",
+        "apiStatus": 200,
+        "latencyMs": 4445,
+        "markdownMarkerPresent": false,
+        "markdownChars": 733,
+        "payloadSha256": "036612fd9861bc64134c6d4784cb13119ebca1dffec1334ec3e912b68b78eb39",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": false,
+          "recovered": false,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 417
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "7c4a651b-3178-4a53-a532-9363a528597f",
+              "pageClosed": true,
+              "pageStatusCode": 417
+            }
+          ]
+        }
+      },
+      {
+        "target": "att",
+        "url": "https://www.att.com/buy/phones/samsung-galaxy-s26-ultra.html",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "target_status_403",
+        "apiStatus": 200,
+        "latencyMs": 2245,
+        "markdownMarkerPresent": false,
+        "markdownChars": 248,
+        "payloadSha256": "580c11d371ec3e84ad283be0784db906c6d11f38f85655a6477c11a54466e9f8",
+        "browserState": "ACCESS_DENIED",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": false,
+          "recovered": false,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "11f5cd58-c429-45b3-929b-ea5c3f488b82",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            }
+          ]
+        }
+      },
+      {
+        "target": "goodrx",
+        "url": "https://www.goodrx.com/advil",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "challenge",
+        "apiStatus": 200,
+        "latencyMs": 2325,
+        "markdownMarkerPresent": false,
+        "markdownChars": 0,
+        "payloadSha256": "eb134eccd15ca41333d5f4b4de3c443354a4b13b7c3ad3d5ccd06e859df9ba29",
+        "browserState": "HUMAN_REQUIRED",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": false,
+          "recovered": false,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "7c4a651b-3178-4a53-a532-9363a528597f",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            }
+          ]
+        }
+      },
+      {
+        "target": "LinkedIn",
+        "url": "https://www.linkedin.com/company/microsoft/",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "service_error",
+        "apiStatus": 500,
+        "latencyMs": 562,
+        "markdownMarkerPresent": false,
+        "markdownChars": 0,
+        "payloadSha256": "797b5adcc4ca777221c82313fc9b68002d827a2684b2c7e7e58480e034025e62",
+        "browserState": "not_returned"
+      },
+      {
+        "target": "X (Twitter)",
+        "url": "https://x.com/NASA",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 1981,
+        "markdownMarkerPresent": true,
+        "markdownChars": 7139,
+        "payloadSha256": "4d4b539c77b0d2c614971e812bd0abb1579e6fab9ae4f468a5192baa4876de81",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "Instagram",
+        "url": "https://www.instagram.com/nasa/",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 1802,
+        "markdownMarkerPresent": true,
+        "markdownChars": 12674,
+        "payloadSha256": "7fcb6352dea3d2fbccd67b0e4798598d115913417ad7b91aca1f2b368b94750a",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "Ticketmaster",
+        "url": "https://www.ticketmaster.com/taylor-swift-tickets/artist/1094215",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 6039,
+        "markdownMarkerPresent": true,
+        "markdownChars": 13419,
+        "payloadSha256": "0f7561dd459aca2febb4f83eafa3bd38b330b4bb53882c339d599fdfbb4f6401",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "Capterra",
+        "url": "https://www.capterra.com/project-management-software/",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "challenge",
+        "apiStatus": 200,
+        "latencyMs": 2490,
+        "markdownMarkerPresent": false,
+        "markdownChars": 904,
+        "payloadSha256": "ee536712bfadc99131eda279768fbdd5cd71d8eff65fe0d8f66ed03852da87df",
+        "browserState": "VERIFICATION_REQUIRED",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": false,
+          "recovered": false,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "11f5cd58-c429-45b3-929b-ea5c3f488b82",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            }
+          ]
+        }
+      },
+      {
+        "target": "Reddit",
+        "url": "https://www.reddit.com/r/webscraping/",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 3109,
+        "markdownMarkerPresent": true,
+        "markdownChars": 7944,
+        "payloadSha256": "0d8fd4f2137fded2d62638d65820bc8b27222061fed519f3ebf8fe5e695b4ac7",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "Google Search",
+        "url": "https://www.google.com/search?q=openai",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 4122,
+        "markdownMarkerPresent": true,
+        "markdownChars": 20483,
+        "payloadSha256": "320f61f4a2c60f9a2bd1c1b21e7f89c57645a0da98004ce80b16023666ee4fa7",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": true,
+          "recovered": true,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 429,
+              "errorCode": "CONTENT_NOT_READY"
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "7c4a651b-3178-4a53-a532-9363a528597f",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "YouTube",
+        "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "service_error",
+        "apiStatus": 500,
+        "latencyMs": 3692,
+        "markdownMarkerPresent": false,
+        "markdownChars": 0,
+        "payloadSha256": "797b5adcc4ca777221c82313fc9b68002d827a2684b2c7e7e58480e034025e62",
+        "browserState": "not_returned"
+      },
+      {
+        "target": "TikTok",
+        "url": "https://www.tiktok.com/@nba",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 3754,
+        "markdownMarkerPresent": true,
+        "markdownChars": 431,
+        "payloadSha256": "ca3b2070b5e21505adeebab229f86688a97fb9c4153eb7b480fa355865acc4ff",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "Airbnb",
+        "url": "https://www.airbnb.com/s/Paris--France/homes",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 4836,
+        "markdownMarkerPresent": true,
+        "markdownChars": 10808,
+        "payloadSha256": "3609dde5ddc20364537f0f623c82c8556246cf31614f3ad464f39201afbd875f",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "Best Buy",
+        "url": "https://www.bestbuy.com/site/apple-airpods-pro-2nd-generation-with-magsafe-case-usb-c-white/6447382.p?skuId=6447382",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 8024,
+        "markdownMarkerPresent": true,
+        "markdownChars": 11189,
+        "payloadSha256": "8ab8a1cf604990f10071e3efa8009237ea137336fc85d1df6f5bd9574bc323bf",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "Redfin",
+        "url": "https://www.redfin.com/city/30749/NY/New-York",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "target_status_405",
+        "apiStatus": 200,
+        "latencyMs": 3530,
+        "markdownMarkerPresent": false,
+        "markdownChars": 620,
+        "payloadSha256": "b4faf1c8c1e9c7428bc9268a9cf51897b7e4e9cda8c2ebc5a5fcd56dfcfe68a9",
+        "browserState": "HUMAN_REQUIRED",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": false,
+          "recovered": false,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 405
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "11f5cd58-c429-45b3-929b-ea5c3f488b82",
+              "pageClosed": true,
+              "pageStatusCode": 405
+            }
+          ]
+        }
+      },
+      {
+        "target": "Foot Locker",
+        "url": "https://www.footlocker.com/category/mens/shoes.html",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 2190,
+        "markdownMarkerPresent": true,
+        "markdownChars": 97771,
+        "payloadSha256": "3724aae128c03922c771197bfe8b3fe91566523ce297f144f2a01cca9b778df1",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "SeatGeek",
+        "url": "https://seatgeek.com/taylor-swift-tickets",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 4255,
+        "markdownMarkerPresent": true,
+        "markdownChars": 83489,
+        "payloadSha256": "ae9b89826ebfd288bced21434cf61bd030f538cc83e9d049d91e2126f45a894b",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "Facebook",
+        "url": "https://www.facebook.com/NASA",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 2760,
+        "markdownMarkerPresent": true,
+        "markdownChars": 16179,
+        "payloadSha256": "fca54867cf5b5cb45bf41855164fb8aca90385af5fd26bef7fbb2a3d5cad1b32",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "GOAT",
+        "url": "https://www.goat.com/brand/air-jordan",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 4159,
+        "markdownMarkerPresent": true,
+        "markdownChars": 12267,
+        "payloadSha256": "fd210595e3b08f1485e39f97c662b341869e350e3abdad531ccc5426bfc83589",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": true,
+          "recovered": true,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "7c4a651b-3178-4a53-a532-9363a528597f",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "Yahoo Finance",
+        "url": "https://finance.yahoo.com/quote/AAPL/",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 6272,
+        "markdownMarkerPresent": true,
+        "markdownChars": 33659,
+        "payloadSha256": "51231a1f1c8235831e459b861587c98dea2cbecbe111052316338b973b8c0d2a",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "DigiKey",
+        "url": "https://www.digikey.com/en/products/detail/texas-instruments/NE555P/277057",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 3866,
+        "markdownMarkerPresent": true,
+        "markdownChars": 125337,
+        "payloadSha256": "80608be4e69a436d22f2196e68ea10298104a78bbeb784bf6b91ab8f2947d39f",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": true,
+          "recovered": true,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "11f5cd58-c429-45b3-929b-ea5c3f488b82",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "Rightmove",
+        "url": "https://www.rightmove.co.uk/property-for-sale/London.html",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 5582,
+        "markdownMarkerPresent": true,
+        "markdownChars": 86512,
+        "payloadSha256": "df31ff62851ae83c8f1fbe76f93eb95f707b37c2d461a361af5cb6b94d68d510",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "Instacart",
+        "url": "https://www.instacart.com/store/costco/storefront",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 8119,
+        "markdownMarkerPresent": true,
+        "markdownChars": 17876,
+        "payloadSha256": "574811894036046a7fdf7e6110ca1130ac7a61741c20bbe397a234eb6e612e69",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "Pinterest",
+        "url": "https://www.pinterest.com/nasa/",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 3943,
+        "markdownMarkerPresent": true,
+        "markdownChars": 2611,
+        "payloadSha256": "1fdd80f1efb7ae90df321b05db3e3e9c82fb44efbffff606b664fc1efbbf0ed4",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "ZipRecruiter",
+        "url": "https://www.ziprecruiter.com/Jobs/Software-Engineer",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "challenge",
+        "apiStatus": 200,
+        "latencyMs": 2224,
+        "markdownMarkerPresent": false,
+        "markdownChars": 0,
+        "payloadSha256": "6bf0856a982d479d61b9b539caa692ff7c1eb77b0ebdb91e0d9ca67c27fc34e3",
+        "browserState": "VERIFICATION_REQUIRED",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": false,
+          "recovered": false,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "7c4a651b-3178-4a53-a532-9363a528597f",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            }
+          ]
+        }
+      },
+      {
+        "target": "Vinted",
+        "url": "https://www.vinted.fr/catalog?search_text=nike",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 8424,
+        "markdownMarkerPresent": true,
+        "markdownChars": 49276,
+        "payloadSha256": "7a896db396f001a95c96340b4c592c42102cf400e7e2fe6f9fc0d447eeb25dea",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "Idealista",
+        "url": "https://www.idealista.com/venta-viviendas/madrid-madrid/",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "challenge",
+        "apiStatus": 200,
+        "latencyMs": 5954,
+        "markdownMarkerPresent": false,
+        "markdownChars": 0,
+        "payloadSha256": "f8016a1b5695e660135b1d2cfc760ea2b5241db46c11c78c33cf02066d2c3c29",
+        "browserState": "VERIFICATION_REQUIRED",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": false,
+          "recovered": false,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "11f5cd58-c429-45b3-929b-ea5c3f488b82",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            }
+          ]
+        }
+      },
+      {
+        "target": "Leboncoin",
+        "url": "https://www.leboncoin.fr/c/voitures",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 7193,
+        "markdownMarkerPresent": true,
+        "markdownChars": 87643,
+        "payloadSha256": "8e68b4c62d1d0e1f3cc9ae1c2373c05616724563faa69effaffd6601a2e68b50",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "StubHub",
+        "url": "https://www.stubhub.com/taylor-swift-tickets",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 6086,
+        "markdownMarkerPresent": true,
+        "markdownChars": 1878,
+        "payloadSha256": "e96a39d5b6e4de0deed52d07c5c32d71bc1b1f58c2248ae174fb50420f36c944",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "Skyscanner",
+        "url": "https://www.skyscanner.net/transport/flights/nyca/lond/",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "content_not_ready",
+        "apiStatus": 200,
+        "latencyMs": 4386,
+        "markdownMarkerPresent": false,
+        "markdownChars": 99,
+        "payloadSha256": "8b8c13640aacc431ec7ee0bff32212e165d78a2102ffa773ee66074972299c29",
+        "browserState": "HUMAN_REQUIRED",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": false,
+          "recovered": false,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200,
+              "errorCode": "CONTENT_NOT_READY"
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "7c4a651b-3178-4a53-a532-9363a528597f",
+              "pageClosed": true,
+              "pageStatusCode": 200,
+              "errorCode": "CONTENT_NOT_READY"
+            }
+          ]
+        }
+      },
+      {
+        "target": "Congress.gov",
+        "url": "https://www.congress.gov/bill/117th-congress/house-bill/3684",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "challenge",
+        "apiStatus": 200,
+        "latencyMs": 2156,
+        "markdownMarkerPresent": false,
+        "markdownChars": 0,
+        "payloadSha256": "df4a40e7ad560d0a2ebe99981a3812d98c1e53c93b2317f88aa94c67efd48df0",
+        "browserState": "VERIFICATION_REQUIRED",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": false,
+          "recovered": false,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "11f5cd58-c429-45b3-929b-ea5c3f488b82",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            }
+          ]
+        }
+      },
+      {
+        "target": "TradingView",
+        "url": "https://www.tradingview.com/symbols/NASDAQ-AAPL/",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 5457,
+        "markdownMarkerPresent": true,
+        "markdownChars": 45920,
+        "payloadSha256": "b35840de24b2d4215e43bd218c92b8e1f1c9bb56997cede0ef318e07f0d768c9",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "CoinMarketCap",
+        "url": "https://coinmarketcap.com/currencies/bitcoin/",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 4679,
+        "markdownMarkerPresent": true,
+        "markdownChars": 56047,
+        "payloadSha256": "92c28b8d5ca192086a8bb2d3c8e45844be2559a3d1a62ecec37084d178cd9b6c",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "Apartments.com",
+        "url": "https://www.apartments.com/new-york-ny/",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 7777,
+        "markdownMarkerPresent": true,
+        "markdownChars": 44028,
+        "payloadSha256": "5cb83011af13f2d4c82429667e9e1d3cc00f657a9c845e3787aa590718ddbe05",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": true,
+          "recovered": true,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "7c4a651b-3178-4a53-a532-9363a528597f",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "Zoopla",
+        "url": "https://www.zoopla.co.uk/for-sale/property/london/",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 6041,
+        "markdownMarkerPresent": true,
+        "markdownChars": 30173,
+        "payloadSha256": "6aa11329e4dcfae8e7eb4c8146d3f0699ba6ec9fcd66b44aaf867d75ee59ee1c",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": true,
+          "recovered": true,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "11f5cd58-c429-45b3-929b-ea5c3f488b82",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "Trustpilot",
+        "url": "https://www.trustpilot.com/review/amazon.com",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 6190,
+        "markdownMarkerPresent": true,
+        "markdownChars": 39021,
+        "payloadSha256": "0b58964714ac6a519fe5094ea491e24ba11c264850cfcbac0d193d3fb471231b",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "Yellow Pages",
+        "url": "https://www.yellowpages.com/chicago-il/restaurants",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 4216,
+        "markdownMarkerPresent": true,
+        "markdownChars": 71093,
+        "payloadSha256": "e0ace46f74e97650a6002af788152a5775051d624dac22a9306a211975a88d46",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": true,
+          "recovered": true,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "7c4a651b-3178-4a53-a532-9363a528597f",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "Kayak",
+        "url": "https://www.kayak.com/flights/NYC-CHI",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 3154,
+        "markdownMarkerPresent": true,
+        "markdownChars": 61438,
+        "payloadSha256": "f7ef0b2b0f0bf8ceafec5a071d313f381882cd15323aac9490733052b632a104",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "Allmenus",
+        "url": "https://www.allmenus.com/il/chicago/223447-chicagoland-pizza-pasta/menu/",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "missing_expected_marker",
+        "apiStatus": 200,
+        "latencyMs": 1019,
+        "markdownMarkerPresent": false,
+        "markdownChars": 60,
+        "payloadSha256": "a43204114590d6de4de90cee48400d444ba2f20fb5a114d79b22a48f2997747d",
+        "browserState": "REGION_UNAVAILABLE",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "temu",
+        "url": "https://www.temu.com/60w-fast-charging-usb-to-type-c-cable-high-speed-data-sync-for-iphone-15-16-for--pro-for-ipad-for-samsung-for-xiaomi-other-devices-g-605554969821574.html",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "missing_expected_marker",
+        "apiStatus": 200,
+        "latencyMs": 8620,
+        "markdownMarkerPresent": false,
+        "markdownChars": 808,
+        "payloadSha256": "0b7690c81c9a0adcd10f8a9de41d2f5c1a99d7d31c41faf37984ddec1168301e",
+        "browserState": "HUMAN_REQUIRED",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": false,
+          "recovered": false,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "11f5cd58-c429-45b3-929b-ea5c3f488b82",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "delta",
+        "url": "https://www.delta.com/flight-status/search",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 7594,
+        "markdownMarkerPresent": true,
+        "markdownChars": 10235,
+        "payloadSha256": "347649eb67306a861a1a9f607eb75b09d1eb8a03a22f03c4e132d5b8953dcdb6",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "kroger",
+        "url": "https://www.kroger.com/p/kroger-vitamin-d-whole-milk/0001111041700",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "target_status_403",
+        "apiStatus": 200,
+        "latencyMs": 2496,
+        "markdownMarkerPresent": false,
+        "markdownChars": 254,
+        "payloadSha256": "2ec1cd26404385f09a96a971fd3df1c5f7b01b8fdf4b3257d6b3a953c12bfdfd",
+        "browserState": "ACCESS_DENIED",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": false,
+          "recovered": false,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "7c4a651b-3178-4a53-a532-9363a528597f",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            }
+          ]
+        }
+      },
+      {
+        "target": "axs",
+        "url": "https://www.axs.com/events",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "target_status_403",
+        "apiStatus": 200,
+        "latencyMs": 2171,
+        "markdownMarkerPresent": false,
+        "markdownChars": 209,
+        "payloadSha256": "75e5b58292dd81aa729a9dcf112f0271bf968a7f00b79b35dc073006ad1c4d4c",
+        "browserState": "VERIFICATION_REQUIRED",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": false,
+          "recovered": false,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "11f5cd58-c429-45b3-929b-ea5c3f488b82",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            }
+          ]
+        }
+      },
+      {
+        "target": "draftkings",
+        "url": "https://sportsbook.draftkings.com/leagues/football/nfl",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "target_status_403",
+        "apiStatus": 200,
+        "latencyMs": 2072,
+        "markdownMarkerPresent": false,
+        "markdownChars": 240,
+        "payloadSha256": "5642a4abcd8f9ff5ef3636fcdcf4b477b97be5c77e63e2dff6fed4e1db6edebd",
+        "browserState": "ACCESS_DENIED",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": false,
+          "recovered": false,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "7c4a651b-3178-4a53-a532-9363a528597f",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            }
+          ]
+        }
+      },
+      {
+        "target": "bing",
+        "url": "https://www.bing.com/search?q=openai",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 4335,
+        "markdownMarkerPresent": false,
+        "markdownChars": 14240,
+        "payloadSha256": "a5c0705699c83d8976c0b357790e7585e5fb682a80bda77b1277ef349c6b4c56",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "github",
+        "url": "https://github.com/facebook/react",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 3167,
+        "markdownMarkerPresent": true,
+        "markdownChars": 26110,
+        "payloadSha256": "f0103cfa0a254117294fe86903964eca8a7daa9c9fc6eb5fff0cf754360ac175",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "stackoverflow",
+        "url": "https://stackoverflow.com/questions/11227809/why-is-processing-a-sorted-array-faster-than-processing-an-unsorted-array",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "challenge",
+        "apiStatus": 200,
+        "latencyMs": 2258,
+        "markdownMarkerPresent": false,
+        "markdownChars": 0,
+        "payloadSha256": "ce6a2718a58349f1492b145984190838c951e57cc19bd0a970d06ad831677a2b",
+        "browserState": "VERIFICATION_REQUIRED",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": false,
+          "recovered": false,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "11f5cd58-c429-45b3-929b-ea5c3f488b82",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            }
+          ]
+        }
+      },
+      {
+        "target": "arxiv",
+        "url": "https://arxiv.org/abs/1706.03762",
+        "normalizedPass": true,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "missing_expected_marker",
+        "apiStatus": 200,
+        "latencyMs": 1227,
+        "markdownMarkerPresent": true,
+        "markdownChars": 10469,
+        "payloadSha256": "469b80b3d1411490ef6ae770e08ba1eb5e0a96acfa2302283a86823c3125035e",
+        "browserState": "CONTENT_READY",
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "buybuybaby",
+        "url": "https://buybuybaby.bedbathandbeyond.com/Baby/Cloud-Muslin-Sage-WHite-5pc-Bedding-Set-Levtex-Baby/43435980/product.html",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "target_status_403",
+        "apiStatus": 200,
+        "latencyMs": 7699,
+        "markdownMarkerPresent": false,
+        "markdownChars": 306,
+        "payloadSha256": "88acc882cef7239385a409d54ff5931f8f37eb5282ae92821afefe3c71c46959",
+        "browserState": "ACCESS_DENIED",
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": false,
+          "recovered": false,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "a4049510-5b16-4f30-af62-ad1680f2cd48",
+              "pageClosed": true,
+              "pageStatusCode": 403
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "11f5cd58-c429-45b3-929b-ea5c3f488b82",
+              "pageClosed": true,
+              "pageStatusCode": 406
+            }
+          ]
+        }
+      },
+      {
+        "target": "roblox",
+        "url": "https://www.roblox.com/discover",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "timeout",
+        "apiStatus": 500,
+        "latencyMs": 60981,
+        "markdownMarkerPresent": false,
+        "markdownChars": 0,
+        "payloadSha256": "6babada434805dc775c5b1b1ae29229f9e6cd7639ab75e4ff59739ac71cdad89",
+        "browserState": "not_returned"
+      }
+    ],
+    "comparisonLimit": "Single-policy fresh run, not a contemporaneous paired Chromium/Firefox or hosted comparison. No new primary-only score is inferred from fallback responses. The historical 46 primary/56 fallback and hosted82 observations remain separately dated evidence.",
+    "evidenceHashes": {
+      "_local/anti-bot/webkit-implementation-full-api-2026-11-04/report.json": "1a3e5de84dc33be90a99cb022a39dd13b1966d289258c89ab5512f760bddec5a",
+      "_local/anti-bot/webkit-implementation-full-api-2026-11-04/score-replay-audit.json": "a4c10f24960d85c29d0f68d35f4af5b3c13bcc62fa67b20353c6e33da8d91943",
+      "_local/anti-bot/webkit-implementation-full-api-harness-2026-11-04/deployment.json": "1af09ac088b69ace766de037c13c81b04738f4f9b1f07465914a35c1a2d01e24",
+      "_local/anti-bot/webkit-implementation-full-api-harness-2026-11-04/result.json": "073bca0e08b7546905d4faac6fbc406b945be77ecb41ce31669f091b61b46e65",
+      "_local/anti-bot/webkit-implementation-full-api-harness-2026-11-04/cleanup.json": "bef9213b9673cf36ba62239b53742ec5c3d0f637b71e06ea9fc712164cd25e0b"
+    }
+  },
+  "historicalComparison": {
+    "historicalChromiumFirefoxScore": 56,
+    "newWebkitFirefoxScore": 56,
+    "newOnly": [
+      "louisvuitton",
+      "expedia",
+      "ebay",
+      "Apartments.com"
+    ],
+    "historicalOnly": [
+      "alibaba",
+      "goodrx",
+      "Capterra",
+      "YouTube"
+    ],
+    "causalGainEstablished": false,
+    "limits": "Different engine bundle and live epoch; no contemporary matched Chromium/Firefox or hosted run. Five earlier fresh Saks contexts shared one browser owner, not five independent browser boots; no durable site-coverage guarantee."
+  },
+  "validation": {
+    "localBuildPassed": true,
+    "localBrowserConfigurationChecks": 6,
+    "localWebkitIntegrationCounts": {
+      "testsIncludingParents": 9,
+      "passed": 9,
+      "failed": 0,
+      "scope": "Page/worker scripts and identity; headers/cookies/redirects; retained context isolation/deletion; denial and timeout cleanup; UID/capability proof; allowed HTTP/private rejection; IPv4/IPv6 constructed RTC probes; actual IPv6 same-UID TCP rejection after trusted-UID positive control."
+    },
+    "fullApiSnips": {
+      "tests": 2,
+      "passed": 2,
+      "command": "pnpm harness pnpm exec vitest run src/__tests__/snips/v2/browser-webkit.test.ts",
+      "runtimeImage": "sha256:032721e8fff3c81470a2d4152be825303df64b047b419e99ea72a55792ca5617",
+      "ownedFixturesOnly": true,
+      "cases": [
+        "Primary denial recovered on actual WebKit with consent and readiness forwarded.",
+        "Opt-out makes no alternate call; unresolved alternate denial remains failure."
+      ],
+      "teardownLimit": "The harness command returned0 and all processes terminated, but extract-worker logged IllegalOperationError: Channel closing during teardown. This is not a clean worker-shutdown verification."
+    },
+    "singleProfileHarnessRepair": {
+      "focusedChecksPassed": 6,
+      "change": "Allow1..8 profiles; empty, too many, duplicate and unsafe credential configurations still rejected. No request construction or scoring change."
+    },
+    "browserCi": {
+      "runId": 41765568461,
+      "url": "https://github.com/toreleon/firecrawl/actions/runs/41765568461",
+      "sourceCommit": "4106cb18eb125bc4363869322b40a450929193f9",
+      "jobs": [
+        {
+          "jobId": 126363016140,
+          "name": "browser-engines",
+          "conclusion": "success",
+          "helperTestsPassed": 65,
+          "integrationTestsPassed": 142,
+          "integrationTestsSkipped": 2,
+          "buildPassed": true,
+          "productionDependencyAuditPassed": true
+        },
+        {
+          "jobId": 126363015958,
+          "name": "contained-webkit",
+          "conclusion": "success",
+          "fullOptionalDockerBuildPassed": true,
+          "webkitTestsPassed": 9,
+          "missingCapabilityAndWrongUidRejected": true
+        }
+      ],
+      "runtimeByteEquivalentToMeasuredSource": true,
+      "limits": "Both jobs passed on the measured source. The ordinary suite skips the two optional WebKit parent tests; the separate mandatory WebKit job runs them, with nine tests including children passing. Broader server/SDK workflows are not verified here."
+    }
+  },
+  "preflightAndRepairHistory": [
+    "Initial local launch rejected the old prototype binary because it was owned by UID1000. Local image ownership was repaired; the production Dockerfile already installs WebKit as root.",
+    "Two new test expectations were corrected to existing contracts: session DELETE204 and VERIFICATION_REQUIRED. Production behavior was not relaxed.",
+    "One thin-image build attempted an unsupported bare image-ID FROM reference. An old-image test invocation followed; its failed test receipt is retained and excluded from final-candidate evidence. The repaired tag-based build and final candidate tests passed.",
+    "The initial full100 dispatcher rejected a single profile before any target call. The runner and all three owners terminated; logs prove zero target dispatches. A focused profile-validation repair preceded the completed run."
+  ],
+  "remainingWork": [
+    "Classify confirmed WebKit navigation connection-termination errors so the existing bounded fallback can handle them; preserve TLS and arbitrary browser failures.",
+    "Investigate the separately observed non-proper TLS termination and page-process crash; do not relabel certificate failures or arbitrary browser errors as retryable network faults.",
+    "Reproduce blocked blob-backed resources in owned fixtures and permit valid in-browser resources without weakening top-level target or private-destination checks.",
+    "Evaluate subsequent fixes without relabelling this measured runtime or treating the historical hosted82 score as a new comparison."
+  ],
+  "cleanup": {
+    "checkedAt": "2026-11-04T03:14:34.552634+00:00",
+    "taskContainersRemoved": 19,
+    "recordedCleanupCount": 15,
+    "additionalAutoRemovedContainersVerifiedAbsent": [
+      "autogtm-firecrawl-webkit-launcher-inspect-20261104",
+      "autogtm-firecrawl-webkit-missing-capability-20261104",
+      "autogtm-firecrawl-webkit-wrong-user-20261104",
+      "autogtm-firecrawl-webkit-source-check-20261104"
+    ],
+    "obsoleteTaskImagesRemoved": [],
+    "candidateImageRetained": "sha256:032721e8fff3c81470a2d4152be825303df64b047b419e99ea72a55792ca5617",
+    "baselineImagesPreserved": true,
+    "unrelatedNewImagesPreserved": [],
+    "cache": {
+      "taskRecordsRemoved": 30,
+      "baselineRecordsPreserved": 128,
+      "unrelatedNewRecordsPreserved": 0,
+      "remainingRecords": 128,
+      "dockerReportedPruneTotal": [
+        "Total:\t1.017GB"
+      ],
+      "physicalBytesFreedNotMeasured": true
+    },
+    "ownershipMethod": "Baseline inventories, four exact own build windows with no overlapping build, parent-chain checks and exact cache-ID preview. Only two new obsolete image IDs were audited; both were already absent at cleanup, so no explicit image removal was necessary.",
+    "taskInfrastructureStopped": [
+      "autogtm-firecrawl-workflows-pg-20261103",
+      "autogtm-firecrawl-workflows-redis-20261103",
+      "autogtm-firecrawl-workflows-rabbit-20261103"
+    ],
+    "taskPortsClosed": true,
+    "unrelatedServicesPreserved": [
+      "0ac91d914d82 opengtm-api-go-1",
+      "df8e48267599 opengtm-scheduler-go-1",
+      "3a44acdcd0b8 opengtm-worker-go-1",
+      "7b59d2a38ebf opengtm-agent-runtime-1",
+      "ed7059dea011 opengtm-agent-test-pg",
+      "691c9af86ab2 lead-data-web",
+      "5d4757f06df0 lead-data-postgres",
+      "3e8ffc5fbed8 opengtm-browser-1",
+      "ee62bd903703 lead-data-redis"
+    ],
+    "volumeNamesUnchanged": true,
+    "dataVolumesPreserved": 114,
+    "volumesDeleted": 0,
+    "rawEvidenceAndBuildContextsPreserved": true,
+    "globalPruneUsed": false,
+    "evidenceHashes": {
+      "_local/anti-bot/webkit-integration-build-2026-11-04/initial-tests-cleanup.json": "a0cccbf5f2cdbc5f337e939865367e04a6566ba8b62a4059af15adeca879a3b4",
+      "_local/anti-bot/webkit-integration-build-2026-11-04/repaired-tests-cleanup.json": "ad7d3dc146fb5e3fb8b0444939bfa63729fcee1e6eea0fbad855657f805f5ba0",
+      "_local/anti-bot/webkit-integration-build-2026-11-04/final-tests-cleanup.json": "d09404bca70333eced3fbf5c1404199bf6f2266d5e1f7ca3f6455f72cfe5c786",
+      "_local/anti-bot/webkit-integration-build-2026-11-04/old-candidate-tests-cleanup.json": "db0d77451c3d61e7556f9c5ac812c7e3ce9769d83bebdd7e16cb57dd3fb6341e",
+      "_local/anti-bot/webkit-integrated-api-harness-2026-11-04/cleanup.json": "27f1e5019c721a5325e48c92d86013ea165fc9860dffda95febd79c770b845d1",
+      "_local/anti-bot/webkit-implementation-api-harness-2026-11-04/cleanup.json": "985baec187252868f73eca7217600cbc8554702dbe9677f3055e6c03f9caa74f",
+      "_local/anti-bot/webkit-implementation-full-api-harness-profile-preflight-2026-11-04/cleanup.json": "3a1c9ecf485bc734d191fe0b275e0b0023cdfe7e996cb4d6b2fff2a809fd377b",
+      "_local/anti-bot/webkit-implementation-full-api-harness-2026-11-04/cleanup.json": "bef9213b9673cf36ba62239b53742ec5c3d0f637b71e06ea9fc712164cd25e0b",
+      "_local/anti-bot/webkit-implementation-cleanup-2026-11-04/implementation-tests-container.json": "846d84f25b3f897febf04dbf336279825f5f4e0a7cee9e54b2e6febbb9edb0a6",
+      "_local/anti-bot/webkit-implementation-cleanup-2026-11-04/preflight.json": "5e87bdc429d9558f37a72439cac5cd71a452e22b83af3f58a22f7208113eb09c",
+      "_local/anti-bot/webkit-implementation-cleanup-2026-11-04/prune.json": "a724b61c71796b6ec431317bf8e559b6b93ce006bab669961e0115302cb88ade"
+    },
+    "systemDfAfter": "TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE\nImages          58        10        30.26GB   11.92GB (39%)\nContainers      13        9         360.4kB   28.67kB (7%)\nLocal Volumes   114       5         6.326GB   6.151GB (97%)\nBuild Cache     128       0         5.644GB   2.716GB\n",
+    "hostDiskAfter": "Filesystem      Size    Used   Avail Capacity iused ifree %iused  Mounted on\n/dev/disk3s5   460Gi   318Gi   118Gi    73%    5.4M  1.2G    0%   /System/Volumes/Data\n",
+    "obsoleteTaskImagesVerifiedAbsent": [
+      "sha256:22e82892c46ecc3661bb3e865964330200d9cf77b49a9b89c3f76a7cf3bb9cc1",
+      "sha256:ed9c8476b86374797b5b50215b4f3bb0cac591fad85c9106cd3ae46d3896d76a"
+    ],
+    "obsoleteImageStatus": {
+      "sha256:22e82892c46ecc3661bb3e865964330200d9cf77b49a9b89c3f76a7cf3bb9cc1": {
+        "alreadyAbsentAtCleanup": true,
+        "removedByThisScript": false
+      },
+      "sha256:ed9c8476b86374797b5b50215b4f3bb0cac591fad85c9106cd3ae46d3896d76a": {
+        "alreadyAbsentAtCleanup": true,
+        "removedByThisScript": false
+      }
+    }
+  },
+  "evidence": {
+    "rawPayloadsRetained": true,
+    "localRoot": "_local/anti-bot",
+    "htmlBodiesPublished": false,
+    "sha256": {
+      "_local/anti-bot/webkit-implementation-full-api-harness-2026-11-04/audited-results.json": "cabd6915b4c15ba5fcb0f46866929b69de9cb051f05706f113f08a0d35abbae7",
+      "_local/anti-bot/webkit-implementation-api-harness-2026-11-04/result.json": "8a1ccf9fd28c4c9c52f12158b7cc1dc83670e64b6b039773264bb0443957bcba",
+      "_local/anti-bot/webkit-implementation-api-harness-2026-11-04/deployment.json": "13e7991998066e7e85cb5bdee51dd1541ab3222ff7c1b99961f9e76d21302223",
+      "_local/anti-bot/webkit-implementation-api-harness-2026-11-04/harness.log": "02634c5b9e0b391dd6c601175f6e2339a498badc9fd56ff7e7e2072c23a05db9",
+      "_local/anti-bot/webkit-implementation-api-harness-2026-11-04/cleanup.json": "985baec187252868f73eca7217600cbc8554702dbe9677f3055e6c03f9caa74f",
+      "_local/anti-bot/webkit-implementation-tests-2026-11-04.log": "5cf337c5dbc4d5c5c977674b6f3014c5ec36f8f3bd91bc4e9d72da95981b82cd",
+      "_local/anti-bot/webkit-implementation-browser-ci-2026-11-04.log": "64b47f6eefbb52f69930f887707d118a99f57ad4c2cb9e04df5186008f12396b",
+      "_local/anti-bot/webkit-implementation-container-ci-2026-11-04.log": "fd288f21f545e7a52b770d2f3511fcf4f2fcb9f7d722ac136940564d30cf5be6",
+      "_local/anti-bot/webkit-integration-build-2026-11-04/runtime-hash-proof.json": "76cd2180598df92b9f7ae95e400b04f8ee9f8e36741699019b060a58ab896ef7",
+      "_local/anti-bot/webkit-implementation-cleanup-2026-11-04/receipt.json": "6a106281867a53258b69d75aad6856dc764fae2c625ae950ef2629625c7463cd",
+      "_local/anti-bot/webkit-final-ci-2026-11-04.json": "70a164d3f94f882aa215f353c5609c5193032eebfb1ed7c3a06f26a97601dbeb",
+      "_local/anti-bot/webkit-harness-browser-ci-2026-11-04.log": "3c1422559b345a79f9007ee90a41b01eee55cdd2c77f992dd401224ec769c486",
+      "_local/anti-bot/webkit-harness-container-ci-2026-11-04.log": "cb852e2b43a8eda18a99b25c7af2f87d26f8b8b9330abfff09b4da784b76fa1e"
+    }
+  },
+  "observedImplementationGaps": {
+    "saksfifthavenue": "page.goto: Connection terminated unexpectedly",
+    "neimanmarcus": "page.goto: Connection terminated unexpectedly",
+    "otherGenericErrors": [
+      "non-proper TLS termination",
+      "page.evaluate: Target crashed"
+    ],
+    "blockedBlobRequests": 32,
+    "limit": "Saved backend logs establish these observations, not that blob allowance or error normalization will recover any public target. Controlled regressions and a later run are required.",
+    "sources": [
+      {
+        "url": "https://github.com/GNOME/libsoup/blob/3.2.3/libsoup/http2/soup-client-message-io-http2.c",
+        "finding": "Upstream libsoup3.2.3 emits the observed connection-termination wording when an HTTP/2 read returns EOF. The installed Debian package reports3.2.3-0+deb12u2; this review does not audit every downstream patch."
+      },
+      {
+        "url": "https://w3c.github.io/FileAPI/#url-model",
+        "finding": "Blob URLs resolve entries in a browser-maintained store and have origin/storage partition rules. This supports investigating a resource policy repair; it does not authorize network destination bypass."
+      }
+    ]
+  }
+}
