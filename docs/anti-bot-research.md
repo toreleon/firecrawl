@@ -4134,3 +4134,93 @@ remain. Task infrastructure is stopped and task ports are closed. No global
 prune or volume removal ran.
 
 [Implementation, saved-DOM research, native paired recovery, API checks, failed attempts, image/source hashes and cleanup](benchmarks/onetrust-preferences-results-2026-11-04.json).
+
+
+## Complete proxy-free API measurement after native OneTrust preferences
+
+Measured checkout: `5878dc4569d96a6d8f62a818c5ce44b57e58a8f7`, byte-equivalent
+in implementation/test/CI inputs to
+`b49464b6f4a1d90181109dc1e577b2c6b02ccd90`. The immutable browser image is
+`sha256:218d6b40a5682abb00f4d5b30f37d4c6e15a2480925bf8fb625d12289e553137`.
+All three public owners verified 35 source/compiled hashes, direct VN egress and
+no fixture DNS aliases. The API's ten source and ten compiled hashes stayed
+unchanged. No implementation changes were made during measurement.
+
+The complete run used the same frozen 100 targets and graders, one API request
+per target, a four-worker cap, seven-second reservation pacing, 6,656 MiB
+aggregate browser memory, the original caller/initial-navigation deadlines and
+one eligible alternate. There were 100 API requests and 155 browser captures
+(100 WebKit, 55 Firefox). No upstream proxy, hosted call, client retry,
+expected-text hint, forced verification or CAPTCHA solver was used.
+
+| Complete frozen result | Preceding run | Current run |
+| --- | --- | --- |
+| Normalized markers | 57/100 | 59/100 |
+| Screened markers | 56/100 | 58/100 |
+| Normalized marker also in Markdown | 54/100 | 56/100 |
+| Successful p50 / p95 | 4.927 / 10.781 s | 5.441 / 8.290 s |
+| All-request p95 | 12.152 s | 10.458 s |
+| Browser captures | 157 | 155 |
+
+Google Search and Zoopla newly matched; no previous match was lost. Google
+Search changed from both engines returning HTTP 429 to primary HTTP 200;
+Zoopla changed from both returning HTTP 403 to primary HTTP 200. Neither target
+used the new preference-center path. The 57 common matches also have current
+p50/p95 5.441/8.290 seconds, so the faster tail is not explained solely by adding
+two successful targets. Different live epochs, unresolved resource/scheduling
+causes and no paired old-code control prevent a causal latency or coverage
+claim. The earlier complete 61/100 observation remains higher than this snapshot;
+historical hosted82 was not refreshed and parity remains unproven.
+
+Only Canada Goose returned a preference-center observation, and it stayed
+unresolved: its settings opener hit the configured native timeout before
+completion, with no category or Save action attempted. The optional Details
+step also remained unresolved. The actual pointer/geometry/focus cause is not
+established by that receipt. The owned native before/after remains a verified
+functional recovery; it has not become a confirmed live-site recovery here.
+No missing expected sentence was promoted from metadata or synthesized. Driver
+timeout arguments are configured limits, not strict wall-clock guarantees under
+scheduling/transport delay.
+
+Of 41 failed targets, 38 already used their permitted alternate. Canada Goose
+and American Airlines still had the frozen marker only in noncontent markup;
+Allmenus still reported regional unavailability. No failure skipped an
+alternate for insufficient budget. Eight returned error receipts identify
+navigation and one identifies readiness; none identifies a workflow error.
+Four API errors remain: three network errors and one timeout. These receipts
+describe observations, not a common WAF/IP cause or proof that every software
+improvement is exhausted.
+
+All 100 scores and payload hashes replayed. All 155 Page and context-close
+receipts validated, including Carter's current response. All final owners were
+healthy with zero pages/sessions. No OOM, memory-limit, PID-limit or
+socket-throttling events were observed; resource/timing samples had no
+unexplained gap. Current closure confirmation does not retroactively confirm
+the preceding run's Carter's context receipt or prove a new cleanup-code gain.
+
+[Current-source browser CI](https://github.com/toreleon/firecrawl/actions/runs/41800777134)
+passes 91 helpers, 176 ordinary integration checks with six optional skips,
+production dependency audit and 27 contained WebKit checks. The development
+phase's 55 native scenarios and two queued API snips remain separately pinned
+local evidence; unchanged implementation suites were not rerun for this
+measurement. Broader server/SDK workflows are not claimed. The harness exited
+zero and terminated its processes, but again logged the existing extract-worker
+channel-closing teardown error, so clean shutdown remains unproven.
+
+The next read-only finding concerns the saved Hyatt/Realtor HTTP 429 responses:
+they load a script bootstrap, while current automatic non-2xx readiness only
+examines HTTP 403. Their responses show no automatic readiness observation.
+A bounded, answer-free readiness experiment is a testable next step; a new
+classifier label alone would not add captures or prove recovery. No runtime
+change or extra public target request was made for that hypothesis during this
+frozen run. Opaque page tokens and script query values are excluded from the
+published review.
+
+Measurement cleanup removed all three browser owners, stopped task infrastructure
+and verified closed ports. No build or image/cache/volume prune ran in this
+measurement phase. Combined with the preceding development phase, 19 task
+containers and 92 exact task cache records were removed. The current reusable
+image, baseline images, 128 baseline cache records, nine unrelated services,
+all 114 volume names and raw evidence remain. No global prune ran.
+
+[Complete 100-target result, changed targets, actual consent outcomes, current CI, next hypotheses, source/image proof and cleanup](benchmarks/onetrust-full-api-results-2026-11-04.json).

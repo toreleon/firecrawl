@@ -310,9 +310,10 @@ checks that each optional category became unchecked and rechecks the complete
 category identity/state before one Save operation. It reports applied only
 after Save completes and both preference panel and banner become hidden.
 Checked categories have one native toggle operation; already-unchecked choices
-are left alone. The path has a five-second budget with at most one second per
-native operation, within the caller deadline. Native actions are awaited, while
-only read-only probes are raced. No Accept/Close substitution, forced/synthetic
+are left alone. The path has a configured five-second budget and native timeout arguments of
+at most one second, within the caller deadline. Observed elapsed time can exceed
+a driver timeout under scheduling/transport delay. The helper awaits native
+operations; its short probe timers race only read-only requests. No Accept/Close substitution, forced/synthetic
 click or OneTrust JavaScript API call is added. `off` and `acceptAll` keep their
 own behavior.
 
@@ -323,7 +324,8 @@ unresolved; native action counters distinguish attempted effects from confirmed
 choices. Applied is an observed UI outcome, not independent proof of server-side
 cookie persistence or completion across every embedded origin. This
 [owned before/after and queued-API verification](benchmarks/onetrust-preferences-results-2026-11-04.json)
-establishes a functional workflow repair; a new full population score is pending.
+establishes a functional workflow repair. The complete measurement below reports
+its live outcome separately.
 
 `workflow` is `none` (default), `auto`, `bestbuy-us@1` or `product-details@1`.
 The current recipes select the original Best Buy product's US destination and
@@ -666,3 +668,18 @@ unconfirmed despite final owners reporting zero pages/sessions. Candidate
 implementation checks and CI are inherited without rerunning unchanged inputs;
 this phase supplies fresh full retrieval evidence, replay audits, an owned
 offline identity probe and scoped Docker cleanup.
+
+
+The [complete API measurement after native OneTrust preferences](benchmarks/onetrust-full-api-results-2026-11-04.json)
+matched 59/100 normalized markers, 58 screened markers and 56 normalized markers
+also present in Markdown. It used 100 API requests, 155 browser captures, a
+four-worker cap and direct VN egress with no proxies, hosted calls, retries or
+expected-text hints. Google Search and Zoopla newly matched; all previous 57
+matches remained. Neither new match used the preference-center path. Canada
+Goose still timed out opening settings, so the two-match difference is not an
+isolated consent-recovery gain. Live-epoch differences prevent causal coverage
+or latency claims. All 155 Page/context closure receipts validated, and scoped
+cleanup removed all three measurement owners. Current browser CI passes 91
+helpers, 176 ordinary integration checks (six optional skips), production audit
+and 27 contained WebKit checks. The earlier complete 61/100 and historical
+hosted82 observations remain distinct; current hosted parity is unproven.
