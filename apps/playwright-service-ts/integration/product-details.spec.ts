@@ -1,6 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import http from 'node:http';
+import dns from 'node:dns/promises';
 import { productDetailsFixture } from './fixtures/product-details';
 import { closeServer, listen, scrape, startService } from './support';
 
@@ -17,6 +18,13 @@ test(
   'optional product details preserve captures, actionability and truthful expansion state',
   { timeout: 90000 },
   async (t) => {
+    // Refuse to contact a real site when an owned-fixture alias is missing.
+    const addresses = await dns.lookup('owned.canadagoose.com', { all: true });
+    assert.ok(
+      addresses.length > 0 &&
+        addresses.every(({ address }) => address === '127.0.0.1' || address === '::1'),
+      'owned.canadagoose.com must resolve only to loopback for this fixture',
+    );
     const server = http.createServer((req, res) => {
       res.setHeader('content-type', 'text/html');
       res.end(productDetailsFixture(req.url?.slice(1) ?? 'happy'));

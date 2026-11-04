@@ -43,6 +43,8 @@ jobs:
         run: |
           node node_modules/playwright-core/cli.js install-deps firefox
           node dist/scripts/prepare-camoufox.js
+      - name: Resolve the owned workflow fixture locally
+        run: echo '127.0.0.1 owned.canadagoose.com' | sudo tee -a /etc/hosts
       - run: pnpm test
       - run: pnpm test:integration
         env:
