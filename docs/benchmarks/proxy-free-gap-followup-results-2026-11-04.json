@@ -1,0 +1,235 @@
+{
+  "recordedAt": "2026-11-04T10:09:01.893296+00:00",
+  "sourceCommit": "06e24f205a22991c8d7b644e79b575d9f6890bf0",
+  "runtimeImplementationByteEquivalentTo": "b49464b6f4a1d90181109dc1e577b2c6b02ccd90",
+  "scope": "Two selected proxy-free browser-service experiments, not a new full API or hosted comparison.",
+  "previousGoalTurnClassification": "progress: CRW source audit and HTTP pilot excluded that integration as a supported hard-target fix.",
+  "totalTargetCaptures": 21,
+  "clientRetries": 0,
+  "hostedCalls": 0,
+  "maximumWorkers": 4,
+  "minDispatchIntervalMs": 7000,
+  "expectedTextSentToRuntime": false,
+  "frozenDatasetAndGradersChanged": false,
+  "passive429Wait": {
+    "hypothesis": "The existing fork may capture a script-backed 429 document too early. Compare current behavior with ten extra seconds on the same document.",
+    "requests": 12,
+    "engines": [
+      "webkit",
+      "camoufox"
+    ],
+    "targets": [
+      "hyatt",
+      "realtor"
+    ],
+    "control": "github",
+    "freshContextPerCapture": true,
+    "recoveredPairs": 0,
+    "targetResults": [
+      {
+        "target": "hyatt",
+        "engine": "webkit",
+        "complete": true,
+        "baselinePass": false,
+        "delayedPass": false,
+        "recovered": false,
+        "lost": false,
+        "baselineStatus": 429,
+        "delayedStatus": 429
+      },
+      {
+        "target": "hyatt",
+        "engine": "camoufox",
+        "complete": true,
+        "baselinePass": false,
+        "delayedPass": false,
+        "recovered": false,
+        "lost": false,
+        "baselineStatus": 429,
+        "delayedStatus": 429
+      },
+      {
+        "target": "realtor",
+        "engine": "webkit",
+        "complete": true,
+        "baselinePass": false,
+        "delayedPass": false,
+        "recovered": false,
+        "lost": false,
+        "baselineStatus": 429,
+        "delayedStatus": 429
+      },
+      {
+        "target": "realtor",
+        "engine": "camoufox",
+        "complete": true,
+        "baselinePass": false,
+        "delayedPass": false,
+        "recovered": false,
+        "lost": false,
+        "baselineStatus": 429,
+        "delayedStatus": 429
+      }
+    ],
+    "controlNormalizedPasses": 4,
+    "delayedTargetStatus": 429,
+    "delayedDocumentRevision": 1,
+    "blockedAdsMediaOrPrivateRequests": 0,
+    "failedRequestsObserved": 0,
+    "diagnosticLimit": "Existing diagnostics do not capture every subresource HTTP response or JavaScript exception; zero requestfailed events does not establish successful script execution.",
+    "decision": "Do not expand automatic readiness or add blanket waiting: no content recovery was observed.",
+    "timingLimit": "caffeinate prevented idle sleep, but this phase did not record an independent heartbeat; do not use it for a precise latency-regression claim.",
+    "runnerOutcome": "All twelve captures and owned cleanup completed. Runner exited 1 on a post-cleanup equality assertion because an unrelated temporary Go container disappeared; see retained audit. No public captures were repeated for that inventory change."
+  },
+  "chromiumComplement": {
+    "hypothesis": "A retained Chromium-only LinkedIn success could justify testing another engine after WebKit and Firefox fail. Revalidate on current source first.",
+    "requests": 9,
+    "engines": [
+      "webkit",
+      "camoufox",
+      "rebrowser"
+    ],
+    "target": "LinkedIn",
+    "controls": [
+      "github",
+      "arxiv"
+    ],
+    "targetNormalizedPasses": 0,
+    "controlNormalizedPasses": 6,
+    "targetFailure": "NETWORK_ERROR on all three engines",
+    "chromiumExclusiveMatches": 0,
+    "timingIntegrity": {
+      "valid": true,
+      "sampleIntervalMs": 1000,
+      "maximumAllowedGapMs": 10000,
+      "maximumObservedGapMs": 1005,
+      "samples": 57
+    },
+    "decision": "Do not add a third fallback stage based on an old, unreplicated selected success.",
+    "preflightRepair": {
+      "unrepairedPublicCaptures": 0,
+      "issue": "Firefox hit memory.max at its 2048MiB startup limit; no OOM kill.",
+      "repair": "Increase Firefox to 3072MiB in a new phase before any public capture.",
+      "repairedOwnerLimitsMiB": {
+        "webkit": 2560,
+        "camoufox": 3072,
+        "rebrowser": 2048
+      },
+      "repairedResourceEventsZero": true
+    }
+  },
+  "capturedPayloadAudit": {
+    "files": 21,
+    "scoresReplayedWithUnchangedGrader": 21,
+    "singleServiceAttemptPerCapture": true,
+    "pageAndContextClosureConfirmed": 21,
+    "finalOwnerPageAndSessionCountsZero": true,
+    "resourceSummary": {
+      "wait": {
+        "webkit": {
+          "peakMemoryBytes": 1591738368,
+          "memoryMaxEvents": 0,
+          "oomEvents": 0
+        },
+        "camoufox": {
+          "peakMemoryBytes": 1704198144,
+          "memoryMaxEvents": 0,
+          "oomEvents": 0
+        }
+      },
+      "chromium": {
+        "webkit": {
+          "peakMemoryBytes": 1022193664,
+          "memoryMaxEvents": 0,
+          "oomEvents": 0
+        },
+        "camoufox": {
+          "peakMemoryBytes": 2032541696,
+          "memoryMaxEvents": 0,
+          "oomEvents": 0
+        },
+        "rebrowser": {
+          "peakMemoryBytes": 891281408,
+          "memoryMaxEvents": 0,
+          "oomEvents": 0
+        }
+      }
+    }
+  },
+  "markdownMissReview": {
+    "source": "Last complete OneTrust full API run",
+    "targets": [
+      "zillow",
+      "marketwatch",
+      "bing"
+    ],
+    "finding": "The frozen expected phrase is present in the HTML title. Returned Markdown includes page-body content with different headings/wording. This supplementary marker miss does not establish an extractor defect.",
+    "decision": "Do not inject title metadata into Markdown or modify frozen graders to manufacture a gain."
+  },
+  "implementationChanged": false,
+  "lastCompleteForkScore": {
+    "normalizedPasses": 59,
+    "targets": 100,
+    "normalizedAndMarkdownMarkerPasses": 56,
+    "newFullRunConducted": false
+  },
+  "cleanup": {
+    "taskContainersRemoved": 8,
+    "taskImagesBuiltOrRemoved": 0,
+    "taskBuildCacheRemoved": 0,
+    "baselineVolumesImagesAndCachePreserved": true,
+    "reusableBrowserImagePreserved": true,
+    "globalPrune": false,
+    "unrelatedInventoryDrift": "Temporary Go container 688ef18ce19f loving_jepsen disappeared during the wait phase; cause was not independently observed. It was outside the task launch/stop/remove lists."
+  },
+  "nextEvidence": "If continuing this failure investigation, obtain a bounded passive subresource-response and JavaScript-error trace from a retained 429 shape before making another readiness or browser-configuration change. Current diagnostics cannot distinguish a failed bootstrap resource from a completed script that leaves an access denial in place.",
+  "researchSources": [
+    {
+      "url": "https://www.rfc-editor.org/rfc/rfc6585#section-4",
+      "finding": "HTTP429 is a rate-limit response and may include Retry-After; its presence alone does not promise a passive page transition."
+    }
+  ],
+  "evidenceSha256": {
+    "_local/anti-bot/active429-passive-wait-2026-11-04/protocol.json": "9791ba1e3aaf6832aba30a4a4bb428ed432242c602e3d474953e7610251c0de1",
+    "_local/anti-bot/active429-passive-wait-2026-11-04/report.json": "fe2bcd58ad84531a7c8b7abfbae98410b0742e784a372f4002319a5d3baa237d",
+    "_local/anti-bot/active429-passive-wait-2026-11-04/dispatches.jsonl": "e72a33b34913c4adf8784290381e4482c4ae4ffe791328d578ca2b5d2cadd2c2",
+    "_local/anti-bot/active429-passive-wait-2026-11-04/result.json": "baf2a62e0bb68114d70f4dc39d98db8387fd70eaa8063f9fff9a088882b78185",
+    "_local/anti-bot/active429-passive-wait-2026-11-04/cleanup.json": "bdec5d108536a4a586d91538f675b317272a49ac57b89a20e06be46707475397",
+    "_local/anti-bot/active429-passive-wait-2026-11-04/post-cleanup-audit.json": "611e7ffa6822c5f438d7731abcb39ba6b426f1784f96d92c3fa9d25c78b4cf85",
+    "_local/anti-bot/active429-passive-wait-2026-11-04/final-health.json": "7754e761fd17b1e3b767e6cf3d9c6ed793a80b0904597e282d3d9653f5fb9cb3",
+    "_local/anti-bot/active429-passive-wait-2026-11-04/resource-samples.jsonl": "1763b3cf2cc337d71f88cf19c8fe27a526f0e67fb0882f9f457f9ab2de99b546",
+    "_local/anti-bot/chromium-complement-pilot-2026-11-04/preflight-failure.json": "6d39b3f9b3337fe4df547976cbf3de40c6a8be5182df0aa659443258155f91e8",
+    "_local/anti-bot/chromium-complement-pilot-2026-11-04/cleanup.json": "35beb1534ddfbd791a47d5ac4108977aa70846054ffa1a86f8f68ba2ada172bd",
+    "_local/anti-bot/chromium-complement-repaired-pilot-2026-11-04/protocol.json": "14b5ec655c0b896193b1da9c5a28cf338854ba431aba3ed85c2316c6b02e7aaf",
+    "_local/anti-bot/chromium-complement-repaired-pilot-2026-11-04/report.json": "f83f0689eb4e1c7ed7083fad8420d01f3df06bf84aa1771563c59faec08327d7",
+    "_local/anti-bot/chromium-complement-repaired-pilot-2026-11-04/dispatches.jsonl": "cb45b71ce3acd7a7fa523fb6e5342442ce282048da490c262cd5978bf052d64f",
+    "_local/anti-bot/chromium-complement-repaired-pilot-2026-11-04/result.json": "f9517e1874445b3d487f24278674adf341ee00859cfda229ffebe3c89121dc95",
+    "_local/anti-bot/chromium-complement-repaired-pilot-2026-11-04/cleanup.json": "e848d44fecbd817cb64a805e32ca49615790e2ea39bfc6410881d240f5798238",
+    "_local/anti-bot/chromium-complement-repaired-pilot-2026-11-04/final-health.json": "cf02d6e9c101452f99a7a6c8f0dd12d3ac0b4a2f16fd331aae56e7eb127a2f90",
+    "_local/anti-bot/chromium-complement-repaired-pilot-2026-11-04/resource-samples.jsonl": "7e589ae937dfc2bcbb4e153c134877ab9897560ed49a2fc4a09b0a95aef8d631",
+    "_local/anti-bot/chromium-complement-repaired-pilot-2026-11-04/timing-integrity.json": "e3a64541f8c77b8bc8d429393173448fe4c2ac3ac88a599171fbccf940b1d0ec",
+    "_local/anti-bot/run-active429-passive-wait-2026-11-04.py": "08849be1501689141a2b6372c272aa5af1bb11596cd8d077100ab97a358c3f02",
+    "_local/anti-bot/run-chromium-complement-repaired-pilot-2026-11-04.py": "545c0085592cd9fa0e7d4aaa3947338222ddd73a94519430df7b735327314bfb",
+    "_local/anti-bot/active429-passive-wait-2026-11-04/11-realtor-camoufox-10000.json": "97a427c37ba23a54b62507ac26d60ea71f2c84c4185efa175c8da68908474282",
+    "_local/anti-bot/active429-passive-wait-2026-11-04/08-realtor-webkit-0.json": "c28682560e55b9e87bb58e889801a1eaf465678be42aae14804970a484fde30a",
+    "_local/anti-bot/active429-passive-wait-2026-11-04/02-realtor-webkit-10000.json": "9ef5462504bbce83dee6f2f9e1238ca38f0d430989911a8b826d837097af6a18",
+    "_local/anti-bot/active429-passive-wait-2026-11-04/00-github-webkit-0.json": "6a919c282195867bdc8feccd0997919e6006cb5a573caf0d1b737de5f8c55003",
+    "_local/anti-bot/active429-passive-wait-2026-11-04/10-hyatt-camoufox-0.json": "fbff6d2f06eee315ddacd8d9274b371bd98ebf2b169452285fa1372b6f410bba",
+    "_local/anti-bot/active429-passive-wait-2026-11-04/05-realtor-camoufox-0.json": "9f4f368516a214ee1bfe12ff80d58086ca978b96d01e052c4b0262237602761c",
+    "_local/anti-bot/active429-passive-wait-2026-11-04/03-github-camoufox-10000.json": "697fb15be3f00354d20a1dd4ba791fc34dea86b25ae43aee394d015bf4182772",
+    "_local/anti-bot/active429-passive-wait-2026-11-04/09-github-camoufox-0.json": "4bcb32f6d8c43a0914e827fbea39b968ed0f4d98e19a9d0113ae2c16d0f70ec6",
+    "_local/anti-bot/active429-passive-wait-2026-11-04/01-hyatt-webkit-0.json": "972320ea5739e4593e3b8a960d42cffdd4cfe81e0d261f395c157448289202bd",
+    "_local/anti-bot/active429-passive-wait-2026-11-04/07-hyatt-webkit-10000.json": "2f87e82dcbe24406765ac30d1fe1433fde177a94335ed044b566ed8072486a3c",
+    "_local/anti-bot/active429-passive-wait-2026-11-04/04-hyatt-camoufox-10000.json": "d291393b2bd2280f6258da746afa3479314338c83088f93105d71cdb7fa63cc0",
+    "_local/anti-bot/active429-passive-wait-2026-11-04/06-github-webkit-10000.json": "9db6417d00e756f87daa50b362daefb232929bac4349378de05fb88f59e91f42",
+    "_local/anti-bot/chromium-complement-repaired-pilot-2026-11-04/02-arxiv-camoufox-0.json": "6b96bdef9168fcd4271c2a7faf99d9814a5955002a89588aaf755a55fe847428",
+    "_local/anti-bot/chromium-complement-repaired-pilot-2026-11-04/01-LinkedIn-rebrowser-0.json": "92606434d9a572ef97238c3f3fac60626603b248be79a32d8b4f239e21493e18",
+    "_local/anti-bot/chromium-complement-repaired-pilot-2026-11-04/00-github-webkit-0.json": "6722fe7f6305fd651dedc39515f42c984a356da352d44a7abea2848f0a4ffa17",
+    "_local/anti-bot/chromium-complement-repaired-pilot-2026-11-04/07-github-rebrowser-0.json": "72520bf9379f8d5e0887acb2db991c0db8990e5350e68bf1ae72d97fc19c54e5",
+    "_local/anti-bot/chromium-complement-repaired-pilot-2026-11-04/03-LinkedIn-webkit-0.json": "96f1c2042b88126f06577be46159166262eba8917d74993d95a1c43c5d658edb",
+    "_local/anti-bot/chromium-complement-repaired-pilot-2026-11-04/05-arxiv-rebrowser-0.json": "43cf3e5823ea9bb4348ed9a4374f154c4d805624b823d60badc2cfbfbccbc6d3",
+    "_local/anti-bot/chromium-complement-repaired-pilot-2026-11-04/06-LinkedIn-camoufox-0.json": "4451f5485dea8700f074bc6ed3343b6afb9bc233100c0b34e8f347e2a9386784",
+    "_local/anti-bot/chromium-complement-repaired-pilot-2026-11-04/08-arxiv-webkit-0.json": "a1734542f172e99f33ad6c4c795ef9edbbb5eea2b9d2c1e1e1f1dbb4a160b3bd",
+    "_local/anti-bot/chromium-complement-repaired-pilot-2026-11-04/04-github-camoufox-0.json": "65d7e668ff9dc982ae52c1c5306c7b81ebdf244e9ceceafb94071da6cdcd0653"
+  }
+}
