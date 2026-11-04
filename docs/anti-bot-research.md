@@ -2928,8 +2928,10 @@ All 46 primary matches also matched with fallback; ten were fallback-only and
 split 26/26. Returned fallback metadata covers 96 records, with ten reported
 recoveries and ten normalized matches. Canada Goose, Verizon, LinkedIn and
 Roblox omitted returned recovery metadata; their details are not inferred from
-scores. Temu returned longer regional-page Markdown but still lacked the frozen
-product marker. No Temu coverage gain is claimed.
+scores. Both Temu responses returned login pages and lacked the frozen product
+marker. Their `CONTENT_READY` interaction label was incorrect; the later
+authentication-route repair below corrects classification. No Temu coverage
+gain is claimed.
 
 Against the preceding 47/54 paired run on `0c2c07695`, fallback gained Indeed,
 GoodRx and Google Search, and lost Apartments.com. The new 46/56 result does
@@ -2981,3 +2983,88 @@ All 59 baseline cache records, 69 concurrent unrelated cache records, pinned
 images, nine unrelated running services and all 114 volumes were preserved.
 The verified image and raw evidence remain; task infrastructure is stopped.
 No global prune was used. Source suites were not repeated for this evidence edit.
+
+### Shared owner budgets and authentication routes (November 4)
+
+The [selected-target topology receipt](../apps/playwright-service-ts/benchmarks/memory-pool-api-results-2026-11-04.json)
+records 80 fresh full-API requests across 20 frozen targets. Separate and pooled
+owners each visited every selected target twice, in separate/pooled/pooled/separate
+phase order with forward/reverse/forward/reverse target order. Every phase started
+fresh browser owners. Two HTTP workers, seven-second dispatch spacing, the same
+opt-in engine fallback, one browser attempt, original request deadlines and direct
+VN egress were retained. There were no client retries, expected-text hints,
+upstream proxies or hosted calls.
+
+All phases used API source `c87e7d7bd` and the existing `5003f3d1…` image, whose
+production browser source is `70ff6e17a`. Both deployments had an aggregate six
+CPU quota, 6,656 MiB memory cap and 2/1/1 page slots. The pooled experiment placed
+the Chromium owner and two Firefox owners in three separate Node processes with
+distinct boot IDs, sharing one container's CPU/memory budget and Xvfb display.
+This also changes isolation and failure domains; it is not a single-variable
+memory experiment.
+
+| Selected-target result | Separate owners | Shared budget |
+| --- | ---: | ---: |
+| Normalized successes, 40 observations each | 16 | 17 |
+| Successes by phase, 20 targets each | 9 / 7 | 9 / 8 |
+| All-attempt p95 | 20.93 s | 23.19 s |
+| Common-success cohort p50, six targets visited twice each | 3.75 s | 3.72 s |
+| Common-success cohort p95 | 5.85 s | 5.57 s |
+
+The first paired phases had one exclusive success in each direction; the second
+had two pooled-only and one separate-only. Backend logs account for 80 primary
+and 54 alternate dispatches, with exactly 27 alternates per topology. All 80
+payload hashes, frozen scores, Markdown metrics, dispatch spacing and concurrency
+replayed. Returned fallback receipts were checked separately from backend
+dispatches. These repeated observations of 20 selected targets are not a new
+100-target score. One extra success and mixed latency results do not establish a
+deployment improvement, so pooled owners were not adopted. The last full run
+remains 46/56, and the earlier hosted reference remains 82; neither was rerun for
+this experiment or the subsequent classification repair.
+
+In the first separate phase, one Firefox owner reached its 2-GiB cap and recorded
+1,542 memory-boundary events. Socket-throttling counters were 671/134/84; in the
+last separate phase only one Firefox owner recorded 344. The shared-budget phases
+recorded zero memory-boundary/socket-throttling events, with cgroup peaks of
+3,871 and 3,714 MiB. OOM, OOM-kill and PID-limit counters remained zero throughout.
+The upstream Linux v7.0 [socket-pressure check](https://github.com/torvalds/linux/blob/v7.0/include/net/sock.h)
+also examines ancestor pressure, and [reclaim efficiency](https://github.com/torvalds/linux/blob/v7.0/mm/vmpressure.c)
+can set that pressure marker. These sources explain why a socket counter alone
+does not establish that a browser hit its own cap or that a target failure was
+caused by memory pressure. The measured Docker kernel was `7.0.12-linuxkit`;
+upstream source review is not verification of every LinuxKit patch. Build-history
+snapshots were unchanged across each phase, but nine unrelated services remained
+running. Live epoch, identities, target-rate effects and other host activity
+remain comparison limits.
+
+Reviewing the saved Temu responses exposed a separate classification defect: both
+landed on `/login.html` with an email-first sign-in prompt, while reporting
+`CONTENT_READY`. The old route expression also inspected query/fragment text and
+matched partial names such as `login-guide`. Three of four focused regression
+cases failed before the fix. Authentication hints now use the final URL's
+[pathname](https://developer.mozilla.org/en-US/docs/Web/API/URL/pathname), with
+segment boundaries for the existing routes and a rendered sign-in prompt for
+root login/sign-in HTML routes. All four regressions now pass; 13 focused native
+checks and 19 Linux Node 22 checks, including both browser engines, passed.
+The repair followed the completed topology experiment. It classifies returned
+documents and does not automate login or establish additional target coverage.
+
+The initial browser CI passed 63 helper and 139 integration checks, but one
+Camoufox request lacked page-close confirmation within the existing cleanup
+window; its parent tests also failed. Its classification assertions passed.
+The root cause was not isolated. Integration test-file concurrency is now
+explicitly bounded at two, retaining the close assertion and including
+diagnostics on failure. No production cleanup timeout was changed. The following
+[browser CI](https://github.com/toreleon/firecrawl/actions/runs/41751982029), on
+`8160af325`, passed build, 63 helper checks, 142 integration checks and the
+production dependency audit. That test-only follow-up leaves the production
+runtime byte-equivalent to authentication repair `30244c3ab`. A passing run does
+not by itself prove the earlier failure's cause. Broader server/SDK jobs are
+separate and have not been verified passed.
+
+Cleanup verified all eleven task containers absent: eight topology containers,
+two short-lived resource samplers and the auto-removed Linux contract container.
+Task API/owner ports are closed and PostgreSQL/Redis/RabbitMQ are stopped. The
+same nine unrelated containers and all 114 volume names were preserved, as were
+the reusable image and raw evidence. No images were built or removed, and no
+cache or global prune was performed in this experiment.
