@@ -1,0 +1,136 @@
+{
+  "recordedAt": "2026-11-04T15:35:45.705276+00:00",
+  "sourceCommit": "9ec9a4380aa602c78f3f9b379a64b3fbedaa238c",
+  "parentCommit": "ff44347e5d38322689af75872aa4477fe714f879",
+  "imageId": "sha256:f4ca13856e2518483a79155bb9c17ccd62890236f5a0f75b17a2e7d195673ac1",
+  "scope": "Stateless browser-context disposal, bounded HTTP responses, and admission ownership. This is not a WAF access or hosted-parity result.",
+  "observedProblem": {
+    "fullRunReceipt": "Previous source2476425 full100 run had158 Page-close confirmations and157 context-close acknowledgements; one Target context acknowledgement was unconfirmed.",
+    "causalLimit": "That receipt alone cannot distinguish an open context from a lost/late acknowledgement. Owned fault injection establishes the implementation defects; it does not retrospectively prove the public Target cause.",
+    "ownedReproduction": [
+      "A real close event with a lost acknowledgement was reported as an unfinished context.",
+      "Terminal cleanup and outer finally could issue duplicate close commands.",
+      "After a timed-out context allocation, a second request could allocate before the first request had finished allocating and disposing."
+    ]
+  },
+  "implementation": [
+    "Observe the close event immediately when the stateless context is allocated, before route setup.",
+    "Share one disposal command and close-event promise across terminal capture cleanup and outer finally.",
+    "A fulfilled, rejected, or timed-out close command alone cannot establish context disposal.",
+    "Retain admission through unfinished context allocation or disposal while returning the bounded HTTP response.",
+    "Release admission when actual context closure is confirmed, including closure after a timed-out request."
+  ],
+  "nativeVerification": {
+    "network": "none",
+    "publicRequests": 0,
+    "maximumConcurrentBrowserBatches": 1,
+    "before": {
+      "imageId": "sha256:89c13f2bf8ecf656382ee35e08694e61dba50437e992baac3d21fdfb81bca6ea",
+      "driverBackends": [
+        "playwright",
+        "patchright",
+        "rebrowser",
+        "camoufox"
+      ],
+      "behaviorCases": 12,
+      "behaviorCasesFailed": 12,
+      "tapChecksIncludingParents": 17,
+      "tapPassed": 0,
+      "exitCode": 1
+    },
+    "after": {
+      "driverBackends": [
+        "playwright",
+        "patchright",
+        "rebrowser",
+        "camoufox",
+        "webkit"
+      ],
+      "newHttpBehaviorCases": 15,
+      "newHttpBehaviorCasesPassed": 15,
+      "existingNativeContextCases": 4,
+      "helperChecks": 6,
+      "tapChecksIncludingParentsAndRepeatedHelpers": 39,
+      "tapPassed": 39
+    },
+    "cases": [
+      "Actual context close with a lost acknowledgement reports closed and issues one command.",
+      "A held close retains admission beyond both HTTP cleanup wait bounds, prevents a second context, and recovers after disposal.",
+      "A held allocation times out, prevents a second allocation, disposes the late context, and recovers."
+    ],
+    "limits": [
+      "Owned injected faults are not measurements of commercial WAF behavior.",
+      "Before and after fault-test durations are not a matched production latency benchmark; failing assertions short-circuit the before cases.",
+      "Retained session disposal is outside this change. A context that never closes continues to occupy admission until owner shutdown."
+    ],
+    "resources": {
+      "ordinary": {
+        "peakBytes": 984842240,
+        "events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0\nsock_throttled 0\n",
+        "pidEvents": "max 0\n",
+        "containerRemoved": true
+      },
+      "webkit": {
+        "peakBytes": 631406592,
+        "events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0\nsock_throttled 0\n",
+        "pidEvents": "max 0\n",
+        "containerRemoved": true
+      }
+    }
+  },
+  "ci": {
+    "sourceCommit": "9ec9a4380aa602c78f3f9b379a64b3fbedaa238c",
+    "run": 41857962332,
+    "url": "https://github.com/toreleon/firecrawl/actions/runs/41857962332",
+    "jobs": [
+      {
+        "id": 126671608707,
+        "name": "browser-engines",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 126671609161,
+        "name": "contained-webkit",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ],
+    "helpers": {
+      "tests": 105,
+      "passed": 105
+    },
+    "integration": {
+      "tests": 240,
+      "passed": 233,
+      "skipped": 7
+    },
+    "containedWebkit": {
+      "tests": 43,
+      "passed": 43
+    },
+    "productionDependencyAudit": "No known vulnerabilities found"
+  },
+  "fullApiBenchmark": {
+    "report": "docs/benchmarks/stateless-cleanup-full-api-results-2026-11-04.json",
+    "htmlMarkerPasses": 57,
+    "htmlAndMarkdownMarkerPasses": 54,
+    "targets": 100,
+    "limit": "A separate complete run; see its metric and timing qualifications."
+  },
+  "sourceReference": "https://playwright.dev/docs/api/class-browsercontext#browser-context-event-close",
+  "evidenceHashes": {
+    "_local/anti-bot/stateless-cleanup-2026-11-04/before-ordinary.log": "a8f312086fa1299e0482a4a10ed01bd157bc86ed50bb4a572ee038a15c1f139b",
+    "_local/anti-bot/stateless-cleanup-2026-11-04/before-results.json": "8877ca227263635603edd085509601ff7a5d06c8ff98d16494a40b0de37418eb",
+    "_local/anti-bot/stateless-cleanup-2026-11-04/before-fixture.ts": "a70504902f67c27e24419e00151438e729d725418f13af1078465651f754a9ac",
+    "_local/anti-bot/stateless-cleanup-2026-11-04/after-ordinary.log": "57209921fcf1176280965fe139f7b3d77ddd0b84fe34f5f795d1f41ee403bcc3",
+    "_local/anti-bot/stateless-cleanup-2026-11-04/after-webkit.log": "be5e85378a87cbaac0f2c2c601d34147055c237105e6f285396f82e09d8bd37b",
+    "_local/anti-bot/stateless-cleanup-2026-11-04/after-results.json": "aaea2149372de6ab8ef9d5279378184baf26e4cea816e0d3d2de92ffe1f3fc56",
+    "_local/anti-bot/stateless-cleanup-2026-11-04/after-fixture.ts": "c4ec5753a611aba626dd5e82b6d5a86fd81ad7e63a5bd75ab95edd68fa9d864d",
+    "_local/anti-bot/stateless-cleanup-2026-11-04/inputs.json": "ffc2cfcf08b4c3c4e29c42fde1c089ca5cbba160fbacb6e0a67638b1d57ac7ae",
+    "_local/anti-bot/stateless-cleanup-2026-11-04/image.json": "9422626529c4eb8a96a2fca3974530cf0c5272a5f4fc020a75ca243493eea096",
+    "_local/anti-bot/stateless-cleanup-2026-11-04/verified-ci.json": "6ca86d956252c1ee7ffe6f58465cace3a8ad06841e70563bd1a78aa4daa631ac",
+    "_local/anti-bot/stateless-cleanup-2026-11-04/ci-ordinary-9ec9a43.log": "576954d63e412c8797e64dd6acdc19782f777ae3b6c9257fa89bbf766aa34e95",
+    "_local/anti-bot/stateless-cleanup-2026-11-04/ci-webkit-9ec9a43.log": "9be3369cc2ae4a94e7a7650a9c0e152995f86988040d2fff271d20162271488f"
+  }
+}
