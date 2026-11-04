@@ -137,6 +137,10 @@ fails before primary dispatch. A successful primary response uses no alternate.
 Eligible failures are recognized verification/loading states, selected HTTP
 denials/transient statuses (400, 403, 406, 417, 429, 502, 503, 504), the filtering
 proxy's connection-reset status 595, or a structured network/timeout error.
+A `PAGE_CRASHED` failure also qualifies only when the owner observed the Page
+crash event and its document receipt includes `rendererCrashed: true`. A driver
+error mentioning a crash is insufficient. Crashes do not add an internal service
+retry; the explicit one-alternate policy and original deadline still apply.
 Before another dispatch the API requires one completed primary attempt,
 `pageClosed: true` and matching owner boot identity. An ambiguous response,
 transport loss, failed cleanup, or exhausted budget is never replayed.
@@ -174,8 +178,18 @@ deadline; the alternate needs enough remaining time for the requested wait and
 readiness budget. Known primary failure content is preserved if the alternate
 also fails. `metadata.browser.diagnostics.engineFallback` reports attempted,
 usedSecondary, recovered, skipped and completed attempt receipts when available.
-`usedSecondary` alone does not mean content recovery. Errors may have no returned
-fallback diagnostics; use owner logs to account for those dispatches. No CAPTCHA
+`usedSecondary` alone does not mean content recovery. Failed HTTP responses may
+include top-level `diagnostics.attempts` and `diagnostics.engineFallback`; these
+closed-attempt receipts survive queue error serialization. They retain the engine,
+boot identity, network alias and bounded document phase/navigation/failure
+observations. Diagnostic URLs omit user information, query and fragment. Unknown
+fields and document content are not copied into these receipts. When both engines
+throw confirmed errors, the returned error preserves both receipts. A lost alternate
+response preserves the known primary receipt and `outcomeUnknown: true`, without
+inventing alternate completion or dispatching another request. An opt-out error
+can return its confirmed primary receipt without enabling recovery. Errors with
+unconfirmed completion may still lack a receipt; use owner logs to account for
+those dispatches. No CAPTCHA
 answers are generated or submitted. A browser change cannot promise access or
 content completeness, and an additional owner consumes additional resources.
 

@@ -3333,3 +3333,88 @@ all 114 volumes and raw evidence were preserved. Task infrastructure is stopped
 and task ports are closed; no global prune was used. Next work is controlled
 renderer-crash/TLS-termination investigation and preserving primary diagnostics
 through API receipts before making further recovery claims.
+
+## Confirmed renderer crashes and queued failure receipts
+
+Measured production source: `dae1f2016293958a446c73986d0b4de8da453a66`. The service now observes the
+[Playwright Page crash event](https://playwright.dev/docs/api/class-page#page-event-crash),
+types a generic operation failure as `PAGE_CRASHED` only after that event, and
+leaves explicit deadline/cancellation failures intact. The existing opt-in
+stateless alternate requires the crash flag, one closed page, matching boot, a
+distinct engine and remaining original budget. It does not add a service-internal
+crash retry or enable replay for retained sessions, caller actions or unknown outcomes.
+
+An owned pending-navigation fixture killed only the single UID1000, zero-capability
+renderer inside a dedicated Docker PID namespace. Both headless WPE and headful
+GTK returned generic `BROWSER_ERROR` before the repair despite confirmed page
+closure. Afterward both returned `PAGE_CRASHED` with the observed event flag,
+closed their pages and served a fresh subsequent request. Two earlier predicate
+development runs found no renderer and injected no fault; those are not before evidence.
+
+Closed-attempt engine/network/document receipts now survive queue error
+serialization and failed HTTP responses. Recognized document fields are bounded;
+diagnostic URLs omit user information, query and fragment. Both known failures
+remain visible. A lost/unconfirmed alternate preserves only known completion
+and reports `outcomeUnknown`, without inventing proof or dispatching again.
+Generic `BROWSER_ERROR` does not become eligible for fallback.
+
+| Same frozen 100 targets, WebKit with optional Firefox alternate | Result |
+| --- | ---: |
+| Normalized HTML content-marker matches | 52/100 |
+| Screened matches | 51/100 |
+| Normalized matches also containing supplementary Markdown marker | 49/100 |
+| Successful-request p50 / p95 | 5.15 s / 12.26 s |
+| All-request p95 | 12.26 s |
+
+The run used 100 API requests and 162 browser captures, four HTTP
+workers, one request per target, no client retries, no upstream proxy and no hosted
+calls. The seven-second reservation pacing, 85-second API deadline, 30-second
+navigation cap, consent/workflow settings and aggregate 6,656-MiB browser cap
+match the previous full policy. All hundred payload hashes and scores replayed;
+backend URL logs account for every capture. Returned closed-attempt proofs:
+161 across 100 responses,
+including 4 failed HTTP responses.
+
+The previous live run matched 53/100. New-only matches: YouTube, Best Buy, Zoopla.
+Previous-only matches: saksfifthavenue, autotrader, target, SeatGeek. These are different live epochs, not a paired
+old-code comparison. The historical hosted reference remains 82/100 and was not
+refreshed. Aggregate causal improvement and hosted parity remain unproven.
+
+Public targets with observed crash-event/closed-page proof: YouTube.
+Their complete per-attempt outcomes are retained in the receipt; a crash event
+or HTTP 200 alone does not establish a content match. In particular, inspect
+the normalized outcome alongside `engineFallback.recovered`.
+
+Final owners had zero active pages/sessions. OOM, memory-boundary and PID-limit
+counters remained zero. Socket-throttling event maxima were
+primary-a=0, fallback-a=304, fallback-b=138. The
+[kernel documentation](https://www.kernel.org/doc/html/latest/admin-guide/cgroup-v2.html#memory-interface-files)
+defines that counter separately from OOM. This is a resource caveat, not proof
+of a target-specific failure or a measured timing effect. No resources or
+kernel settings changed mid-run. Point-in-time pressure/socket observations
+are retained with the regular resource ledger.
+
+Validation: five owned full-API snips passed through `pnpm harness`, including
+actual renderer recovery exactly once and opt-out error diagnostics without
+replay. Forty-one fallback unit checks cover invalid crash/boot/closure proof,
+redaction/bounds, queue round trip, both-engine errors, unknown alternate outcomes
+and unavailable distinct backends. API type checking, 67 helper checks and 16
+local contained WebKit checks passed. [CI on the measured code](https://github.com/toreleon/firecrawl/actions/runs/41772317567)
+passed build, 67 helpers, 146 ordinary integration checks, production dependency
+audit and all 16 checks in a separately built contained WebKit image. Five
+optional WebKit parents are skipped in the ordinary suite. Broader server/SDK
+workflows are not claimed. Harness commands exited zero and reported processes
+terminated, but extract-worker teardown still logged a channel-closing error;
+clean shutdown is not established.
+
+Scoped cleanup removed 11 task containers, one obsolete task image and
+36 exact task cache records. It retained the measured image, baseline
+images/cache, nine unrelated services, all 114 volumes and raw evidence. Task
+infrastructure is stopped and ports are closed; no global prune or volume removal.
+
+Remaining investigations include non-proper TLS termination and unconfirmed
+alternate completion. Neither should be promoted to a renderer crash from
+error prose. Access denials, verification, marker-only markup and rate limits
+still need separate treatment under the proxy-free constraint.
+
+[Complete result, per-target receipts, source/image hashes, validation and cleanup](benchmarks/renderer-recovery-api-results-2026-11-04.json).
