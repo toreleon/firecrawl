@@ -74,9 +74,10 @@ test('profile configuration keeps keys in named environment variables and forbid
     },
   ];
   assert.equal(validateProfiles(profiles).length, 2);
+  assert.equal(validateProfiles([profiles[0]]).length, 1);
   for (const broken of [
     [],
-    [profiles[0]],
+    Array.from({ length: 9 }, (_, i) => ({ ...profiles[0], name: `profile${i}` })),
     [profiles[0], profiles[0]],
     [profiles[0], { ...profiles[1], apiKey: 'literal-secret' }],
     [

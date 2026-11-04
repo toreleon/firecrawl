@@ -12,8 +12,8 @@ export type ApiProfile = {
 };
 
 export const validateProfiles = (value: unknown): ApiProfile[] => {
-  if (!Array.isArray(value) || value.length < 2 || value.length > 8)
-    throw new Error('Expected 2..8 API profiles');
+  if (!Array.isArray(value) || value.length < 1 || value.length > 8)
+    throw new Error('Expected 1..8 API profiles');
   const names = new Set<string>();
   for (const p of value) {
     if (
