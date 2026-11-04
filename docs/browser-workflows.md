@@ -296,6 +296,35 @@ probe/action errors, scan-limit exhaustion and duration under
 when no choice was applied. Neither a successful scrape nor one applied CMP
 choice proves consent completion across every embedded origin.
 
+For `rejectNonEssential`, a visible OneTrust banner without a unique visible
+Reject button can use a bounded native preference-center path. Standard
+OneTrust settings openers are supported; Canada Goose's observed
+`button[data-cookie-settings][aria-haspopup="dialog"]` is scoped to that site's
+hosts. The path requires one known category panel/save control, an unchanged
+C0001 Always Active marker and unique matching optional category IDs. Mutable
+required categories, disabled/read-only switches and unknown layouts are not
+interpreted as opt-out choices.
+
+The browser clicks associated labels for zero-area OneTrust checkbox inputs,
+checks that each optional category became unchecked and rechecks the complete
+category identity/state before one Save operation. It reports applied only
+after Save completes and both preference panel and banner become hidden.
+Checked categories have one native toggle operation; already-unchecked choices
+are left alone. The path has a five-second budget with at most one second per
+native operation, within the caller deadline. Native actions are awaited, while
+only read-only probes are raced. No Accept/Close substitution, forced/synthetic
+click or OneTrust JavaScript API call is added. `off` and `acceptAll` keep their
+own behavior.
+
+`interaction.consent.preferenceCenter` reports phase, outcome/reason, settings
+and save completion, category action attempts/completions, confirmed category
+changes and duration. A layout/state change or incomplete operation stays
+unresolved; native action counters distinguish attempted effects from confirmed
+choices. Applied is an observed UI outcome, not independent proof of server-side
+cookie persistence or completion across every embedded origin. This
+[owned before/after and queued-API verification](benchmarks/onetrust-preferences-results-2026-11-04.json)
+establishes a functional workflow repair; a new full population score is pending.
+
 `workflow` is `none` (default), `auto`, `bestbuy-us@1` or `product-details@1`.
 The current recipes select the original Best Buy product's US destination and
 expand an observed Canada Goose details control. `auto` also scrolls an observed

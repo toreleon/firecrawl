@@ -4039,3 +4039,98 @@ current reusable image, all baseline images, 128 baseline cache records, nine
 unrelated running services, all 114 volume names and raw evidence were preserved.
 
 [Complete 100-target results, changed-target receipts, workflow observations, offline identity probe, source/image hashes and cleanup](benchmarks/country-budget-full-api-results-2026-11-04.json).
+
+
+## Native OneTrust preference-center rejection without a direct Reject button
+
+Implementation: `b49464b6f4a1d90181109dc1e577b2c6b02ccd90`.
+The saved complete 57/100 run showed a functional consent gap before Canada
+Goose's optional product interaction: its visible OneTrust banner had Accept
+and Close buttons but no native Reject button. A separate native footer settings
+button and a preference center with three checked optional category switches
+were present. The current fallback looked only for direct choice buttons.
+The saved CSS gives those switch inputs zero area; their associated labels
+are the normal native targets.
+
+OneTrust documents that [Close applies the default model, while Reject excludes
+strictly necessary categories](https://developer.onetrust.com/onetrust/docs/javascript-api).
+Its [official control-selector reference](https://my.onetrust.com/articles/en_US/Knowledge/UUID-bdeeeab3-4aa9-2b39-aab6-cf837bb9c1f9)
+also distinguishes banner settings and preference-center saving. Closing a
+banner with checked defaults would not prove the requested nonessential
+rejection. The repair uses the observed native settings/categories/save UI,
+with no page SDK calls, arbitrary code execution or acceptance substitution.
+Native [actionability](https://playwright.dev/docs/api/class-locator#locator-uncheck)
+and explicit checked-state verification remain required.
+
+A five-second optional path opens one known settings control, validates the
+standard category layout and leaves the C0001 Always Active category untouched.
+It performs one native operation for each checked optional switch, using its
+associated label when the input has zero area. Already-unchecked choices are
+not toggled. Category identity and state are checked before/after operations and
+before a single Save. Unknown, ambiguous, disabled/read-only or mutable-required
+layouts remain unresolved. Settings, category and Save operations each have at
+most one second within the path/caller budget; every native action is awaited.
+Only read-only discovery is raced, so late query results cannot dispatch actions.
+Global cancellation/expiry and non-timeout browser failures remain terminal.
+
+Applied requires a completed Save and observed disappearance of both preference
+panel and banner after verified unchecked choices. It describes this native UI
+path, not independently verified server-side persistence or every embedded
+origin's consent. The metadata includes phase/reason, action attempt/completion
+counts, confirmed category changes, settings/save observations and duration.
+The custom footer selector is limited to Canada Goose hosts; standard OneTrust
+openers remain available elsewhere. Existing `off`, `acceptAll`, direct Reject,
+SSRF filtering, original deadlines and single-alternate rules are unchanged.
+
+An owned offline native before/after uses the same fixture, browser family,
+launch settings, consent policy and click budget. Its banner covers the product
+Details control. Before the repair, consent stays unresolved and the optional
+Details click times out without expansion. After the repair, two checked
+optional switches are turned off, the already-unchecked third switch is left
+alone, one Save records `000`, the overlay disappears and Details expands.
+Neither run clicks Accept. The measured dependency sequence is 2.340 versus
+0.518 seconds; this establishes a functional recovery, not a real-site or API
+latency gain. Both Page/context closures are confirmed. Docker networking is
+disabled and all fixture responses are local; this is separate from production
+SSRF topology and public benchmarks.
+
+Validation passed 91 helpers and seven native parent/child checks containing
+55 new scenarios across Playwright, Patchright, Rebrowser, Firefox and contained
+WebKit. Cases cover standard/custom openers, immutable required categories,
+ambiguous saves, covered switches, reverted state, changed/duplicate category
+identity, unconfirmed saves, policy opt-out/accept isolation and foreign-origin
+exclusion. The preceding native attempt also passed existing product-details
+and stalled auxiliary-frame regressions; its source/image is retained separately.
+A new identity-change case initially had an imprecise unconfirmed reason; the
+final source reports unsupported layout and passes in all five engines.
+
+Two fresh owned v2 API snips pass via `pnpm harness` on the final image. They
+verify forwarded consent observations and subsequent expanded-content readiness,
+and an unsupported required-category layout that neither changes choices nor
+saves/accepts and leaves required content unresolved. Both execute one WebKit
+capture with no alternate and confirmed Page/context cleanup. An initial API
+assertion expected fallback metadata despite opt-out; the contract correctly
+omits it. That assertion was corrected, then both tests passed. API type checking
+also passed after replacing a fixture import outside API `rootDir` with an
+API-owned fixture. API production and SDK control fields are unchanged.
+Fresh browser CI is pending at publication and includes the new WebKit case;
+broader server/SDK workflows are not claimed. Harness teardown still logs the
+existing extract-worker channel-closing error despite zero harness exit and
+terminated processes; clean shutdown remains unproven.
+
+No public target capture or hosted call ran in this phase. The latest complete
+population result remains 57/100 on the preceding source; this implementation
+has no new full-run score yet. Earlier observations found Canada Goose's frozen
+sentence only in metadata even when Details expanded. Consent recovery does
+not establish that marker, authorize a grader change or prove hosted parity.
+A fresh complete proxy-free measurement is the next performance check.
+
+Scoped cleanup removed 16 task containers and 92 exact task cache records
+(Docker-reported 329.2 MB; physical storage freed was not measured). Prototype
+image IDs were already absent when explicit cleanup inspected them; no image
+removal is claimed. The reusable final image, 65 baseline images, 128 baseline
+cache records, nine unrelated running services, all 114 volumes and raw evidence
+remain. Task infrastructure is stopped and task ports are closed. No global
+prune or volume removal ran.
+
+[Implementation, saved-DOM research, native paired recovery, API checks, failed attempts, image/source hashes and cleanup](benchmarks/onetrust-preferences-results-2026-11-04.json).
