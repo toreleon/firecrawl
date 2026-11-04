@@ -3929,3 +3929,113 @@ services, all 114 volumes and raw evidence. Task infrastructure is stopped and
 ports are closed; no global prune or image/volume removal ran.
 
 [Country-budget implementation, paired dependency evidence, owned API/native checks, selected result and cleanup](benchmarks/country-budget-results-2026-11-04.json).
+
+
+## Complete API measurement after optional-details and country-budget repairs
+
+The fresh complete run matched **57/100 frozen normalized markers**, with
+56 screened matches and 54 normalized matches also containing the Markdown
+marker. This replaces the earlier selected 3/4 observation as the latest
+population measurement. The preceding complete result was 61/100; the result
+regressed by four matches. Historical hosted82 was not refreshed, belongs to a
+different live epoch and does not establish current comparable performance.
+
+Measured checkout: `72a7b7956b18223bb5754d64d97324a67e1849d0`.
+Production, test and CI inputs are byte-equivalent to implementation
+`f2211b46ac7a659f121fa8be8b9aaadb91fd877b`. The run reused the pinned
+`sha256:c4171b75361aa03edc292425982daa9ab07794205fa3aaea8e6db434ffef047b`
+image. Browser source/compiled hashes for all three owners and API hashes were
+checked before and after; no implementation change was made in this phase.
+
+The same frozen 100 targets and graders used one v2 API request per target,
+157 browser captures (100 contained WebKit, 57 Firefox), a four-worker cap and
+6,656 MiB aggregate browser memory. Public owners had no fixture DNS aliases.
+Direct VN egress, controls, caller deadlines and seven-second reservation pacing
+were retained. There were no upstream proxies, hosted calls, client retries or
+expected-text hints. The observed minimum dispatch gap was 6,999 ms; reservation
+pacing is not a strict 7,000-ms dispatch-floor guarantee. Observed API concurrency
+peaked at two under the configured four-worker cap.
+
+Successful-request latency was p50 4.927 seconds and p95 10.781 seconds;
+all-request p95 was 12.152 seconds. These are slower than the preceding complete
+run's 4.539/7.689-second successful p50/p95 and 9.126-second all-request p95.
+Different live epochs and shared runtime scheduling prevent a causal latency
+claim. No paired old-code or standalone primary-only experiment ran here.
+
+| Changed normalized result | Preceding complete run | Current complete run |
+| --- | --- | --- |
+| Louis Vuitton | Both engines HTTP 403. | WebKit HTTP 200, marker matched. |
+| Saks Fifth Avenue | WebKit HTTP 200, matched. | WebKit connection termination and Firefox network reset during navigation; neither returned a response. |
+| Glassdoor | Firefox HTTP 200 recovery after WebKit 403, matched. | Both HTTP 403; verification required. |
+| Verizon | WebKit HTTP 200, matched. | Both HTTP 417; frozen status check failed. |
+| Google Search | Firefox HTTP 200 recovery after WebKit 429, matched. | Both HTTP 429; verification required. |
+| Zoopla | Firefox HTTP 200 recovery after WebKit 403, matched. | Both HTTP 403; verification required. |
+
+Five lost matches offset one newly matched target. These receipts describe
+returned statuses and navigation failures, not their WAF, IP, identity or
+resource cause. None identifies a new workflow-stage regression. Verizon was
+labelled `CONTENT_READY`, but its HTTP 417 still fails the frozen status check;
+an alternate already ran, so changing that label would not add a capture.
+
+Across all 43 frozen-marker failures, 40 already used their single alternate.
+Canada Goose and American Airlines returned ordinary documents with the marker
+only in noncontent markup; Allmenus reported a regional restriction. These
+three skipped the alternate as not needed by the runtime policy. The frozen
+marker is not supplied to that policy. No failure skipped its alternate for
+insufficient budget. Returned error-receipt phases were nine navigation and one
+readiness, with no workflow failures. Temu returned an actual object-selection
+security-verification page through both engines and remained `HUMAN_REQUIRED`;
+its HTTP 200 and body readiness do not establish requested-product recovery.
+No CAPTCHA was solved and no support form was submitted.
+
+Canada Goose now preserved its HTTP 200 document and 57,054 Markdown characters
+while the optional native Details click hit its bounded action timeout. Its
+step remained unresolved, with no completed click or expansion claim, and its
+frozen marker still failed. Best Buy matched after the existing initial
+WebKit navigation cap and one Firefox recovery, completing in 39.445 seconds.
+Firefox discovered nine country links, navigated the validated original-product
+destination and followed the retained server redirect to a canonical product
+route. The primary failed before the country workflow; this is not an isolated
+live recovery gain from the new country bounds, nor field-level SKU identity
+proof. Amazon and CoinMarketCap also matched in this complete run.
+
+All 100 payload hashes and scores replayed. All 157 Page-close proofs validated;
+156 attempt receipts confirmed context closure. Carter's selected Firefox
+response has an unconfirmed context close (`cleanupFinished: false`, 1,105 ms),
+which must not be counted as confirmed. All owners ultimately reported zero
+active pages and sessions. No OOM, memory-limit, PID-limit or socket-throttling
+events were observed, and timing/resource sampling had no unexplained gap.
+These counters do not establish the cause of a target-specific denial or reset.
+
+A supplemental owned offline probe used two sequential fresh Firefox launches
+through the same compiled browser helper with Docker networking disabled. Native
+version 158.0.1-beta.41 agreed with Firefox/158.0 in the page, Playwright-observed
+request header and dedicated worker. Page/worker platform, language and hardware
+concurrency agreed, and the selected recorded identities were equal between
+these two launches. No mismatch or variation was observed. This is not a
+reconstruction of the measured public owners, an on-wire HTTP/TLS observation,
+a guarantee across future launches or an explanation for any failed target.
+The first probe setup omitted Docker `--init` and stalled before Node started;
+its Xvfb-only process tree/logs were retained, the container removed, and the
+probe ran successfully after adding the same `--init` used by benchmark owners.
+It made no public captures or API calls and justifies no identity change.
+
+Implementation verification is explicitly inherited from the unchanged candidate:
+89 helpers, seven local native parent/child checks across five engines, API type
+checking, 45 fallback/serialization checks and four owned API snips (49 API-side
+checks total). The candidate's
+[browser CI](https://github.com/toreleon/firecrawl/actions/runs/41789966573)
+passed 89 helpers, 171 ordinary integration checks with six optional skips,
+production dependency audit and 25 contained WebKit checks. No implementation
+suite was rerun or relabelled as a new source test in this measurement phase;
+broader server/SDK workflows are not claimed. The API harness exited zero and
+terminated its processes, but its extract-worker teardown again logged the
+existing channel-closing error, so clean shutdown remains unproven.
+
+Scoped cleanup removed the three full-run browser containers and two supplemental
+owned-probe containers, stopped task infrastructure and verified closed task
+ports. There was no build, image/cache/volume removal or global prune. The
+current reusable image, all baseline images, 128 baseline cache records, nine
+unrelated running services, all 114 volume names and raw evidence were preserved.
+
+[Complete 100-target results, changed-target receipts, workflow observations, offline identity probe, source/image hashes and cleanup](benchmarks/country-budget-full-api-results-2026-11-04.json).

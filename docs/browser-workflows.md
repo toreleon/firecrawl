@@ -620,3 +620,20 @@ matched 61/100 normalized markers with direct VN egress, a four-worker cap,
 separately from the selected cohort. The preceding complete result was 59/100;
 live-epoch differences prevent an isolated causal claim. The historical hosted
 82/100 reference was not refreshed; comparable coverage remains unproven.
+
+
+The [complete API rerun after optional Details and bounded country workflow repairs](benchmarks/country-budget-full-api-results-2026-11-04.json)
+matched 57/100 normalized markers, 56 screened markers and 54 normalized markers
+also present in Markdown. It used direct VN egress, a four-worker cap, 100 API
+requests and 157 browser captures, with no hosted calls, upstream proxies, client
+retries or expected-text hints. This is the latest complete population result;
+the preceding complete run matched 61/100. Five lost targets and one new match
+are documented with their actual navigation/status receipts. Different live
+epochs do not isolate a code, IP, WAF or resource cause. No workflow-phase
+failures occurred, and 40 of 43 failed targets already used their alternate.
+The historical hosted82 observation was not refreshed; parity remains unproven.
+All Page closes are confirmed; one Carter's context-close receipt remains
+unconfirmed despite final owners reporting zero pages/sessions. Candidate
+implementation checks and CI are inherited without rerunning unchanged inputs;
+this phase supplies fresh full retrieval evidence, replay audits, an owned
+offline identity probe and scoped Docker cleanup.
