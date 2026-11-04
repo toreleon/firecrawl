@@ -758,6 +758,7 @@ export const interactionState = (
   status: number | null,
   challenge: boolean,
   interactive = false,
+  denied = false,
 ) => {
   let path = '';
   try {
@@ -772,6 +773,7 @@ export const interactionState = (
   )
     return 'AUTH_REQUIRED';
   if (/not available in your location/i.test(text)) return 'REGION_UNAVAILABLE';
+  if (denied) return 'ACCESS_DENIED';
   if (
     interactive ||
     /prove your humanity|verify you are human|security verification|human verification|complete the challenge/i.test(

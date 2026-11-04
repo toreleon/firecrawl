@@ -860,7 +860,9 @@ app.post('/scrape', async (req: Request, res: Response) => {
       result.url,
     );
     const pageError = botDetection
-      ? `Bot protection challenge remains (${botDetection.provider}): ${botDetection.reason}`
+      ? botDetection.denied
+        ? `Access blocked (${botDetection.provider}): ${botDetection.reason}`
+        : `Bot protection challenge remains (${botDetection.provider}): ${botDetection.reason}`
       : !result.readiness.satisfied
         ? 'Expected content did not become ready'
         : (getError(result.status) ?? undefined);
@@ -892,6 +894,7 @@ app.post('/scrape', async (req: Request, res: Response) => {
           result.status,
           !!botDetection,
           botDetection?.interactive === true,
+          botDetection?.denied === true,
         ),
       },
       diagnostics: {

@@ -333,11 +333,17 @@ export const scrapePage = async (
         rawBody && current
           ? (await deadline.run(current.body())).toString('utf8')
           : snapshot.content;
+      const capturedProtection =
+        automatic && !rawBody
+          ? detectPageProtection(snapshot.content, headers, snapshot.url)
+          : undefined;
       const automaticOutcome =
         automatic && !rawBody
           ? verificationPending(current?.status() ?? 0) ||
-            detectPageProtection(snapshot.content, headers, snapshot.url)
-            ? 'verification'
+            capturedProtection
+            ? capturedProtection?.denied
+              ? 'blocked'
+              : 'verification'
             : snapshot.documentReadyState === 'loading'
               ? 'loading'
               : snapshot.busyCount

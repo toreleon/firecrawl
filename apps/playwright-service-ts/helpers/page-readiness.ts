@@ -7,7 +7,11 @@ export const detectPageProtection = (
   html: string,
   headers: Record<string, string> = {},
   url?: string,
-): (BotDetection & { interactive?: true; passive?: true }) | undefined => {
+): (BotDetection & {
+  interactive?: true;
+  passive?: true;
+  denied?: true;
+}) | undefined => {
   const awsAction = Object.entries(headers)
     .find(([key]) => key.toLowerCase() === 'x-amzn-waf-action')?.[1]
     ?.toLowerCase();
@@ -112,6 +116,30 @@ export const detectPageProtection = (
   const title =
     structure.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i)?.[1]?.trim() ??
     '';
+  if (/^Autotrader\s*[-–]\s*page unavailable$/i.test(title)) {
+    const bodyText = markup
+      .replace(/<head\b[^>]*>[\s\S]*?<\/head>/gi, ' ')
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+    if (
+      bodyText.length < 3000 &&
+      /we(?:'|&#39;|&apos;)re sorry for any inconvenience, but the site is currently unavailable\./i.test(
+        bodyText,
+      ) &&
+      /\bIncident Number:\s*18\.[a-z0-9.-]+/i.test(bodyText) &&
+      /<form\b[^>]*\bid=["']atcform["']/i.test(markup) &&
+      /<link\b[^>]*\bhref=["']\/akamai-block\/block-images\/css\/app\.css["']/i.test(
+        structure,
+      ) &&
+      hasScript(/^\/akamai-block\/block-images\/js\/app\.js(?:[?#]|$)/i)
+    )
+      return {
+        provider: 'autotrader',
+        reason: 'Autotrader unavailability block document',
+        denied: true,
+      };
+  }
   const hasAwsCaptcha = hasScript(
     /^https:\/\/[a-z0-9.-]+\.(?:captcha|captcha-sdk)\.awswaf\.com\/[^<>"']*\/(?:captcha|jsapi)\.js(?:[?#]|$)/i,
   );
@@ -447,6 +475,7 @@ export const waitForRenderedBody = async (
     | 'busy'
     | 'ready'
     | 'verification'
+    | 'blocked'
     | 'navigating' = 'empty';
   let busyCount = 0,
     maxBusyCount = 0;
@@ -479,8 +508,9 @@ export const waitForRenderedBody = async (
       // because its script changes a status label before returning content.
       if (verificationPending()) outcome = 'verification';
       if (protection) {
-        outcome = 'verification';
+        outcome = protection.denied ? 'blocked' : 'verification';
         if (
+          protection.denied ||
           protection.interactive ||
           ['amazon', 'google'].includes(protection.provider) ||
           /prove your humanity|verify (?:that )?you are human|complete the challenge|enter the characters/i.test(
