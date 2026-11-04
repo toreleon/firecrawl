@@ -3570,3 +3570,66 @@ records, nine unrelated services, all 114 volumes and raw evidence remain. Task
 infrastructure is stopped and ports are closed; no global prune was used.
 
 [Selected result, offline replay, source/image hashes, gap review, validation and cleanup](benchmarks/alibaba-interception-results-2026-11-04.json).
+
+## Complete 100-target measurement after Alibaba recognition
+
+Measured checkout: `eb140020ccca24cf919949877641a94be1e37579`, with production and test inputs byte-equivalent
+to the previously verified candidate `c63cbda30868dfc3edd5ba48d06204e6fce5da3e`. The same pinned browser image
+was reused; no implementation, test-input or Docker build changed during this
+measurement. This supplies the complete run that the preceding four-target
+cohort explicitly lacked. The cohort remains separate evidence.
+
+| Full v2 API, same frozen 100 targets | Result |
+| --- | ---: |
+| Normalized content-marker matches | 59/100 |
+| Screened matches | 58/100 |
+| Normalized matches also containing supplementary Markdown marker | 56/100 |
+| Successful-request p50 / p95 | 4.62 s / 7.63 s |
+| All-request p95 | 8.01 s |
+
+The run completed 100 API RPCs and 157 browser captures with a
+four-worker cap, one request per target, no client retries and no expected-text
+hints. Direct VN egress, consent/workflow settings, navigation and API deadlines,
+seven-second reservation pacing and the aggregate 6,656-MiB browser cap match
+the preceding full policy. No upstream proxy or hosted API was used. All 100
+payload hashes and frozen scores replayed; backend URL logs account for every
+capture. Three owners' 33 runtime source/compiled hashes and API source/compiled
+hashes were verified before and after measurement.
+
+Alibaba matched the frozen marker in this full run. Its complete primary/alternate
+receipt, normalized/Markdown observations and preceding cohort observation are
+retained without combining epochs. Overall, there were
+157 closed-Page proofs, including 157
+fulfilled-context receipts. Selected responses with an explicitly unconfirmed
+context close: none. A Page-close proof remains separate from context
+disposal; the result does not establish universal cleanup reliability.
+
+The preceding complete run matched 54/100. New-only matches: saksfifthavenue, alibaba, verizon, goodrx, SeatGeek, Best Buy, Leboncoin.
+Previous-only matches: autotrader, Apartments.com. These are different live epochs, so the
+aggregate difference is not an isolated causal effect of the code change. The
+historical hosted reference remains 82/100 and was not refreshed. Marker
+matches are not extraction F1, CSS visibility or WAF-vendor ground truth.
+Comparable hosted coverage remains unproven.
+
+Final owners had zero active pages/sessions. Resource counters and peak memory
+are retained in the receipt, including socket-throttling maxima `{'primary-a': 0, 'fallback-a': 314, 'fallback-b': 0}`.
+No resource setting changed during measurement; a counter alone does not
+establish a target-specific blocking or latency cause.
+
+Existing implementation validation is carried forward explicitly: candidate
+[CI](https://github.com/toreleon/firecrawl/actions/runs/41777849186) passed 75 helper checks, 156 ordinary integration checks
+(six optional skips), production dependency audit and 19 contained WebKit checks
+from a full Docker build. Its five-engine local checks, three owned full-API
+snips and API type checking belong to that earlier candidate validation. No
+unchanged implementation suite was rerun or relabeled as fresh evidence. This
+turn ran the full measurement through `pnpm harness`; it exited zero and reported
+processes terminated, but extract-worker teardown still logged a channel-closing
+error. Clean shutdown and broader server/SDK workflows are not claimed.
+
+Scoped cleanup removed the three benchmark browser containers after preserving
+logs and stopped task PostgreSQL, Redis and RabbitMQ. Task ports are closed. No
+image, build cache or data volume was removed: this turn performed no build, and
+all baseline images/cache, nine unrelated services, all 114 volumes and evidence
+remain. No global prune was used.
+
+[Full result, per-target failures, completion receipts, equivalence proof, deployment hashes and cleanup](benchmarks/alibaba-full-api-results-2026-11-04.json).

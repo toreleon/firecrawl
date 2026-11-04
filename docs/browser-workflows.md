@@ -559,3 +559,10 @@ Both Facebook and CoinMarketCap moved from 0/5 to 5/5 normalized matches. The
 complete repaired run matched on 209/500 (41.8%) with the frozen grader and no
 upstream proxy. The report includes the 78-request controls-on/off comparison,
 all failed-target findings, timing and remaining origin/verification failures.
+
+The [complete API rerun after Alibaba interception recognition](benchmarks/alibaba-full-api-results-2026-11-04.json)
+matched 59/100 normalized markers with direct VN egress, a four-worker cap,
+100 API requests and 157 browser captures. It supersedes the earlier
+selected four-target observation for population measurement. The prior complete
+run matched 54/100; live-epoch differences prevent an isolated causal claim.
+The historical hosted82 reference was not refreshed, and parity remains unproven.
