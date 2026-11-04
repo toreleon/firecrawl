@@ -60,6 +60,7 @@ test(
                 assert.equal(
                   result.body.diagnostics.attempts[0].pageClosed,
                   true,
+                  JSON.stringify(result.body.diagnostics),
                 );
                 if (path === '/product') {
                   assert.equal(
