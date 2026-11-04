@@ -1,0 +1,267 @@
+{
+  "checkedAt": "2026-11-04T00:05:35.403760+00:00",
+  "sourceCommit": "70ff6e17a562a0d4bafe83c4946f1e52d0ca0dee",
+  "scope": "Remove ten recorded owned browser/test/export containers plus two auto-removed Node contract-test containers, one obsolete prototype image and only new task build-cache IDs. Preserve verified production image, pinned bases, pre-existing images/cache, unrelated services, all volumes, raw evidence and exported prototype source. No global prune.",
+  "taskContainersRemoved": 12,
+  "recordedContainerCleanupCount": 10,
+  "additionalAutoRemovedContractContainers": [
+    {
+      "name": "autogtm-firecrawl-api-timeout-isolated-20261104",
+      "exitCode": 0,
+      "observedAbsentAfter": true
+    },
+    {
+      "name": "autogtm-firecrawl-api-deadline-contract-20261104",
+      "exitCode": 0,
+      "observedAbsentAfter": true
+    }
+  ],
+  "obsoletePrototypeImageRemoved": "sha256:38c6bc87df8d33523d4a6ecb483063fc46b64f5faef09ef9e23c82e2d56464c7",
+  "prototypeSourceAndCompiledEvidencePreserved": true,
+  "containerCleanup": [
+    {
+      "receipt": "_local/anti-bot/interaction-gate-probe-2026-11-04/cleanup.json",
+      "name": "autogtm-firecrawl-interaction-probe-chromium-20261104",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 143,
+        "Error": "",
+        "StartedAt": "2026-11-03T23:22:30.094610472Z",
+        "FinishedAt": "2026-11-03T23:22:53.105230094Z"
+      },
+      "imageId": "sha256:ba13d7322dae83619d53640b4785ad2eb0fc66a6cac3af86e4101fbb307fb396",
+      "removedAfterReceipt": true
+    },
+    {
+      "receipt": "_local/anti-bot/interaction-gate-probe-2026-11-04/cleanup.json",
+      "name": "autogtm-firecrawl-interaction-probe-firefox-20261104",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 143,
+        "Error": "",
+        "StartedAt": "2026-11-03T23:22:32.095111834Z",
+        "FinishedAt": "2026-11-03T23:22:53.332622552Z"
+      },
+      "imageId": "sha256:ba13d7322dae83619d53640b4785ad2eb0fc66a6cac3af86e4101fbb307fb396",
+      "removedAfterReceipt": true
+    },
+    {
+      "receipt": "_local/anti-bot/primary-text-linux-tests-2026-11-04/cleanup.json",
+      "name": "autogtm-firecrawl-primary-text-tests-20261104",
+      "image": "sha256:38c6bc87df8d33523d4a6ecb483063fc46b64f5faef09ef9e23c82e2d56464c7",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 143,
+        "Error": "",
+        "StartedAt": "2026-11-03T23:34:29.927262139Z",
+        "FinishedAt": "2026-11-03T23:34:42.809046589Z"
+      },
+      "removed": true
+    },
+    {
+      "receipt": "_local/anti-bot/primary-text-api-harness-2026-11-04/browser-cleanup.json",
+      "name": "autogtm-firecrawl-primary-text-api-harness-20261104",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 143,
+        "Error": "",
+        "StartedAt": "2026-11-03T23:34:37.563057128Z",
+        "FinishedAt": "2026-11-03T23:34:50.687691759Z"
+      },
+      "image": "sha256:38c6bc87df8d33523d4a6ecb483063fc46b64f5faef09ef9e23c82e2d56464c7",
+      "containerRemovedAfterReceipt": true
+    },
+    {
+      "receipt": "_local/anti-bot/primary-text-final-linux-tests-2026-11-04/cleanup.json",
+      "name": "autogtm-firecrawl-primary-text-final-tests-20261104",
+      "image": "sha256:5003f3d1d7e3f39bfd86cd1e567d9ce95d484fa7a1fefda6b1fda2ce453cfe9a",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 143,
+        "Error": "",
+        "StartedAt": "2026-11-03T23:38:42.04670213Z",
+        "FinishedAt": "2026-11-03T23:38:59.767221347Z"
+      },
+      "removed": true
+    },
+    {
+      "receipt": "_local/anti-bot/primary-text-final-api-harness-2026-11-04/browser-cleanup.json",
+      "name": "autogtm-firecrawl-primary-text-final-api-harness-20261104",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 143,
+        "Error": "",
+        "StartedAt": "2026-11-03T23:38:49.72637855Z",
+        "FinishedAt": "2026-11-03T23:39:02.811238501Z"
+      },
+      "image": "sha256:5003f3d1d7e3f39bfd86cd1e567d9ce95d484fa7a1fefda6b1fda2ce453cfe9a",
+      "containerRemovedAfterReceipt": true
+    },
+    {
+      "receipt": "_local/anti-bot/primary-text-full-api-harness-2026-11-04/cleanup.json",
+      "image": "sha256:5003f3d1d7e3f39bfd86cd1e567d9ce95d484fa7a1fefda6b1fda2ce453cfe9a",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 143,
+        "Error": "",
+        "StartedAt": "2026-11-03T23:41:40.804716504Z",
+        "FinishedAt": "2026-11-03T23:54:29.402600763Z"
+      },
+      "cpuNano": 2000000000,
+      "memoryBytes": 2684354560,
+      "containerRemovedAfterReceipt": true
+    },
+    {
+      "receipt": "_local/anti-bot/primary-text-full-api-harness-2026-11-04/cleanup.json",
+      "image": "sha256:5003f3d1d7e3f39bfd86cd1e567d9ce95d484fa7a1fefda6b1fda2ce453cfe9a",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 143,
+        "Error": "",
+        "StartedAt": "2026-11-03T23:41:42.575875464Z",
+        "FinishedAt": "2026-11-03T23:54:29.628133847Z"
+      },
+      "cpuNano": 2000000000,
+      "memoryBytes": 2147483648,
+      "containerRemovedAfterReceipt": true
+    },
+    {
+      "receipt": "_local/anti-bot/primary-text-full-api-harness-2026-11-04/cleanup.json",
+      "image": "sha256:5003f3d1d7e3f39bfd86cd1e567d9ce95d484fa7a1fefda6b1fda2ce453cfe9a",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 143,
+        "Error": "",
+        "StartedAt": "2026-11-03T23:41:46.536044424Z",
+        "FinishedAt": "2026-11-03T23:54:29.851004472Z"
+      },
+      "cpuNano": 2000000000,
+      "memoryBytes": 2147483648,
+      "containerRemovedAfterReceipt": true
+    },
+    {
+      "receipt": "_local/anti-bot/primary-text-prototype-source-2026-11-04/cleanup.json",
+      "name": "autogtm-firecrawl-primary-text-source-export-20261104",
+      "image": "sha256:38c6bc87df8d33523d4a6ecb483063fc46b64f5faef09ef9e23c82e2d56464c7",
+      "state": {
+        "Status": "created",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "0001-01-01T00:00:00Z",
+        "FinishedAt": "0001-01-01T00:00:00Z"
+      },
+      "removed": true,
+      "scope": "Stopped source-export container only; no process or browser started."
+    }
+  ],
+  "newProductionImageRetained": "sha256:5003f3d1d7e3f39bfd86cd1e567d9ce95d484fa7a1fefda6b1fda2ce453cfe9a",
+  "preExistingImageIdsPreserved": true,
+  "unrelatedConcurrentImageIdsPreserved": [
+    "sha256:5390aa0ae8ea0c5602e835a9d8bb48930b2dec2003ac4ab852c1fa09dedd94b2"
+  ],
+  "unrelatedConcurrentCacheRecordsPreserved": 69,
+  "cacheOwnershipMethod": "Exact build-record windows with no overlapping build, pre/final-build inventory and parent-chain checks. Concurrent OpenGTM images/cache are preserved.",
+  "cache": {
+    "taskRecordsRemoved": 19,
+    "baseline59RecordsPreserved": true,
+    "remainingRecords": 128,
+    "pruneReportedTotal": [
+      "Total:\t1.3MB"
+    ],
+    "physicalBytesFreedNotMeasured": true
+  },
+  "taskInfrastructureStopped": [
+    "autogtm-firecrawl-workflows-pg-20261103",
+    "autogtm-firecrawl-workflows-redis-20261103",
+    "autogtm-firecrawl-workflows-rabbit-20261103"
+  ],
+  "unrelatedRunningServicesPreserved": [
+    "lead-data-postgres",
+    "lead-data-redis",
+    "lead-data-web",
+    "opengtm-agent-runtime-1",
+    "opengtm-agent-test-pg",
+    "opengtm-api-go-1",
+    "opengtm-browser-1",
+    "opengtm-scheduler-go-1",
+    "opengtm-worker-go-1"
+  ],
+  "dataVolumesDeleted": 0,
+  "dataVolumeCountAfter": 114,
+  "volumeNamesUnchanged": true,
+  "globalPruneUsed": false,
+  "dockerSystemDfAfter": "TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE\nImages          56        10        28.98GB   11.35GB (39%)\nContainers      13        9         360.4kB   28.67kB (7%)\nLocal Volumes   114       5         6.326GB   6.151GB (97%)\nBuild Cache     128       0         5.644GB   2.716GB\n",
+  "hostDiskAfter": "Filesystem      Size    Used   Avail Capacity iused ifree %iused  Mounted on\n/dev/disk3s5   460Gi   316Gi   120Gi    73%    5.4M  1.3G    0%   /System/Volumes/Data\n",
+  "rawEvidencePreserved": true,
+  "evidenceHashes": {
+    "_local/anti-bot/interaction-gate-probe-2026-11-04/cleanup.json": "da7fe24c49962d1c0e33488802597e75dfcfa3a67d07700090b5c02c17f66b85",
+    "_local/anti-bot/primary-text-linux-tests-2026-11-04/cleanup.json": "4e4811f4b9c073583574665ebef369e5513cc974315eea77d84a5d5b4151617c",
+    "_local/anti-bot/primary-text-api-harness-2026-11-04/browser-cleanup.json": "1657f1dda3c08751500aa829a45ead226630947b1c79fd0d0d8ff64b9bdd2bea",
+    "_local/anti-bot/primary-text-final-linux-tests-2026-11-04/cleanup.json": "4438718953c116d8bfc3d84fedab1b70d9757e24385f1959887774b35d99bc75",
+    "_local/anti-bot/primary-text-final-api-harness-2026-11-04/browser-cleanup.json": "b7dcb09d8300d98ad6cb1ac8f318b12b17d15970959aca3e06335752f38b963c",
+    "_local/anti-bot/primary-text-full-api-harness-2026-11-04/cleanup.json": "f914b5fa107f78141c4979f29b4091131506b330d91992e1f96fd1e674eab9fc",
+    "_local/anti-bot/primary-text-prototype-source-2026-11-04/cleanup.json": "b29d9191ca2c0b47aedeeb2ab7c31805f7430866cf30a213f27995c9a50beed1",
+    "_local/anti-bot/primary-text-cleanup-2026-11-04/preflight.json": "465a9758a6a305f78fd4669454fbdc3107a1f45d7ba03151f42e87366354086c",
+    "_local/anti-bot/primary-text-cleanup-2026-11-04/cache-result.json": "262efec8b105ff5f5433f067d3c8f14e7c678f47e6c93521b62ef30a3b140086"
+  }
+}

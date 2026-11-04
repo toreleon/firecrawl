@@ -2859,3 +2859,125 @@ configuration and full run. Eleven exact new cache records were pruned
 59 cache records were retained. Task infrastructure is stopped; nine unrelated
 running services, all 114 volumes and raw evidence were preserved. No global
 prune was used. Focused tests were not repeated for the subsequent evidence edit.
+
+## Main content readiness and workflow recovery (November 4)
+
+The saved Temu response exposed a recovery gap: its rendered puzzle produced
+`HUMAN_REQUIRED`, but the optional alternate was skipped because the older
+`botDetection` field was absent. Controlled API fixtures reproduced both that
+missed recovery and promotion of an HTTP 200 alternate declaring an unresolved
+workflow state. Before the change, ten unit checks and eleven full API protocol
+checks failed. Production source `70ff6e17a` now treats `HUMAN_REQUIRED` and
+`VERIFICATION_REQUIRED` as eligible failed captures under the existing completed
+attempt, closed-page, matching-owner and shared-deadline requirements. A supplied
+alternate state must be `CONTENT_READY` to count as recovered content. Older
+owners omitting state still pass through the other existing response checks.
+Retained sessions, actions, uncertain outcomes and extra attempts keep their
+existing restrictions. No puzzle answers are submitted.
+
+An eight-request, direct-egress browser-service probe used three Temu visits and
+one GitHub control per Chromium/Firefox engine. Neither engine matched Temu
+(0/3 each); both controls passed. The saved probes contained off-document sample
+text consistent with font measurement, footer labels below an empty main area,
+or format-only content. Five of the six Temu samples were marked ready despite
+returning only sample/footer text. This was not a successful access experiment.
+
+Owned fixtures reproduced premature capture from off-document spans and from
+footer text outside an empty main landmark. The repaired automatic check now
+samples rendered main text when available and body text otherwise, excluding
+text wholly outside the document's negative bounds. The bounded walk samples
+at most 20,000 text nodes and 4,096 characters. It preserves ordinary below-fold
+text, `display: contents`, explicit caller readiness and returned body text.
+Segmented loading labels remain loading. A temporarily absent document root
+during passive navigation stays an empty observation rather than throwing.
+
+This design uses the [main element's documented content role](https://html.spec.whatwg.org/multipage/grouping-content.html#the-main-element)
+and [text-range rectangles](https://developer.mozilla.org/en-US/docs/Web/API/Range/getClientRects).
+Document coordinates account for [horizontal scroll offsets, including negative RTL offsets](https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollX).
+These choices improve readiness heuristics; they are not proof of complete
+extraction or CSS visibility throughout the document.
+
+Verification passed 36 API unit checks, fourteen real API/queue/worker checks
+with controlled browser-protocol owners, 36 focused native browser/helper checks,
+eighteen Linux Chromium/Firefox checks and four real API/queue/browser snips.
+The protocol checks are not real-browser or public-site evidence. The real
+browser cases cover delayed content behind samples/footer labels, bounded
+failure, streaming/hidden bodies, partial busy output and explicit readiness.
+The initial Linux prototype exposed a missing-root race; its source and compiled
+files were exported before the obsolete image was removed. Final Linux tests
+passed after the guard was added.
+
+The [new full API receipt](../apps/playwright-service-ts/benchmarks/primary-text-full-api-results-2026-11-04.json)
+uses browser image `5003f3d1d` and source `70ff6e17a`. It retains the preceding
+paired run's 100 frozen targets per policy, one request per target/policy,
+four global HTTP workers/two per policy, seven-second per-policy pacing, an
+85-second request deadline and a 30-second initial-navigation cap. The one
+Chromium primary/two Firefox alternate topology retains a 6.5 GiB aggregate
+browser limit. No client retries, expected-text hints, upstream proxies or
+hosted requests were added.
+
+| Full v2 API, 100 targets/policy | Primary only | Opt-in fallback |
+| --- | --- | --- |
+| Raw HTML substring matches | 46 | 55 |
+| Screened matches | 45 | 55 |
+| Normalized matches | 46 | 56 |
+| Normalized matches also containing the supplementary Markdown marker | 44 | 53 |
+
+All 46 primary matches also matched with fallback; ten were fallback-only and
+44 matched neither. Owner logs account for 200 primary and 52 alternate calls,
+split 26/26. Returned fallback metadata covers 96 records, with ten reported
+recoveries and ten normalized matches. Canada Goose, Verizon, LinkedIn and
+Roblox omitted returned recovery metadata; their details are not inferred from
+scores. Temu returned longer regional-page Markdown but still lacked the frozen
+product marker. No Temu coverage gain is claimed.
+
+Against the preceding 47/54 paired run on `0c2c07695`, fallback gained Indeed,
+GoodRx and Google Search, and lost Apartments.com. The new 46/56 result does
+not isolate a code effect: source/browser identities, live epoch and shared-host
+activity differ. The last actual hosted comparison remains 56/82 on the earlier
+source; hosted was not refreshed. Coverage parity remains unproven.
+
+All 200 payload hashes, scores and output metrics replayed. The run took 746.9
+seconds. On the 46 common normalized successes, primary p50/p95 was 3.17/7.31
+seconds and fallback 2.98/8.55 seconds.
+Across all attempts, p95 was 15.11 seconds for primary and 21.74 seconds for
+fallback, versus 8.57/10.50 seconds in the preceding paired run. Tail
+latency therefore increased in this observation.
+
+Sampled owner memory peaked at 1,219/1,037/1,219 MiB, with zero observed
+memory-boundary/OOM/PID events.
+Socket-throttling counters were 3,068/7/1. The kernel documents this as a
+[separate network-socket throttling counter](https://www.kernel.org/doc/html/latest/admin-guide/cgroup-v2.html).
+An unrelated OpenGTM build overlapped 23:50:20–23:51:20 UTC; throttling had
+already been observed before that interval. Neither observation establishes a
+particular failure's cause. There is no isolated code-gain or speed claim.
+
+### Benchmark deadline hardening and final CI
+
+Initial CI passed 60 helper and 127 integration checks, with one benchmark-client
+timeout test cancelled. That test passed in isolated Linux Node 22. Its CI root
+cause was not isolated. A separate owned stream deliberately ignoring abort
+proved the client could remain pending after its deadline. Commit `9e2a939ac`
+now settles the deadline independently and cancels the body reader. Fixture
+teardown also follows the [Node HTTP close ordering](https://github.com/nodejs/node/blob/v22.x/doc/api/http.md#servercloseallconnections).
+Three benchmark-client checks passed on macOS and Linux Node 22. Final
+[browser CI](https://github.com/toreleon/firecrawl/actions/runs/41743254194)
+passed build, 60 helper checks, 129 integration checks and the production
+dependency audit. Broader server/SDK jobs are separate and not verified passed.
+
+This harness-only repair followed the completed 200-request run. Its historical
+runner source was preserved, request construction/metric source text was proved
+unchanged and all 200 saved observations replayed again without network calls.
+The nineteen recorded production source files are byte-equivalent between the
+measured and CI revisions; the intervening diff contains only benchmark client
+and integration-harness files. No historical receipt is relabelled as a new run.
+
+The [cleanup receipt](../apps/playwright-service-ts/benchmarks/primary-text-cleanup-results-2026-11-04.json)
+verifies twelve task containers removed, one obsolete prototype image removed
+after exporting its source/compiled files, and nineteen exact task cache records
+pruned (Docker-reported 1.3 MB). Cache ownership used the two build records,
+non-overlapping build windows, before/after inventories and parent-chain checks.
+All 59 baseline cache records, 69 concurrent unrelated cache records, pinned
+images, nine unrelated running services and all 114 volumes were preserved.
+The verified image and raw evidence remain; task infrastructure is stopped.
+No global prune was used. Source suites were not repeated for this evidence edit.
