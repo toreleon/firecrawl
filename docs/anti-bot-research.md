@@ -3068,3 +3068,79 @@ Task API/owner ports are closed and PostgreSQL/Redis/RabbitMQ are stopped. The
 same nine unrelated containers and all 114 volume names were preserved, as were
 the reusable image and raw evidence. No images were built or removed, and no
 cache or global prune was performed in this experiment.
+
+### Contained WebKit prototype (November 4)
+
+The [prototype receipt](../apps/playwright-service-ts/benchmarks/webkit-prototype-results-2026-11-04.json)
+records a useful site-specific lead: WebKit retrieved the expected rendered Saks
+product content in **five of five** matched fresh-context visits. Chromium and
+Firefox each passed **zero of five**; all six GitHub controls passed. These are
+browser-service observations, not full Firecrawl API results. The earlier
+sixteen-target comparison tied at three successes for each engine. WebKit's
+default user agent subsequently scored four of sixteen, while Linux-platform
+and pinned-upstream GLib-format variants each scored three; the extra Saks
+success prompted the matched replication. These measurements support further
+integration work, not an aggregate coverage or hosted-parity claim.
+
+All three bundles ran headful Linux ARM64 on the same prototype image, with two
+CPU quota, 2 GiB and one page slot each. Three HTTP workers, one per owner, used
+direct VN egress, enabled page JavaScript, fresh contexts, one service attempt,
+30-second navigation/service deadlines and a 35-second client deadline. No
+client retries, expected-text hints, upstream proxies or hosted calls were used.
+Each matched Saks batch followed a fifteen-second wait and rotated engine order.
+Independent replay checked all 117 completed payload hashes, frozen scores,
+rendered markers, backend dispatches, owner boot IDs and page-close proofs.
+The reused pacer reserves a slot before starting fetch: per-profile minimum
+observed gaps were 6.991–7.001 seconds, so its seven-second configuration is not
+an exact dispatch floor. All three experiments reached concurrency three;
+OOM, OOM-kill and PID-limit counters remained zero.
+
+The candidate uses Playwright 1.64.1, WebKit 27.2/revision 2370, Chromium
+156.0.8078.4 and Camoufox 158.0.1-beta.41. Playwright documents that its
+[WebKit build](https://playwright.dev/docs/browsers) is patched upstream WebKit,
+not installed Safari. The pinned
+[upstream configuration](https://github.com/microsoft/playwright/blob/v1.64.1/browser_patches/webkit/UPSTREAM_CONFIG.sh)
+and [GLib user-agent source](https://github.com/WebKit/WebKit/blob/56453fdfe0b0ca6258c23e6453b34f70b885d13f/Source/WebCore/platform/glib/UserAgentGLib.cpp)
+informed the UA variants; changing those strings did not establish an improvement.
+The default UA describes macOS while this runtime reports a Linux platform.
+Engine identity, time, rate effects, host load and different network containment
+remain confounders; this is a comparison of bundles, not an isolated driver test.
+
+Owned probes showed that uncontained WebKit sent three STUN UDP packets and
+opened one TURN TCP connection outside the HTTP filtering proxy. A native macOS
+sandbox wrapper also failed owned loopback/RTC checks and was not used against
+public benchmark targets. The Linux candidate instead runs its browser as UID
+1000 with zero effective capabilities and NoNewPrivs, while a trusted root
+service with container-scoped NET_ADMIN installs IPv4/IPv6 UID rules allowing
+only TCP to the local destination-filtering proxy. Owned HTTP/HTTPS allowances,
+private-address rejection and page JavaScript passed; RTC probes then observed
+zero UDP packets and zero TCP connections. The IPv6 rule was installed, but no
+actual IPv6 packet negative test is claimed. This experimental privilege model
+still needs production design, child-environment isolation and focused tests.
+
+Three initial GitHub control calls exposed a missing system CA bundle: Chromium
+and Firefox passed while WebKit rejected the certificate. The run stopped before
+comparison targets. Installing standard `ca-certificates` repaired the candidate;
+verification stayed enabled, and an owned untrusted certificate was still
+rejected. This image setup defect does not explain historical engine failures.
+The public-request accounting is **120 RPCs**: those three aborted controls plus
+48 engine comparisons, 48 UA comparisons and 21 matched-replication calls.
+Ancillary geolocation checks and a Node TLS diagnostic are separate.
+
+All 26 measured runtime source/compiled files match checkout `ac870a06f`.
+Only private experimental bootstrap/launch code changed; WebKit has not yet
+been added to the production API or fallback policy. Next work is explicit
+engine/port configuration, a least-privilege network boundary, session/fallback
+compatibility and focused happy/failure tests, followed by a bounded proxy-free
+hundred-target evaluation. The last full run remains primary 46/fallback 56;
+the historical hosted reference remains 82. Neither was rerun here.
+
+Cleanup verified 24 task containers absent, two obsolete task images removed,
+29 exact task cache records pruned (Docker-reported 696 MB), and the unused
+302,570,601-byte native browser cache removed after retaining executable hashes.
+The working experimental image `8ea3f825…`, production image `5003f3d1…`, raw
+evidence, all 128 baseline cache records, nine unrelated running services and all
+114 volumes were preserved. Build windows, parent chains and an exact-ID preview
+bounded cache removal. Shared browser caches were untouched; no global prune was
+used. No production source changed, so the prior 205-check browser CI remains
+production-runtime evidence, not validation of the experimental WebKit launcher.
