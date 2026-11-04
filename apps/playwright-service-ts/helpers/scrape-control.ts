@@ -150,16 +150,22 @@ export const errorCode = (error: unknown) => {
   const message = String(error);
   if (networkErrorCode(error)) return 'NETWORK_ERROR';
   if (/Timeout|deadline/i.test(message)) return 'SCRAPE_TIMEOUT';
-  if (/ECONN|ENOTFOUND|EAI_AGAIN/.test(message))
-    return 'NETWORK_ERROR';
+  if (/ECONN|ENOTFOUND|EAI_AGAIN/.test(message)) return 'NETWORK_ERROR';
   return 'BROWSER_ERROR';
 };
 
-export const networkErrorCode = (error: unknown) =>
-  String(error).match(/net::(ERR_[A-Z0-9_]+)/)?.[1] ??
-  String(error).match(
-    /\b(NS_ERROR_(?:NET_RESET|NET_INTERRUPT|NET_TIMEOUT|CONNECTION_REFUSED|UNKNOWN_HOST|PROXY_CONNECTION_REFUSED))\b/,
-  )?.[1];
+export const networkErrorCode = (error: unknown) => {
+  const message = error instanceof Error ? error.message : String(error);
+  return (
+    message.match(/net::(ERR_[A-Z0-9_]+)/)?.[1] ??
+    message.match(
+      /\b(NS_ERROR_(?:NET_RESET|NET_INTERRUPT|NET_TIMEOUT|CONNECTION_REFUSED|UNKNOWN_HOST|PROXY_CONNECTION_REFUSED))\b/,
+    )?.[1] ??
+    (/^page\.goto: Connection terminated unexpectedly(?:\n|$)/.test(message)
+      ? 'WEBKIT_CONNECTION_TERMINATED'
+      : undefined)
+  );
+};
 
 export const isRetryableScrapeError = (error: unknown) => {
   if (error instanceof ScrapeFailure) return error.code === 'SCRAPE_TIMEOUT';
@@ -174,6 +180,7 @@ export const isRetryableScrapeError = (error: unknown) => {
       'NS_ERROR_NET_RESET',
       'NS_ERROR_NET_INTERRUPT',
       'NS_ERROR_NET_TIMEOUT',
+      'WEBKIT_CONNECTION_TERMINATED',
     ].includes(network);
   return errorCode(error) === 'SCRAPE_TIMEOUT';
 };

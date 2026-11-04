@@ -105,7 +105,11 @@ test('network diagnostics preserve numeric Chromium protocol names', () => {
 });
 
 test('observed Gecko transport errors remain typed and only transient cases permit explicit retries', () => {
-  for (const code of ['NS_ERROR_NET_RESET', 'NS_ERROR_NET_INTERRUPT', 'NS_ERROR_NET_TIMEOUT']) {
+  for (const code of [
+    'NS_ERROR_NET_RESET',
+    'NS_ERROR_NET_INTERRUPT',
+    'NS_ERROR_NET_TIMEOUT',
+  ]) {
     const error = new Error(`page.goto: ${code} at https://example.com`);
     assert.equal(networkErrorCode(error), code);
     assert.equal(errorCode(error), 'NETWORK_ERROR');
@@ -116,8 +120,34 @@ test('observed Gecko transport errors remain typed and only transient cases perm
     assert.equal(errorCode(code), 'NETWORK_ERROR');
     assert.equal(isRetryableScrapeError(code), false);
   }
-  for (const code of ['NS_BINDING_ABORTED', 'SEC_ERROR_UNKNOWN_ISSUER', 'SSL_ERROR_BAD_CERT_DOMAIN', 'NS_ERROR_DOM_BAD_URI', 'NS_ERROR_FAILURE']) {
+  for (const code of [
+    'NS_BINDING_ABORTED',
+    'SEC_ERROR_UNKNOWN_ISSUER',
+    'SSL_ERROR_BAD_CERT_DOMAIN',
+    'NS_ERROR_DOM_BAD_URI',
+    'NS_ERROR_FAILURE',
+  ]) {
     assert.equal(isRetryableScrapeError(code), false);
     assert.equal(networkErrorCode(code), undefined);
+  }
+});
+
+test('WebKit navigation EOF is transient without reclassifying TLS, renderer or evaluation failures', () => {
+  const error = new Error(
+    'page.goto: Connection terminated unexpectedly\nCall log:\n  - navigating to https://example.test/',
+  );
+  assert.equal(networkErrorCode(error), 'WEBKIT_CONNECTION_TERMINATED');
+  assert.equal(errorCode(error), 'NETWORK_ERROR');
+  assert.equal(isRetryableScrapeError(error), true);
+  for (const message of [
+    'page.goto: Unacceptable TLS certificate',
+    'page.goto: Peer failed to perform TLS handshake: The TLS connection was non-properly terminated.',
+    'page.evaluate: Connection terminated unexpectedly',
+    'page.evaluate: Target crashed',
+    'page.goto: Connection terminated unexpectedly while executing arbitrary code',
+  ]) {
+    assert.equal(networkErrorCode(new Error(message)), undefined);
+    assert.equal(errorCode(new Error(message)), 'BROWSER_ERROR');
+    assert.equal(isRetryableScrapeError(new Error(message)), false);
   }
 });

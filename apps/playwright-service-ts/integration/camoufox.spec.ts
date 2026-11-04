@@ -89,6 +89,26 @@ test(
         },
       );
       await t.test(
+        'blob-backed workers render under the same destination policy',
+        async () => {
+          const result = await scrape(
+            service.baseUrl,
+            fixtures.url + '/blob-worker',
+            {
+              wait_for_text: 'Owned blob worker content 42',
+              readiness_timeout: 2000,
+            },
+          );
+          assert.equal(result.status, 200);
+          assert.equal(result.body.errorCode, undefined);
+          assert.match(
+            result.body.renderedText,
+            /Owned blob worker content 42/,
+          );
+          assert.equal(result.body.diagnostics.blockedRequests.private, 0);
+        },
+      );
+      await t.test(
         'a failed selector closes the page and releases capacity',
         async () => {
           for (let attempt = 0; attempt < 3; attempt++) {

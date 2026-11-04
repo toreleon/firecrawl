@@ -70,6 +70,29 @@ test(
               assert.equal(JSON.parse(next.body.content).cookie, null);
             });
             await t.test(
+              'blob-backed workers can render content under the destination policy',
+              async () => {
+                const result = await scrape(
+                  service.baseUrl,
+                  fixtures.url + '/blob-worker',
+                  {
+                    wait_for_text: 'Owned blob worker content 42',
+                    readiness_timeout: 2000,
+                  },
+                );
+                assert.equal(result.status, 200);
+                assert.equal(result.body.errorCode, undefined);
+                assert.match(
+                  result.body.renderedText,
+                  /Owned blob worker content 42/,
+                );
+                assert.equal(
+                  result.body.diagnostics.blockedRequests.private,
+                  0,
+                );
+              },
+            );
+            await t.test(
               'reports an unresolved HTTP 200 bot challenge as an error',
               async () => {
                 const result = await scrape(

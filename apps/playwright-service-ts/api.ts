@@ -9,7 +9,11 @@ import {
 import dotenv from 'dotenv';
 import { getError } from './helpers/get_error';
 import { Server } from 'proxy-chain';
-import { isInternalHost, ssrfPrepareRequest } from './helpers/ssrf';
+import {
+  isInternalHost,
+  resourceSecurityUrl,
+  ssrfPrepareRequest,
+} from './helpers/ssrf';
 import { browserConfiguration, launchBrowser } from './helpers/browser';
 import { detectPageProtection } from './helpers/page-readiness';
 import { cookieScope } from './helpers/cookies';
@@ -223,8 +227,12 @@ const createContext = async (
     '**/*',
     async (route: Route, request: PlaywrightRequest) => {
       const requestUrlString = request.url();
+      const securityUrl = resourceSecurityUrl(
+        requestUrlString,
+        request.isNavigationRequest(),
+      );
       try {
-        await assertSafeTargetUrl(requestUrlString);
+        await assertSafeTargetUrl(securityUrl);
       } catch (error) {
         if (error instanceof InsecureConnectionError) {
           securityState.blockedRequests.private++;
@@ -240,7 +248,7 @@ const createContext = async (
         throw error;
       }
 
-      const hostname = new URL(requestUrlString).hostname.toLowerCase();
+      const hostname = new URL(securityUrl).hostname.toLowerCase();
 
       if (
         workflowOrigin &&
@@ -253,7 +261,7 @@ const createContext = async (
       if (
         blockAds &&
         shouldBlockAdRequest(
-          requestUrlString,
+          securityUrl,
           request.frame().page().url(),
           request.isNavigationRequest() &&
             request.frame().parentFrame() === null,

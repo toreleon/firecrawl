@@ -8,9 +8,39 @@ import {
   pinnedLookup,
   resolvePublicAddresses,
   ssrfPrepareRequest,
+  resourceSecurityUrl,
 } from './ssrf';
 
 const PUBLIC_IP = '8.8.8.8';
+
+test('blob subresources use their HTTP origin for security checks without allowing opaque origins or blob navigation', async () => {
+  assert.equal(
+    resourceSecurityUrl('blob:https://example.test/owned', false),
+    'https://example.test',
+  );
+  assert.equal(
+    resourceSecurityUrl('blob:http://example.test:8080/owned', false),
+    'http://example.test:8080',
+  );
+  for (const url of [
+    'blob:null/owned',
+    'blob:file:///private/owned',
+    'data:text/html,owned',
+    'file:///private/owned',
+    'https://example.test/path',
+  ])
+    assert.equal(resourceSecurityUrl(url, false), url);
+  const navigation = 'blob:https://example.test/owned';
+  assert.equal(resourceSecurityUrl(navigation, true), navigation);
+  const privateTarget = resourceSecurityUrl(
+    'blob:http://127.0.0.1/owned',
+    false,
+  );
+  assert.equal(
+    await resolvePublicAddresses(new URL(privateTarget).hostname),
+    null,
+  );
+});
 
 const listen = async (server: net.Server): Promise<number> => {
   await new Promise<void>((resolve) => server.listen(0, '127.0.0.1', resolve));

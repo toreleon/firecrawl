@@ -103,7 +103,15 @@ export const startFixtures = async () => {
   const server = http.createServer((req, res) => {
     const url = new URL(req.url ?? '/', 'http://fixture.test');
     res.setHeader('content-type', 'text/html');
-    if (url.pathname === '/gate') {
+    if (url.pathname === '/blob-data') {
+      res.end('Owned blob worker content 42');
+    } else if (url.pathname === '/blob-worker') {
+      const endpoint = `http://${req.headers.host}/blob-data`;
+      const worker = `fetch(${JSON.stringify(endpoint)}).then(r=>r.text()).then(text=>postMessage(text))`;
+      res.end(
+        `<main>Loading...</main><script>const worker=new Worker(URL.createObjectURL(new Blob([${JSON.stringify(worker)}],{type:'text/javascript'})));worker.onmessage=event=>{document.querySelector('main').textContent=event.data;worker.terminate()};</script>`,
+      );
+    } else if (url.pathname === '/gate') {
       res.end(`<!doctype html><title>Automation diagnostic fixture</title>
         <body><div id="pending">Checking browser</div><script>
         const worker = new Worker('/worker.js');

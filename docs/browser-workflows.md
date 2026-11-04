@@ -97,6 +97,16 @@ it does not try every engine. WebKit is an upstream Playwright build, not
 installed Safari. The selected-site prototype result does not establish an
 overall coverage gain; a fresh full-API benchmark is still required.
 
+Blob-backed subresources use their HTTP/HTTPS origin for the same private-address
+and ad checks before browser-local resolution. Top-level blob targets/navigations
+and opaque blob origins remain unsupported; worker network requests still pass
+through the destination filter. A confirmed WebKit `page.goto` connection
+termination is reported as `NETWORK_ERROR` with
+`networkErrorCode: WEBKIT_CONNECTION_TERMINATED`, making it eligible for the same
+bounded opt-in fallback as other transport failures. This classification does
+not cover certificate rejection, other TLS failures, page crashes or evaluation
+exceptions.
+
 Configure a separate internal owner pool on the API and workers:
 
 ```dotenv
