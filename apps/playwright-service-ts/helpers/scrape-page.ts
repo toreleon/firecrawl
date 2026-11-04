@@ -122,7 +122,9 @@ export const scrapePage = async (
   );
   state.phase = 'workflow';
   const workflow = await deadline.run(
-    applyWorkflow(page, options.workflow ?? 'none', deadline),
+    applyWorkflow(page, options.workflow ?? 'none', deadline, (phase) => {
+      state.phase = phase;
+    }),
   );
   state.phase = 'actions';
   const actions = await deadline.run(
@@ -190,7 +192,11 @@ export const scrapePage = async (
     amazonProductIdentity(page.url()) === originalProduct.asin
   ) {
     state.phase = 'workflow-late';
-    const late = await deadline.run(applyWorkflow(page, 'auto', deadline));
+    const late = await deadline.run(
+      applyWorkflow(page, 'auto', deadline, (phase) => {
+        state.phase = phase;
+      }),
+    );
     if (late.steps.length) {
       workflow.steps.push(...late.steps);
       Object.assign(workflow.observations, late.observations);

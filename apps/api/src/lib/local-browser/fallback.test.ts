@@ -296,6 +296,43 @@ describe("Explicit stateless browser-engine fallback", () => {
       { url: "https://example.com/item", status: 200 },
     ]);
   });
+  it.each([
+    "workflow-country-text",
+    "workflow-country-links",
+    "workflow-country-navigation",
+  ])(
+    "preserves the bounded country phase %s through a queued failure",
+    async phase => {
+      await configure(
+        {
+          apiStatus: 500,
+          code: "SCRAPE_TIMEOUT",
+          document: {
+            phase,
+            url: "https://user:password@example.com/item?token=private#secret",
+            unknown: "not-copied",
+          },
+        },
+        { engine: "camoufox", apiStatus: 500, code: "SCRAPE_TIMEOUT" },
+      );
+      const error = await request().catch(error => error);
+      const transported = new LocalBrowserTransportError(
+        error.code,
+        error.message,
+        error.status,
+        error.browserDiagnostics,
+      );
+      const restored = deserializeTransportableError(
+        serializeTransportableError(transported),
+      );
+      expect(
+        restored.browserDiagnostics.engineFallback.attempts[0].document,
+      ).toEqual({ phase, url: "https://example.com/item" });
+      expect(JSON.stringify(restored.browserDiagnostics)).not.toMatch(
+        /password|private|secret|not-copied/,
+      );
+    },
+  );
   it("retains a closed failure through queue serialization without enabling fallback", async () => {
     const { fallback } = await configure({
       engine: "webkit",

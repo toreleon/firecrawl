@@ -588,6 +588,12 @@ export const applyWorkflow = async (
   page: Page,
   workflow: Workflow,
   deadline: Deadline,
+  onPhase?: (
+    phase:
+      | 'workflow-country-text'
+      | 'workflow-country-links'
+      | 'workflow-country-navigation',
+  ) => void,
 ) => {
   const steps: { type: string; outcome: string }[] = [];
   const url = new URL(page.url());
@@ -603,6 +609,8 @@ export const applyWorkflow = async (
       observed: boolean;
       candidateCount: number;
       waitMs: number;
+      discoveryTimeoutMs: number;
+      navigationTimeoutMs?: number;
     };
   } = { entryHost: url.hostname };
   if (workflow === 'auto' && amazonProductIdentity(url.href)) {
@@ -760,24 +768,39 @@ export const applyWorkflow = async (
     // Prompt hydration and deep-link rewriting are separate. Wait for a link
     // that passes the same identity check used for navigation, not any US link.
     const started = Date.now();
-    const end =
-      started + Math.min(5000, Math.max(1, deadline.remaining() - 300));
+    const discoveryTimeoutMs = Math.min(
+      5000,
+      Math.max(1, deadline.remaining() - 300),
+    );
+    const end = started + discoveryTimeoutMs;
+    const discovery = new Deadline(discoveryTimeoutMs);
+    const check = () => {
+      deadline.remaining();
+      discovery.remaining();
+    };
     let destination: string | null = null;
     let observed = false;
     let candidateCount = 0;
     do {
+      check();
+      onPhase?.('workflow-country-text');
       const text = await deadline.run(
-        page.evaluate(() => document.body?.innerText ?? ''),
+        discovery.run(page.evaluate(() => document.body?.innerText ?? '')),
       );
+      check();
       if (/choose\s+a\s+country|select\s+your\s+country/i.test(text)) {
         observed = true;
+        onPhase?.('workflow-country-links');
         const links = await deadline.run(
-          page
-            .locator('a[href]')
-            .evaluateAll((links) =>
-              links.map((link) => (link as HTMLAnchorElement).href),
-            ),
+          discovery.run(
+            page
+              .locator('a[href]')
+              .evaluateAll((links) =>
+                links.map((link) => (link as HTMLAnchorElement).href),
+              ),
+          ),
         );
+        check();
         candidateCount = links.length;
         for (const href of links) {
           destination = countryDestination(url.href, href);
@@ -792,12 +815,25 @@ export const applyWorkflow = async (
       observed,
       candidateCount,
       waitMs: Date.now() - started,
+      discoveryTimeoutMs,
     };
     if (destination) {
+      check();
+      if (deadline.remaining() <= 300)
+        throw new ScrapeFailure(
+          'SCRAPE_TIMEOUT',
+          'Insufficient country-navigation budget',
+        );
+      const navigationTimeoutMs = Math.min(30000, deadline.remaining() - 300);
+      observations.countrySelection.navigationTimeoutMs = navigationTimeoutMs;
+      onPhase?.('workflow-country-navigation');
+      // Await the native navigation timeout. An unfinished navigation fails
+      // before capture; existing Page-close proof remains required for fallback.
       await page.goto(destination, {
         waitUntil: 'domcontentloaded',
-        timeout: deadline.remaining(),
+        timeout: navigationTimeoutMs,
       });
+      deadline.remaining();
       steps.push({
         type: 'country-selection',
         outcome: 'navigated-original-product',
