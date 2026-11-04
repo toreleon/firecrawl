@@ -94,8 +94,9 @@ A WebKit owner can replace a member of the primary or alternate URL lists below;
 the existing distinct-engine/boot, closed-page and one-alternate rules still
 apply. A heterogeneous alternate list uses the existing round-robin selection;
 it does not try every engine. WebKit is an upstream Playwright build, not
-installed Safari. The selected-site prototype result does not establish an
-overall coverage gain; a fresh full-API benchmark is still required.
+installed Safari. The latest complete proxy-free API measurement is linked
+below; selected-site results alone do not establish overall coverage, and
+comparable hosted performance remains unproven.
 
 Blob-backed subresources use their HTTP/HTTPS origin for the same private-address
 and ad checks before browser-local resolution. Top-level blob targets/navigations
@@ -578,3 +579,10 @@ matched 59/100 normalized markers with direct VN egress, a four-worker cap,
 selected four-target observation for population measurement. The prior complete
 run matched 54/100; live-epoch differences prevent an isolated causal claim.
 The historical hosted82 reference was not refreshed, and parity remains unproven.
+
+The [complete API rerun after Autotrader access-block recognition](benchmarks/autotrader-full-api-results-2026-11-04.json)
+matched 61/100 normalized markers with direct VN egress, a four-worker cap,
+100 API requests and 158 browser captures. It supplies population measurement
+separately from the selected cohort. The preceding complete result was 59/100;
+live-epoch differences prevent an isolated causal claim. The historical hosted
+82/100 reference was not refreshed; comparable coverage remains unproven.

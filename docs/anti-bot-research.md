@@ -3690,3 +3690,77 @@ prune or image/volume removal was used. A fresh full 100-target benchmark on
 this candidate is still required before claiming aggregate improvement.
 
 [Selected result, offline replay, deployment hashes, CI and cleanup](benchmarks/autotrader-block-results-2026-11-04.json).
+
+## Complete 100-target measurement after Autotrader block recognition
+
+Measured checkout: `0d130c7c4a2e91acb2d0beb2d3f7e36a68d8f7cb`, with production and test inputs byte-equivalent
+to verified implementation `37df06d0849e8abae9fa79c9cf8d6580653dd275`. The already validated pinned browser image
+was reused without production changes or a new build. This is the complete
+population run required after the earlier selected Autotrader observation;
+the four-target cohort remains separate evidence.
+
+| Full v2 API, same frozen 100 targets | Result |
+| --- | ---: |
+| Normalized content-marker matches | 61/100 |
+| Screened matches | 60/100 |
+| Normalized matches also containing supplementary Markdown marker | 58/100 |
+| Successful-request p50 / p95 | 4.54 s / 7.69 s |
+| All-request p95 | 9.13 s |
+
+The run completed 100 API RPCs and 158 browser captures under a
+four-worker cap, one API request per target, no client retries or expected-text
+hints, direct VN egress, no upstream proxy and no hosted API calls. The same
+consent/workflow controls, 30-second initial-navigation and 85-second API
+deadlines, seven-second reservation pacing and 6,656-MiB aggregate browser cap
+were retained. All 100 score/hash/lifecycle replays passed. Backend URL logs
+account for every capture; owner runtime source/compiled hashes and API
+source/compiled hashes match the measured checkout before and after the run.
+
+Autotrader matched in this complete run; its primary and optional alternate
+receipts are retained. New-only normalized matches against the preceding
+complete 59/100 run: autotrader, Google Search, Apartments.com. Previous-only matches: louisvuitton. The difference
+between live epochs is not an isolated causal code effect. The historical
+hosted 82/100 reference was not refreshed; comparable hosted coverage remains
+unproven. Marker matches are not extraction F1, CSS visibility, crawl
+completeness or WAF-vendor ground truth.
+
+The run returned 158 closed-Page proofs and
+158 fulfilled-context receipts. Selected responses
+with explicitly unconfirmed context closure: none. Final owners reported
+zero active pages/sessions. Resource counters and memory peaks remain in the
+receipt, including socket-throttling maxima `{'primary-a': 0, 'fallback-a': 1, 'fallback-b': 170}`. Supplemental read-only
+pressure samples were collected after startup on LinuxKit 7.0.12. No CPU,
+memory, networking or runtime configuration changed during the run.
+
+The [kernel cgroup documentation](https://docs.kernel.org/admin-guide/cgroup-v2.html)
+defines the socket-throttling event separately from OOM/high/max events.
+Nonzero socket events do not identify an origin WAF decision or establish a
+particular request's cause. Supplemental CPU/pressure observations are not a
+paired resource experiment, and no causal performance gain is inferred.
+
+A read-only review found that 38 of the 39 failed targets had already used the
+permitted alternate; Allmenus remained region-unavailable. All four failed
+responses labeled `CONTENT_READY` had also used an alternate, including two
+HTTP 429 responses, one HTTP 406 response and American Airlines' noncontent
+marker. Relabeling those responses cannot unlock a third capture. Canada Goose
+is a separate workflow candidate: both engines received HTTP 200 before a
+workflow timeout. The exact failing operation is not established; bounded
+optional probes and honest capture/workflow outcomes should be investigated
+without assuming that the frozen marker will start matching.
+
+Existing [implementation CI](https://github.com/toreleon/firecrawl/actions/runs/41781905522) is carried forward explicitly:
+78 helpers, 161 ordinary integration checks (six optional skips), production
+dependency audit and 21 contained WebKit checks. The earlier five-engine local
+checks, three owned full-API snips and API type checking also belong to candidate
+validation. No unchanged suite was rerun or relabeled as new evidence. The fresh
+measurement used `pnpm harness`, exited zero and reported processes terminated;
+extract-worker teardown again logged a channel-closing error, so clean shutdown
+and broader server/SDK workflows are not claimed.
+
+Cleanup removed three task browser containers after preserving their logs and
+stopped task PostgreSQL, Redis and RabbitMQ. Task ports are closed. No image,
+cache or volume was removed and no build/global prune ran. Baseline images,
+128 cache records, nine unrelated services, all 114 volumes, the reusable image
+and raw evidence remain.
+
+[Full result, per-target failures, closure receipts, source equivalence, deployment hashes and cleanup](benchmarks/autotrader-full-api-results-2026-11-04.json).
