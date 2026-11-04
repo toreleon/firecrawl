@@ -789,20 +789,23 @@ export const applyWorkflow = async (
     );
     const end = started + discoveryTimeoutMs;
     const discovery = new Deadline(discoveryTimeoutMs);
-    const check = () => {
+    const canDiscover = () => {
       deadline.remaining();
-      discovery.remaining();
+      return Date.now() < end;
     };
     let destination: string | null = null;
     let observed = false;
     let candidateCount = 0;
     do {
-      check();
+      if (!canDiscover()) break;
       onPhase?.('workflow-country-text');
       const text = await deadline.run(
         discovery.run(page.evaluate(() => document.body?.innerText ?? '')),
       );
-      check();
+      // A completed read may be delivered as the discovery window closes.
+      // Discard that result without failing the remaining caller budget or
+      // starting another RPC. A stuck read still rejects via discovery.run.
+      if (!canDiscover()) break;
       if (/choose\s+a\s+country|select\s+your\s+country/i.test(text)) {
         observed = true;
         onPhase?.('workflow-country-links');
@@ -815,7 +818,7 @@ export const applyWorkflow = async (
               ),
           ),
         );
-        check();
+        if (!canDiscover()) break;
         candidateCount = links.length;
         for (const href of links) {
           destination = countryDestination(url.href, href);
@@ -826,14 +829,14 @@ export const applyWorkflow = async (
       if (Date.now() < end)
         await deadline.sleep(Math.min(100, end - Date.now()));
     } while (Date.now() < end);
+    deadline.remaining();
     observations.countrySelection = {
       observed,
       candidateCount,
       waitMs: Date.now() - started,
       discoveryTimeoutMs,
     };
-    if (destination) {
-      check();
+    if (destination && canDiscover()) {
       if (deadline.remaining() <= 300)
         throw new ScrapeFailure(
           'SCRAPE_TIMEOUT',

@@ -4,6 +4,58 @@ import { applyWorkflow } from './workflows';
 import { Deadline } from './scrape-control';
 
 const url = 'https://www.bestbuy.com/site/owned/42.p?skuId=42';
+test('a completed country poll at the discovery boundary stays unresolved without a late navigation', async (t) => {
+  for (const stage of ['text', 'links']) {
+    let now = 0;
+    t.mock.method(Date, 'now', () => now);
+    const calls = { text: 0, links: 0, navigation: 0 };
+    const page = {
+      url: () => url,
+      evaluate: async () => {
+        calls.text++;
+        if (stage === 'text' && calls.text === 2) {
+          await Promise.resolve();
+          now = 5000;
+        }
+        return 'Choose a country';
+      },
+      locator: () => ({
+        evaluateAll: async () => {
+          calls.links++;
+          if (stage === 'links' && calls.links === 2) {
+            await Promise.resolve();
+            now = 5000;
+            return [url + '&intl=nosplash'];
+          }
+          return ['https://other.test/wrong?intl=nosplash'];
+        },
+      }),
+      goto: async () => {
+        calls.navigation++;
+      },
+    } as any;
+    const deadline = new Deadline(12000);
+    t.mock.method(deadline, 'sleep', async () => {
+      now = 4999;
+    });
+    const result = await applyWorkflow(page, 'auto', deadline);
+    assert.equal(result.steps[0]?.outcome, 'destination_not_ready', stage);
+    assert.equal(result.observations.countrySelection?.observed, true, stage);
+    assert.equal(
+      result.observations.countrySelection?.candidateCount,
+      1,
+      stage,
+    );
+    assert.equal(deadline.remaining(), 7000, stage);
+    assert.deepEqual(calls, {
+      text: 2,
+      links: stage === 'text' ? 1 : 2,
+      navigation: 0,
+    });
+    t.mock.restoreAll();
+  }
+});
+
 test('the country discovery window bounds both RPCs and cannot navigate from a late result', async () => {
   await Promise.all(
     ['text', 'links'].map(async (stage) => {
@@ -45,6 +97,39 @@ test('the country discovery window bounds both RPCs and cannot navigate from a l
       assert.equal(calls.links, stage === 'text' ? 0 : 1);
     }),
   );
+});
+
+test('a completed country read cannot hide caller expiry at either RPC boundary', async (t) => {
+  for (const stage of ['text', 'links']) {
+    let now = 0;
+    t.mock.method(Date, 'now', () => now);
+    let navigations = 0;
+    const finish = async (value: any) => {
+      await Promise.resolve();
+      now = 12000;
+      return value;
+    };
+    const page = {
+      url: () => url,
+      evaluate: () =>
+        stage === 'text'
+          ? finish('Choose a country')
+          : Promise.resolve('Choose a country'),
+      locator: () => ({
+        evaluateAll: () => finish([url + '&intl=nosplash']),
+      }),
+      goto: async () => {
+        navigations++;
+      },
+    } as any;
+    await assert.rejects(
+      applyWorkflow(page, 'auto', new Deadline(12000)),
+      (error: any) => error.code === 'SCRAPE_TIMEOUT',
+      stage,
+    );
+    assert.equal(navigations, 0, stage);
+    t.mock.restoreAll();
+  }
 });
 
 test('country navigation uses a native thirty-second cap and preserves the validated destination', async () => {

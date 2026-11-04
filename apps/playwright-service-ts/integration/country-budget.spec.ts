@@ -77,7 +77,15 @@ test(
                   'workflow-country-navigation',
                 );
               } else {
-                assert.equal(result.status, 200, mode);
+                assert.equal(
+                  result.status,
+                  200,
+                  JSON.stringify({
+                    mode,
+                    errorCode: result.body.errorCode,
+                    phase: receipt.document?.phase,
+                  }),
+                );
                 const workflow = result.body.interaction.workflow;
                 assert.equal(
                   workflow.observations.countrySelection.discoveryTimeoutMs,
