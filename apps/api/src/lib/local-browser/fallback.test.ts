@@ -3,6 +3,11 @@ import { randomUUID } from "node:crypto";
 import { config } from "../../config";
 import { scrapeLocalBrowser } from "./client";
 import { scrapeRequestSchema } from "../../controllers/v2/types";
+import { LocalBrowserTransportError } from "../error";
+import {
+  deserializeTransportableError,
+  serializeTransportableError,
+} from "../error-serde";
 
 describe("Explicit stateless browser-engine fallback", () => {
   const prior = {
@@ -36,6 +41,8 @@ describe("Explicit stateless browser-engine fallback", () => {
       url?: string;
       navigationTimeout?: boolean;
       interactionState?: string;
+      document?: Record<string, unknown>;
+      networkErrorCode?: unknown;
     } = {},
   ) => {
     const boot = randomUUID();
@@ -67,12 +74,23 @@ describe("Explicit stateless browser-engine fallback", () => {
       res.statusCode = options.apiStatus ?? 200;
       const diagnostics = {
         ownerBootId: options.wrongBoot ? randomUUID() : boot,
-        attempts: [{ attempt: 1, pageClosed: options.closed ?? true }],
+        attempts: [
+          {
+            attempt: 1,
+            pageClosed: options.closed ?? true,
+            document: options.document,
+            networkErrorCode: options.networkErrorCode,
+          },
+        ],
       };
       res.end(
         JSON.stringify(
           options.code
-            ? { errorCode: options.code, diagnostics }
+            ? {
+                errorCode: options.code,
+                networkErrorCode: options.networkErrorCode,
+                diagnostics,
+              }
             : {
                 content:
                   status === 200
@@ -182,6 +200,178 @@ describe("Explicit stateless browser-engine fallback", () => {
       "NETWORK_ERROR",
     );
     expect([primary.calls.scrape, fallback.calls.scrape]).toEqual([1, 1]);
+  });
+
+  it("recovers a renderer crash only with observed crash and page-close proof", async () => {
+    const { primary, fallback } = await configure({
+      engine: "webkit",
+      apiStatus: 500,
+      code: "PAGE_CRASHED",
+      document: { phase: "capture", rendererCrashed: true },
+    });
+    const result = await request();
+    expect(result.diagnostics.engineFallback.recovered).toBe(true);
+    expect(result.diagnostics.engineFallback.attempts[0]).toMatchObject({
+      engine: "webkit",
+      errorCode: "PAGE_CRASHED",
+      pageClosed: true,
+      document: { rendererCrashed: true, phase: "capture" },
+    });
+    expect([primary.calls.scrape, fallback.calls.scrape]).toEqual([1, 1]);
+  });
+  it.each([
+    { document: undefined },
+    { document: { rendererCrashed: false } },
+    { document: { rendererCrashed: true }, closed: false },
+    { document: { rendererCrashed: true }, wrongBoot: true },
+  ])("does not replay an unconfirmed renderer failure: %j", async options => {
+    const { fallback } = await configure({
+      engine: "webkit",
+      apiStatus: 500,
+      code: "PAGE_CRASHED",
+      ...options,
+    });
+    await expect(request()).rejects.toMatchObject({ code: "PAGE_CRASHED" });
+    expect(fallback.calls.scrape).toBe(0);
+  });
+  it("keeps bounded primary network/document diagnostics without changing recovery eligibility", async () => {
+    await configure({
+      engine: "webkit",
+      apiStatus: 500,
+      code: "NETWORK_ERROR",
+      networkErrorCode: "WEBKIT_CONNECTION_TERMINATED",
+      document: {
+        phase: "navigation",
+        url: "https://user:password@example.com/item?token=private#secret",
+        lastResponseStatus: null,
+        rendererCrashed: false,
+        recentNavigations: [
+          {
+            url: "https://user:password@example.com/item?token=private",
+            status: 200,
+          },
+        ],
+        recentFailedRequests: Array(35).fill(
+          "Connection terminated unexpectedly at https://user:password@example.com/item?token=private",
+        ),
+        unknown: "not-copied",
+      },
+    });
+    const result = await request();
+    const proof = result.diagnostics.engineFallback.attempts[0];
+    expect(proof.networkErrorCode).toBe("WEBKIT_CONNECTION_TERMINATED");
+    expect(proof.document.url).toBe("https://example.com/item");
+    expect(proof.document.recentFailedRequests).toHaveLength(30);
+    expect(JSON.stringify(proof)).not.toMatch(
+      /password|private|secret|not-copied/,
+    );
+    expect(proof.document.recentNavigations).toEqual([
+      { url: "https://example.com/item", status: 200 },
+    ]);
+  });
+  it("retains a closed failure through queue serialization without enabling fallback", async () => {
+    const { fallback } = await configure({
+      engine: "webkit",
+      apiStatus: 500,
+      code: "BROWSER_ERROR",
+      document: { phase: "capture", rendererCrashed: false },
+    });
+    const error = await request().catch(error => error);
+    expect(error.code).toBe("BROWSER_ERROR");
+    expect(error.browserDiagnostics.attempts[0]).toMatchObject({
+      engine: "webkit",
+      errorCode: "BROWSER_ERROR",
+      pageClosed: true,
+    });
+    const transported = new LocalBrowserTransportError(
+      error.code,
+      error.message,
+      error.status,
+      error.browserDiagnostics,
+    );
+    const restored = deserializeTransportableError(
+      serializeTransportableError(transported),
+    );
+    expect(restored).toBeInstanceOf(LocalBrowserTransportError);
+    expect(restored.browserDiagnostics).toEqual(error.browserDiagnostics);
+    expect(fallback.calls.scrape).toBe(0);
+  });
+  it("retains both closed failures when neither engine returns content", async () => {
+    const pair = await configure(
+      {
+        engine: "webkit",
+        apiStatus: 500,
+        code: "PAGE_CRASHED",
+        document: { rendererCrashed: true },
+      },
+      { apiStatus: 500, code: "NETWORK_ERROR" },
+    );
+    await expect(request()).rejects.toMatchObject({
+      code: "NETWORK_ERROR",
+      browserDiagnostics: {
+        engineFallback: {
+          attempted: true,
+          recovered: false,
+          attempts: [
+            { engine: "webkit", errorCode: "PAGE_CRASHED", pageClosed: true },
+            {
+              engine: "camoufox",
+              errorCode: "NETWORK_ERROR",
+              pageClosed: true,
+            },
+          ],
+        },
+      },
+    });
+    expect([pair.primary.calls.scrape, pair.fallback.calls.scrape]).toEqual([
+      1, 1,
+    ]);
+  });
+  it("reports why a confirmed failure could not use a distinct alternate", async () => {
+    const pair = await configure(
+      {
+        engine: "webkit",
+        apiStatus: 500,
+        code: "PAGE_CRASHED",
+        document: { rendererCrashed: true },
+      },
+      { engine: "webkit" },
+    );
+    await expect(request()).rejects.toMatchObject({
+      code: "PAGE_CRASHED",
+      browserDiagnostics: {
+        engineFallback: {
+          attempted: false,
+          skipped: "no_distinct_healthy_backend",
+          attempts: [{ engine: "webkit", pageClosed: true }],
+        },
+      },
+    });
+    expect([pair.primary.calls.scrape, pair.fallback.calls.scrape]).toEqual([
+      1, 0,
+    ]);
+  });
+  it("preserves the primary proof but never invents alternate completion after a lost response", async () => {
+    const pair = await configure(
+      { engine: "webkit", status: 403 },
+      { lost: true },
+    );
+    await expect(request()).rejects.toMatchObject({
+      code: "BROWSER_OUTCOME_UNKNOWN",
+      browserDiagnostics: {
+        engineFallback: {
+          attempted: true,
+          recovered: false,
+          outcomeUnknown: true,
+          attempts: [
+            { engine: "webkit", pageStatusCode: 403, pageClosed: true },
+          ],
+        },
+      },
+    });
+    expect([pair.primary.calls.scrape, pair.fallback.calls.scrape]).toEqual([
+      1, 1,
+    ]);
   });
   it.each(["HUMAN_REQUIRED", "VERIFICATION_REQUIRED"])(
     "recovers a completed %s workflow gate without a legacy bot signature",

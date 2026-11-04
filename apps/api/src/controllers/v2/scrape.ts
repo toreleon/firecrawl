@@ -472,6 +472,9 @@ export async function scrapeController(
             success: false,
             code: (e as any).reason ?? e.code,
             error: e.message,
+            ...((e as any).browserDiagnostics && {
+              diagnostics: (e as any).browserDiagnostics,
+            }),
           });
         }
         if (reservedKeylessCredits > 0 && !reconciledKeylessCredits) {

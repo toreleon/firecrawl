@@ -421,11 +421,19 @@ export class LocalBrowserTransportError extends TransportableError {
     readonly reason: string,
     message: string,
     readonly status = 409,
+    readonly browserDiagnostics?: Record<string, unknown>,
   ) {
     super("LOCAL_BROWSER_ERROR", message);
   }
   serialize() {
-    return { ...super.serialize(), reason: this.reason, status: this.status };
+    return {
+      ...super.serialize(),
+      reason: this.reason,
+      status: this.status,
+      ...(this.browserDiagnostics && {
+        browserDiagnostics: this.browserDiagnostics,
+      }),
+    };
   }
   static deserialize(
     _: ErrorCodes,
@@ -435,6 +443,7 @@ export class LocalBrowserTransportError extends TransportableError {
       data.reason,
       data.message,
       data.status,
+      data.browserDiagnostics,
     );
     error.stack = data.stack;
     return error;

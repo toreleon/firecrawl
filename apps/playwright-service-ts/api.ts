@@ -792,17 +792,24 @@ app.post('/scrape', async (req: Request, res: Response) => {
             retryAfterMs(result.headers['retry-after']) ??
             250 * 2 ** (attempt - 1);
       } catch (error) {
-        entry.errorCode = errorCode(error);
-        entry.networkErrorCode = networkErrorCode(error);
-        if (page) entry.document = documentDiagnostics(page);
+        const document = page ? documentDiagnostics(page) : undefined;
+        // A driver message alone is not crash proof. Preserve typed deadlines
+        // and cancellation; only an observed page crash changes classification.
+        const failure =
+          document?.rendererCrashed && !(error instanceof ScrapeFailure)
+            ? new ScrapeFailure('PAGE_CRASHED', 'Browser renderer crashed')
+            : error;
+        entry.errorCode = errorCode(failure);
+        entry.networkErrorCode = networkErrorCode(failure);
+        if (document) entry.document = document;
         entry.durationMs = Date.now() - started;
         if (securityState.blockedNavigationRequestUrl)
           throw new InsecureConnectionError(
             securityState.blockedNavigationRequestUrl,
             'navigation to private/internal resource is not allowed',
           );
-        if (attempt >= max_attempts || !isRetryableScrapeError(error))
-          throw error;
+        if (attempt >= max_attempts || !isRetryableScrapeError(failure))
+          throw failure;
         result = undefined;
         delay = 250 * 2 ** (attempt - 1);
       } finally {

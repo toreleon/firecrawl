@@ -38,6 +38,7 @@ type DocumentState = {
   navigations: { url: string; status: number }[];
   failed: string[];
   phase: string;
+  rendererCrashed: boolean;
 };
 const documents = new WeakMap<Page, DocumentState>();
 const trackDocument = (page: Page) => {
@@ -49,8 +50,12 @@ const trackDocument = (page: Page) => {
     navigations: [],
     failed: [],
     phase: 'prepare',
+    rendererCrashed: false,
   };
   documents.set(page, state);
+  page.on('crash', () => {
+    state!.rendererCrashed = true;
+  });
   page.on('response', (response) => {
     const request = response.request();
     if (request.isNavigationRequest() && request.frame() === page.mainFrame()) {
@@ -79,6 +84,7 @@ export const documentDiagnostics = (page: Page) => {
   return state
     ? {
         phase: state.phase,
+        rendererCrashed: state.rendererCrashed,
         url: page.url(),
         lastResponseStatus: state.response?.status() ?? null,
         recentNavigations: state.navigations.slice(-20),

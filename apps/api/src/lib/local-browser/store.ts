@@ -9,6 +9,7 @@ import {
 import { config } from "../../config";
 
 export class LocalBrowserError extends Error {
+  browserDiagnostics?: Record<string, unknown>;
   constructor(
     readonly code: string,
     message: string,

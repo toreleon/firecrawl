@@ -36,7 +36,14 @@ const handle =
       if (error instanceof LocalBrowserError)
         return res
           .status(error.status)
-          .json({ success: false, code: error.code, error: error.message });
+          .json({
+            success: false,
+            code: error.code,
+            error: error.message,
+            ...(error.browserDiagnostics && {
+              diagnostics: error.browserDiagnostics,
+            }),
+          });
       return res.status(503).json({
         success: false,
         code: "LOCAL_BROWSER_UNAVAILABLE",

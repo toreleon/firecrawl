@@ -56,6 +56,7 @@ export async function scrapeURLWithPlaywright(
           error.code,
           error.message,
           error.status,
+          error.browserDiagnostics,
         );
       throw error;
     }

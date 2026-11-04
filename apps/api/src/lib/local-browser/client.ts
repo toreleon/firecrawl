@@ -30,13 +30,79 @@ type CompletedReceipt = {
   pageClosed: true;
   pageStatusCode?: number;
   errorCode?: string;
+  networkErrorCode?: string;
+  document?: Record<string, unknown>;
 };
 const completedErrors = new WeakMap<LocalBrowserError, CompletedReceipt>();
+const closedErrorReceipts = new WeakMap<LocalBrowserError, CompletedReceipt>();
 const completedErrorCodes = [
   "NETWORK_ERROR",
   "SCRAPE_TIMEOUT",
   "WORKFLOW_NAVIGATION_MISMATCH",
+  "PAGE_CRASHED",
 ];
+
+const diagnosticUrl = (value: unknown): string | undefined => {
+  if (typeof value !== "string" || value.length > 8192) return;
+  try {
+    const url = new URL(value);
+    if (!["http:", "https:"].includes(url.protocol)) return;
+    url.username = "";
+    url.password = "";
+    url.search = "";
+    url.hash = "";
+    return url.toString().slice(0, 2048);
+  } catch {
+    return;
+  }
+};
+const documentReceipt = (value: any): Record<string, unknown> | undefined => {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return;
+  const result: Record<string, unknown> = {};
+  if (
+    [
+      "prepare",
+      "navigation",
+      "consent",
+      "workflow",
+      "workflow-late",
+      "actions",
+      "readiness",
+      "capture",
+    ].includes(value.phase)
+  )
+    result.phase = value.phase;
+  if (typeof value.rendererCrashed === "boolean")
+    result.rendererCrashed = value.rendererCrashed;
+  const url = diagnosticUrl(value.url);
+  if (url) result.url = url;
+  const status = (v: unknown) =>
+    Number.isInteger(v) && Number(v) >= 100 && Number(v) <= 599;
+  if (value.lastResponseStatus === null || status(value.lastResponseStatus))
+    result.lastResponseStatus = value.lastResponseStatus;
+  if (Array.isArray(value.recentNavigations))
+    result.recentNavigations = value.recentNavigations
+      .slice(-20)
+      .flatMap((item: any) => {
+        const url = diagnosticUrl(item?.url);
+        return url && status(item?.status)
+          ? [{ url, status: item.status }]
+          : [];
+      });
+  if (Array.isArray(value.recentFailedRequests))
+    result.recentFailedRequests = value.recentFailedRequests
+      .slice(-30)
+      .filter((item: unknown): item is string => typeof item === "string")
+      .map((item: string) =>
+        item
+          .slice(0, 512)
+          .replace(
+            /https?:\/\/[^\s"'<>]+/gi,
+            url => diagnosticUrl(url) ?? "[URL]",
+          ),
+      );
+  return Object.keys(result).length ? result : undefined;
+};
 const amazonProduct = (value: unknown): string | undefined => {
   if (typeof value !== "string") return;
   try {
@@ -70,6 +136,10 @@ const completedReceipt = (
     attempts[0]?.pageClosed !== true
   )
     return;
+  const document = documentReceipt(attempts[0]?.document);
+  if (result.errorCode === "PAGE_CRASHED" && document?.rendererCrashed !== true)
+    return;
+  const networkError = result.networkErrorCode ?? attempts[0]?.networkErrorCode;
   return {
     engine,
     ownerBootId: boot,
@@ -77,9 +147,15 @@ const completedReceipt = (
     ...(Number.isInteger(result.pageStatusCode) && {
       pageStatusCode: result.pageStatusCode,
     }),
-    ...([...completedErrorCodes, "CONTENT_NOT_READY"].includes(
-      result.errorCode,
-    ) && { errorCode: result.errorCode }),
+    ...(typeof result.errorCode === "string" &&
+      /^[A-Z][A-Z0-9_]{0,79}$/.test(result.errorCode) && {
+        errorCode: result.errorCode,
+      }),
+    ...(typeof networkError === "string" &&
+      /^(?:ERR_|NS_ERROR_|WEBKIT_)[A-Z0-9_]{1,80}$/.test(networkError) && {
+        networkErrorCode: networkError,
+      }),
+    ...(document && { document }),
   };
 };
 const fallbackOwners = () =>
@@ -118,6 +194,7 @@ export const browserRpc = async (
   body: unknown,
   options: {
     boot?: string;
+    engine?: string;
     revision?: number;
     timeout?: number;
     signal?: AbortSignal;
@@ -155,7 +232,11 @@ export const browserRpc = async (
         "Local browser operation failed",
         response.status,
       );
-      const proof = completedReceipt(result, options.boot);
+      const proof = completedReceipt(result, options.boot, options.engine);
+      if (proof) {
+        closedErrorReceipts.set(error, proof);
+        error.browserDiagnostics = { attempts: [proof] };
+      }
       if (proof && completedErrorCodes.includes(error.code))
         completedErrors.set(error, { ...proof, errorCode: error.code });
       throw error;
@@ -563,6 +644,7 @@ export const scrapeLocalBrowser = async (
           },
           {
             boot: selected.boot,
+            engine: selected.engine,
             timeout: left,
             signal: input.signal,
           },
@@ -590,8 +672,12 @@ export const scrapeLocalBrowser = async (
           selected.boot,
           selected.engine,
         );
-        if (receipt)
-          completedErrors.set(error, { ...receipt, errorCode: error.code });
+        if (receipt) {
+          const proof = { ...receipt, errorCode: error.code };
+          completedErrors.set(error, proof);
+          closedErrorReceipts.set(error, proof);
+          error.browserDiagnostics = { attempts: [proof] };
+        }
         throw error;
       }
       return result;
@@ -619,13 +705,20 @@ export const scrapeLocalBrowser = async (
       diagnostics: { ...response.diagnostics, engineFallback: details },
     });
     const stop = (skipped: string) => {
-      if (failure) throw failure;
-      return annotate(primary, {
+      const details = {
         attempted: false,
         usedSecondary: false,
         skipped,
         attempts: proof ? [proof] : [],
-      });
+      };
+      if (failure) {
+        failure.browserDiagnostics = {
+          ...failure.browserDiagnostics,
+          engineFallback: details,
+        };
+        throw failure;
+      }
+      return annotate(primary, details);
     };
     const eligible =
       proof &&
@@ -700,9 +793,19 @@ export const scrapeLocalBrowser = async (
         );
       secondaryProof = receipt;
     } catch (error) {
-      if (!(error instanceof LocalBrowserError) || !completedErrors.has(error))
-        throw error;
-      if (!primary) throw error;
+      if (!(error instanceof LocalBrowserError)) throw error;
+      const closed = closedErrorReceipts.get(error);
+      error.browserDiagnostics = {
+        ...error.browserDiagnostics,
+        engineFallback: {
+          attempted: true,
+          usedSecondary: false,
+          recovered: false,
+          ...(closed ? {} : { outcomeUnknown: true }),
+          attempts: [proof, ...(closed ? [closed] : [])],
+        },
+      };
+      if (!primary || !completedErrors.has(error)) throw error;
       secondaryProof = {
         ...completedErrors.get(error)!,
         engine: alternate.engine ?? "unknown",

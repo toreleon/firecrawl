@@ -1755,6 +1755,7 @@ export type ErrorResponse = {
   success: false;
   code?: ErrorCodes;
   error: string;
+  diagnostics?: Record<string, unknown>;
   details?: any;
   sponsor_status?: string;
   login_url?: string;
