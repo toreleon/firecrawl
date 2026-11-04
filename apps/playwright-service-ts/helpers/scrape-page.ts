@@ -1,6 +1,7 @@
 import { Page, Response } from 'playwright';
 import { createHash } from 'node:crypto';
 import { Deadline, ScrapeFailure } from './scrape-control';
+import { lowesProductIdentity, navigateLowesProduct } from './lowes-search';
 import {
   detectPageProtection,
   captureRenderedPage,
@@ -103,11 +104,17 @@ export const scrapePage = async (
   const navStart = state.navigations.length;
   const failStart = state.failed.length;
   const requestedAmazon = options.workflow === 'auto' ? amazonProductIdentity(url) : null;
+  const requestedLowes = options.workflow === 'auto' && !options.retained && !options.continueSession && !options.actions?.length &&
+    page.context().browser()?.browserType().name() === 'firefox'
+    ? lowesProductIdentity(url) : null;
   // Retained tabs use discovery-only injection; awaited explicit CMP controls
   // cannot leave a background consent click racing a later human handoff.
   await prepareConsent(page, options.consent ?? 'off', !options.retained);
   state.phase = 'navigation';
-  if (!options.continueSession)
+  const lowesSearch = requestedLowes ? await deadline.run(navigateLowesProduct(
+    page, requestedLowes, options.consent ?? 'off', options.navigationTimeout, deadline, options.waitUntil,
+  )) : undefined;
+  if (!options.continueSession && !requestedLowes)
     await page.goto(url, {
       waitUntil: options.waitUntil,
       timeout: Math.min(deadline.remaining(), options.navigationTimeout ?? Infinity),
@@ -126,6 +133,10 @@ export const scrapePage = async (
       state.phase = phase;
     }),
   );
+  if (lowesSearch) {
+    workflow.steps.unshift({ type: 'lowes-search@1', outcome: lowesSearch.outcome });
+    workflow.observations.lowesSearch = lowesSearch;
+  }
   state.phase = 'actions';
   const actions = await deadline.run(
     runActions(page, options.actions ?? [], deadline),
@@ -317,6 +328,14 @@ export const scrapePage = async (
         continue;
       }
       const expectedProduct = workflow.observations.amazonContinuation ?? originalProduct;
+      if (requestedLowes) {
+        const actual = lowesProductIdentity(snapshot.url);
+        if (new URL(snapshot.url).origin !== requestedLowes.origin ||
+          (actual !== null && actual.id !== requestedLowes.id) ||
+          (actual === null && (current?.status() ?? 200) >= 200 && (current?.status() ?? 200) < 300 &&
+            !detectPageProtection(snapshot.content, headers, snapshot.url)))
+          throw new ScrapeFailure('WORKFLOW_NAVIGATION_MISMATCH', 'Captured document is not the requested Lowe\'s product');
+      }
       if (expectedProduct) {
         const actualProduct = amazonProductIdentity(snapshot.url);
         if (

@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { Deadline, ScrapeFailure, errorCode } from './scrape-control';
 import { waitForRenderedBody } from './page-readiness';
+import type { LowesSearchObservation } from './lowes-search';
 import {
   rejectOneTrustPreferences,
   OneTrustPreferencesResult,
@@ -637,6 +638,7 @@ export const applyWorkflow = async (
   const url = new URL(page.url());
   const observations: {
     entryHost: string;
+    lowesSearch?: LowesSearchObservation;
     productDetails?: ProductDetailsObservation;
     amazonContinuation?: {
       origin: string;

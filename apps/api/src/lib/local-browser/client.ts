@@ -125,6 +125,22 @@ const amazonProduct = (value: unknown): string | undefined => {
     return;
   }
 };
+const lowesProduct = (value: unknown): string | undefined => {
+  if (typeof value !== "string") return;
+  try {
+    const url = new URL(value);
+    if (
+      url.protocol !== "https:" ||
+      url.host !== "www.lowes.com" ||
+      url.username ||
+      url.password
+    )
+      return;
+    return url.pathname.match(/^\/pd\/[^/]+\/(\d{1,20})\/?$/)?.[1];
+  } catch {
+    return;
+  }
+};
 const completedReceipt = (
   result: any,
   boot?: string,
@@ -591,6 +607,8 @@ export const scrapeLocalBrowser = async (
   const fallbackEnabled = input.controls.engineFallback === true;
   const expectedAmazon =
     input.controls.workflow === "auto" ? amazonProduct(input.url) : undefined;
+  const expectedLowes =
+    input.controls.workflow === "auto" ? lowesProduct(input.url) : undefined;
   if (
     fallbackEnabled &&
     (input.controls.sessionId ||
@@ -660,18 +678,19 @@ export const scrapeLocalBrowser = async (
       // Older owners may return a ready document from another product. Guard
       // the landed URL here too, before either primary or alternate promotion.
       if (
-        expectedAmazon &&
+        (expectedAmazon || expectedLowes) &&
         result.pageStatusCode >= 200 &&
         result.pageStatusCode < 300 &&
         !result.botDetection &&
         !result.pageError &&
         !result.errorCode &&
         result.readiness?.satisfied !== false &&
-        amazonProduct(result.url) !== expectedAmazon
+        ((expectedAmazon && amazonProduct(result.url) !== expectedAmazon) ||
+          (expectedLowes && lowesProduct(result.url) !== expectedLowes))
       ) {
         const error = new LocalBrowserError(
           "WORKFLOW_NAVIGATION_MISMATCH",
-          "Browser did not capture the original Amazon product",
+          "Browser did not capture the requested product",
           500,
         );
         const receipt = completedReceipt(
@@ -699,7 +718,11 @@ export const scrapeLocalBrowser = async (
     } catch (error) {
       if (!(error instanceof LocalBrowserError) || !completedErrors.has(error))
         throw error;
-      if (error.code === "WORKFLOW_NAVIGATION_MISMATCH" && !expectedAmazon)
+      if (
+        error.code === "WORKFLOW_NAVIGATION_MISMATCH" &&
+        !expectedAmazon &&
+        !expectedLowes
+      )
         throw error;
       failure = error;
       proof = {

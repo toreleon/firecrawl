@@ -75,7 +75,9 @@ describe("Full API identity fallback with controlled browser-protocol fixtures",
               ? {}
               : {
                   url: wrong
-                    ? body.url.replace("B000000042", "B000000043")
+                    ? body.url
+                        .replace("B000000042", "B000000043")
+                        .replace("5010000042", "5010000043")
                     : body.url,
                 }),
             readiness: { satisfied: true },
@@ -103,64 +105,68 @@ describe("Full API identity fallback with controlled browser-protocol fixtures",
   itIf(enabled)(
     "recovers only the original product after closed identity failures and never returns an unsafe alternate",
     async () => {
-      for (const mode of [
-        "error",
-        "old-document",
-        "wrong-alternate",
-        "missing-url",
-        "not-closed",
-        "wrong-boot",
-        "optout",
-      ]) {
-        const url = `https://www.amazon.com/Product/dp/B000000042?case=${mode}`;
-        const before = {
-          primary: calls.primary.length,
-          alternate: calls.alternate.length,
-        };
-        const response = await fetch(TEST_API_URL + "/v2/scrape", {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-            authorization: `Bearer ${config.TEST_API_KEY ?? "test"}`,
-          },
-          body: JSON.stringify({
-            url,
-            formats: ["rawHtml", "markdown"],
-            waitFor: 0,
-            maxAge: 0,
-            storeInCache: false,
-            timeout: scrapeTimeout,
-            browserControls: {
-              workflow: "auto",
-              engineFallback: mode !== "optout",
-              maxAttempts: 1,
+      for (const productUrl of [
+        "https://www.amazon.com/Product/dp/B000000042",
+        "https://www.lowes.com/pd/Owned-product/5010000042",
+      ])
+        for (const mode of [
+          "error",
+          "old-document",
+          "wrong-alternate",
+          "missing-url",
+          "not-closed",
+          "wrong-boot",
+          "optout",
+        ]) {
+          const url = `${productUrl}?case=${mode}`;
+          const before = {
+            primary: calls.primary.length,
+            alternate: calls.alternate.length,
+          };
+          const response = await fetch(TEST_API_URL + "/v2/scrape", {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+              authorization: `Bearer ${config.TEST_API_KEY ?? "test"}`,
             },
-          }),
-        });
-        const result = await response.json();
-        if (mode === "error" || mode === "old-document") {
-          expect(response.status).toBe(200);
-          expect(result.data.markdown).toContain(
-            "Recovered original product 42",
+            body: JSON.stringify({
+              url,
+              formats: ["rawHtml", "markdown"],
+              waitFor: 0,
+              maxAge: 0,
+              storeInCache: false,
+              timeout: scrapeTimeout,
+              browserControls: {
+                workflow: "auto",
+                engineFallback: mode !== "optout",
+                maxAttempts: 1,
+              },
+            }),
+          });
+          const result = await response.json();
+          if (mode === "error" || mode === "old-document") {
+            expect(response.status).toBe(200);
+            expect(result.data.markdown).toContain(
+              "Recovered original product 42",
+            );
+            expect(result.data.metadata.url).toBe(url);
+            const fallback =
+              result.data.metadata.browser.diagnostics.engineFallback;
+            expect(fallback.recovered).toBe(true);
+            expect(fallback.attempts).toHaveLength(2);
+            expect(fallback.attempts[0].errorCode).toBe(
+              "WORKFLOW_NAVIGATION_MISMATCH",
+            );
+          } else {
+            expect(result.success).toBe(false);
+            expect(result.code).toBe("WORKFLOW_NAVIGATION_MISMATCH");
+            expect(result.data).toBeUndefined();
+          }
+          expect(calls.primary.slice(before.primary)).toEqual([url]);
+          expect(calls.alternate.slice(before.alternate)).toEqual(
+            ["not-closed", "wrong-boot", "optout"].includes(mode) ? [] : [url],
           );
-          expect(result.data.metadata.url).toBe(url);
-          const fallback =
-            result.data.metadata.browser.diagnostics.engineFallback;
-          expect(fallback.recovered).toBe(true);
-          expect(fallback.attempts).toHaveLength(2);
-          expect(fallback.attempts[0].errorCode).toBe(
-            "WORKFLOW_NAVIGATION_MISMATCH",
-          );
-        } else {
-          expect(result.success).toBe(false);
-          expect(result.code).toBe("WORKFLOW_NAVIGATION_MISMATCH");
-          expect(result.data).toBeUndefined();
         }
-        expect(calls.primary.slice(before.primary)).toEqual([url]);
-        expect(calls.alternate.slice(before.alternate)).toEqual(
-          ["not-closed", "wrong-boot", "optout"].includes(mode) ? [] : [url],
-        );
-      }
     },
     scrapeTimeout,
   );
