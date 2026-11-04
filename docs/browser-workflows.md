@@ -435,6 +435,11 @@ the shared desktop, arbitrary code execution or a browser-wide CDP endpoint.
 viewer ticket, re-checks the same tab and returns the resulting content/state.
 The viewer's completion is not evidence that verification succeeded. Site
 verification, authentication and access denial remain explicit outcomes.
+Authentication route hints use the final URL's path, excluding query strings,
+fragments and partial names such as `login-guide`. Root login/sign-in HTML pages
+with a rendered sign-in prompt also report `AUTH_REQUIRED`, including
+email-first forms that have no password field. This classifies the returned
+document; it does not sign in or establish that the requested content is present.
 Handoff does not extend the session TTL or hold a queue worker/DB transaction
 open. Human-assisted completion must be reported separately from automation.
 

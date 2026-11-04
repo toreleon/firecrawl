@@ -103,3 +103,51 @@ test('interactive commands reject broad clicks, code execution and retry-shaped 
     'HUMAN_REQUIRED',
   );
 });
+
+test('email-first authentication pages are identified from their final route and sign-in prompt', () => {
+  for (const path of ['/login.html?from=%2Fproduct', '/login', '/sign-in.htm'])
+    assert.equal(
+      interactionState(
+        'Sign in / Register\nEmail or phone number\nContinue',
+        `https://example.com${path}`,
+        true,
+        200,
+        false,
+      ),
+      'AUTH_REQUIRED',
+    );
+});
+
+test('authentication route hints exclude queries, fragments and partial path names', () => {
+  for (const url of [
+    'https://example.com/article?example=/accounts/login',
+    'https://example.com/article#/signin',
+    'https://example.com/articles/accounts/login-guide',
+    'https://example.com/docs/login.html',
+    'https://example.com/login.html',
+    'not a URL/accounts/login',
+  ])
+    assert.equal(
+      interactionState(
+        'Public login architecture guide',
+        url,
+        true,
+        200,
+        false,
+      ),
+      'CONTENT_READY',
+    );
+});
+
+test('established account login and sign-in routes retain authentication state', () => {
+  for (const path of [
+    '/accounts/login',
+    '/accounts/login/two-factor',
+    '/en/accounts/login/',
+    '/signin?next=/public',
+  ])
+    assert.equal(
+      interactionState('', `https://example.com${path}`, true, 200, false),
+      'AUTH_REQUIRED',
+    );
+});

@@ -759,7 +759,18 @@ export const interactionState = (
   challenge: boolean,
   interactive = false,
 ) => {
-  if (/\/accounts\/login|\/signin(?:[/?]|$)/i.test(url)) return 'AUTH_REQUIRED';
+  let path = '';
+  try {
+    path = new URL(url).pathname;
+  } catch {
+    // A malformed URL cannot establish a dedicated authentication route.
+  }
+  if (
+    /\/accounts\/login(?:\/|$)|\/signin(?:\/|$)/i.test(path) ||
+    (/^\/(?:login|log-in|sign-in)(?:\.html?)?\/?$/i.test(path) &&
+      /\b(?:sign|log)[\s-]+in\b/i.test(text))
+  )
+    return 'AUTH_REQUIRED';
   if (/not available in your location/i.test(text)) return 'REGION_UNAVAILABLE';
   if (
     interactive ||
