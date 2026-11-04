@@ -28,6 +28,7 @@ type CompletedReceipt = {
   engine: string;
   ownerBootId: string;
   pageClosed: true;
+  contextClosed?: true;
   pageStatusCode?: number;
   errorCode?: string;
   networkErrorCode?: string;
@@ -144,6 +145,9 @@ const completedReceipt = (
     engine,
     ownerBootId: boot,
     pageClosed: true,
+    ...(attempts[0]?.contextClosed === true && {
+      contextClosed: true as const,
+    }),
     ...(Number.isInteger(result.pageStatusCode) && {
       pageStatusCode: result.pageStatusCode,
     }),

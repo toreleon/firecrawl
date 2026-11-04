@@ -269,6 +269,8 @@ test(
             'SCRAPE_TIMEOUT',
           );
           assert.equal(retried.body.diagnostics.attempts[0].pageClosed, true);
+          assert.equal(retried.body.diagnostics.attempts[0].contextClosed, undefined);
+          assert.equal(retried.body.diagnostics.attempts[1].contextClosed, true);
           assert.equal(counts.get('/slow-first'), 2);
           assert.ok(Date.now() - start < 5000);
         },

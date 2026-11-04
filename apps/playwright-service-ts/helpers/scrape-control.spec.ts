@@ -141,7 +141,6 @@ test('WebKit navigation EOF is transient without reclassifying TLS, renderer or 
   assert.equal(isRetryableScrapeError(error), true);
   for (const message of [
     'page.goto: Unacceptable TLS certificate',
-    'page.goto: Peer failed to perform TLS handshake: The TLS connection was non-properly terminated.',
     'page.evaluate: Connection terminated unexpectedly',
     'page.evaluate: Target crashed',
     'page.goto: Connection terminated unexpectedly while executing arbitrary code',
@@ -149,5 +148,24 @@ test('WebKit navigation EOF is transient without reclassifying TLS, renderer or 
     assert.equal(networkErrorCode(new Error(message)), undefined);
     assert.equal(errorCode(new Error(message)), 'BROWSER_ERROR');
     assert.equal(isRetryableScrapeError(new Error(message)), false);
+  }
+});
+
+test('exact WebKit premature TLS handshake termination is transient without ignoring certificate or policy failures', () => {
+  const message = 'page.goto: Peer failed to perform TLS handshake: The TLS connection was non-properly terminated.';
+  const error = new Error(message + '\nCall log:\n  - navigating to https://example.test/');
+  assert.equal(networkErrorCode(error), 'WEBKIT_TLS_HANDSHAKE_TERMINATED');
+  assert.equal(errorCode(error), 'NETWORK_ERROR');
+  assert.equal(isRetryableScrapeError(error), true);
+  for (const unrelated of [
+    'page.goto: Unacceptable TLS certificate',
+    'page.goto: Peer failed to perform TLS handshake: certificate validation failed.',
+    message.replace('page.goto:', 'page.evaluate:'),
+    message + ' arbitrary suffix',
+    'prefix ' + message,
+  ]) {
+    assert.equal(networkErrorCode(new Error(unrelated)), undefined);
+    assert.equal(errorCode(new Error(unrelated)), 'BROWSER_ERROR');
+    assert.equal(isRetryableScrapeError(new Error(unrelated)), false);
   }
 });

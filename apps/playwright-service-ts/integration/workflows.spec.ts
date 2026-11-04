@@ -606,6 +606,8 @@ test(
           });
           assert.equal(second.body.readiness.satisfied, true);
           assert.equal(second.body.diagnostics.navigations.length, 0);
+          assert.equal(first.body.diagnostics.attempts[0].contextClosed, undefined);
+          assert.equal(second.body.diagnostics.attempts[0].contextClosed, undefined);
           const invalid = await scrape(service.baseUrl, `${origin}/tab`, {
             session_id: token,
             session_mode: 'workflow',

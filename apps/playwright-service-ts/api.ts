@@ -30,6 +30,7 @@ import {
   attemptBudgetMs,
 } from './helpers/scrape-control';
 import { scrapePage, documentDiagnostics } from './helpers/scrape-page';
+import { closeScrapePage } from './helpers/page-cleanup';
 import { BrowserSessions } from './helpers/browser-sessions';
 import { randomUUID, timingSafeEqual } from 'node:crypto';
 import {
@@ -596,6 +597,7 @@ app.post('/scrape', async (req: Request, res: Response) => {
   const attempts: Record<string, unknown>[] = [];
 
   let requestContext: BrowserContext | null = null;
+  let requestContextClosed = false;
   let securityState: ContextSecurityState | null = null;
   let page: Page | null = null;
   const disconnected = () => {
@@ -814,9 +816,21 @@ app.post('/scrape', async (req: Request, res: Response) => {
         delay = 250 * 2 ** (attempt - 1);
       } finally {
         if (page && session_mode !== 'workflow') {
-          const closeFinished = await boundedClose(page.close());
-          entry.pageClosed = page.isClosed();
-          cleanupHealthy = closeFinished && page.isClosed() && cleanupHealthy;
+          // The final stateless capture needs no live context. Dispose it before
+          // publishing completion, rather than waiting on a separate tab-close
+          // RPC and disposing the same context only after the HTTP response.
+          // Retained leases and intermediate retries keep their context.
+          const terminalContext =
+            !sessionToken && (delay === null || attempt === max_attempts)
+              ? requestContext
+              : undefined;
+          const cleanup = await closeScrapePage(
+            page, terminalContext ?? undefined,
+          );
+          Object.assign(entry, cleanup);
+          if (cleanup.contextClosed) requestContextClosed = true;
+          cleanupHealthy =
+            cleanup.cleanupFinished && cleanup.pageClosed && cleanupHealthy;
           page = null;
         }
       }
@@ -925,7 +939,8 @@ app.post('/scrape', async (req: Request, res: Response) => {
             cancellation.signal.aborted,
         )
         .catch(() => {});
-    else if (requestContext) await boundedClose(requestContext.close());
+    else if (requestContext && !requestContextClosed)
+      await boundedClose(requestContext.close());
     if (permit) pageSemaphore.release();
   }
 });

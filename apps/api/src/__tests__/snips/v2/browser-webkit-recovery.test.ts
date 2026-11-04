@@ -1,6 +1,7 @@
 import http from "node:http";
 import http2 from "node:http2";
 import tls from "node:tls";
+import net from "node:net";
 import { execFileSync } from "node:child_process";
 import { mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -14,14 +15,17 @@ const enabled =
 describe("Full API WebKit resources and confirmed navigation termination", () => {
   const httpPort = Number(process.env.TEST_WEBKIT_FIXTURE_PORT ?? 33391);
   const tlsPort = Number(process.env.TEST_WEBKIT_TLS_FIXTURE_PORT ?? 33392);
+  const prematurePort = Number(process.env.TEST_WEBKIT_PREMATURE_PORT ?? 33394);
   const origin = `http://host.docker.internal:${httpPort}`;
   const tlsOrigin = `https://host.docker.internal:${tlsPort}`;
   const calls = { blob: 0, webkit: 0, firefox: 0 };
   const sockets = new Set<tls.TLSSocket>();
   const byPort = new Map<number, tls.TLSSocket>();
+  const prematureSockets = new Set<net.Socket>();
   let directory: string | undefined,
     ordinary: http.Server | undefined,
-    secure: http2.Http2SecureServer | undefined;
+    secure: http2.Http2SecureServer | undefined,
+    premature: net.Server | undefined;
   beforeAll(async () => {
     if (!enabled) return;
     const token = config.BROWSER_SERVICE_AUTH_TOKEN;
@@ -103,15 +107,26 @@ describe("Full API WebKit resources and confirmed navigation termination", () =>
       socket.end();
     });
     secure.on("stream", stream => stream.on("error", () => {}));
+    premature = net.createServer(socket => {
+      prematureSockets.add(socket);
+      socket.on("error", () => {});
+      socket.once("close", () => prematureSockets.delete(socket));
+      // Close after ClientHello, before any certificate or HTTP response.
+      socket.once("data", () => socket.end());
+    });
     await Promise.all([
       new Promise<void>(resolve =>
         ordinary!.listen(httpPort, "0.0.0.0", resolve),
       ),
       new Promise<void>(resolve => secure!.listen(tlsPort, "0.0.0.0", resolve)),
+      new Promise<void>(resolve =>
+        premature!.listen(prematurePort, "0.0.0.0", resolve),
+      ),
     ]);
   });
   afterAll(async () => {
     for (const socket of sockets) socket.destroy();
+    for (const socket of prematureSockets) socket.destroy();
     if (ordinary)
       await new Promise<void>(resolve => {
         ordinary!.close(() => resolve());
@@ -119,6 +134,8 @@ describe("Full API WebKit resources and confirmed navigation termination", () =>
       });
     if (secure)
       await new Promise<void>(resolve => secure!.close(() => resolve()));
+    if (premature)
+      await new Promise<void>(resolve => premature!.close(() => resolve()));
     if (directory) rmSync(directory, { recursive: true, force: true });
   });
   const request = async (url: string, extra: Record<string, unknown> = {}) => {
@@ -155,6 +172,9 @@ describe("Full API WebKit resources and confirmed navigation termination", () =>
         result.body.data.metadata.browser.diagnostics.blockedRequests.private,
       ).toBe(0);
       expect(calls.blob).toBe(1);
+      expect(
+        result.body.data.metadata.browser.diagnostics.attempts[0],
+      ).toMatchObject({ pageClosed: true, contextClosed: true });
     },
   );
   itIf(enabled)(
@@ -177,9 +197,51 @@ describe("Full API WebKit resources and confirmed navigation termination", () =>
       expect(fallback.attempts[0].engine).toBe("webkit");
       expect(fallback.attempts[0].errorCode).toBe("NETWORK_ERROR");
       expect(fallback.attempts[0].pageClosed).toBe(true);
+      expect(
+        fallback.attempts.every(
+          (attempt: any) => attempt.contextClosed === true,
+        ),
+      ).toBe(true);
       expect(fallback.attempts[1].engine).toBe("camoufox");
       expect(calls.webkit - before.webkit).toBe(1);
       expect(calls.firefox - before.firefox).toBe(1);
+    },
+  );
+  itIf(enabled)(
+    "types premature TLS termination and dispatches only one opted-in alternate without a TLS exception",
+    async () => {
+      const url = `https://host.docker.internal:${prematurePort}`;
+      const optout = await request(url, { skipTlsVerification: false });
+      expect(optout.status).toBe(500);
+      expect(optout.body.code).toBe("NETWORK_ERROR");
+      expect(optout.body.diagnostics.attempts).toHaveLength(1);
+      expect(optout.body.diagnostics.attempts[0]).toMatchObject({
+        engine: "webkit",
+        networkErrorCode: "WEBKIT_TLS_HANDSHAKE_TERMINATED",
+        pageClosed: true,
+        contextClosed: true,
+      });
+      const opted = await request(url, {
+        skipTlsVerification: false,
+        browserControls: { workflow: "auto", engineFallback: true },
+      });
+      expect(opted.status).toBeGreaterThanOrEqual(400);
+      expect(opted.body.success).toBe(false);
+      const fallback = opted.body.diagnostics.engineFallback;
+      expect(fallback.attempted).toBe(true);
+      expect(fallback.recovered).toBe(false);
+      expect(fallback.attempts).toHaveLength(2);
+      expect(fallback.attempts[0]).toMatchObject({
+        engine: "webkit",
+        networkErrorCode: "WEBKIT_TLS_HANDSHAKE_TERMINATED",
+        pageClosed: true,
+        contextClosed: true,
+      });
+      expect(fallback.attempts[1]).toMatchObject({
+        engine: "camoufox",
+        pageClosed: true,
+        contextClosed: true,
+      });
     },
   );
   itIf(enabled)(
@@ -189,6 +251,10 @@ describe("Full API WebKit resources and confirmed navigation termination", () =>
       const optout = await request(tlsOrigin, { skipTlsVerification: true });
       expect(optout.status).toBeGreaterThanOrEqual(400);
       expect(optout.body.success).toBe(false);
+      expect(optout.body.diagnostics.attempts[0]).toMatchObject({
+        pageClosed: true,
+        contextClosed: true,
+      });
       expect(calls.webkit - before.webkit).toBe(1);
       expect(calls.firefox).toBe(before.firefox);
       before = { ...calls };

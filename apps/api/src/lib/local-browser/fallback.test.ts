@@ -35,6 +35,7 @@ describe("Explicit stateless browser-engine fallback", () => {
       apiStatus?: number;
       code?: string;
       closed?: boolean;
+      contextClosed?: unknown;
       lost?: boolean;
       unhealthy?: boolean;
       wrongBoot?: boolean;
@@ -78,6 +79,7 @@ describe("Explicit stateless browser-engine fallback", () => {
           {
             attempt: 1,
             pageClosed: options.closed ?? true,
+            contextClosed: options.contextClosed,
             document: options.document,
             networkErrorCode: options.networkErrorCode,
           },
@@ -200,6 +202,31 @@ describe("Explicit stateless browser-engine fallback", () => {
       "NETWORK_ERROR",
     );
     expect([primary.calls.scrape, fallback.calls.scrape]).toEqual([1, 1]);
+  });
+  it("preserves confirmed context disposal but still requires page-close proof", async () => {
+    const pair = await configure(
+      { status: 403, contextClosed: true },
+      { contextClosed: true },
+    );
+    const result = await request();
+    expect(
+      result.diagnostics.engineFallback.attempts.map(
+        (a: any) => a.contextClosed,
+      ),
+    ).toEqual([true, true]);
+    expect([pair.primary.calls.scrape, pair.fallback.calls.scrape]).toEqual([
+      1, 1,
+    ]);
+    const unconfirmed = await configure({
+      status: 403,
+      contextClosed: true,
+      closed: false,
+    });
+    const rejected = await request();
+    expect(rejected.diagnostics.engineFallback.skipped).toBe(
+      "completion_unconfirmed",
+    );
+    expect(unconfirmed.fallback.calls.scrape).toBe(0);
   });
 
   it("recovers a renderer crash only with observed crash and page-close proof", async () => {

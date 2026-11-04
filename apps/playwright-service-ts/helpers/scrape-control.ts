@@ -163,6 +163,9 @@ export const networkErrorCode = (error: unknown) => {
     )?.[1] ??
     (/^page\.goto: Connection terminated unexpectedly(?:\n|$)/.test(message)
       ? 'WEBKIT_CONNECTION_TERMINATED'
+      : undefined) ??
+    (/^page\.goto: Peer failed to perform TLS handshake: The TLS connection was non-properly terminated\.(?:\n|$)/.test(message)
+      ? 'WEBKIT_TLS_HANDSHAKE_TERMINATED'
       : undefined)
   );
 };
@@ -181,6 +184,7 @@ export const isRetryableScrapeError = (error: unknown) => {
       'NS_ERROR_NET_INTERRUPT',
       'NS_ERROR_NET_TIMEOUT',
       'WEBKIT_CONNECTION_TERMINATED',
+      'WEBKIT_TLS_HANDSHAKE_TERMINATED',
     ].includes(network);
   return errorCode(error) === 'SCRAPE_TIMEOUT';
 };
