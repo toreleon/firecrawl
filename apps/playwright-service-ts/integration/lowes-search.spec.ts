@@ -27,6 +27,10 @@ const cases = process.env.OWNED_LOWES_CASES?.split(',') ?? [
   'cancelled',
   'load',
   'budget',
+  'focus-shift',
+  'rerendered-input',
+  'changed-value',
+  'early-product',
 ];
 
 test(
@@ -95,10 +99,34 @@ test(
                           ? '<h1>Security Verification</h1><div id="px-captcha">Verify you are human</div>'
                           : mode === 'missing-search'
                             ? '<main>Public storefront without the supported form</main>'
-                            : '<main>Public storefront</main><form id="frmQuickSearch" action="/search"><input type="text" id="search-query" name="searchTerm" aria-label="Search Query"><input type="hidden" name="trusted"><button type="submit">Search</button></form><script>document.querySelector("form").addEventListener("submit",e=>document.querySelector("input[name=trusted]").value=String(e.isTrusted))</script>',
+                            : '<main>Public storefront</main><button id="other-control" type="button">Other storefront control</button><form id="frmQuickSearch" action="/search"><input type="text" id="search-query" name="searchTerm" aria-label="Search Query"><input type="hidden" name="trusted"><button type="submit">Search</button></form><script>document.querySelector("form").addEventListener("submit",e=>document.querySelector("input[name=trusted]").value=String(e.isTrusted));' +
+                              ([
+                                'focus-shift',
+                                'rerendered-input',
+                                'changed-value',
+                                'early-product',
+                              ].includes(mode)
+                                ? 'document.querySelector("#search-query").addEventListener("input",()=>setTimeout(()=>{const input=document.querySelector("#search-query");' +
+                                  (mode === 'focus-shift'
+                                    ? 'document.querySelector("#other-control").focus();'
+                                    : mode === 'rerendered-input'
+                                      ? 'const replacement=input.cloneNode(true);replacement.value=input.value;input.replaceWith(replacement);'
+                                      : mode === 'changed-value'
+                                        ? 'input.value="5010000099";'
+                                        : 'location.href=' +
+                                          JSON.stringify(target) +
+                                          ';') +
+                                  '},100),{once:true});'
+                                : '') +
+                              '</script>',
                     });
                   if (url.pathname === '/search') {
                     searches++;
+                    if (mode === 'changed-value')
+                      return route.fulfill({
+                        status: 400,
+                        body: 'Unexpected changed identifier submitted',
+                      });
                     assert.equal(route.request().method(), 'GET');
                     assert.equal(
                       url.searchParams.get('searchTerm'),
@@ -121,16 +149,17 @@ test(
                     });
                   }
                   return route.fulfill({
-                    status: searches ? 200 : 403,
+                    status: searches || mode === 'early-product' ? 200 : 403,
                     contentType: 'text/html',
-                    body: searches
-                      ? '<main>' +
-                        (mode === 'wrong-product'
-                          ? 'Other product 99'
-                          : 'Requested fixture product 42') +
-                        '</main>' +
-                        (mode === 'load' ? '<img src="/owned-load.svg">' : '')
-                      : '<main>Access Denied</main>',
+                    body:
+                      searches || mode === 'early-product'
+                        ? '<main>' +
+                          (mode === 'wrong-product'
+                            ? 'Other product 99'
+                            : 'Requested fixture product 42') +
+                          '</main>' +
+                          (mode === 'load' ? '<img src="/owned-load.svg">' : '')
+                        : '<main>Access Denied</main>',
                   });
                 });
                 try {
@@ -170,7 +199,11 @@ test(
                     assert.deepEqual(calls, ['/']);
                   } else if (
                     usesSearch &&
-                    (mode === 'wrong-product' || mode === 'missing-search')
+                    [
+                      'wrong-product',
+                      'missing-search',
+                      'changed-value',
+                    ].includes(mode)
                   ) {
                     await assert.rejects(
                       operation,
@@ -179,7 +212,16 @@ test(
                     );
                   } else {
                     const result = await operation;
-                    if (usesSearch && (mode === 'happy' || mode === 'load')) {
+                    if (
+                      usesSearch &&
+                      [
+                        'happy',
+                        'load',
+                        'focus-shift',
+                        'rerendered-input',
+                        'early-product',
+                      ].includes(mode)
+                    ) {
                       assert.equal(result.status, 200);
                       assert.match(
                         result.renderedText,
@@ -189,10 +231,10 @@ test(
                         new URL(result.url).pathname,
                         new URL(target).pathname,
                       );
-                      assert.equal(searches, 1);
+                      assert.equal(searches, mode === 'early-product' ? 0 : 1);
                       assert.deepEqual(calls, [
                         '/',
-                        '/search',
+                        ...(mode === 'early-product' ? [] : ['/search']),
                         new URL(target).pathname,
                         ...(mode === 'load' ? ['/owned-load.svg'] : []),
                       ]);
@@ -217,6 +259,8 @@ test(
                     }
                   }
                   if (mode === 'missing-search') assert.equal(searches, 0);
+                  if (usesSearch && mode === 'changed-value')
+                    assert.equal(searches, 0);
                 } finally {
                   await context.close();
                   assert.equal(page.isClosed(), true);

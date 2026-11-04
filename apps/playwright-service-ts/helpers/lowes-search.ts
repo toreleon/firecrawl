@@ -116,9 +116,44 @@ export const navigateLowesProduct = async (
     await deadline.run(deadline.sleep(5000));
     result.settleWaitMs = 5000;
     remaining();
-    await deadline.run(page.keyboard.press('Enter'));
-    result.searchSubmitted = true;
-    remaining();
+    const settled = await read(page.evaluate(captureRenderedPage, {}));
+    const settledProduct = lowesProductIdentity(settled.url);
+    if (
+      settledProduct?.origin !== product.origin ||
+      settledProduct.id !== product.id
+    ) {
+      const settledUrl = new URL(settled.url);
+      if (settledUrl.origin !== product.origin || settledUrl.pathname !== '/') {
+        result.reason = 'unexpected_document';
+        return result;
+      }
+      if (detectPageProtection(settled.content, {}, settled.url)) {
+        result.outcome = 'blocked';
+        return result;
+      }
+      // Hydration can replace the input or move focus during the passive wait.
+      // Re-resolve the supported field and refuse an altered identifier. Native
+      // locator.press focuses that field; a global Enter could hit the body or
+      // another control. Navigation retains its separate existing budget.
+      result.inputCount = await read(input.count());
+      if (
+        result.inputCount !== 1 ||
+        !(await read(input.isVisible())) ||
+        !(await read(input.isEditable())) ||
+        (await read(input.inputValue())) !== product.id
+      ) {
+        result.reason = 'unsupported_form';
+        return result;
+      }
+      await deadline.run(
+        input.press('Enter', {
+          timeout: nativeTimeout(2000),
+          noWaitAfter: true,
+        }),
+      );
+      result.searchSubmitted = true;
+      remaining();
+    }
     result.phase = 'navigation';
     // The observed native GET /search redirects to /pd/<slug>/<id>. A different
     // product or a results page is never accepted by the caller's capture guard.
