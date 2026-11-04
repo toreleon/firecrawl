@@ -455,6 +455,135 @@ export const amazonContinuationAllowed = (
   );
 };
 
+type ProductDetailsObservation = {
+  outcome:
+    | 'not_found'
+    | 'ambiguous'
+    | 'not_collapsible'
+    | 'already_expanded'
+    | 'expanded'
+    | 'unresolved';
+  phase: 'probe' | 'click' | 'confirm';
+  reason?:
+    | 'insufficient_budget'
+    | 'not_visible'
+    | 'probe_timeout'
+    | 'action_timeout'
+    | 'expansion_unconfirmed';
+  candidateCount?: number;
+  clickAttempted: boolean;
+  clickCompleted: boolean;
+  durationMs: number;
+};
+
+/** An optional accordion must not discard a document when its native click fails. */
+export const expandProductDetails = async (
+  page: Page,
+  deadline: Deadline,
+): Promise<ProductDetailsObservation> => {
+  const started = Date.now();
+  const result: ProductDetailsObservation = {
+    outcome: 'not_found',
+    phase: 'probe',
+    clickAttempted: false,
+    clickCompleted: false,
+    durationMs: 0,
+  };
+  const details = page.getByRole('button', {
+    name: /^(product )?details|^description$/i,
+  });
+  // Only read-only probes are raced. Check each result before another RPC;
+  // an expired probe has no continuation that can click a retained tab later.
+  const inspect = async (budget: Deadline) => {
+    const check = () => {
+      deadline.remaining();
+      budget.remaining();
+    };
+    check();
+    const count = await details.count();
+    check();
+    if (count !== 1) return { count, visible: false, expanded: null };
+    const visible = await details.isVisible();
+    check();
+    const expanded = visible
+      ? await details.getAttribute('aria-expanded', {
+          timeout: budget.remaining(),
+        })
+      : null;
+    check();
+    return { count, visible, expanded };
+  };
+  try {
+    if (deadline.remaining() <= 300) {
+      result.outcome = 'unresolved';
+      result.reason = 'insufficient_budget';
+      return result;
+    }
+    const probe = new Deadline(Math.min(1000, deadline.remaining() - 300));
+    const before = await probe.run(inspect(probe));
+    result.candidateCount = before.count;
+    if (before.count === 0) return result;
+    if (before.count > 1) {
+      result.outcome = 'ambiguous';
+      return result;
+    }
+    if (!before.visible) {
+      result.outcome = 'unresolved';
+      result.reason = 'not_visible';
+      return result;
+    }
+    if (before.expanded !== 'false') {
+      result.outcome =
+        before.expanded === 'true' ? 'already_expanded' : 'not_collapsible';
+      return result;
+    }
+    result.phase = 'click';
+    if (deadline.remaining() <= 300) {
+      result.outcome = 'unresolved';
+      result.reason = 'insufficient_budget';
+      return result;
+    }
+    result.clickAttempted = true;
+    // Await the native operation's own timeout; racing a separate short timer
+    // here could report completion while a late click is still queued.
+    await details.click({ timeout: Math.min(2000, deadline.remaining() - 300) });
+    result.clickCompleted = true;
+    deadline.remaining();
+    result.phase = 'confirm';
+    const confirm = new Deadline(
+      Math.min(1000, Math.max(1, deadline.remaining() - 300)),
+    );
+    await confirm.run(
+      (async () => {
+        while (true) {
+          const after = await inspect(confirm);
+          if (after.count === 1 && after.visible && after.expanded === 'true')
+            return;
+          await confirm.sleep(50);
+        }
+      })(),
+    );
+    result.outcome = 'expanded';
+    return result;
+  } catch (error) {
+    deadline.remaining(); // Caller expiry and cancellation remain terminal.
+    const timeout =
+      (error instanceof ScrapeFailure && error.code === 'SCRAPE_TIMEOUT') ||
+      (error instanceof Error && error.name === 'TimeoutError');
+    if (!timeout) throw error;
+    result.outcome = 'unresolved';
+    result.reason =
+      result.phase === 'probe'
+        ? 'probe_timeout'
+        : result.phase === 'click'
+          ? 'action_timeout'
+          : 'expansion_unconfirmed';
+    return result;
+  } finally {
+    result.durationMs = Date.now() - started;
+  }
+};
+
 export const applyWorkflow = async (
   page: Page,
   workflow: Workflow,
@@ -464,6 +593,7 @@ export const applyWorkflow = async (
   const url = new URL(page.url());
   const observations: {
     entryHost: string;
+    productDetails?: ProductDetailsObservation;
     amazonContinuation?: {
       origin: string;
       asin: string;
@@ -682,15 +812,10 @@ export const applyWorkflow = async (
     (workflow === 'auto' || workflow === 'product-details@1') &&
     /(^|\.)canadagoose\.com$/.test(url.hostname)
   ) {
-    const details = page.getByRole('button', {
-      name: /^(product )?details|^description$/i,
-    });
-    if ((await details.count()) === 1 && (await details.isVisible())) {
-      if ((await details.getAttribute('aria-expanded')) === 'false') {
-        await details.click({ timeout: Math.min(2000, deadline.remaining()) });
-        steps.push({ type: 'product-details', outcome: 'expanded' });
-      }
-    }
+    const details = await expandProductDetails(page, deadline);
+    observations.productDetails = details;
+    if (details.outcome === 'expanded' || details.outcome === 'unresolved')
+      steps.push({ type: 'product-details', outcome: details.outcome });
   }
   if (
     workflow === 'auto' &&
