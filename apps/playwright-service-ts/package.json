@@ -7,26 +7,37 @@
     "start": "node dist/api.js",
     "build": "tsc",
     "dev": "tsx api.ts",
-    "test": "node --import tsx --test --test-force-exit helpers/*.spec.ts"
+    "test": "node --import tsx --test --test-force-exit helpers/*.spec.ts",
+    "test:integration": "node --import tsx --test --test-concurrency=2 integration/*.spec.ts",
+    "benchmark:bots": "tsx scripts/benchmark-bot-detection.ts",
+    "benchmark:waf": "tsx scripts/benchmark-waf.ts",
+    "benchmark:api": "tsx scripts/benchmark-api.ts",
+    "benchmark:api:audit": "tsx scripts/audit-api-benchmark.ts",
+    "benchmark:reliability": "tsx scripts/benchmark-reliability.ts",
+    "prepare:camoufox": "pnpm build && node dist/scripts/prepare-camoufox.js"
   },
   "keywords": [],
   "author": "Jeff Pereira",
   "license": "ISC",
   "engines": {
-    "node": ">=22.13.0"
+    "node": ">=22.15.0"
   },
   "dependencies": {
+    "@duckduckgo/autoconsent": "17.3.0",
+    "camoufox": "0.5.9",
     "dotenv": "^16.4.5",
     "express": "^5.2.1",
     "ipaddr.js": "^2.3.0",
+    "patchright": "1.64.2",
     "playwright": "^1.64.1",
+    "playwright-core": "1.62.0",
     "proxy-chain": "^2.7.1",
-    "user-agents": "^1.1.669"
+    "rebrowser-playwright": "1.64.101",
+    "tldts": "7.4.19"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
     "@types/node": "^22.15.30",
-    "@types/user-agents": "^1.0.4",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"
   },

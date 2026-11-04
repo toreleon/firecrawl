@@ -1,0 +1,1127 @@
+{
+  "recordedAt": "2026-11-04T06:43:42.839867+00:00",
+  "sourceCommit": "8366a132c7c8f3fa2e161cb31c03851bde7fe572",
+  "runtimeImplementationCommit": "ab395427de66c45dc9c497975183abd34e62d025",
+  "scope": "Bound optional Canada Goose product-details discovery and preserve honest captures after a native action timeout. Four selected proxy-free full-API requests exercise this recipe and the existing Amazon, Best Buy and CoinMarketCap recipes. No new full-100 or hosted comparison.",
+  "runtimeEquivalence": {
+    "measuredCohortSource": "ab395427de66c45dc9c497975183abd34e62d025",
+    "finalSource": "8366a132c7c8f3fa2e161cb31c03851bde7fe572",
+    "checkedPaths": [
+      "apps/playwright-service-ts/helpers",
+      "apps/playwright-service-ts/api.ts",
+      "apps/api"
+    ],
+    "diffEmpty": true,
+    "fixtureOnlyCorrection": "Final source adds local alias setup and a fail-closed DNS precondition for the owned integration fixture. The measured runtime and API test bytes are unchanged."
+  },
+  "rootCause": {
+    "savedLiveError": "Both engines reached HTTP 200 and then threw locator.click Timeout 2000ms in the workflow phase. WebKit logged a button outside the viewport; Firefox was still waiting for the locator. A failed optional step discarded the document.",
+    "exactFailedOperationConfirmed": true,
+    "priorLiveReceipt": "docs/benchmarks/autotrader-full-api-results-2026-11-04.json",
+    "noWafOrIpCauseInferred": true
+  },
+  "pairedOwnedReproduction": {
+    "fixture": {
+      "htmlCharacters": 221,
+      "htmlSHA256": "3f96bf542f76feb5b21546dcebee430a0be4c0076c3e39d5942dc461a8e98c58",
+      "beforeSourceSHA256": "d1084f1a677be55068bce5bcb5f36f0487ef8a8a46516a54b2189e3a64688f7e",
+      "beforeHashDerivation": "The exact constant passed to route.fulfill is retained in before.mjs. This hash is derived from that retained source; it was not printed in the original run.",
+      "publicTargetCalls": 0,
+      "networkMode": "none",
+      "browserOffline": true
+    },
+    "before": {
+      "ownedFixture": true,
+      "publicTargetCalls": 0,
+      "engine": "rebrowser",
+      "visibleBeforeFailure": true,
+      "code": "SCRAPE_TIMEOUT",
+      "errorFirstLine": "TimeoutError: locator.click: Timeout 2000ms exceeded.",
+      "durationMs": 2047,
+      "document": {
+        "phase": "workflow",
+        "rendererCrashed": false,
+        "url": "https://www.canadagoose.com/owned-product",
+        "lastResponseStatus": 200,
+        "recentNavigations": [
+          {
+            "url": "https://www.canadagoose.com/owned-product",
+            "status": 200
+          }
+        ],
+        "recentFailedRequests": []
+      },
+      "publicBodyStillPresent": true,
+      "nativeClicks": 0
+    },
+    "after": {
+      "ownedFixture": true,
+      "publicTargetCalls": 0,
+      "engine": "rebrowser",
+      "htmlSHA256": "3f96bf542f76feb5b21546dcebee430a0be4c0076c3e39d5942dc461a8e98c58",
+      "durationMs": 2072,
+      "captureReturned": true,
+      "readiness": {
+        "requested": false,
+        "satisfied": true,
+        "scope": "body",
+        "documentRevision": 1,
+        "automatic": {
+          "mode": "rendered-body",
+          "outcome": "ready",
+          "waitMs": 15,
+          "timeoutMs": 300,
+          "busyCount": 0,
+          "ignoredComplementaryBusyCount": 0,
+          "maxBusyCount": 0,
+          "busyScope": "main",
+          "documentReadyState": "complete"
+        }
+      },
+      "productDetails": {
+        "outcome": "unresolved",
+        "phase": "click",
+        "clickAttempted": true,
+        "clickCompleted": false,
+        "durationMs": 2036,
+        "candidateCount": 1,
+        "reason": "action_timeout"
+      },
+      "nativeClicks": 0
+    },
+    "outcome": "The same off-viewport owned HTML and native click deadline throw before the repair and return a ready public-body capture with an unresolved optional step afterwards. Neither run fires a click.",
+    "scope": "Rebrowser, offline browser context and Docker network none; no public target calls. This establishes a functional change, not a live-site latency effect."
+  },
+  "implementation": {
+    "readOnlyProbeBudgetMs": 1000,
+    "nativeClickMaximumMs": 2000,
+    "expansionConfirmationBudgetMs": 1000,
+    "callerBudgetReserveMs": 300,
+    "outcome": "Unfinished optional discovery/click/confirmation is reported under workflow.observations.productDetails and steps[].outcome unresolved. Only an observed aria-expanded true after a completed native click reports expanded. Caller expiry/cancellation and non-timeout browser failures stay terminal.",
+    "lateActionGuard": "Only read-only probes are raced; every awaited result is checked before another RPC and no expired probe can dispatch a click. Native click is awaited under its own timeout, without forcing, replay or a second independent race.",
+    "noVerificationOrSupportAutomationAdded": true,
+    "noDefaultRetriesAdded": true,
+    "frozenGradersUnchanged": {
+      "apps/playwright-service-ts/helpers/bot-detection.ts": "3111f011045834a040e5497825cd0bf2c698a3fa8ca77a48c8479dddf2348817",
+      "apps/playwright-service-ts/helpers/waf-benchmark.ts": "ffd9f0d2e5996825aa77cb71b600a6667558e166d4471a084c20638bab9171d6",
+      "apps/playwright-service-ts/helpers/api-benchmark.ts": "2e48cf7bc3ef5f3f691e0eff899fbb71f0d067411c504a038164347f37232c91",
+      "apps/playwright-service-ts/scripts/benchmark-api.ts": "0b42fef70efaade1e3ad4c5e2e8a6759d8ce8fe2b70cbe314bf889139e4027ed",
+      "apps/playwright-service-ts/benchmarks/frontier-2026-10-30.json": "a886fb57087e842c2857b89a7669e31d2fb7b98d6bd7deb60a2329f29581b76a"
+    }
+  },
+  "fullApiCohort": {
+    "checkedAt": "2026-11-04T06:32:32.063996+00:00",
+    "sourceCommit": "ab395427de66c45dc9c497975183abd34e62d025",
+    "productionRuntimeCommit": "ab395427de66c45dc9c497975183abd34e62d025",
+    "profile": "webkit-firefox",
+    "requests": 4,
+    "backendCaptures": 5,
+    "backendCapturesByOwner": {
+      "primary-a": 4,
+      "fallback-a": 1,
+      "fallback-b": 0
+    },
+    "normalizedPasses": 2,
+    "screenedPasses": 2,
+    "frontierPasses": 3,
+    "normalizedAndMarkdownPasses": 2,
+    "latency": {
+      "successfulP50Ms": 3955,
+      "successfulP95Ms": 8742,
+      "allAttemptsP95Ms": 84539
+    },
+    "failures": {
+      "marker_only_in_noncontent_markup": 1,
+      "timeout": 1
+    },
+    "states": {
+      "CONTENT_READY": 3,
+      "not_returned": 1
+    },
+    "apiErrors": {
+      "SCRAPE_TIMEOUT": 1
+    },
+    "proofs": {
+      "responsesWithClosedReceipts": 4,
+      "closedAttemptReceipts": 5,
+      "contextClosedReceipts": 5,
+      "failedResponsesWithClosedReceipts": 1,
+      "SCRAPE_TIMEOUT": 1
+    },
+    "fallback": {
+      "returned": 4,
+      "closedAttemptReceipts": 5,
+      "attempted": 1,
+      "recovered": 1,
+      "normalizedRecovered": 0
+    },
+    "fallbackSkipped": {
+      "not_needed": 2,
+      "insufficient_budget": 1
+    },
+    "resources": {
+      "primary-a": {
+        "peakBytes": 1490255872,
+        "sampledPeakBytes": 999231488,
+        "events": {
+          "memory.events:low": 0,
+          "memory.events:high": 0,
+          "memory.events:max": 0,
+          "memory.events:oom": 0,
+          "memory.events:oom_kill": 0,
+          "memory.events:oom_group_kill": 0,
+          "memory.events:sock_throttled": 0,
+          "pids.events:max": 0
+        }
+      },
+      "fallback-a": {
+        "peakBytes": 1648312320,
+        "sampledPeakBytes": 1012334592,
+        "events": {
+          "memory.events:low": 0,
+          "memory.events:high": 0,
+          "memory.events:max": 0,
+          "memory.events:oom": 0,
+          "memory.events:oom_kill": 0,
+          "memory.events:oom_group_kill": 0,
+          "memory.events:sock_throttled": 0,
+          "pids.events:max": 0
+        }
+      },
+      "fallback-b": {
+        "peakBytes": 705433600,
+        "sampledPeakBytes": 693739520,
+        "events": {
+          "memory.events:low": 0,
+          "memory.events:high": 0,
+          "memory.events:max": 0,
+          "memory.events:oom": 0,
+          "memory.events:oom_kill": 0,
+          "memory.events:oom_group_kill": 0,
+          "memory.events:sock_throttled": 0,
+          "pids.events:max": 0
+        }
+      }
+    },
+    "pacing": {
+      "configuredReservationIntervalMs": 7000,
+      "minimumObservedDispatchGapMs": 7001,
+      "strict7000msDispatchFloorMet": true,
+      "limit": "Slot reservation precedes fetch. Observed gaps are retained; configuration is not an exact dispatch floor."
+    },
+    "timingIntegrity": {
+      "valid": true,
+      "sampleIntervalMs": 1000,
+      "maximumAllowedGapMs": 10000,
+      "maximumObservedGapMs": 1003,
+      "gaps": []
+    },
+    "replay": {
+      "status": "complete",
+      "attempts": 4,
+      "uniquePairs": true,
+      "allEvidenceHashesMatch": true,
+      "allScoresReplay": true,
+      "sourceHashesMatch": true,
+      "networkRequests": 0,
+      "lifecycleLedgerVerified": true,
+      "profileConcurrencyLimitsChecked": 1,
+      "maxObservedConcurrency": 2,
+      "maxObservedConcurrencyByProfile": {
+        "webkit-firefox": 2
+      }
+    },
+    "byTarget": [
+      {
+        "target": "Amazon",
+        "url": "https://www.amazon.com/Combination-Lock-Shackle-Security-Mounting-Bicycle-Secure/dp/B08KCWFMRS",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 8742,
+        "markdownMarkerPresent": true,
+        "markdownChars": 191017,
+        "payloadSha256": "05fbab11d710d1590997cbb9e0808e0d5c7011585e91eaac236604806181de9d",
+        "browserState": "CONTENT_READY",
+        "apiErrorCode": null,
+        "selectedAttemptCleanup": [
+          {
+            "attempt": 1,
+            "pageClosed": true,
+            "contextClosed": true,
+            "cleanupFinished": true,
+            "cleanupDurationMs": 5
+          }
+        ],
+        "closedAttemptReceipts": [
+          {
+            "engine": "webkit",
+            "ownerBootId": "ecfee7d8-aebf-4325-80f9-ff025f0fe755",
+            "pageClosed": true,
+            "contextClosed": true,
+            "pageStatusCode": 200
+          }
+        ],
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "ecfee7d8-aebf-4325-80f9-ff025f0fe755",
+              "pageClosed": true,
+              "contextClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "canadagoose",
+        "url": "https://www.canadagoose.com/us/en/pr/macmillan-parka-2080M.html",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": true,
+        "failureReason": "marker_only_in_noncontent_markup",
+        "apiStatus": 200,
+        "latencyMs": 12356,
+        "markdownMarkerPresent": false,
+        "markdownChars": 57054,
+        "payloadSha256": "54bd0bebba4053f26db0391aad72bfc049321aec050cfd078cab02da13c8a1ab",
+        "browserState": "CONTENT_READY",
+        "apiErrorCode": null,
+        "selectedAttemptCleanup": [
+          {
+            "attempt": 1,
+            "pageClosed": true,
+            "contextClosed": true,
+            "cleanupFinished": true,
+            "cleanupDurationMs": 5
+          }
+        ],
+        "closedAttemptReceipts": [
+          {
+            "engine": "webkit",
+            "ownerBootId": "ecfee7d8-aebf-4325-80f9-ff025f0fe755",
+            "pageClosed": true,
+            "contextClosed": true,
+            "pageStatusCode": 403
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "92a31706-902e-47d8-a29d-354b0ce69257",
+            "pageClosed": true,
+            "contextClosed": true,
+            "pageStatusCode": 200
+          }
+        ],
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": true,
+          "recovered": true,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "ecfee7d8-aebf-4325-80f9-ff025f0fe755",
+              "pageClosed": true,
+              "contextClosed": true,
+              "pageStatusCode": 403
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "92a31706-902e-47d8-a29d-354b0ce69257",
+              "pageClosed": true,
+              "contextClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "CoinMarketCap",
+        "url": "https://coinmarketcap.com/currencies/bitcoin/",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 3955,
+        "markdownMarkerPresent": true,
+        "markdownChars": 56282,
+        "payloadSha256": "1529004751397599c04d08694bfda3eb37dadeb68d5b848331c642d88e733178",
+        "browserState": "CONTENT_READY",
+        "apiErrorCode": null,
+        "selectedAttemptCleanup": [
+          {
+            "attempt": 1,
+            "pageClosed": true,
+            "contextClosed": true,
+            "cleanupFinished": true,
+            "cleanupDurationMs": 4
+          }
+        ],
+        "closedAttemptReceipts": [
+          {
+            "engine": "webkit",
+            "ownerBootId": "ecfee7d8-aebf-4325-80f9-ff025f0fe755",
+            "pageClosed": true,
+            "contextClosed": true,
+            "pageStatusCode": 200
+          }
+        ],
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "ecfee7d8-aebf-4325-80f9-ff025f0fe755",
+              "pageClosed": true,
+              "contextClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "Best Buy",
+        "url": "https://www.bestbuy.com/site/apple-airpods-pro-2nd-generation-with-magsafe-case-usb-c-white/6447382.p?skuId=6447382",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": false,
+        "failureReason": "timeout",
+        "apiStatus": 500,
+        "latencyMs": 84539,
+        "markdownMarkerPresent": false,
+        "markdownChars": 0,
+        "payloadSha256": "d3054b63c0a8cc1046f6e1420c726087a0b674fa151704eee7a0833c3e65dce5",
+        "browserState": "not_returned",
+        "apiErrorCode": "SCRAPE_TIMEOUT",
+        "selectedAttemptCleanup": [],
+        "closedAttemptReceipts": [
+          {
+            "engine": "webkit",
+            "ownerBootId": "ecfee7d8-aebf-4325-80f9-ff025f0fe755",
+            "pageClosed": true,
+            "contextClosed": true,
+            "errorCode": "SCRAPE_TIMEOUT",
+            "document": {
+              "phase": "workflow",
+              "rendererCrashed": false,
+              "url": "https://www.bestbuy.com/site/apple-airpods-pro-2nd-generation-with-magsafe-case-usb-c-white/6447382.p",
+              "lastResponseStatus": 200,
+              "recentNavigations": [
+                {
+                  "url": "https://www.bestbuy.com/site/apple-airpods-pro-2nd-generation-with-magsafe-case-usb-c-white/6447382.p",
+                  "status": 200
+                }
+              ],
+              "recentFailedRequests": [
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "unknown"
+              ]
+            }
+          }
+        ],
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "insufficient_budget",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "ecfee7d8-aebf-4325-80f9-ff025f0fe755",
+              "pageClosed": true,
+              "contextClosed": true,
+              "errorCode": "SCRAPE_TIMEOUT",
+              "document": {
+                "phase": "workflow",
+                "rendererCrashed": false,
+                "url": "https://www.bestbuy.com/site/apple-airpods-pro-2nd-generation-with-magsafe-case-usb-c-white/6447382.p",
+                "lastResponseStatus": 200,
+                "recentNavigations": [
+                  {
+                    "url": "https://www.bestbuy.com/site/apple-airpods-pro-2nd-generation-with-magsafe-case-usb-c-white/6447382.p",
+                    "status": 200
+                  }
+                ],
+                "recentFailedRequests": [
+                  "Load request cancelled",
+                  "Load request cancelled",
+                  "Load request cancelled",
+                  "Load request cancelled",
+                  "Load request cancelled",
+                  "Load request cancelled",
+                  "Load request cancelled",
+                  "Load request cancelled",
+                  "Load request cancelled",
+                  "Load request cancelled",
+                  "Load request cancelled",
+                  "Load request cancelled",
+                  "Load request cancelled",
+                  "Load request cancelled",
+                  "Load request cancelled",
+                  "Load request cancelled",
+                  "Load request cancelled",
+                  "Load request cancelled",
+                  "Load request cancelled",
+                  "Load request cancelled",
+                  "Load request cancelled",
+                  "Load request cancelled",
+                  "Load request cancelled",
+                  "Load request cancelled",
+                  "Load request cancelled",
+                  "Load request cancelled",
+                  "Load request cancelled",
+                  "Load request cancelled",
+                  "Load request cancelled",
+                  "unknown"
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "comparisonLimit": "Four-target selected cohort after bounding the optional product-details recipe and preserving honest captures, not a full 100-target result, paired old-code test or hosted comparison. No population coverage or standalone primary-only score is inferred.",
+    "evidenceHashes": {
+      "_local/anti-bot/product-details-cohort-api-2026-11-04/report.json": "18174a5fd15c2f000c631116465fdec1ccf2df46c5b41f148930d03b8e65b6b0",
+      "_local/anti-bot/product-details-cohort-api-2026-11-04/score-replay-audit.json": "6cd22cb0bd71088a2f4cf447c33576e882a5bf641aecdbd7c52c7c7ec7db23d9",
+      "_local/anti-bot/product-details-cohort-api-harness-2026-11-04/deployment.json": "e853718db732735d9acf79c9ebeea6c314b39b5e40866a4737838cc3b06f7e01",
+      "_local/anti-bot/product-details-cohort-api-harness-2026-11-04/result.json": "b99f607e0c0424c4f09162d1acec88782dc8ef4e4296a68dd54b51858ec63864",
+      "_local/anti-bot/product-details-cohort-api-harness-2026-11-04/cleanup.json": "8851f59d3f3593c04fea6630d6f024eeec746b9b9c1ab043e8cce8c0d0914b87"
+    }
+  },
+  "canadaGooseObservation": {
+    "apiStatus": 200,
+    "success": true,
+    "markdownCharacters": 57054,
+    "htmlCharacters": 1691159,
+    "browser": {
+      "readiness": {
+        "requested": false,
+        "satisfied": true,
+        "scope": "body",
+        "documentRevision": 1,
+        "automatic": {
+          "mode": "rendered-body",
+          "outcome": "ready",
+          "waitMs": 26,
+          "timeoutMs": 5000,
+          "busyCount": 0,
+          "ignoredComplementaryBusyCount": 0,
+          "maxBusyCount": 0,
+          "busyScope": "main",
+          "documentReadyState": "complete"
+        }
+      },
+      "interaction": {
+        "consent": {
+          "policy": "rejectNonEssential",
+          "outcome": "unresolved",
+          "version": "autoconsent-17.3.0+local-2",
+          "diagnostics": {
+            "framesScanned": 12,
+            "probeTimeouts": 0,
+            "mainFrameProbeTimeouts": 0,
+            "auxiliaryProbeTimeouts": 0,
+            "probeErrors": 0,
+            "actionErrors": 0,
+            "limited": false,
+            "durationMs": 154
+          },
+          "cmp": "OneTrust"
+        },
+        "workflow": {
+          "id": "auto",
+          "steps": [
+            {
+              "type": "product-details",
+              "outcome": "unresolved"
+            }
+          ],
+          "observations": {
+            "entryHost": "www.canadagoose.com",
+            "productDetails": {
+              "outcome": "unresolved",
+              "phase": "probe",
+              "clickAttempted": false,
+              "clickCompleted": false,
+              "durationMs": 1001,
+              "reason": "probe_timeout"
+            }
+          }
+        },
+        "state": "CONTENT_READY"
+      },
+      "diagnostics": {
+        "navigations": [
+          {
+            "url": "https://www.canadagoose.com/us/en/pr/macmillan-parka-2080M.html",
+            "status": 301
+          },
+          {
+            "url": "https://www.canadagoose.com/en-us/products/macmillan-parka-2080m",
+            "status": 200
+          }
+        ],
+        "failedRequests": {
+          "NS_ERROR_FAILURE": 2,
+          "NS_ERROR_DOM_NETWORK_ERR": 1
+        },
+        "renderedTextSha256": "c5184f96bdf71eaa449de8c1885702add33f37e109d50f6c0e8a39d1ed03a4ec",
+        "ownerBootId": "92a31706-902e-47d8-a29d-354b0ce69257",
+        "attempts": [
+          {
+            "attempt": 1,
+            "budgetMs": 81744,
+            "status": 200,
+            "durationMs": 9545,
+            "pageClosed": true,
+            "contextClosed": true,
+            "cleanupFinished": true,
+            "cleanupDurationMs": 5
+          }
+        ],
+        "blockedRequests": {
+          "ads": 2,
+          "media": 0,
+          "private": 0
+        },
+        "blockedAdHosts": {
+          "www.googletagmanager.com": 2
+        },
+        "durationMs": 9561,
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": true,
+          "recovered": true,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "ecfee7d8-aebf-4325-80f9-ff025f0fe755",
+              "pageClosed": true,
+              "contextClosed": true,
+              "pageStatusCode": 403
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "92a31706-902e-47d8-a29d-354b0ce69257",
+              "pageClosed": true,
+              "contextClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      }
+    }
+  },
+  "scoredCoverageGainClaim": false,
+  "fresh100TargetMeasurement": false,
+  "lastFull100TargetMeasurement": {
+    "sourceCommit": "0d130c7c4a2e91acb2d0beb2d3f7e36a68d8f7cb",
+    "implementationByteEquivalentTo": "37df06d0849e8abae9fa79c9cf8d6580653dd275",
+    "normalizedMatches": 61,
+    "receipt": "docs/benchmarks/autotrader-full-api-results-2026-11-04.json",
+    "limit": "Predates this optional-workflow repair. The selected document recovery is not added to its numerator or denominator."
+  },
+  "deployment": {
+    "imageId": "sha256:5f16e303610599c18e912ccf35192a76cba8a20d040c14f79fd02cb3bbf542c5",
+    "globalHttpConcurrencyLimit": 4,
+    "aggregateBrowserMemoryLimitMiB": 6656,
+    "limitsPerOwner": {
+      "primary-a": {
+        "cpus": 2,
+        "memoryMiB": 2560,
+        "pageCapacity": 2
+      },
+      "fallback-a": {
+        "cpus": 2,
+        "memoryMiB": 2048,
+        "pageCapacity": 1
+      },
+      "fallback-b": {
+        "cpus": 2,
+        "memoryMiB": 2048,
+        "pageCapacity": 1
+      }
+    },
+    "browserRuntimeHashesPerOwner": {
+      "primary-a": {
+        "api.ts": "f55ea246626825f739f76cfb2c9342706806e42fe84e416d998966b4c8efe72e",
+        "helpers/browser.ts": "df8cea26bc7291f16c651daa1c2961e51342adc61b17836857687f62345a5a10",
+        "helpers/browser-sessions.ts": "d67253bc869f97206083c7fa7c2c2ae9d711005960c8590ad44725fb12ceb41f",
+        "helpers/cookies.ts": "94736b093cf95fe8244f52c6e8ee9925cdd39ea7cd64cf08156be05a45240dcb",
+        "helpers/get_error.ts": "1c15475f5f048c869be847c62dbfb9610cf4130ab93538db2c00dbd567d01aea",
+        "helpers/resource-policy.ts": "7c54984bc6187baf1c0ce2ff18cb50373109c8dcd961edc65b9186d5d2e2e774",
+        "helpers/webkit.ts": "93771af70a8d2a2fe126d6bcd8ef4b8794ece9add16613a220b37acaed6b2e33",
+        "helpers/scrape-control.ts": "06facddd72e027792c7f527a671b50e32bd4d5389a98a6af7720577eca66e9e0",
+        "helpers/page-cleanup.ts": "e0e798de0db771202e7663f3d34227c2937f277d9093b4c0df65425e1dbf43a4",
+        "helpers/scrape-page.ts": "3125e449d89931f071e0b7be74b9f8d0852f9b5318fbbf73d140166dc7002961",
+        "helpers/ssrf.ts": "dd50cd35b42a39474dcef16481c8bbba308b5f5290645ca680cfb50bcf35ae14",
+        "helpers/workflows.ts": "0683b689c0dac8518c67ef9063adebdbe733fa7120d17e32d8f3805bd31c02aa",
+        "helpers/page-readiness.ts": "5b43a83d23d6c3b39ac58fd1e8dc45c65f57c7b43e7dc9f69e26ba4db976e6c8",
+        "helpers/waf-benchmark.ts": "ffd9f0d2e5996825aa77cb71b600a6667558e166d4471a084c20638bab9171d6",
+        "helpers/bot-detection.ts": "3111f011045834a040e5497825cd0bf2c698a3fa8ca77a48c8479dddf2348817",
+        "dist/api.js": "bce94b46aa5d642d6e3d8bacd5fab9e16c3ae0ce10a39f903f7bfc9a3eb8fd03",
+        "dist/helpers/browser.js": "9e2a6dd9fb0adbef04d7e6845593484dc060f0208a4c95cf7c3e631063452ddd",
+        "dist/helpers/browser-sessions.js": "715e61bf0a2fe9b43de9ab1dc733f5f775e0a92e60c5268dbe6e0b8620f9f549",
+        "dist/helpers/cookies.js": "0d7a5e0f76b861992a1b304b6acf6f70eacaaa7a09f8269d93434dcdbc23bc57",
+        "dist/helpers/get_error.js": "5edbde83afd8bceb2280455d500bdb7c3d62f5318d54c82cc01629c6681cd6a7",
+        "dist/helpers/resource-policy.js": "3c079ef3d980dde1a91090007396929a506962a57ee1cd83a9baa48fc7bce2f1",
+        "dist/helpers/webkit.js": "7700d1b1a53f29abece85053fec39abe301b22768db4989698f9e5a894a4a078",
+        "dist/helpers/scrape-control.js": "cf3862ccedf93c1f73a84471f558241d63cb5f9fb62d95881f2c3aad5fd4abfd",
+        "dist/helpers/page-cleanup.js": "89896b2084177a69e6a8d7ed26f6bd6b052e631c6692e26f84111e2d745912eb",
+        "dist/helpers/scrape-page.js": "1c40b3d59beb5c15d038f9579d6f94aca332f77cc04ba666ca1bc2b9723697ed",
+        "dist/helpers/ssrf.js": "c5a7425cd6dca38a721186621e7fe1752314bb4e1cf12e6f39a49b67ea3ea87c",
+        "dist/helpers/workflows.js": "9899dace8abbc2b077aad89ef17023738ebcd9b25b7d62a25f8ddc0de7440abf",
+        "dist/helpers/page-readiness.js": "eb9d291a95830e1d245c1221aa689d822262b9b0afd54ec85b6dcc3304e8b64f",
+        "dist/helpers/waf-benchmark.js": "4eea26db4617351a9daa9ad546c8d9d16983d2d736f5a1d435a3159fe7a96f4d",
+        "dist/helpers/bot-detection.js": "77a197cbbe0942b6106db2eb2579fc1af8dc7a167e3e959de51a89f8ed7a746e",
+        "scripts/webkit-entrypoint.sh": "b0fd23edbeae9b2ec4d4d0724af52f8fe23bb93891c8e052a708be5e76a8d60e",
+        "scripts/webkit-launcher.sh": "97f7408a15e2a714ed351c865b45294468b22da1eaa14eba1ab260d66e5ad305",
+        "docker-entrypoint.sh": "55aa3489e4db96d2b71e75fab1a1b443fd30051f33b6ebcfc98b7b672c4422ae"
+      },
+      "fallback-a": {
+        "api.ts": "f55ea246626825f739f76cfb2c9342706806e42fe84e416d998966b4c8efe72e",
+        "helpers/browser.ts": "df8cea26bc7291f16c651daa1c2961e51342adc61b17836857687f62345a5a10",
+        "helpers/browser-sessions.ts": "d67253bc869f97206083c7fa7c2c2ae9d711005960c8590ad44725fb12ceb41f",
+        "helpers/cookies.ts": "94736b093cf95fe8244f52c6e8ee9925cdd39ea7cd64cf08156be05a45240dcb",
+        "helpers/get_error.ts": "1c15475f5f048c869be847c62dbfb9610cf4130ab93538db2c00dbd567d01aea",
+        "helpers/resource-policy.ts": "7c54984bc6187baf1c0ce2ff18cb50373109c8dcd961edc65b9186d5d2e2e774",
+        "helpers/webkit.ts": "93771af70a8d2a2fe126d6bcd8ef4b8794ece9add16613a220b37acaed6b2e33",
+        "helpers/scrape-control.ts": "06facddd72e027792c7f527a671b50e32bd4d5389a98a6af7720577eca66e9e0",
+        "helpers/page-cleanup.ts": "e0e798de0db771202e7663f3d34227c2937f277d9093b4c0df65425e1dbf43a4",
+        "helpers/scrape-page.ts": "3125e449d89931f071e0b7be74b9f8d0852f9b5318fbbf73d140166dc7002961",
+        "helpers/ssrf.ts": "dd50cd35b42a39474dcef16481c8bbba308b5f5290645ca680cfb50bcf35ae14",
+        "helpers/workflows.ts": "0683b689c0dac8518c67ef9063adebdbe733fa7120d17e32d8f3805bd31c02aa",
+        "helpers/page-readiness.ts": "5b43a83d23d6c3b39ac58fd1e8dc45c65f57c7b43e7dc9f69e26ba4db976e6c8",
+        "helpers/waf-benchmark.ts": "ffd9f0d2e5996825aa77cb71b600a6667558e166d4471a084c20638bab9171d6",
+        "helpers/bot-detection.ts": "3111f011045834a040e5497825cd0bf2c698a3fa8ca77a48c8479dddf2348817",
+        "dist/api.js": "bce94b46aa5d642d6e3d8bacd5fab9e16c3ae0ce10a39f903f7bfc9a3eb8fd03",
+        "dist/helpers/browser.js": "9e2a6dd9fb0adbef04d7e6845593484dc060f0208a4c95cf7c3e631063452ddd",
+        "dist/helpers/browser-sessions.js": "715e61bf0a2fe9b43de9ab1dc733f5f775e0a92e60c5268dbe6e0b8620f9f549",
+        "dist/helpers/cookies.js": "0d7a5e0f76b861992a1b304b6acf6f70eacaaa7a09f8269d93434dcdbc23bc57",
+        "dist/helpers/get_error.js": "5edbde83afd8bceb2280455d500bdb7c3d62f5318d54c82cc01629c6681cd6a7",
+        "dist/helpers/resource-policy.js": "3c079ef3d980dde1a91090007396929a506962a57ee1cd83a9baa48fc7bce2f1",
+        "dist/helpers/webkit.js": "7700d1b1a53f29abece85053fec39abe301b22768db4989698f9e5a894a4a078",
+        "dist/helpers/scrape-control.js": "cf3862ccedf93c1f73a84471f558241d63cb5f9fb62d95881f2c3aad5fd4abfd",
+        "dist/helpers/page-cleanup.js": "89896b2084177a69e6a8d7ed26f6bd6b052e631c6692e26f84111e2d745912eb",
+        "dist/helpers/scrape-page.js": "1c40b3d59beb5c15d038f9579d6f94aca332f77cc04ba666ca1bc2b9723697ed",
+        "dist/helpers/ssrf.js": "c5a7425cd6dca38a721186621e7fe1752314bb4e1cf12e6f39a49b67ea3ea87c",
+        "dist/helpers/workflows.js": "9899dace8abbc2b077aad89ef17023738ebcd9b25b7d62a25f8ddc0de7440abf",
+        "dist/helpers/page-readiness.js": "eb9d291a95830e1d245c1221aa689d822262b9b0afd54ec85b6dcc3304e8b64f",
+        "dist/helpers/waf-benchmark.js": "4eea26db4617351a9daa9ad546c8d9d16983d2d736f5a1d435a3159fe7a96f4d",
+        "dist/helpers/bot-detection.js": "77a197cbbe0942b6106db2eb2579fc1af8dc7a167e3e959de51a89f8ed7a746e",
+        "scripts/webkit-entrypoint.sh": "b0fd23edbeae9b2ec4d4d0724af52f8fe23bb93891c8e052a708be5e76a8d60e",
+        "scripts/webkit-launcher.sh": "97f7408a15e2a714ed351c865b45294468b22da1eaa14eba1ab260d66e5ad305",
+        "docker-entrypoint.sh": "55aa3489e4db96d2b71e75fab1a1b443fd30051f33b6ebcfc98b7b672c4422ae"
+      },
+      "fallback-b": {
+        "api.ts": "f55ea246626825f739f76cfb2c9342706806e42fe84e416d998966b4c8efe72e",
+        "helpers/browser.ts": "df8cea26bc7291f16c651daa1c2961e51342adc61b17836857687f62345a5a10",
+        "helpers/browser-sessions.ts": "d67253bc869f97206083c7fa7c2c2ae9d711005960c8590ad44725fb12ceb41f",
+        "helpers/cookies.ts": "94736b093cf95fe8244f52c6e8ee9925cdd39ea7cd64cf08156be05a45240dcb",
+        "helpers/get_error.ts": "1c15475f5f048c869be847c62dbfb9610cf4130ab93538db2c00dbd567d01aea",
+        "helpers/resource-policy.ts": "7c54984bc6187baf1c0ce2ff18cb50373109c8dcd961edc65b9186d5d2e2e774",
+        "helpers/webkit.ts": "93771af70a8d2a2fe126d6bcd8ef4b8794ece9add16613a220b37acaed6b2e33",
+        "helpers/scrape-control.ts": "06facddd72e027792c7f527a671b50e32bd4d5389a98a6af7720577eca66e9e0",
+        "helpers/page-cleanup.ts": "e0e798de0db771202e7663f3d34227c2937f277d9093b4c0df65425e1dbf43a4",
+        "helpers/scrape-page.ts": "3125e449d89931f071e0b7be74b9f8d0852f9b5318fbbf73d140166dc7002961",
+        "helpers/ssrf.ts": "dd50cd35b42a39474dcef16481c8bbba308b5f5290645ca680cfb50bcf35ae14",
+        "helpers/workflows.ts": "0683b689c0dac8518c67ef9063adebdbe733fa7120d17e32d8f3805bd31c02aa",
+        "helpers/page-readiness.ts": "5b43a83d23d6c3b39ac58fd1e8dc45c65f57c7b43e7dc9f69e26ba4db976e6c8",
+        "helpers/waf-benchmark.ts": "ffd9f0d2e5996825aa77cb71b600a6667558e166d4471a084c20638bab9171d6",
+        "helpers/bot-detection.ts": "3111f011045834a040e5497825cd0bf2c698a3fa8ca77a48c8479dddf2348817",
+        "dist/api.js": "bce94b46aa5d642d6e3d8bacd5fab9e16c3ae0ce10a39f903f7bfc9a3eb8fd03",
+        "dist/helpers/browser.js": "9e2a6dd9fb0adbef04d7e6845593484dc060f0208a4c95cf7c3e631063452ddd",
+        "dist/helpers/browser-sessions.js": "715e61bf0a2fe9b43de9ab1dc733f5f775e0a92e60c5268dbe6e0b8620f9f549",
+        "dist/helpers/cookies.js": "0d7a5e0f76b861992a1b304b6acf6f70eacaaa7a09f8269d93434dcdbc23bc57",
+        "dist/helpers/get_error.js": "5edbde83afd8bceb2280455d500bdb7c3d62f5318d54c82cc01629c6681cd6a7",
+        "dist/helpers/resource-policy.js": "3c079ef3d980dde1a91090007396929a506962a57ee1cd83a9baa48fc7bce2f1",
+        "dist/helpers/webkit.js": "7700d1b1a53f29abece85053fec39abe301b22768db4989698f9e5a894a4a078",
+        "dist/helpers/scrape-control.js": "cf3862ccedf93c1f73a84471f558241d63cb5f9fb62d95881f2c3aad5fd4abfd",
+        "dist/helpers/page-cleanup.js": "89896b2084177a69e6a8d7ed26f6bd6b052e631c6692e26f84111e2d745912eb",
+        "dist/helpers/scrape-page.js": "1c40b3d59beb5c15d038f9579d6f94aca332f77cc04ba666ca1bc2b9723697ed",
+        "dist/helpers/ssrf.js": "c5a7425cd6dca38a721186621e7fe1752314bb4e1cf12e6f39a49b67ea3ea87c",
+        "dist/helpers/workflows.js": "9899dace8abbc2b077aad89ef17023738ebcd9b25b7d62a25f8ddc0de7440abf",
+        "dist/helpers/page-readiness.js": "eb9d291a95830e1d245c1221aa689d822262b9b0afd54ec85b6dcc3304e8b64f",
+        "dist/helpers/waf-benchmark.js": "4eea26db4617351a9daa9ad546c8d9d16983d2d736f5a1d435a3159fe7a96f4d",
+        "dist/helpers/bot-detection.js": "77a197cbbe0942b6106db2eb2579fc1af8dc7a167e3e959de51a89f8ed7a746e",
+        "scripts/webkit-entrypoint.sh": "b0fd23edbeae9b2ec4d4d0724af52f8fe23bb93891c8e052a708be5e76a8d60e",
+        "scripts/webkit-launcher.sh": "97f7408a15e2a714ed351c865b45294468b22da1eaa14eba1ab260d66e5ad305",
+        "docker-entrypoint.sh": "55aa3489e4db96d2b71e75fab1a1b443fd30051f33b6ebcfc98b7b672c4422ae"
+      }
+    },
+    "apiSourceHashes": {
+      "apps/api/src/controllers/v2/scrape.ts": "5d6f51665c80fbfc6e8968f5a18b6e2dd591fc2fa7051ed0147e3799acd05ed4",
+      "apps/api/src/lib/local-browser/store.ts": "3fc2d6c0f846112ada94f21db6965354e466a7fe0c576b2fc2082509ed22d4c4",
+      "apps/api/src/lib/error.ts": "cff0c1e7a4d35f05fb6d1c907ab3769fa610d66118d9d24be6d4508e0718ea33",
+      "apps/api/src/lib/error-serde.ts": "577afcca02649788bb52157b21b8eefa91f14581fe0353a1228ec939fe180e44",
+      "apps/api/src/config.ts": "ff0125914ec73e0ef0d49e1d3e09777f71e43f1a62fae7b9cb1c209724ddba4e",
+      "apps/api/src/controllers/v2/types.ts": "7a8553a2d1b95d4b81960d1cf366a2ff8f7048c34ccd55c3b7b6f4e11ad288a7",
+      "apps/api/src/controllers/v2/local-browser.ts": "247b0f403c6a332cb38b0ba95efef12f648ba00731133f4bcc0c51d12e0b6c48",
+      "apps/api/src/lib/local-browser/client.ts": "4daeb41b17e08667d3752f94d41663fea8428e25d7e4047890e5361d4e81d28a",
+      "apps/api/src/lib/local-browser/controls.ts": "d76525c7c691460d74efb53acc54318817ddcbbdf1c184ff848989220eafd7fa",
+      "apps/api/src/scraper/scrapeURL/engines/playwright/index.ts": "b08ecf7316c656866f04be9a1e96e1b19b64bfac3a83d15d595b2cb107e550a4"
+    },
+    "apiCompiledHashes": {
+      "controllers/v2/scrape": "3a130b81176092593376b53d2da18a2bf12269f916914eb8345242fb8540f37d",
+      "lib/local-browser/store": "f0948ec39ad3595a246fa49ba73ff8e0c27094823b29e2fa3c28141797e91fb2",
+      "lib/error": "44be52ea4c884fe07a2e30021f47403611869c1c5efa8647718143a12b9770ea",
+      "lib/error-serde": "10dac52367b057ab8603113a7475fe1a14e014ae360dffac9f532f7a094140d3",
+      "config": "1aa5cec1540fa41a5cdd0c08b06b1bac1bc8ffc9532ce269de358689f43bc26e",
+      "controllers/v2/types": "862e1cdcd553037a23a4d3ca8eebfce8fd0b21da7e8e9c3662fcc6773bae0ce8",
+      "controllers/v2/local-browser": "cc944c2b23df86abe50be2d3ac2cd828cdf8bb284ce60f43c0a701d513be0ab6",
+      "lib/local-browser/client": "020dceafc5773d8fabcea64f9621ca3bcafd23ddc72cd8fb21fabd23cc7450b0",
+      "lib/local-browser/controls": "278e8a852637bd1cd83448751eb13508898d779e505b2b31ff66bd1da0318c18",
+      "scraper/scrapeURL/engines/playwright/index": "436dbbb27bcec5cfa7ee73aafaee4cffe682fc70d2e45c611afdf69c4eabf8f3"
+    },
+    "upstreamProxy": false,
+    "hostedCalls": 0
+  },
+  "validation": {
+    "helpersPassed": 85,
+    "localBrowserParentChildChecksPassed": 7,
+    "localRealEngines": [
+      "playwright",
+      "patchright",
+      "rebrowser",
+      "camoufox",
+      "webkit"
+    ],
+    "ownedFullApiSnipsPassed": 3,
+    "ownedFullApiHarnessExitCode": 0,
+    "apiTypecheckExitCode": 0,
+    "browserCi": {
+      "sourceCommit": "8366a132c7c8f3fa2e161cb31c03851bde7fe572",
+      "runtimeImplementationCommit": "ab395427de66c45dc9c497975183abd34e62d025",
+      "runId": 41786748106,
+      "url": "https://github.com/toreleon/firecrawl/actions/runs/41786748106",
+      "jobs": [
+        {
+          "id": 126430522833,
+          "name": "browser-engines",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 41786748106,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Run pnpm install --frozen-lockfile",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Install browser dependencies for all three drivers",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Run pnpm build",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Prepare the pinned optional Firefox backend",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Resolve the owned workflow fixture locally",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Run pnpm test",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Run pnpm test:integration",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            },
+            {
+              "name": "Run pnpm audit --prod",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12
+            },
+            {
+              "name": "Post Run actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 22
+            },
+            {
+              "name": "Post Run pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 23
+            },
+            {
+              "name": "Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 24
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 25
+            }
+          ]
+        },
+        {
+          "id": 126430523186,
+          "name": "contained-webkit",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 41786748106,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Build the optional WebKit image",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Exercise the production UID boundary and HTTP/session contract",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Refuse startup without the required UID or namespace capability",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            }
+          ]
+        }
+      ],
+      "counts": {
+        "helpersPassed": 85,
+        "ordinaryIntegrationPassed": 166,
+        "ordinaryIntegrationSkipped": 6,
+        "containedWebkitPassed": 23,
+        "productionDependencyAuditPassed": true
+      }
+    },
+    "initialApiTestCorrection": {
+      "passed": 1,
+      "failed": 2,
+      "cause": "The initial assertions incorrectly assumed Markdown excludes hidden HTML. The correction verifies actual hidden state, native-click counters and readiness. Initial source and failed output are retained; all three final API cases passed.",
+      "productionChangeForCorrection": false
+    },
+    "initialCiFixtureCorrection": {
+      "runId": 41785822059,
+      "sourceCommit": "ab395427de66c45dc9c497975183abd34e62d025",
+      "unverifiedAliasBrowserCaptures": 4,
+      "cause": "Ordinary CI lacked the fixture alias and received Not Found rather than owned content. The final test requires loopback DNS resolution before launching a browser, and CI configures the alias. These first-run captures are separate from the scored direct-VN cohort; their destination was not verified local.",
+      "initialRunClaimedAsPassing": false
+    },
+    "finalLocalFixtureVerification": "The corrected fixture test was copied into the existing runtime image and rerun across all five engines. Fresh CI builds and checks the final committed source.",
+    "teardownLimit": "Harness commands terminated their processes, but extract-worker teardown still logged a channel-closing error. Clean shutdown is not established.",
+    "broaderServerSdkWorkflowsClaimed": false
+  },
+  "formattingLimit": "The API Markdown converter can retain text from hidden HTML. Markdown substring presence does not prove visibility, successful expansion or satisfied readiness. Browser rendered-body checks and explicit readiness remain distinct evidence.",
+  "requestAccounting": {
+    "scoredCohortPublicApiRequests": 4,
+    "scoredCohortBrowserCaptures": 5,
+    "scoredCohortMaximumPlannedCaptures": 8,
+    "clientRetries": 0,
+    "expectedTextHintsSent": false,
+    "upstreamProxy": false,
+    "hostedCalls": 0,
+    "pairedOfflineCaptures": 2,
+    "ownedFixtureTrafficSeparate": true,
+    "firstCiUnverifiedAliasCapturesSeparate": 4
+  },
+  "cleanup": {
+    "taskContainersRemoved": 13,
+    "candidateImageRetained": "sha256:5f16e303610599c18e912ccf35192a76cba8a20d040c14f79fd02cb3bbf542c5",
+    "imagesRemoved": 0,
+    "baselineImagesPreserved": true,
+    "cache": {
+      "taskRecordsRemoved": 68,
+      "baselineRecordsPreserved": 128,
+      "unrelatedNewRecordsPreserved": 0,
+      "remainingRecords": 128,
+      "dockerReportedPruneTotal": [
+        "Total:\t328.3MB"
+      ],
+      "physicalBytesFreedNotMeasured": true
+    },
+    "taskInfrastructureStopped": [
+      "autogtm-firecrawl-workflows-pg-20261103",
+      "autogtm-firecrawl-workflows-redis-20261103",
+      "autogtm-firecrawl-workflows-rabbit-20261103"
+    ],
+    "taskPortsClosed": true,
+    "volumeNamesUnchanged": true,
+    "dataVolumesPreserved": 114,
+    "volumesDeleted": 0,
+    "rawEvidenceAndBuildContextsPreserved": true,
+    "globalPruneUsed": false
+  },
+  "remainingWork": [
+    "Best Buy consumed the primary workflow deadline with HTTP 200 and then skipped alternate dispatch for insufficient budget. Inspect and bound its discovery/navigation stages without weakening original-product identity or Page-close requirements.",
+    "The Canada Goose frozen marker remains only in noncontent markup; this document recovery is not a new scored match.",
+    "Comparable hosted performance remains unproven. The last full fork score is 61/100 on earlier code; the historical hosted 82/100 reference was not refreshed."
+  ],
+  "research": [
+    {
+      "url": "https://playwright.dev/docs/actionability",
+      "use": "Native visibility, stability, event-receiving and enabled checks can fail independently of isVisible. Preserve these checks rather than forcing a click."
+    },
+    {
+      "url": "https://playwright.dev/docs/api/class-locator",
+      "use": "A native action timeout is not proof that expansion succeeded. The helper observes expanded state and keeps incomplete outcomes explicit."
+    }
+  ],
+  "evidence": {
+    "retainedRawResponses": true,
+    "hashes": {
+      "_local/anti-bot/product-details-2026-11-04/before.json": "94f231ee9e434ba10b5972c2aedd934b9784bc6ccce733e14506379a912db267",
+      "_local/anti-bot/product-details-2026-11-04/before.log": "b663f47c319dcf525a5d89ac24bda6bedaedd725fb3562bb8d167000cf3b30ff",
+      "_local/anti-bot/product-details-2026-11-04/before.mjs": "d1084f1a677be55068bce5bcb5f36f0487ef8a8a46516a54b2189e3a64688f7e",
+      "_local/anti-bot/product-details-2026-11-04/after.json": "92388b3ad99f9c3f6bd8d342b990ddb84b0e583426a9a26d5271077a2130875f",
+      "_local/anti-bot/product-details-2026-11-04/after.log": "e5f376ab400520c8621a6cab7687a41c463bb5eca07085676208a713fe9ace98",
+      "_local/anti-bot/product-details-2026-11-04/after.mjs": "6ba911bb217f43749cb6db560a48f5dad0709e2c55c718a806e028349f00acbb",
+      "_local/anti-bot/product-details-2026-11-04/paired-fixture.json": "0919d31e2d0a491071ea766a8620a65cb96129bb9999e1b7924e4394a2cfefde",
+      "_local/anti-bot/product-details-2026-11-04/paired-fixture.html": "3f96bf542f76feb5b21546dcebee430a0be4c0076c3e39d5942dc461a8e98c58",
+      "_local/anti-bot/product-details-2026-11-04/build-manifest.json": "58fa6b9fa95a5477bf45736fac4c69025583b9e1b6b44d68ecb10b792d36b95f",
+      "_local/anti-bot/product-details-2026-11-04/build-source-hashes.json": "0ed9ec6c188a6bcf21d7ee4ff094310af45c84942c70f5f9383135e42dd95635",
+      "_local/anti-bot/product-details-2026-11-04/helpers.log": "a513fdb8b793675deaaefefb7ba9b1e989969e340f25f1a3a6891c780e77c73c",
+      "_local/anti-bot/product-details-2026-11-04/api-typecheck.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "_local/anti-bot/product-details-2026-11-04/webkit-integration.log": "8336b5cbef082a9dd44b7d237b06b4860689c167ba0e321934679690800cb406",
+      "_local/anti-bot/product-details-2026-11-04/driver-integration.log": "a103a5fc00246c3a7e7b91603f236b0818fe1f7495d2b03a6a0ffcf6695b18b8",
+      "_local/anti-bot/product-details-2026-11-04/webkit-fixture-verified.log": "ad14f89a7adb2c952fa51e5705f048e3ec4f6310c4db1fb28e0286971e68788a",
+      "_local/anti-bot/product-details-2026-11-04/driver-fixture-verified.log": "af62492adef29b124760f41509693bf5301bb9349f3f271c8c9ee0d000846024",
+      "_local/anti-bot/product-details-2026-11-04/fixture-verification-cleanup.json": "83bd9bc128716cec0edf178c9aadcaaab7f0fa9c00774b25d0c72627484fccd3",
+      "_local/anti-bot/product-details-2026-11-04/canadagoose-observation.json": "b00edfc2ebf39474636b3d919a11506b3812e38d30c4c1329c886c5fa76fc5c0",
+      "_local/anti-bot/product-details-2026-11-04/api-test-first-attempt.ts": "6bdfbb88d9d4afc70ab6d84464c9737ee58c116a821962fae8a992c60bdc3113",
+      "_local/anti-bot/product-details-2026-11-04/ci-first-engines.log": "1ecb7b24441a806c1f33359b4d24d9a5ce1347d24b1699aa803004dc39de1b89",
+      "_local/anti-bot/product-details-2026-11-04/ci.json": "139e88c26a40601d6b15feed3564fd9207e56a61e3603a5b494470bfd1172b73",
+      "_local/anti-bot/product-details-2026-11-04/ci-engines.log": "56b35398e0ee24cd2b4228f07268c726caffd28a021c06ccf7b35f8e283037b2",
+      "_local/anti-bot/product-details-2026-11-04/ci-webkit.log": "d832994f5fe852ee73974347bb0f9f018a55f026caa1db01607075bede2aec3d",
+      "_local/anti-bot/product-details-api-harness-verified-2026-11-04/result.json": "71853479c7a146dcc323e6cb4edef19bf1d20e35ce51f52c632d9a501603a5d7",
+      "_local/anti-bot/product-details-api-harness-verified-2026-11-04/deployment.json": "73b36181ea44bd566a3653b8a210dc94d5809652de8ba55a3a35acbe29b798e2",
+      "_local/anti-bot/product-details-api-harness-verified-2026-11-04/harness.log": "21c4fd4231348baa689958579f7585d8c3b63ee8d3041488e9016826b27b55fa",
+      "_local/anti-bot/product-details-api-harness-verified-2026-11-04/final-health.json": "c5b35b7fe35db4c566891d2f1ea264cde20adb4860650f625e1abfd1b884518b",
+      "_local/anti-bot/product-details-api-harness-verified-2026-11-04/cleanup.json": "99683575b3cc4c14735b7b9a78f712b1bf4f024f83a274a4100e9c8a6d9353e4",
+      "_local/anti-bot/product-details-api-harness-2026-11-04/result.json": "0662ae5f54aa0b8dd450ac6e3cbed6c1bc380cd6b06618b62222fc9b6a843977",
+      "_local/anti-bot/product-details-api-harness-2026-11-04/deployment.json": "c43e79286c1a5c90f28a43e8164544312abf08322067e22155685d7dc4273ea8",
+      "_local/anti-bot/product-details-api-harness-2026-11-04/harness.log": "308abe1c5eb897d2e6b4ddef4c80ea2f3485e617080efc78d6e3db973ece4959",
+      "_local/anti-bot/product-details-api-harness-2026-11-04/final-health.json": "2a1c5f12b0eb047ad9f912185873276a04c59afd09c69d18b7b553113401193a",
+      "_local/anti-bot/product-details-api-harness-2026-11-04/cleanup.json": "85204c83f9f21e9b974bafe564f9d0f09902f260375aa13872636bcf300e9cea",
+      "_local/anti-bot/product-details-cohort-api-harness-2026-11-04/audited-results.json": "240b3df08884c189cf48007c7d165cf090353013e0ed3d5cae2ceaeff3c0eda6",
+      "_local/anti-bot/product-details-cohort-api-harness-2026-11-04/deployment.json": "e853718db732735d9acf79c9ebeea6c314b39b5e40866a4737838cc3b06f7e01",
+      "_local/anti-bot/product-details-cohort-api-harness-2026-11-04/result.json": "b99f607e0c0424c4f09162d1acec88782dc8ef4e4296a68dd54b51858ec63864",
+      "_local/anti-bot/product-details-cohort-api-harness-2026-11-04/final-health.json": "d3de931e92e8e5d40f6951a48c1d7a40cbc04708906e5df317a52c4b18d1a6e2",
+      "_local/anti-bot/product-details-cohort-api-harness-2026-11-04/cleanup.json": "8851f59d3f3593c04fea6630d6f024eeec746b9b9c1ab043e8cce8c0d0914b87",
+      "_local/anti-bot/product-details-cohort-api-harness-2026-11-04/resource-samples.jsonl": "7d93fa2a4de73463f374a18a8d884fe2b745ed00e94bd12624056796b24b1730",
+      "_local/anti-bot/product-details-cohort-api-harness-2026-11-04/harness.log": "7606d336a380ec5c6c9bf49bf99e3921eb8425060b7e7911431b52b385f256a8",
+      "_local/anti-bot/product-details-cohort-api-harness-2026-11-04/primary-a-service.log": "941ee44ba266057703127e8659f28007c2c361c6536e2706e09b5dda51482a1c",
+      "_local/anti-bot/product-details-cohort-api-harness-2026-11-04/fallback-a-service.log": "024ecd42cc58354d1a5825d64cf5bed4e509c637c7b34db567eba596ee195266",
+      "_local/anti-bot/product-details-cohort-api-harness-2026-11-04/fallback-b-service.log": "348e240b6c572c10c14e28bc7f1814cdd5e3a58ecf22c9480ad8758ee5da8a55",
+      "_local/anti-bot/product-details-cohort-api-2026-11-04/report.json": "18174a5fd15c2f000c631116465fdec1ccf2df46c5b41f148930d03b8e65b6b0",
+      "_local/anti-bot/product-details-cohort-api-2026-11-04/attempts.jsonl": "538be960d652f08885391df6c5d340c431f1e68845b3da0b756e0fc9d5c4f52c",
+      "_local/anti-bot/product-details-cohort-api-2026-11-04/score-replay-audit.json": "6cd22cb0bd71088a2f4cf447c33576e882a5bf641aecdbd7c52c7c7ec7db23d9",
+      "_local/anti-bot/product-details-cleanup-2026-11-04/receipt.json": "1ef30a4abd1810ee65d10ce4f894d8bee8b15f5b802528ff69ded03633290fee",
+      "_local/anti-bot/autotrader-full-api-harness-2026-11-04/primary-a-service.log": "76d8e583627b34d0a4fd8c4881be532ac03b0c1153d30da8570efe0df2e96878",
+      "_local/anti-bot/autotrader-full-api-harness-2026-11-04/fallback-b-service.log": "01f77dd2233d638979142b64552aa82031d2aee0d46341a33fc22e297dcf25ac"
+    }
+  }
+}

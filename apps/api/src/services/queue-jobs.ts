@@ -499,6 +499,22 @@ export async function addScrapeJob(
   directToBullMQ: boolean = false,
   listenable: boolean = false,
 ): Promise<NuQJob<ScrapeJobData> | null> {
+  if (
+    webScraperOptions.mode === "single_urls" &&
+    webScraperOptions.scrapeOptions.browserControls &&
+    webScraperOptions.internalOptions
+  ) {
+    const browserInternal = webScraperOptions.internalOptions;
+    webScraperOptions = {
+      ...webScraperOptions,
+      internalOptions: {
+        ...browserInternal,
+        browserDeadlineAt:
+          browserInternal.browserDeadlineAt ??
+          Date.now() + (webScraperOptions.scrapeOptions.timeout ?? 30000),
+      },
+    };
+  }
   // Capture trace context to propagate to worker
   const traceContext = serializeTraceContext();
   const optionsWithTrace: ScrapeJobData = {

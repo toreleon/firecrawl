@@ -1,0 +1,1177 @@
+{
+  "recordedAt": "2026-11-04T12:51:47.377258+00:00",
+  "measuredSourceCommit": "94c5471af2e49e894e057f36a8b6993163fcba4d",
+  "scope": "Fresh frozen 100-target full Firecrawl v2 API benchmark at Amazon homepage-interruption source 94c5471. Two owners with two page slots each restore the last complete 60/100 layout and its 5.5GiB aggregate browser cap. Monitoring and live epoch differ, so no isolated causal coverage or latency claim. One-second persistent collectors stop on memory/PID-limit or OOM events; socket-pressure counters and cgroup/VM pressure qualify timing rather than stop coverage measurement. The preceding one-page-per-Firefox attempt stopped at its own stricter socket gate and is retained as incomplete, never resumed or merged into this score. Direct VN egress, four API workers, same frozen dataset/graders/deadlines/controls/pacing, no upstream proxies, hosted calls, solvers, expected-text hints, fixture aliases or client retries. Maximum 100 API requests and 200 browser captures.",
+  "fullApiBenchmark": {
+    "checkedAt": "2026-11-04T12:45:19.607186+00:00",
+    "sourceCommit": "94c5471af2e49e894e057f36a8b6993163fcba4d",
+    "productionRuntimeCommit": "94c5471af2e49e894e057f36a8b6993163fcba4d",
+    "profile": "webkit-firefox",
+    "requests": 100,
+    "backendCaptures": 158,
+    "backendCapturesByOwner": {
+      "primary-a": 100,
+      "fallback-a": 58
+    },
+    "normalizedPasses": 56,
+    "screenedPasses": 55,
+    "frontierPasses": 57,
+    "normalizedAndMarkdownPasses": 53,
+    "latency": {
+      "successfulP50Ms": 4989,
+      "successfulP95Ms": 8803,
+      "allAttemptsP95Ms": 9700
+    },
+    "failures": {
+      "challenge": 13,
+      "marker_only_in_noncontent_markup": 2,
+      "target_status_403": 15,
+      "network_error": 4,
+      "rate_limited": 3,
+      "target_status_511": 1,
+      "target_status_406": 1,
+      "target_status_405": 1,
+      "content_not_ready": 1,
+      "missing_expected_marker": 2,
+      "timeout": 1
+    },
+    "states": {
+      "VERIFICATION_REQUIRED": 15,
+      "CONTENT_READY": 61,
+      "ACCESS_DENIED": 14,
+      "not_returned": 5,
+      "HUMAN_REQUIRED": 4,
+      "REGION_UNAVAILABLE": 1
+    },
+    "apiErrors": {
+      "NETWORK_ERROR": 4,
+      "SCRAPE_TIMEOUT": 1
+    },
+    "returnedErrorReceiptPhases": {
+      "navigation": 10,
+      "readiness": 1
+    },
+    "proofs": {
+      "responsesWithClosedReceipts": 100,
+      "closedAttemptReceipts": 158,
+      "contextClosedReceipts": 158,
+      "failedResponsesWithClosedReceipts": 5,
+      "NETWORK_ERROR": 8,
+      "CONTENT_NOT_READY": 6,
+      "PAGE_CRASHED": 1,
+      "SCRAPE_TIMEOUT": 2
+    },
+    "fallback": {
+      "returned": 100,
+      "closedAttemptReceipts": 158,
+      "attempted": 58,
+      "recovered": 17,
+      "normalizedRecovered": 16
+    },
+    "fallbackSkipped": {
+      "not_needed": 42
+    },
+    "resources": {
+      "primary-a": {
+        "peakBytes": 2048122880,
+        "sampledPeakBytes": 2045808640,
+        "events": {
+          "memory.events:low": 0,
+          "memory.events:high": 0,
+          "memory.events:max": 0,
+          "memory.events:oom": 0,
+          "memory.events:oom_kill": 0,
+          "memory.events:oom_group_kill": 0,
+          "memory.events:sock_throttled": 38,
+          "pids.events:max": 0
+        }
+      },
+      "fallback-a": {
+        "peakBytes": 2480275456,
+        "sampledPeakBytes": 2420121600,
+        "events": {
+          "memory.events:low": 0,
+          "memory.events:high": 0,
+          "memory.events:max": 0,
+          "memory.events:oom": 0,
+          "memory.events:oom_kill": 0,
+          "memory.events:oom_group_kill": 0,
+          "memory.events:sock_throttled": 168,
+          "pids.events:max": 0
+        }
+      }
+    },
+    "pacing": {
+      "configuredReservationIntervalMs": 7000,
+      "minimumObservedDispatchGapMs": 7000,
+      "strict7000msDispatchFloorMet": true,
+      "limit": "Slot reservation precedes fetch. Observed gaps are retained; configuration is not an exact dispatch floor."
+    },
+    "timingIntegrity": {
+      "valid": true,
+      "sampleIntervalMs": 1000,
+      "maximumAllowedGapMs": 10000,
+      "maximumObservedGapMs": 1018,
+      "gaps": []
+    },
+    "replay": {
+      "status": "complete",
+      "attempts": 100,
+      "uniquePairs": true,
+      "allEvidenceHashesMatch": true,
+      "allScoresReplay": true,
+      "sourceHashesMatch": true,
+      "networkRequests": 0,
+      "lifecycleLedgerVerified": true,
+      "profileConcurrencyLimitsChecked": 1,
+      "maxObservedConcurrency": 2,
+      "maxObservedConcurrencyByProfile": {
+        "webkit-firefox": 2
+      }
+    },
+    "comparisonLimit": "Fresh complete 100-target measurement at Amazon homepage-interruption source 94c5471. The immediate last complete 60/100 run used the same two owners, page slots and aggregate memory cap, but this run adds persistent one-second monitoring and belongs to another live epoch. Memory/PID-limit and OOM events are fatal; socket pressure and PSI qualify timing. The aborted one-page-per-Firefox run is excluded. No isolated causal coverage or latency gain, contemporary hosted parity or standalone primary-only score is inferred.",
+    "resourceIntegrity": {
+      "oomAndMemoryAndPidLimitEventsZero": true,
+      "socketThrottlingObserved": true,
+      "comparisonQualified": true
+    },
+    "byTarget": [
+      {
+        "target": "allegro",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "challenge",
+        "browserState": "VERIFICATION_REQUIRED",
+        "apiStatus": 200
+      },
+      {
+        "target": "Amazon",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "indeed",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "canadagoose",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "marker_only_in_noncontent_markup",
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "lowes",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "target_status_403",
+        "browserState": "ACCESS_DENIED",
+        "apiStatus": 200
+      },
+      {
+        "target": "safeway",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "target_status_403",
+        "browserState": "ACCESS_DENIED",
+        "apiStatus": 200
+      },
+      {
+        "target": "walmart",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "zillow",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "saksfifthavenue",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "network_error",
+        "browserState": "not_returned",
+        "apiStatus": 500
+      },
+      {
+        "target": "g2",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "challenge",
+        "browserState": "VERIFICATION_REQUIRED",
+        "apiStatus": 200
+      },
+      {
+        "target": "neimanmarcus",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "network_error",
+        "browserState": "not_returned",
+        "apiStatus": 500
+      },
+      {
+        "target": "aa",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "marker_only_in_noncontent_markup",
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "asda",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "lululemon",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "hyatt",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "rate_limited",
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "macys",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "target_status_403",
+        "browserState": "ACCESS_DENIED",
+        "apiStatus": 200
+      },
+      {
+        "target": "etsy",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "yelp",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "challenge",
+        "browserState": "VERIFICATION_REQUIRED",
+        "apiStatus": 200
+      },
+      {
+        "target": "zara",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "louisvuitton",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "target_status_403",
+        "browserState": "ACCESS_DENIED",
+        "apiStatus": 200
+      },
+      {
+        "target": "autozone",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "target_status_403",
+        "browserState": "ACCESS_DENIED",
+        "apiStatus": 200
+      },
+      {
+        "target": "homedepot",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "target_status_403",
+        "browserState": "ACCESS_DENIED",
+        "apiStatus": 200
+      },
+      {
+        "target": "ashleyfurniture",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "autotrader",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "booking.com",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "carters",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "databricks",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "emag",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "target_status_511",
+        "browserState": "HUMAN_REQUIRED",
+        "apiStatus": 200
+      },
+      {
+        "target": "expedia",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "glassdoor",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "marketwatch",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "barrons",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "monster",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "target_status_403",
+        "browserState": "ACCESS_DENIED",
+        "apiStatus": 200
+      },
+      {
+        "target": "mouser",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "target_status_403",
+        "browserState": "ACCESS_DENIED",
+        "apiStatus": 200
+      },
+      {
+        "target": "nytimes",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "ralphlauren",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "tripadvisor",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "challenge",
+        "browserState": "VERIFICATION_REQUIRED",
+        "apiStatus": 200
+      },
+      {
+        "target": "realtor",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "rate_limited",
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "wsj",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "challenge",
+        "browserState": "VERIFICATION_REQUIRED",
+        "apiStatus": 200
+      },
+      {
+        "target": "bloomberg",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "reuters",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "alibaba",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "coupang",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "target_status_403",
+        "browserState": "ACCESS_DENIED",
+        "apiStatus": 200
+      },
+      {
+        "target": "ebay",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "target",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "nike",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "stockx",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "target_status_403",
+        "browserState": "ACCESS_DENIED",
+        "apiStatus": 200
+      },
+      {
+        "target": "cargurus",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "target_status_406",
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "cars.com",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "challenge",
+        "browserState": "VERIFICATION_REQUIRED",
+        "apiStatus": 200
+      },
+      {
+        "target": "crunchbase",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "challenge",
+        "browserState": "VERIFICATION_REQUIRED",
+        "apiStatus": 200
+      },
+      {
+        "target": "verizon",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "att",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "target_status_403",
+        "browserState": "ACCESS_DENIED",
+        "apiStatus": 200
+      },
+      {
+        "target": "goodrx",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "LinkedIn",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "network_error",
+        "browserState": "not_returned",
+        "apiStatus": 500
+      },
+      {
+        "target": "X (Twitter)",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "Instagram",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "Ticketmaster",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "Capterra",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "Reddit",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "Google Search",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "rate_limited",
+        "browserState": "VERIFICATION_REQUIRED",
+        "apiStatus": 200
+      },
+      {
+        "target": "YouTube",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "TikTok",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "Airbnb",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "Best Buy",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "Redfin",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "target_status_405",
+        "browserState": "HUMAN_REQUIRED",
+        "apiStatus": 200
+      },
+      {
+        "target": "Foot Locker",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "SeatGeek",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "challenge",
+        "browserState": "VERIFICATION_REQUIRED",
+        "apiStatus": 200
+      },
+      {
+        "target": "Facebook",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "GOAT",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "Yahoo Finance",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "network_error",
+        "browserState": "not_returned",
+        "apiStatus": 500
+      },
+      {
+        "target": "DigiKey",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "Rightmove",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "Instacart",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "Pinterest",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "ZipRecruiter",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "challenge",
+        "browserState": "VERIFICATION_REQUIRED",
+        "apiStatus": 200
+      },
+      {
+        "target": "Vinted",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "Idealista",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "challenge",
+        "browserState": "VERIFICATION_REQUIRED",
+        "apiStatus": 200
+      },
+      {
+        "target": "Leboncoin",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "StubHub",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "Skyscanner",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "content_not_ready",
+        "browserState": "HUMAN_REQUIRED",
+        "apiStatus": 200
+      },
+      {
+        "target": "Congress.gov",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "challenge",
+        "browserState": "VERIFICATION_REQUIRED",
+        "apiStatus": 200
+      },
+      {
+        "target": "TradingView",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "CoinMarketCap",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "Apartments.com",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "Zoopla",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "challenge",
+        "browserState": "VERIFICATION_REQUIRED",
+        "apiStatus": 200
+      },
+      {
+        "target": "Trustpilot",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "Yellow Pages",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "Kayak",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "Allmenus",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "missing_expected_marker",
+        "browserState": "REGION_UNAVAILABLE",
+        "apiStatus": 200
+      },
+      {
+        "target": "temu",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "missing_expected_marker",
+        "browserState": "HUMAN_REQUIRED",
+        "apiStatus": 200
+      },
+      {
+        "target": "delta",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "kroger",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "target_status_403",
+        "browserState": "ACCESS_DENIED",
+        "apiStatus": 200
+      },
+      {
+        "target": "axs",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "target_status_403",
+        "browserState": "VERIFICATION_REQUIRED",
+        "apiStatus": 200
+      },
+      {
+        "target": "draftkings",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "target_status_403",
+        "browserState": "ACCESS_DENIED",
+        "apiStatus": 200
+      },
+      {
+        "target": "bing",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "github",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "failureReason": null,
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "stackoverflow",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "challenge",
+        "browserState": "VERIFICATION_REQUIRED",
+        "apiStatus": 200
+      },
+      {
+        "target": "arxiv",
+        "normalizedPass": true,
+        "screenedPass": false,
+        "failureReason": "missing_expected_marker",
+        "browserState": "CONTENT_READY",
+        "apiStatus": 200
+      },
+      {
+        "target": "buybuybaby",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "target_status_403",
+        "browserState": "ACCESS_DENIED",
+        "apiStatus": 200
+      },
+      {
+        "target": "roblox",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "failureReason": "timeout",
+        "browserState": "not_returned",
+        "apiStatus": 500
+      }
+    ]
+  },
+  "comparisonWithPreviousFullRun": {
+    "previousSource": "70c69f8538103f0eaab4b0b27119887dbdafa557",
+    "previousNormalizedPasses": 60,
+    "currentNormalizedPasses": 56,
+    "gained": [],
+    "lost": [
+      {
+        "target": "louisvuitton",
+        "reason": "target_status_403",
+        "receipts": [
+          {
+            "engine": "webkit",
+            "ownerBootId": "954b3554-4bf2-4464-8558-4628472acba0",
+            "pageClosed": true,
+            "contextClosed": true,
+            "pageStatusCode": 403
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "a9f03bda-b74b-4217-842e-8273981ee774",
+            "pageClosed": true,
+            "contextClosed": true,
+            "pageStatusCode": 403
+          }
+        ]
+      },
+      {
+        "target": "Google Search",
+        "reason": "rate_limited",
+        "receipts": [
+          {
+            "engine": "webkit",
+            "ownerBootId": "954b3554-4bf2-4464-8558-4628472acba0",
+            "pageClosed": true,
+            "contextClosed": true,
+            "pageStatusCode": 429,
+            "errorCode": "CONTENT_NOT_READY"
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "a9f03bda-b74b-4217-842e-8273981ee774",
+            "pageClosed": true,
+            "contextClosed": true,
+            "pageStatusCode": 429,
+            "errorCode": "CONTENT_NOT_READY"
+          }
+        ]
+      },
+      {
+        "target": "SeatGeek",
+        "reason": "challenge",
+        "receipts": [
+          {
+            "engine": "webkit",
+            "ownerBootId": "954b3554-4bf2-4464-8558-4628472acba0",
+            "pageClosed": true,
+            "contextClosed": true,
+            "pageStatusCode": 403
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "a9f03bda-b74b-4217-842e-8273981ee774",
+            "pageClosed": true,
+            "contextClosed": true,
+            "pageStatusCode": 403
+          }
+        ]
+      },
+      {
+        "target": "Yahoo Finance",
+        "reason": "network_error",
+        "receipts": [
+          {
+            "engine": "webkit",
+            "ownerBootId": "954b3554-4bf2-4464-8558-4628472acba0",
+            "pageClosed": true,
+            "contextClosed": true,
+            "errorCode": "NETWORK_ERROR",
+            "networkErrorCode": "WEBKIT_CONNECTION_TERMINATED",
+            "document": {
+              "phase": "navigation",
+              "rendererCrashed": false,
+              "lastResponseStatus": null,
+              "recentNavigations": [],
+              "recentFailedRequests": [
+                "Connection terminated unexpectedly"
+              ]
+            }
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "a9f03bda-b74b-4217-842e-8273981ee774",
+            "pageClosed": true,
+            "contextClosed": true,
+            "errorCode": "NETWORK_ERROR",
+            "networkErrorCode": "NS_ERROR_NET_RESET",
+            "document": {
+              "phase": "navigation",
+              "rendererCrashed": false,
+              "lastResponseStatus": null,
+              "recentNavigations": [],
+              "recentFailedRequests": [
+                "NS_ERROR_NET_RESET"
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "sameApiSourceAndCompiledHashes": true,
+    "changedMeasuredBrowserFiles": [
+      "dist/helpers/workflows.js",
+      "helpers/workflows.ts"
+    ],
+    "limit": "No contemporary paired old-code run. The changed recipes concern Best Buy discovery and an Amazon homepage interruption; neither applies to the four lost hosts. Live epochs and monitoring differ. Failure receipts show 403/429 or transport termination on both engines, but do not prove an isolated external cause or rule out timing effects."
+  },
+  "amazonObservation": {
+    "normalizedPass": true,
+    "fallbackAttempted": false,
+    "limit": "Passed directly on WebKit. This live request does not demonstrate a recovery caused by the interruption classification; owned before/after fixtures establish that functional repair."
+  },
+  "verification": {
+    "browserCi": {
+      "verifiedAt": "2026-11-04T12:42:54.764900+00:00",
+      "sourceCommit": "94c5471af2e49e894e057f36a8b6993163fcba4d",
+      "runUrl": "https://github.com/toreleon/firecrawl/actions/runs/41830005113",
+      "ordinaryJobId": 126574432393,
+      "webkitJobId": 126574432746,
+      "bothJobs": "success",
+      "logsSha256": {
+        "ci-ordinary-94c547.log": "fea8f0bbf102c72724ff6be8dc9493c6a6cec316788d037371ddfe30f36fc5c8",
+        "ci-webkit-94c547.log": "fbf3d28853594971b56a62bfb0857ff498adca6ac56c55ed165a3c761e33af69"
+      }
+    },
+    "helperChecks": 101,
+    "ordinaryIntegrationPassed": 196,
+    "ordinaryIntegrationSkipped": 7,
+    "containedWebkitChecks": 34,
+    "productionDependencyAudit": "No known vulnerabilities found",
+    "nativeRegression": "WebKit interruption failed before; typed identity failure and normal return passed after, using a real denying SSRF filter and offline owned routes.",
+    "apiProtocolHarness": "Seven modes pass through API/queue/worker with controlled HTTP browser-protocol fixtures; not native-browser/API end-to-end evidence."
+  },
+  "monitoring": {
+    "policy": {
+      "sourceCommit": "94c5471af2e49e894e057f36a8b6993163fcba4d",
+      "workers": 4,
+      "browserPageSlots": 4,
+      "maxApiRequests": 100,
+      "maxTargetCaptures": 200,
+      "clientRetries": 0,
+      "upstreamProxy": false,
+      "hostedCalls": 0,
+      "previousAttempt": {
+        "phase": "single-page-firefox-full-api-2026-11-04",
+        "completedResponses": 2,
+        "observedTargetCaptures": 5,
+        "notResumedOrMerged": true
+      },
+      "resourcePolicy": "OOM, memory.max and pids.max remain fatal. Socket pressure is recorded and qualifies latency. The retained per-owner PSI=0 and approximately 6ms of global PSI increase around the prior event do not establish either a fatal allocation failure or clean performance; the kernel counter alone does not quantify request latency."
+    },
+    "pressure": {
+      "scope": "Per-owner one-second collectors, including owner startup and teardown. VM readings include unrelated services. Timing remains resource-qualified; the counter alone does not establish a per-request delay.",
+      "owners": [
+        {
+          "owner": "primary-a",
+          "samples": 727,
+          "maximumCollectorGapMs": 1016,
+          "cgroupMemoryPsiDeltaUs": {
+            "some": 52,
+            "full": 52
+          },
+          "maximumCgroupMemorySomeAvg10": 0.0,
+          "maximumVmMemorySomeAvg10": 0.0
+        },
+        {
+          "owner": "fallback-a",
+          "samples": 725,
+          "maximumCollectorGapMs": 1045,
+          "cgroupMemoryPsiDeltaUs": {
+            "some": 2075,
+            "full": 2075
+          },
+          "maximumCgroupMemorySomeAvg10": 0.0,
+          "maximumVmMemorySomeAvg10": 0.0
+        }
+      ]
+    },
+    "limit": "Memory/PID-limit and OOM events remained fatal. Socket pressure qualified latency. The earlier single-page-Firefox attempt used its stricter socket gate, stopped and was excluded from this result."
+  },
+  "cleanup": {
+    "taskBrowserContainersRemoved": 2,
+    "priorAbortedRunContainersRemoved": 3,
+    "nativeRegressionContainersRemoved": 3,
+    "taskInfrastructureStopped": true,
+    "ownedDataVolumeNamesPresent": [
+      "5cceb9978ee25af905b9e5e9fa8579a76d139b8f78755c530b4f8cc5c564ae84",
+      "3580885e4742de88a1727b7f9e42379360ecc9a8b334437ae9ee2e1e8c65126b",
+      "3e412c18f631803e2327af15b663b701eb110606f858883329594cff5d81dd48"
+    ],
+    "reusableImagesPreserved": [
+      "sha256:218d6b40a5682abb00f4d5b30f37d4c6e15a2480925bf8fb625d12289e553137",
+      "sha256:0565f4ef95379efc7a3f174f248460a16d44136e19085505b5f10cc68c08f1ee",
+      "sha256:14ecc363ad49e2dd2e03b531e5ace09e209dae4923d4ddba5f70179fabc7c439",
+      "sha256:4dd2f44f6136227fc88bd429c9ccf5559e63d358639da9ea0ec4de7912ef2573"
+    ],
+    "baselineInventoryDrift": {
+      "volumeNamesMissing": [
+        "opengtm-check-82fdf16d8929-data"
+      ],
+      "imageIdsMissing": [],
+      "runningNamesMissing": [
+        "opengtm-check-82fdf16d8929-go",
+        "opengtm-check-82fdf16d8929-pg",
+        "opengtm-check-82fdf16d8929-redis"
+      ]
+    },
+    "driftLimit": "No image, volume or cache deletion was performed in this phase. The disappearance of an unrelated opengtm-check volume was observed; its cause was not observed. Whole-machine inventory equality is not claimed.",
+    "globalPrune": false,
+    "volumesRemoved": false,
+    "imagesRemoved": false,
+    "cachePruned": false,
+    "retainedEvidence": true
+  },
+  "shutdownLimit": "Existing extract-worker channel-closing teardown error remains; all managed processes terminated. Clean application shutdown is not claimed.",
+  "nextEvidence": "Inspect newly failed targets and the remaining access/verification gap before further public requests. Do not repeat the failed one-page-owner layout, native macOS Chrome trial or HTTP tier without a distinct supported hypothesis. Hosted parity remains unproven.",
+  "evidenceHashes": {
+    "_local/anti-bot/homepage-interruption-full-api-harness-2026-11-04/audited-results.json": "5bb926f5707cf192a7e03c75f9b9e3e1ae701b00e63f24d6e7e0f515061f7bd6",
+    "_local/anti-bot/homepage-interruption-full-api-harness-2026-11-04/deployment.json": "179ec80175b14a3cda0ba1adce79d6952db75ab1c03e8eb6aa5b727f5d515403",
+    "_local/anti-bot/homepage-interruption-full-api-harness-2026-11-04/result.json": "4df8b2179975d88abfaa801ff58952f2d90122837773c3e6c86099740292a473",
+    "_local/anti-bot/homepage-interruption-full-api-harness-2026-11-04/cleanup.json": "235c529ee1013c65b8243e3eb7ffcb9d2db766eb30914adf39ff605e7e143661",
+    "_local/anti-bot/homepage-interruption-full-api-harness-2026-11-04/final-health.json": "d37e94e37558ebbf31779091a8dbb40e2c6b4b5c3edbf464d425069af9d0ec3f",
+    "_local/anti-bot/homepage-interruption-full-audit-2026-11-04/pressure-summary.json": "9fb6052b67d61ee123507da54f9e08579cf7f1b6a96a3880c87b1a8c52f89f6d",
+    "_local/anti-bot/homepage-interruption-full-audit-2026-11-04/predeclared-protocol.json": "691e8007502c6fa0c80070e0475cbe089ae5fd555ebd60c6d98a3f0779f16213",
+    "_local/anti-bot/homepage-interruption-full-audit-2026-11-04/final-cleanup.json": "51abb08d341ef2f341d835755d767e9cf633c619eebd23dc5eebad60674ea7e7",
+    "_local/anti-bot/amazon-homepage-interruption-2026-11-04/verified-current-ci.json": "bcba1c156589a67f3bb0d91545b07b56d1d2d832d1d93d6898bcc470b2a47322"
+  }
+}

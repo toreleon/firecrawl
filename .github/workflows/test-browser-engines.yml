@@ -1,0 +1,77 @@
+name: Browser engine integration
+
+on:
+  pull_request:
+    paths:
+      - 'apps/playwright-service-ts/**'
+      - 'docker-compose.yaml'
+      - '.github/workflows/test-browser-engines.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: browser-engines-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  browser-engines:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: apps/playwright-service-ts
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4
+        with:
+          version: 11.4.0
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: apps/playwright-service-ts/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - name: Install browser dependencies for all three drivers
+        run: |
+          node node_modules/playwright/cli.js install chromium --with-deps
+          node node_modules/patchright/cli.js install chromium
+          node node_modules/rebrowser-playwright/cli.js install chromium
+      - run: pnpm build
+      - name: Prepare the pinned optional Firefox backend
+        run: |
+          node node_modules/playwright-core/cli.js install-deps firefox
+          node dist/scripts/prepare-camoufox.js
+      - name: Resolve the owned workflow fixture locally
+        run: echo '127.0.0.1 owned.canadagoose.com www.bestbuy.com' | sudo tee -a /etc/hosts
+      - run: pnpm test
+      - run: pnpm test:integration
+        env:
+          TEST_CAMOUFOX: 'true'
+      - run: pnpm audit --prod
+
+  contained-webkit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - name: Build the optional WebKit image
+        run: docker build --build-arg INSTALL_WEBKIT=true --tag firecrawl-webkit-test apps/playwright-service-ts
+      - name: Exercise the production UID boundary and HTTP/session contract
+        run: |
+          docker run --rm --init --user root --cap-add=NET_ADMIN --cpus=2 --memory=3g \
+            --add-host webkit-fixture.test:127.0.0.1 --add-host owned.canadagoose.com:127.0.0.1 --add-host www.bestbuy.com:127.0.0.1 \
+            -e BROWSER_ENGINE=webkit -e BROWSER_HEADLESS=false -e TEST_WEBKIT=true \
+            --entrypoint sh firecrawl-webkit-test scripts/webkit-entrypoint.sh \
+            node --import tsx --test --test-concurrency=1 integration/webkit.spec.ts integration/webkit-resources.spec.ts integration/webkit-crash.spec.ts integration/webkit-tls.spec.ts integration/alibaba-interception.spec.ts integration/autotrader-block.spec.ts integration/product-details.spec.ts integration/country-budget.spec.ts integration/onetrust-preferences.spec.ts integration/owner-health.spec.ts integration/homepage-interruption.spec.ts integration/lowes-search.spec.ts integration/stateless-cleanup.spec.ts
+      - name: Refuse startup without the required UID or namespace capability
+        run: |
+          if docker run --rm --network none --user node -e BROWSER_ENGINE=webkit firecrawl-webkit-test; then
+            echo 'WebKit unexpectedly started as the browser UID' >&2
+            exit 1
+          fi
+          if docker run --rm --network none --user root -e BROWSER_ENGINE=webkit firecrawl-webkit-test; then
+            echo 'WebKit unexpectedly started without NET_ADMIN' >&2
+            exit 1
+          fi

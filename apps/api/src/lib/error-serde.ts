@@ -1,5 +1,6 @@
 import {
   ActionsNotSupportedError,
+  LocalBrowserTransportError,
   ConcurrencyQueueTimeoutError,
   CrawlDenialError,
   ErrorCodes,
@@ -84,6 +85,7 @@ const errorMap: Record<ErrorCodes, any> = {
   SCRAPE_LOCKDOWN_CACHE_MISS: LockdownMissError,
   SCRAPE_ACTION_ERROR: ActionError,
   SCRAPE_ACTIONS_NOT_SUPPORTED: ActionsNotSupportedError,
+  LOCAL_BROWSER_ERROR: LocalBrowserTransportError,
   SCRAPE_BRANDING_NOT_SUPPORTED: BrandingNotSupportedError,
   AGENT_INDEX_ONLY: AgentIndexOnlyError,
   SCRAPE_RACED_REDIRECT_ERROR: RacedRedirectError,

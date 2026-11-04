@@ -1,0 +1,243 @@
+{
+  "scope": "Interleaved proxy-free browser-backend comparison: 100 frozen targets, two rounds per runtime, no oracle readiness text",
+  "measuredAt": {
+    "startedAt": "2026-11-03T09:08:48.025Z",
+    "finishedAt": "2026-11-03T09:16:03.792Z"
+  },
+  "baseline": {
+    "runtimeCommit": "f47d7085ce6a07be1ce38fc523a10533648b9f36",
+    "imageId": "sha256:9a97a3c48ff12f8ec20518f769f620d31516262daa2a3636ba679ae87695d94d",
+    "overall": {
+      "requests": 200,
+      "uniqueTargets": 100,
+      "frontierPasses": 83,
+      "screenedPasses": 79,
+      "normalizedPasses": 81,
+      "frontierSuccessRate": 0.415,
+      "screenedSuccessRate": 0.395,
+      "normalizedSuccessRate": 0.405,
+      "successfulLatencyP50Ms": 3099,
+      "successfulLatencyP95Ms": 5966,
+      "allAttemptLatencyP95Ms": 4789,
+      "failures": {
+        "missing_expected_marker": 21,
+        "challenge": 46,
+        "marker_only_in_noncontent_markup": 4,
+        "target_status_403": 27,
+        "rate_limited": 9,
+        "target_status_511": 2,
+        "network_error": 6,
+        "target_status_417": 2,
+        "target_status_405": 2,
+        "timeout": 2
+      }
+    }
+  },
+  "candidate": {
+    "runtimeCommit": "da7af1f2a82fb9e3911cd696a0324068ed263ebf",
+    "imageId": "sha256:c5ffcdf3a753c28f68c2f180e2e9c3ba27b4d99c49f771bb50c04c58cce6162a",
+    "overall": {
+      "requests": 200,
+      "uniqueTargets": 100,
+      "frontierPasses": 91,
+      "screenedPasses": 86,
+      "normalizedPasses": 88,
+      "frontierSuccessRate": 0.455,
+      "screenedSuccessRate": 0.43,
+      "normalizedSuccessRate": 0.44,
+      "successfulLatencyP50Ms": 3846,
+      "successfulLatencyP95Ms": 7475,
+      "allAttemptLatencyP95Ms": 7475,
+      "failures": {
+        "challenge": 46,
+        "marker_only_in_noncontent_markup": 3,
+        "target_status_403": 34,
+        "rate_limited": 7,
+        "target_status_511": 2,
+        "network_error": 7,
+        "target_status_417": 2,
+        "target_status_405": 2,
+        "missing_expected_marker": 8,
+        "timeout": 3
+      }
+    }
+  },
+  "fixtureSha256": "a886fb57087e842c2857b89a7669e31d2fb7b98d6bd7deb60a2329f29581b76a",
+  "graderSha256": "ffd9f0d2e5996825aa77cb71b600a6667558e166d4471a084c20638bab9171d6",
+  "fallbackClassifierSha256": "3111f011045834a040e5497825cd0bf2c698a3fa8ca77a48c8479dddf2348817",
+  "configuration": {
+    "targets": 100,
+    "rounds": 2,
+    "requestsPerProfile": 200,
+    "totalRequests": 400,
+    "totalClientConcurrency": 4,
+    "cpuCountPerBrowser": 2,
+    "memoryGiBPerBrowser": 3,
+    "pageCapacityPerBrowser": 2,
+    "clientTimeoutMs": 90000,
+    "serviceTimeoutMs": 85000,
+    "postLoadWaitMs": 0,
+    "waitUntil": "domcontentloaded",
+    "consent": "rejectNonEssential",
+    "workflow": "auto",
+    "explicitReadinessTextSent": false,
+    "readinessBudgetMs": 5000,
+    "freshContexts": true,
+    "clientRetries": 0,
+    "serviceMaxAttempts": 1,
+    "directEgressCountry": "VN",
+    "upstreamProxy": false,
+    "profileOrder": "Rotated by target and round; shared egress remains a source of interference."
+  },
+  "pairedOutcomes": {
+    "both": 80,
+    "candidateOnly": 8,
+    "baselineOnly": 1,
+    "neither": 111
+  },
+  "normalizedDeltaPercentagePoints": 3.5,
+  "targetChanges": [
+    {
+      "target": "Amazon",
+      "baseline": 0,
+      "candidate": 1,
+      "workflowSteps": [
+        {
+          "attempt": 1,
+          "type": "amazon-continue@1",
+          "outcome": "submitted-and-returned-to-product",
+          "normalizedPass": true
+        },
+        {
+          "attempt": 2,
+          "type": "amazon-continue@1",
+          "outcome": "verification_unresolved",
+          "normalizedPass": false
+        }
+      ]
+    },
+    {
+      "target": "booking.com",
+      "baseline": 0,
+      "candidate": 2,
+      "workflowSteps": []
+    },
+    {
+      "target": "expedia",
+      "baseline": 0,
+      "candidate": 1,
+      "workflowSteps": []
+    },
+    {
+      "target": "YouTube",
+      "baseline": 2,
+      "candidate": 1,
+      "workflowSteps": []
+    },
+    {
+      "target": "TikTok",
+      "baseline": 0,
+      "candidate": 2,
+      "workflowSteps": []
+    },
+    {
+      "target": "Airbnb",
+      "baseline": 0,
+      "candidate": 1,
+      "workflowSteps": []
+    },
+    {
+      "target": "Zoopla",
+      "baseline": 1,
+      "candidate": 2,
+      "workflowSteps": []
+    }
+  ],
+  "byWafLabel": {
+    "cloudflare": {
+      "baseline": {
+        "requests": 30,
+        "frontierPasses": 11,
+        "screenedPasses": 11,
+        "normalizedPasses": 11
+      },
+      "candidate": {
+        "requests": 30,
+        "frontierPasses": 12,
+        "screenedPasses": 12,
+        "normalizedPasses": 12
+      }
+    },
+    "datadome": {
+      "baseline": {
+        "requests": 40,
+        "frontierPasses": 10,
+        "screenedPasses": 8,
+        "normalizedPasses": 8
+      },
+      "candidate": {
+        "requests": 40,
+        "frontierPasses": 10,
+        "screenedPasses": 9,
+        "normalizedPasses": 9
+      }
+    },
+    "akamai": {
+      "baseline": {
+        "requests": 40,
+        "frontierPasses": 11,
+        "screenedPasses": 11,
+        "normalizedPasses": 11
+      },
+      "candidate": {
+        "requests": 40,
+        "frontierPasses": 12,
+        "screenedPasses": 12,
+        "normalizedPasses": 12
+      }
+    }
+  },
+  "validation": {
+    "status": "complete",
+    "auditedRequests": 400,
+    "allUniquePairs": true,
+    "twoPerTargetPerProfile": true,
+    "allContentHashesMatch": true,
+    "allScoresReplay": true,
+    "allSummaryMetricsReplay": true,
+    "graderAndFallbackUnchanged": true,
+    "noOracleReadinessHint": true,
+    "historicalNormalizedSuccessesChecked": 424,
+    "historicalGateFalseRejections": 0,
+    "resourceSamples": 30,
+    "peakSampledMemoryMiB": {
+      "baseline": 1284,
+      "candidate": 1247
+    },
+    "resourceLimitEvents": 0,
+    "timingIntegrity": {
+      "valid": true,
+      "sampleIntervalMs": 1000,
+      "maximumAllowedGapMs": 10000,
+      "maximumObservedGapMs": 1004,
+      "gaps": []
+    },
+    "cleanupVerified": true,
+    "networkRequests": 0
+  },
+  "excludedRun": {
+    "sourceCommit": "5c751699ccd34dd49932fb1d4f8a02f06fd20124",
+    "completedRequests": 218,
+    "plannedRequests": 400,
+    "status": "aborted",
+    "reason": "The live form supplied a nonempty hidden value; an incorrect empty-field guard declined the form. Hidden values are now preserved without inspection. Partial results are excluded."
+  },
+  "limits": [
+    "These are interleaved live observations with shared egress; do not infer a population-wide or causal WAF coverage gain.",
+    "The earlier 500-attempt runs supplied expected-text readiness hints and had different capacity profiles. Their rates are not interchangeable with this no-hint comparison.",
+    "Shorter or longer successful-request latency can reflect different successful target sets. The candidate increased both observed match rate and latency.",
+    "The measured candidate had one unresolved Amazon continuation subsequently land on the storefront; it remained a failed marker check. A later redirect-settling repair must be measured and validated separately, not relabeled as this runtime.",
+    "No hosted-parity, extraction-F1 or production-availability claim is established."
+  ],
+  "localEvidence": "_local/anti-bot/content-readiness-corrected-paired-full-2026-11-03"
+}

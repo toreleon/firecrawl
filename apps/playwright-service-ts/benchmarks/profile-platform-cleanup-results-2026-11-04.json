@@ -1,0 +1,274 @@
+{
+  "checkedAt": "2026-11-03T22:18:12.402321+00:00",
+  "sourceCommit": "91a817350e1e5f0707c3f38b612ce69a54aad748",
+  "scope": "Eleven exact task containers and two native browser service processes were stopped/removed by their experiment finalizers. Both native temporary browser profiles were automatically removed. No new image/build cache was created, so no image or cache pruning was needed.",
+  "taskContainersRemoved": 11,
+  "nativeBrowserServicesExited": 2,
+  "nativeTemporaryProfilesRemoved": true,
+  "noProcessReferencesOwnedTemporaryProfiles": true,
+  "containerAndNativeCleanup": [
+    {
+      "path": "_local/anti-bot/cloudflare-live-observation-2026-11-04/cleanup.json",
+      "sha256": "e29f949a113a747944658729137abdbba2586e3b9fedca74ec12401178ea7db4",
+      "receipts": {
+        "rebrowser": {
+          "name": "autogtm-firecrawl-cf-observe-rebrowser-20261104",
+          "state": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-11-03T21:59:45.11345359Z",
+            "FinishedAt": "2026-11-03T22:00:13.071105839Z"
+          },
+          "imageId": "sha256:cbff34eac3e1296b9ea7a980b9007ef5b6f881e0c56aaffa93f8ed87a8e63fda",
+          "removedAfterReceipt": true
+        },
+        "camoufox": {
+          "name": "autogtm-firecrawl-cf-observe-camoufox-20261104",
+          "state": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-11-03T21:59:45.269343465Z",
+            "FinishedAt": "2026-11-03T22:00:13.418013839Z"
+          },
+          "imageId": "sha256:cbff34eac3e1296b9ea7a980b9007ef5b6f881e0c56aaffa93f8ed87a8e63fda",
+          "removedAfterReceipt": true
+        }
+      }
+    },
+    {
+      "path": "_local/anti-bot/browser-timezone-probe-2026-11-04/cleanup.json",
+      "sha256": "2b1d20f1c63a03c3894f02728fb6cf47250042e49a57cc7a310ee5e30889be50",
+      "receipts": [
+        {
+          "profile": "rebrowser-utc",
+          "imageId": "sha256:cbff34eac3e1296b9ea7a980b9007ef5b6f881e0c56aaffa93f8ed87a8e63fda",
+          "state": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-11-03T22:03:48.287232592Z",
+            "FinishedAt": "2026-11-03T22:03:49.019090092Z"
+          },
+          "removedAfterReceipt": true
+        },
+        {
+          "profile": "rebrowser-vn",
+          "imageId": "sha256:cbff34eac3e1296b9ea7a980b9007ef5b6f881e0c56aaffa93f8ed87a8e63fda",
+          "state": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-11-03T22:03:49.181858925Z",
+            "FinishedAt": "2026-11-03T22:03:49.919870301Z"
+          },
+          "removedAfterReceipt": true
+        },
+        {
+          "profile": "camoufox-utc",
+          "imageId": "sha256:cbff34eac3e1296b9ea7a980b9007ef5b6f881e0c56aaffa93f8ed87a8e63fda",
+          "state": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-11-03T22:03:50.095946509Z",
+            "FinishedAt": "2026-11-03T22:03:52.972917677Z"
+          },
+          "removedAfterReceipt": true
+        },
+        {
+          "profile": "camoufox-vn",
+          "imageId": "sha256:cbff34eac3e1296b9ea7a980b9007ef5b6f881e0c56aaffa93f8ed87a8e63fda",
+          "state": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-11-03T22:03:53.147359052Z",
+            "FinishedAt": "2026-11-03T22:03:56.011074179Z"
+          },
+          "removedAfterReceipt": true
+        }
+      ]
+    },
+    {
+      "path": "_local/anti-bot/timezone-env-rebrowser-2026-11-04/cleanup.json",
+      "sha256": "aa25cd076cc0758f0f8bb72226d62176201fca45f1e051a5b0b3ee50cb0115dc",
+      "receipts": {
+        "utc": {
+          "name": "autogtm-firecrawl-tz-rebrowser-utc-20261104",
+          "imageId": "sha256:cbff34eac3e1296b9ea7a980b9007ef5b6f881e0c56aaffa93f8ed87a8e63fda",
+          "state": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 143,
+            "Error": "",
+            "StartedAt": "2026-11-03T22:05:59.857138625Z",
+            "FinishedAt": "2026-11-03T22:06:51.61887576Z"
+          },
+          "removedAfterReceipt": true
+        },
+        "vn": {
+          "name": "autogtm-firecrawl-tz-rebrowser-vn-20261104",
+          "imageId": "sha256:cbff34eac3e1296b9ea7a980b9007ef5b6f881e0c56aaffa93f8ed87a8e63fda",
+          "state": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 143,
+            "Error": "",
+            "StartedAt": "2026-11-03T22:06:01.59357925Z",
+            "FinishedAt": "2026-11-03T22:06:51.82168026Z"
+          },
+          "removedAfterReceipt": true
+        }
+      }
+    },
+    {
+      "path": "_local/anti-bot/timezone-env-camoufox-2026-11-04/cleanup.json",
+      "sha256": "f6292fb289ba628fa88eab6ae11d304570a2cc70877676ba65c1ff5cce56de10",
+      "receipts": {
+        "utc": {
+          "name": "autogtm-firecrawl-tz-camoufox-utc-20261104",
+          "imageId": "sha256:cbff34eac3e1296b9ea7a980b9007ef5b6f881e0c56aaffa93f8ed87a8e63fda",
+          "state": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 143,
+            "Error": "",
+            "StartedAt": "2026-11-03T22:06:52.05474901Z",
+            "FinishedAt": "2026-11-03T22:07:38.458655879Z"
+          },
+          "removedAfterReceipt": true
+        },
+        "vn": {
+          "name": "autogtm-firecrawl-tz-camoufox-vn-20261104",
+          "imageId": "sha256:cbff34eac3e1296b9ea7a980b9007ef5b6f881e0c56aaffa93f8ed87a8e63fda",
+          "state": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 143,
+            "Error": "",
+            "StartedAt": "2026-11-03T22:06:55.79664372Z",
+            "FinishedAt": "2026-11-03T22:07:38.687889212Z"
+          },
+          "removedAfterReceipt": true
+        }
+      }
+    },
+    {
+      "path": "_local/anti-bot/platform-bundles-2026-11-04/cleanup.json",
+      "sha256": "c19ffcd9ee67fca19ec0a4effa6a3731d464745c25e80538abc265b68866169b",
+      "receipts": {
+        "container-chromium": {
+          "kind": "docker",
+          "name": "autogtm-firecrawl-platform-container-20261104",
+          "imageId": "sha256:cbff34eac3e1296b9ea7a980b9007ef5b6f881e0c56aaffa93f8ed87a8e63fda",
+          "state": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 143,
+            "Error": "",
+            "StartedAt": "2026-11-03T22:11:37.841063378Z",
+            "FinishedAt": "2026-11-03T22:12:53.670486469Z"
+          },
+          "removedAfterReceipt": true
+        },
+        "native-chromium": {
+          "kind": "native",
+          "pid": 27927,
+          "returnCode": 0,
+          "processExited": true,
+          "temporaryProfileRemoved": true
+        },
+        "native-chrome": {
+          "kind": "native",
+          "pid": 27961,
+          "returnCode": 0,
+          "processExited": true,
+          "temporaryProfileRemoved": true
+        }
+      }
+    }
+  ],
+  "imageIdsUnchanged": true,
+  "buildCacheIdsUnchanged": true,
+  "remainingCacheRecords": 59,
+  "dataVolumesDeleted": 0,
+  "volumeNamesUnchanged": true,
+  "dataVolumeCountAfter": 114,
+  "unrelatedRunningServicesPreserved": [
+    "lead-data-postgres",
+    "lead-data-redis",
+    "lead-data-web",
+    "opengtm-agent-runtime-1",
+    "opengtm-agent-test-pg",
+    "opengtm-api-go-1",
+    "opengtm-browser-1",
+    "opengtm-scheduler-go-1",
+    "opengtm-worker-go-1"
+  ],
+  "globalPruneUsed": false,
+  "dockerSystemDfAfter": "TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE\nImages          53        10        28.92GB   11.29GB (39%)\nContainers      13        9         360.4kB   28.67kB (7%)\nLocal Volumes   114       5         6.325GB   6.151GB (97%)\nBuild Cache     59        0         2.132GB   0B\n",
+  "hostDiskAfter": "Filesystem      Size    Used   Avail Capacity iused ifree %iused  Mounted on\n/dev/disk3s5   460Gi   312Gi   124Gi    72%    5.4M  1.3G    0%   /System/Volumes/Data\n"
+}

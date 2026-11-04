@@ -1,0 +1,344 @@
+{
+  "status": "complete",
+  "measuredAt": "2026-11-03T12:47:01.607Z",
+  "sourceCommit": "8daec7135a5ec057b51ef8614c355322b8225420",
+  "baselineSourceCommit": "4a363134f7d5dd50943338c4b18109d151395817",
+  "scope": "One fresh attempt per image on all 100 frozen browser-service targets. This is not a hosted or full public-target API rerun.",
+  "protocol": {
+    "targets": 100,
+    "rounds": 1,
+    "requests": 200,
+    "globalConcurrency": 4,
+    "limitsPerBrowser": {
+      "cpuCount": 2,
+      "memoryGiB": 3,
+      "pageCapacity": 2
+    },
+    "egressCountry": "VN",
+    "upstreamProxy": false,
+    "freshContexts": true,
+    "mediaBlocked": false,
+    "workflow": "auto",
+    "consent": "rejectNonEssential",
+    "maxAttempts": 1,
+    "expectedTextSent": false,
+    "serviceDeadlineMs": 85000,
+    "clientDeadlineMs": 90000,
+    "readinessTimeoutMs": 5000,
+    "fixtureSha256": "a886fb57087e842c2857b89a7669e31d2fb7b98d6bd7deb60a2329f29581b76a",
+    "graderSha256": "ffd9f0d2e5996825aa77cb71b600a6667558e166d4471a084c20638bab9171d6",
+    "fallbackClassifierSha256": "3111f011045834a040e5497825cd0bf2c698a3fa8ca77a48c8479dddf2348817",
+    "images": {
+      "baseline": "sha256:b9efbb220e6ef7fc2625696d8d0d6887925a94a9f4f226b64906e5b115465920",
+      "candidate": "sha256:8d4106b10c7161aef316b411985bc874cb0f15e0d94a067cf1c1fd849d302c00"
+    }
+  },
+  "profiles": {
+    "baseline": {
+      "requests": 100,
+      "uniqueTargets": 100,
+      "frontierPasses": 45,
+      "screenedPasses": 42,
+      "normalizedPasses": 43,
+      "frontierSuccessRate": 0.45,
+      "screenedSuccessRate": 0.42,
+      "normalizedSuccessRate": 0.43,
+      "successfulLatencyP50Ms": 3966,
+      "successfulLatencyP95Ms": 8108,
+      "allAttemptLatencyP95Ms": 7297,
+      "failures": {
+        "challenge": 23,
+        "timeout": 2,
+        "target_status_403": 17,
+        "network_error": 3,
+        "target_status_400": 1,
+        "rate_limited": 3,
+        "target_status_511": 1,
+        "target_status_417": 1,
+        "content_not_ready": 1,
+        "target_status_405": 1,
+        "marker_only_in_noncontent_markup": 1,
+        "missing_expected_marker": 4
+      }
+    },
+    "candidate": {
+      "requests": 100,
+      "uniqueTargets": 100,
+      "frontierPasses": 45,
+      "screenedPasses": 41,
+      "normalizedPasses": 42,
+      "frontierSuccessRate": 0.45,
+      "screenedSuccessRate": 0.41,
+      "normalizedSuccessRate": 0.42,
+      "successfulLatencyP50Ms": 3913,
+      "successfulLatencyP95Ms": 7931,
+      "allAttemptLatencyP95Ms": 6723,
+      "failures": {
+        "challenge": 23,
+        "marker_only_in_noncontent_markup": 2,
+        "target_status_403": 17,
+        "network_error": 3,
+        "target_status_400": 1,
+        "rate_limited": 3,
+        "target_status_511": 1,
+        "target_status_417": 1,
+        "content_not_ready": 1,
+        "target_status_405": 1,
+        "missing_expected_marker": 4,
+        "target_status_503": 1,
+        "timeout": 1
+      }
+    }
+  },
+  "pairedNormalizedMatches": {
+    "both": 42,
+    "baselineOnly": 1,
+    "candidateOnly": 0,
+    "neither": 57
+  },
+  "commonNormalizedSuccessLatency": {
+    "pairedObservations": 42,
+    "quantiles": "nearest rank",
+    "profiles": {
+      "baseline": {
+        "p50Ms": 3966,
+        "p95Ms": 8108
+      },
+      "candidate": {
+        "p50Ms": 3853,
+        "p95Ms": 7931
+      }
+    }
+  },
+  "targetCountChanges": [
+    {
+      "target": "Yellow Pages",
+      "baseline": 1,
+      "candidate": 0,
+      "workflowSteps": []
+    }
+  ],
+  "yahooFinance": {
+    "candidate": {
+      "normalizedPass": true,
+      "failureReason": null,
+      "latencyMs": 5633,
+      "automaticReadiness": {
+        "mode": "rendered-body",
+        "outcome": "ready",
+        "waitMs": 42,
+        "timeoutMs": 5000,
+        "busyCount": 0,
+        "ignoredComplementaryBusyCount": 1,
+        "maxBusyCount": 0,
+        "busyScope": "main"
+      }
+    },
+    "baseline": {
+      "normalizedPass": true,
+      "failureReason": null,
+      "latencyMs": 5808,
+      "automaticReadiness": {
+        "mode": "rendered-body",
+        "outcome": "ready",
+        "waitMs": 33,
+        "timeoutMs": 5000,
+        "busyCount": 0,
+        "maxBusyCount": 0,
+        "busyScope": "main"
+      }
+    }
+  },
+  "supportingLandmarkCases": [
+    {
+      "target": "Best Buy",
+      "profile": "candidate",
+      "round": 1,
+      "normalizedPass": true,
+      "ignoredComplementaryBusyCount": 1,
+      "waitMs": 73
+    },
+    {
+      "target": "Yahoo Finance",
+      "profile": "candidate",
+      "round": 1,
+      "normalizedPass": true,
+      "ignoredComplementaryBusyCount": 1,
+      "waitMs": 42
+    }
+  ],
+  "audit": {
+    "status": "complete",
+    "auditedRequests": 200,
+    "allUniquePairs": true,
+    "onePerTargetPerProfile": true,
+    "allContentHashesMatch": true,
+    "allScoresReplay": true,
+    "allSummaryMetricsReplay": true,
+    "graderAndFallbackUnchanged": true,
+    "noOracleReadinessHint": true,
+    "priorProtectionAudit": {
+      "historicalNormalizedSuccessesChecked": 424,
+      "historicalGateFalseRejections": 0,
+      "scope": "Inherited prior protection-classification audit; not rerun for this readiness-scoping change."
+    },
+    "resourceSamples": 18,
+    "peakSampledMemoryMiB": {
+      "baseline": 1262,
+      "candidate": 1220
+    },
+    "resourceLimitEvents": 0,
+    "timingIntegrity": {
+      "valid": true,
+      "sampleIntervalMs": 1000,
+      "maximumAllowedGapMs": 10000,
+      "maximumObservedGapMs": 1003,
+      "gaps": []
+    },
+    "consentReturnedResponsesOnly": {
+      "baseline": {
+        "returned": 95,
+        "withDiagnostics": 95,
+        "framesScanned": 152,
+        "probeTimeouts": 1,
+        "mainFrameProbeTimeouts": 0,
+        "auxiliaryProbeTimeouts": 1,
+        "probeErrors": 0,
+        "actionErrors": 0,
+        "limited": 0,
+        "durationMs": 18119,
+        "outcomes": {
+          "not_detected": 92,
+          "unresolved": 3
+        }
+      },
+      "candidate": {
+        "returned": 96,
+        "withDiagnostics": 96,
+        "framesScanned": 157,
+        "probeTimeouts": 0,
+        "mainFrameProbeTimeouts": 0,
+        "auxiliaryProbeTimeouts": 0,
+        "probeErrors": 1,
+        "actionErrors": 0,
+        "limited": 0,
+        "durationMs": 20337,
+        "outcomes": {
+          "not_detected": 93,
+          "unresolved": 3
+        }
+      }
+    },
+    "loading": {
+      "baseline": {
+        "observedBusy": 3,
+        "unresolvedBusy": 0,
+        "waitMs": 21415
+      },
+      "candidate": {
+        "observedBusy": 2,
+        "unresolvedBusy": 0,
+        "waitMs": 19850
+      }
+    },
+    "interactionStates": {
+      "baseline": {
+        "VERIFICATION_REQUIRED": 20,
+        "not_recorded": 5,
+        "CONTENT_READY": 53,
+        "ACCESS_DENIED": 17,
+        "HUMAN_REQUIRED": 3,
+        "CONTENT_NOT_READY": 1,
+        "REGION_UNAVAILABLE": 1
+      },
+      "candidate": {
+        "VERIFICATION_REQUIRED": 20,
+        "CONTENT_READY": 54,
+        "ACCESS_DENIED": 17,
+        "not_recorded": 4,
+        "HUMAN_REQUIRED": 3,
+        "CONTENT_NOT_READY": 1,
+        "REGION_UNAVAILABLE": 1
+      }
+    },
+    "cleanupVerified": true,
+    "networkRequests": 0
+  },
+  "protectionClassificationSourceAudit": {
+    "baselineSourceCommit": "4a363134f7d5dd50943338c4b18109d151395817",
+    "candidateSourceCommit": "8daec7135a5ec057b51ef8614c355322b8225420",
+    "classificationPrefixSha256": "899b6cfa76e0d39295912ba1f69b5771e43b20b7f82bd6dd969265d9da94c321",
+    "classificationFunctionUnchanged": true,
+    "priorHistoricalClassificationAuditRerun": false
+  },
+  "verification": {
+    "browserCI": {
+      "url": "https://github.com/toreleon/firecrawl/actions/runs/41637736679",
+      "sourceCommit": "8daec7135a5ec057b51ef8614c355322b8225420",
+      "build": true,
+      "helpersPassed": 51,
+      "integrationPassed": 73,
+      "productionDependencyAudit": true,
+      "logSha256": "3ac6782bd5229350f99a27d8ebdb313e275ec77754bcd618d0cae831e86e4967"
+    },
+    "focusedReadinessChecks": {
+      "passed": 7,
+      "failureFirstLogSha256": "344eab7d6f1bf502cd417013f532e954acfab908c7779155713589626df6adf9",
+      "validationLogSha256": "5fc06ce14ad763e825ad23c01e73aa56d5805ae6bf576ee03a4db9b8032830a4",
+      "negativeCases": [
+        "body fallback keeps busy supporting content",
+        "aside role=main retains primary loading",
+        "main nested inside an aside remains primary",
+        "busy ancestor of main remains authoritative",
+        "primary results still hydrate while supporting sidebar stays busy"
+      ]
+    },
+    "apiHarness": {
+      "realApiChecksPassed": 6,
+      "exitCode": 0,
+      "sourcePins": {
+        "sourceFiles": {
+          "apps/api/src/lib/local-browser/controls.ts": "fa1646901a7dc0dcfc90cdb1b08fa64a32ba7450291a1a071f7cf1306706e1d2",
+          "apps/api/src/lib/local-browser/controls.test.ts": "bb499cdad7c2e029cec0a2911406d0f3e6038be97ee08a7073e7599305b18b31",
+          "apps/api/src/__tests__/snips/v2/browser-controls.test.ts": "f19b5acaada0118a9c31245a7356508553123523a06dcc402202a30dd0c73b17"
+        },
+        "compiledControlsSha256": "bbf8877e6567a0e467cf00a47e7d0cede3d16c19dea677aad559afe6f717075f",
+        "verifiedCommit": "8daec7135a5ec057b51ef8614c355322b8225420"
+      },
+      "harnessLogSha256": "1c7b3974bbb9cde578360ede1013b3898f651cbab24999ca15ea4da0af1f6541",
+      "coverage": "Busy primary content hydrates despite a persistently busy supporting sidebar; unresolved primary content still returns CONTENT_NOT_READY. Existing consent/session/error checks remain.",
+      "teardownNote": "Extract-worker logged AMQP Channel closing during teardown; tests and harness exited zero."
+    }
+  },
+  "lastHostedApiComparison": {
+    "productionSourceCommit": "4a363134f7d5dd50943338c4b18109d151395817",
+    "targets": 100,
+    "forkNormalizedMatches": 42,
+    "hostedNormalizedMatches": 80,
+    "rerunForThisSource": false,
+    "receipt": "full-api-frontier-results-2026-11-03.json"
+  },
+  "hostedCallsForThisFix": 0,
+  "localEvidence": {
+    "directory": "_local/anti-bot/complementary-readiness-paired-full-2026-11-03",
+    "reportSha256": "56037a14ece60b674a502605178e3fcb80890d698a9bd329c81aa9aed5dcd86c",
+    "auditSha256": "960b70dc9f4594b93b5ddaaa0bafaf4e20b1d9ad3289a7fb699472129710b901",
+    "deploymentSha256": "a6972c028cf35479a6284c791df9bb6bec9f9a20d49bf381840e9caa5379cf5a",
+    "cleanupSha256": "f5a2a186ecd5edccde78918a5c4e6150d47f1e748cc9f5bb8c6b8495eada275e"
+  },
+  "limits": [
+    "Author-provided landmark semantics are a loading hint, not proof of complete primary or supporting content. Explicit caller readiness remains authoritative.",
+    "One live round on shared host/egress does not establish a causal aggregate gain or stable availability.",
+    "Normalized marker checks do not establish CSS visibility, extraction F1, crawl discovery or refresh coverage.",
+    "Hosted comparison remains pinned to the prior production source; no newer hosted success rate is inferred."
+  ],
+  "pairedLossDiagnostics": {
+    "target": "Yellow Pages",
+    "baselineTargetStatus": 200,
+    "candidateTargetStatus": 503,
+    "candidateAutomaticReadinessRan": false,
+    "rawAndNormalizedMarkersPresentOnBoth": true,
+    "interpretation": "The sole normalized-match loss was a target HTTP 503 before automatic readiness. This does not establish a causal code regression or a causal aggregate improvement."
+  },
+  "conclusion": "Normalized matches were 43/100 versus 42/100, with 42 common matches and a single candidate-only HTTP 503 loss before automatic readiness. Common-success latency decreased slightly. Controlled fixtures prove supporting-scope behavior, but this live run does not establish an aggregate causal performance gain."
+}

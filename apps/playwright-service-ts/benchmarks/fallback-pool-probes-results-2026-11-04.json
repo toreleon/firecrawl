@@ -1,0 +1,1336 @@
+{
+  "sourceCommit": "c65d3df2ff0b6a13c2b4d5c4fd09f75271059463",
+  "scope": "Per-process stateless fallback candidate rotation, controlled API capacity model, and selected real-browser owner experiments. No hosted calls or upstream proxies.",
+  "capacityModel": {
+    "before": {
+      "runDirectory": "_local/anti-bot/fallback-pool-failure-first-harness-2026-11-04",
+      "fixtureModel": {
+        "mode": "controlled-browser-protocol-capacity-model",
+        "requests": 8,
+        "clientConcurrency": 8,
+        "fixtureAlternateCapacity": 1,
+        "simulatedWorkMs": 400,
+        "batchElapsedMs": 3258,
+        "primaryCalls": 8,
+        "alternateCalls": {
+          "first": 8,
+          "second": 0
+        },
+        "maximumParallelAlternates": 1,
+        "maximumActivePerOwner": {
+          "first": 1,
+          "second": 0
+        },
+        "allApiSuccess": true,
+        "successfulResults": [
+          {
+            "item": 0,
+            "status": 200,
+            "statusCode": 200,
+            "fallback": {
+              "attempted": true,
+              "usedSecondary": true,
+              "recovered": true,
+              "attempts": [
+                {
+                  "engine": "rebrowser",
+                  "ownerBootId": "6122efb5-3ec0-47c8-9cce-7ed99905dde1",
+                  "pageClosed": true,
+                  "pageStatusCode": 403
+                },
+                {
+                  "engine": "camoufox",
+                  "ownerBootId": "d808cf11-8fa2-43f3-bb5d-6a6d38a60fae",
+                  "pageClosed": true,
+                  "pageStatusCode": 200
+                }
+              ]
+            }
+          },
+          {
+            "item": 1,
+            "status": 200,
+            "statusCode": 200,
+            "fallback": {
+              "attempted": true,
+              "usedSecondary": true,
+              "recovered": true,
+              "attempts": [
+                {
+                  "engine": "rebrowser",
+                  "ownerBootId": "6122efb5-3ec0-47c8-9cce-7ed99905dde1",
+                  "pageClosed": true,
+                  "pageStatusCode": 403
+                },
+                {
+                  "engine": "camoufox",
+                  "ownerBootId": "d808cf11-8fa2-43f3-bb5d-6a6d38a60fae",
+                  "pageClosed": true,
+                  "pageStatusCode": 200
+                }
+              ]
+            }
+          },
+          {
+            "item": 2,
+            "status": 200,
+            "statusCode": 200,
+            "fallback": {
+              "attempted": true,
+              "usedSecondary": true,
+              "recovered": true,
+              "attempts": [
+                {
+                  "engine": "rebrowser",
+                  "ownerBootId": "6122efb5-3ec0-47c8-9cce-7ed99905dde1",
+                  "pageClosed": true,
+                  "pageStatusCode": 403
+                },
+                {
+                  "engine": "camoufox",
+                  "ownerBootId": "d808cf11-8fa2-43f3-bb5d-6a6d38a60fae",
+                  "pageClosed": true,
+                  "pageStatusCode": 200
+                }
+              ]
+            }
+          },
+          {
+            "item": 3,
+            "status": 200,
+            "statusCode": 200,
+            "fallback": {
+              "attempted": true,
+              "usedSecondary": true,
+              "recovered": true,
+              "attempts": [
+                {
+                  "engine": "rebrowser",
+                  "ownerBootId": "6122efb5-3ec0-47c8-9cce-7ed99905dde1",
+                  "pageClosed": true,
+                  "pageStatusCode": 403
+                },
+                {
+                  "engine": "camoufox",
+                  "ownerBootId": "d808cf11-8fa2-43f3-bb5d-6a6d38a60fae",
+                  "pageClosed": true,
+                  "pageStatusCode": 200
+                }
+              ]
+            }
+          },
+          {
+            "item": 4,
+            "status": 200,
+            "statusCode": 200,
+            "fallback": {
+              "attempted": true,
+              "usedSecondary": true,
+              "recovered": true,
+              "attempts": [
+                {
+                  "engine": "rebrowser",
+                  "ownerBootId": "6122efb5-3ec0-47c8-9cce-7ed99905dde1",
+                  "pageClosed": true,
+                  "pageStatusCode": 403
+                },
+                {
+                  "engine": "camoufox",
+                  "ownerBootId": "d808cf11-8fa2-43f3-bb5d-6a6d38a60fae",
+                  "pageClosed": true,
+                  "pageStatusCode": 200
+                }
+              ]
+            }
+          },
+          {
+            "item": 5,
+            "status": 200,
+            "statusCode": 200,
+            "fallback": {
+              "attempted": true,
+              "usedSecondary": true,
+              "recovered": true,
+              "attempts": [
+                {
+                  "engine": "rebrowser",
+                  "ownerBootId": "6122efb5-3ec0-47c8-9cce-7ed99905dde1",
+                  "pageClosed": true,
+                  "pageStatusCode": 403
+                },
+                {
+                  "engine": "camoufox",
+                  "ownerBootId": "d808cf11-8fa2-43f3-bb5d-6a6d38a60fae",
+                  "pageClosed": true,
+                  "pageStatusCode": 200
+                }
+              ]
+            }
+          },
+          {
+            "item": 6,
+            "status": 200,
+            "statusCode": 200,
+            "fallback": {
+              "attempted": true,
+              "usedSecondary": true,
+              "recovered": true,
+              "attempts": [
+                {
+                  "engine": "rebrowser",
+                  "ownerBootId": "6122efb5-3ec0-47c8-9cce-7ed99905dde1",
+                  "pageClosed": true,
+                  "pageStatusCode": 403
+                },
+                {
+                  "engine": "camoufox",
+                  "ownerBootId": "d808cf11-8fa2-43f3-bb5d-6a6d38a60fae",
+                  "pageClosed": true,
+                  "pageStatusCode": 200
+                }
+              ]
+            }
+          },
+          {
+            "item": 7,
+            "status": 200,
+            "statusCode": 200,
+            "fallback": {
+              "attempted": true,
+              "usedSecondary": true,
+              "recovered": true,
+              "attempts": [
+                {
+                  "engine": "rebrowser",
+                  "ownerBootId": "6122efb5-3ec0-47c8-9cce-7ed99905dde1",
+                  "pageClosed": true,
+                  "pageStatusCode": 403
+                },
+                {
+                  "engine": "camoufox",
+                  "ownerBootId": "d808cf11-8fa2-43f3-bb5d-6a6d38a60fae",
+                  "pageClosed": true,
+                  "pageStatusCode": 200
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "sourceHashes": {
+        "sourceFiles": {
+          "apps/api/src/config.ts": "ff0125914ec73e0ef0d49e1d3e09777f71e43f1a62fae7b9cb1c209724ddba4e",
+          "apps/api/src/controllers/v2/types.ts": "8412c9b8e28d55f2ee8819b4ce53323e1cded94402e0bf2a2365d95f25de03b7",
+          "apps/api/src/controllers/v2/local-browser.ts": "a39de56910d964c19fe56b5bb01badb9341907969da72b29746f12b56cce30a0",
+          "apps/api/src/lib/local-browser/client.ts": "d7c9aa64f57e4df849355c23a0ba9e37684438751e7b241939d209728f9182e4",
+          "apps/api/src/lib/local-browser/controls.ts": "f80ee6e0f9d1251e40a82a22f7c4c2763d5d5acc688670ac976cf8fdcbbf6d28",
+          "apps/api/src/lib/local-browser/controls.test.ts": "bb499cdad7c2e029cec0a2911406d0f3e6038be97ee08a7073e7599305b18b31",
+          "apps/api/src/lib/local-browser/fallback.test.ts": "44e3f164ff329353c029c1720081482684b697fb45b15d7668aca12ff68ba9f4",
+          "apps/api/src/__tests__/snips/v2/browser-controls.test.ts": "d5f024b9708d7434a253c3b85777fce4ad7f4440f6cf2d165e39b4ba6f328420",
+          "apps/playwright-service-ts/api.ts": "2563a35dfc084d2fc3ba2133825ccf193c56141eb2afb9da24f05ab956bb1275",
+          "apps/playwright-service-ts/helpers/page-readiness.ts": "5a4dafabdc24401a2a83b44a49c97a894495229baa4877f2b059dda1007d8daa",
+          "apps/playwright-service-ts/helpers/scrape-page.ts": "f58c49f2766a038a01bfb68180c821f04a1e7e090e4a606dc4e894ed7f546034",
+          "apps/playwright-service-ts/helpers/workflows.ts": "2f829da96d5525bc05aee2290a3a138dc60d0dc31ff9745ab25c1e647104347a",
+          "apps/playwright-service-ts/helpers/scrape-control.ts": "5cf450f24b5681803b27485f7122b13ffe42eb172f7b0e601469723de5541f13",
+          "apps/api/src/__tests__/snips/v2/browser-fallback-pool.test.ts": "4669207ea784354fe641e59c2739b5e030386eb69dc0e082efb3fee7eac24f78"
+        },
+        "compiledClientSha256": "1f1d9b221228c8b32911016612f85342de4c6c16fa9c53d67e1f9ba12399373e"
+      },
+      "harnessResult": {
+        "exitCode": 1,
+        "scope": "Real API/queue/worker path with two controlled HTTP browser-protocol fixtures; not real browser or public-site evidence.",
+        "fixtureModes": 2,
+        "networkRequestsToPublicTargets": 0,
+        "upstreamProxy": false
+      },
+      "artifactSha256": "21799435d80ce88dc6838abfc044ade474b90f1735e23aa6adfa4930780ed6ea",
+      "productionClientSourceCommit": "2d385064c12ff20077aa7f9061f1a5aacd46880a"
+    },
+    "after": {
+      "runDirectory": "_local/anti-bot/fallback-pool-protocol-harness-2026-11-04",
+      "fixtureModel": {
+        "mode": "controlled-browser-protocol-capacity-model",
+        "requests": 8,
+        "clientConcurrency": 8,
+        "fixtureAlternateCapacity": 1,
+        "simulatedWorkMs": 400,
+        "batchElapsedMs": 1654,
+        "primaryCalls": 8,
+        "alternateCalls": {
+          "first": 4,
+          "second": 4
+        },
+        "maximumParallelAlternates": 2,
+        "maximumActivePerOwner": {
+          "first": 1,
+          "second": 1
+        },
+        "allApiSuccess": true,
+        "successfulResults": [
+          {
+            "item": 0,
+            "status": 200,
+            "statusCode": 200,
+            "fallback": {
+              "attempted": true,
+              "usedSecondary": true,
+              "recovered": true,
+              "attempts": [
+                {
+                  "engine": "rebrowser",
+                  "ownerBootId": "6db289e8-2c74-4308-8bf5-589f317a2157",
+                  "pageClosed": true,
+                  "pageStatusCode": 403
+                },
+                {
+                  "engine": "camoufox",
+                  "ownerBootId": "b9c2b653-5d89-4f3a-8fb7-67823f9bc771",
+                  "pageClosed": true,
+                  "pageStatusCode": 200
+                }
+              ]
+            }
+          },
+          {
+            "item": 1,
+            "status": 200,
+            "statusCode": 200,
+            "fallback": {
+              "attempted": true,
+              "usedSecondary": true,
+              "recovered": true,
+              "attempts": [
+                {
+                  "engine": "rebrowser",
+                  "ownerBootId": "6db289e8-2c74-4308-8bf5-589f317a2157",
+                  "pageClosed": true,
+                  "pageStatusCode": 403
+                },
+                {
+                  "engine": "camoufox",
+                  "ownerBootId": "ff49e9a4-d20b-43fe-b7e7-aa753c1d4e81",
+                  "pageClosed": true,
+                  "pageStatusCode": 200
+                }
+              ]
+            }
+          },
+          {
+            "item": 2,
+            "status": 200,
+            "statusCode": 200,
+            "fallback": {
+              "attempted": true,
+              "usedSecondary": true,
+              "recovered": true,
+              "attempts": [
+                {
+                  "engine": "rebrowser",
+                  "ownerBootId": "6db289e8-2c74-4308-8bf5-589f317a2157",
+                  "pageClosed": true,
+                  "pageStatusCode": 403
+                },
+                {
+                  "engine": "camoufox",
+                  "ownerBootId": "b9c2b653-5d89-4f3a-8fb7-67823f9bc771",
+                  "pageClosed": true,
+                  "pageStatusCode": 200
+                }
+              ]
+            }
+          },
+          {
+            "item": 3,
+            "status": 200,
+            "statusCode": 200,
+            "fallback": {
+              "attempted": true,
+              "usedSecondary": true,
+              "recovered": true,
+              "attempts": [
+                {
+                  "engine": "rebrowser",
+                  "ownerBootId": "6db289e8-2c74-4308-8bf5-589f317a2157",
+                  "pageClosed": true,
+                  "pageStatusCode": 403
+                },
+                {
+                  "engine": "camoufox",
+                  "ownerBootId": "ff49e9a4-d20b-43fe-b7e7-aa753c1d4e81",
+                  "pageClosed": true,
+                  "pageStatusCode": 200
+                }
+              ]
+            }
+          },
+          {
+            "item": 4,
+            "status": 200,
+            "statusCode": 200,
+            "fallback": {
+              "attempted": true,
+              "usedSecondary": true,
+              "recovered": true,
+              "attempts": [
+                {
+                  "engine": "rebrowser",
+                  "ownerBootId": "6db289e8-2c74-4308-8bf5-589f317a2157",
+                  "pageClosed": true,
+                  "pageStatusCode": 403
+                },
+                {
+                  "engine": "camoufox",
+                  "ownerBootId": "b9c2b653-5d89-4f3a-8fb7-67823f9bc771",
+                  "pageClosed": true,
+                  "pageStatusCode": 200
+                }
+              ]
+            }
+          },
+          {
+            "item": 5,
+            "status": 200,
+            "statusCode": 200,
+            "fallback": {
+              "attempted": true,
+              "usedSecondary": true,
+              "recovered": true,
+              "attempts": [
+                {
+                  "engine": "rebrowser",
+                  "ownerBootId": "6db289e8-2c74-4308-8bf5-589f317a2157",
+                  "pageClosed": true,
+                  "pageStatusCode": 403
+                },
+                {
+                  "engine": "camoufox",
+                  "ownerBootId": "ff49e9a4-d20b-43fe-b7e7-aa753c1d4e81",
+                  "pageClosed": true,
+                  "pageStatusCode": 200
+                }
+              ]
+            }
+          },
+          {
+            "item": 6,
+            "status": 200,
+            "statusCode": 200,
+            "fallback": {
+              "attempted": true,
+              "usedSecondary": true,
+              "recovered": true,
+              "attempts": [
+                {
+                  "engine": "rebrowser",
+                  "ownerBootId": "6db289e8-2c74-4308-8bf5-589f317a2157",
+                  "pageClosed": true,
+                  "pageStatusCode": 403
+                },
+                {
+                  "engine": "camoufox",
+                  "ownerBootId": "b9c2b653-5d89-4f3a-8fb7-67823f9bc771",
+                  "pageClosed": true,
+                  "pageStatusCode": 200
+                }
+              ]
+            }
+          },
+          {
+            "item": 7,
+            "status": 200,
+            "statusCode": 200,
+            "fallback": {
+              "attempted": true,
+              "usedSecondary": true,
+              "recovered": true,
+              "attempts": [
+                {
+                  "engine": "rebrowser",
+                  "ownerBootId": "6db289e8-2c74-4308-8bf5-589f317a2157",
+                  "pageClosed": true,
+                  "pageStatusCode": 403
+                },
+                {
+                  "engine": "camoufox",
+                  "ownerBootId": "ff49e9a4-d20b-43fe-b7e7-aa753c1d4e81",
+                  "pageClosed": true,
+                  "pageStatusCode": 200
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "sourceHashes": {
+        "sourceFiles": {
+          "apps/api/src/config.ts": "ff0125914ec73e0ef0d49e1d3e09777f71e43f1a62fae7b9cb1c209724ddba4e",
+          "apps/api/src/controllers/v2/types.ts": "8412c9b8e28d55f2ee8819b4ce53323e1cded94402e0bf2a2365d95f25de03b7",
+          "apps/api/src/controllers/v2/local-browser.ts": "a39de56910d964c19fe56b5bb01badb9341907969da72b29746f12b56cce30a0",
+          "apps/api/src/lib/local-browser/client.ts": "965ee5e2f0898e3e8246f61ceeac3ee320ad033be4b98442430fb6c52a98b4ac",
+          "apps/api/src/lib/local-browser/controls.ts": "f80ee6e0f9d1251e40a82a22f7c4c2763d5d5acc688670ac976cf8fdcbbf6d28",
+          "apps/api/src/lib/local-browser/controls.test.ts": "bb499cdad7c2e029cec0a2911406d0f3e6038be97ee08a7073e7599305b18b31",
+          "apps/api/src/lib/local-browser/fallback.test.ts": "44e3f164ff329353c029c1720081482684b697fb45b15d7668aca12ff68ba9f4",
+          "apps/api/src/__tests__/snips/v2/browser-controls.test.ts": "d5f024b9708d7434a253c3b85777fce4ad7f4440f6cf2d165e39b4ba6f328420",
+          "apps/playwright-service-ts/api.ts": "2563a35dfc084d2fc3ba2133825ccf193c56141eb2afb9da24f05ab956bb1275",
+          "apps/playwright-service-ts/helpers/page-readiness.ts": "5a4dafabdc24401a2a83b44a49c97a894495229baa4877f2b059dda1007d8daa",
+          "apps/playwright-service-ts/helpers/scrape-page.ts": "f58c49f2766a038a01bfb68180c821f04a1e7e090e4a606dc4e894ed7f546034",
+          "apps/playwright-service-ts/helpers/workflows.ts": "2f829da96d5525bc05aee2290a3a138dc60d0dc31ff9745ab25c1e647104347a",
+          "apps/playwright-service-ts/helpers/scrape-control.ts": "5cf450f24b5681803b27485f7122b13ffe42eb172f7b0e601469723de5541f13",
+          "apps/api/src/__tests__/snips/v2/browser-fallback-pool.test.ts": "4669207ea784354fe641e59c2739b5e030386eb69dc0e082efb3fee7eac24f78"
+        },
+        "compiledClientSha256": "2e3afb5ee750f72386714628928597cb71aaf94cb8292d1e387404433c3ade10"
+      },
+      "harnessResult": {
+        "exitCode": 0,
+        "scope": "Real API/queue/worker path with two controlled HTTP browser-protocol fixtures; not real browser or public-site evidence.",
+        "fixtureModes": 2,
+        "networkRequestsToPublicTargets": 0,
+        "upstreamProxy": false
+      },
+      "artifactSha256": "f1745bd08c27a26f3484ef34a77fe5df85a6ddf3e552f74ad44d88bf3e80897e",
+      "productionClientSourceCommit": "c65d3df2ff0b6a13c2b4d5c4fd09f75271059463"
+    }
+  },
+  "realBrowserProbes": [
+    {
+      "runDirectory": "_local/anti-bot/fallback-pool-browser-probe-2026-11-04",
+      "status": "stopped_on_memory_boundary_pressure_without_oom",
+      "observations": 27,
+      "sourceCommit": "2d385064c12ff20077aa7f9061f1a5aacd46880a",
+      "browserProductionSourceCommit": "02f47b3151e2b19b910ca5994ebc73c0f1d462cc",
+      "imageId": "sha256:4cf1c1eb4550e82504a0f11af5817e2a95143bc96e3b83f081400764e51a8244",
+      "globalConcurrency": 3,
+      "perOwnerConcurrency": 1,
+      "roundsPlanned": 2,
+      "expectedRequests": 48,
+      "upstreamProxy": false,
+      "hostedCalls": 0,
+      "profiles": {
+        "chromium": {
+          "requests": 9,
+          "uniqueTargets": 8,
+          "frontierPasses": 1,
+          "screenedPasses": 1,
+          "normalizedPasses": 1,
+          "frontierSuccessRate": 0.1111111111111111,
+          "screenedSuccessRate": 0.1111111111111111,
+          "normalizedSuccessRate": 0.1111111111111111,
+          "successfulLatencyP50Ms": 2081,
+          "successfulLatencyP95Ms": 2081,
+          "allAttemptLatencyP95Ms": 2488,
+          "failures": {
+            "target_status_403": 3,
+            "challenge": 5
+          }
+        },
+        "firefox-a": {
+          "requests": 9,
+          "uniqueTargets": 8,
+          "frontierPasses": 3,
+          "screenedPasses": 3,
+          "normalizedPasses": 3,
+          "frontierSuccessRate": 0.3333333333333333,
+          "screenedSuccessRate": 0.3333333333333333,
+          "normalizedSuccessRate": 0.3333333333333333,
+          "successfulLatencyP50Ms": 3953,
+          "successfulLatencyP95Ms": 6543,
+          "allAttemptLatencyP95Ms": 6543,
+          "failures": {
+            "target_status_403": 3,
+            "challenge": 3
+          }
+        },
+        "firefox-b": {
+          "requests": 9,
+          "uniqueTargets": 8,
+          "frontierPasses": 4,
+          "screenedPasses": 4,
+          "normalizedPasses": 4,
+          "frontierSuccessRate": 0.4444444444444444,
+          "screenedSuccessRate": 0.4444444444444444,
+          "normalizedSuccessRate": 0.4444444444444444,
+          "successfulLatencyP50Ms": 2259,
+          "successfulLatencyP95Ms": 6922,
+          "allAttemptLatencyP95Ms": 6922,
+          "failures": {
+            "target_status_403": 3,
+            "challenge": 2
+          }
+        }
+      },
+      "scoresAndHashesReplayed": 27,
+      "timingIntegrity": null,
+      "resources": {
+        "peakSampledMemoryMiB": {
+          "autogtm-firecrawl-pool-probe-rebrowser-20261103": 736,
+          "autogtm-firecrawl-pool-probe-patchright-20261103": 2980,
+          "autogtm-firecrawl-pool-probe-camoufox-20261103": 970
+        },
+        "maximumObservedEventCounters": {
+          "autogtm-firecrawl-pool-probe-rebrowser-20261103": {
+            "memory.events:low": 0,
+            "memory.events:high": 0,
+            "memory.events:max": 0,
+            "memory.events:oom": 0,
+            "memory.events:oom_kill": 0,
+            "memory.events:oom_group_kill": 0,
+            "memory.events:sock_throttled": 0,
+            "pids.events:max": 0
+          },
+          "autogtm-firecrawl-pool-probe-patchright-20261103": {
+            "memory.events:low": 0,
+            "memory.events:high": 0,
+            "memory.events:max": 131,
+            "memory.events:oom": 0,
+            "memory.events:oom_kill": 0,
+            "memory.events:oom_group_kill": 0,
+            "memory.events:sock_throttled": 70,
+            "pids.events:max": 0
+          },
+          "autogtm-firecrawl-pool-probe-camoufox-20261103": {
+            "memory.events:low": 0,
+            "memory.events:high": 0,
+            "memory.events:max": 0,
+            "memory.events:oom": 0,
+            "memory.events:oom_kill": 0,
+            "memory.events:oom_group_kill": 0,
+            "memory.events:sock_throttled": 17,
+            "pids.events:max": 0
+          }
+        },
+        "threeContainersRemoved": true
+      },
+      "observationsByTarget": [
+        {
+          "profile": "firefox-b",
+          "target": "lowes",
+          "round": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "payloadSha256": "f554e08cefa617c205bfa84b57782845f38772a79f8c0e8a956fb5766fdc49ba"
+        },
+        {
+          "profile": "firefox-a",
+          "target": "lowes",
+          "round": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "payloadSha256": "fed7b36ff0a7156ca0c0405e78a7134f091264cd68f38aabfb39e3fa282be2a5"
+        },
+        {
+          "profile": "chromium",
+          "target": "lowes",
+          "round": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "payloadSha256": "e6d2b34f7575c83b045391cbfccaf922d0da575e1eec217fb7b5a482702bf0af"
+        },
+        {
+          "profile": "firefox-b",
+          "target": "louisvuitton",
+          "round": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "payloadSha256": "8430e27e746822f07f5b0a3405aa8108bc72647dbd05101305c8113d6c3392e6"
+        },
+        {
+          "profile": "firefox-a",
+          "target": "louisvuitton",
+          "round": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "payloadSha256": "7f2a2f52a1c398d682c760161133090b48bb35d0773caf8e439db4858803b665"
+        },
+        {
+          "profile": "chromium",
+          "target": "louisvuitton",
+          "round": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "payloadSha256": "1098367da693c7d942b53cddb56b7ee5f747e34f8ffebd0f6354cabf041c6c7a"
+        },
+        {
+          "profile": "chromium",
+          "target": "wsj",
+          "round": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "payloadSha256": "7e5ec4a0bb98bfb3839ed1ce202d85cbbb770588801a37059ba6c6d254afcb81"
+        },
+        {
+          "profile": "firefox-b",
+          "target": "wsj",
+          "round": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "payloadSha256": "701be0dbd27426be16ea5c5b4788dbc3c70957f553120582f9b786b31f815ef8"
+        },
+        {
+          "profile": "firefox-a",
+          "target": "wsj",
+          "round": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "payloadSha256": "07155eb1978e993bd5b73941b0e617a704f608f4230c6d070e19bb82921d189e"
+        },
+        {
+          "profile": "chromium",
+          "target": "stockx",
+          "round": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "payloadSha256": "bf67c2348ae54ff7f37b192acc30a0c6da7c9ec90275315326d4c23bab6be35d"
+        },
+        {
+          "profile": "firefox-a",
+          "target": "stockx",
+          "round": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "payloadSha256": "9b9e7c85f7f3a9c78c9bb29a6506d140d33e84336ad1d1bcfccb9314c7ae99dc"
+        },
+        {
+          "profile": "firefox-b",
+          "target": "stockx",
+          "round": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "payloadSha256": "0c4282f1c83294073a346898e37781641b777f652c7b481b3189d109deac2cf6"
+        },
+        {
+          "profile": "chromium",
+          "target": "Capterra",
+          "round": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "payloadSha256": "8d99e5013314276f7266ee0de9bd0d977db8592a877bbaed37dd9a3d2b679c6a"
+        },
+        {
+          "profile": "firefox-b",
+          "target": "Capterra",
+          "round": 1,
+          "normalizedPass": true,
+          "payloadSha256": "a98243ec0f4b55bb4ffb938cbe9b1dd172acac0eb35c8e9e0ab58cc4b6956dbb"
+        },
+        {
+          "profile": "firefox-a",
+          "target": "Capterra",
+          "round": 1,
+          "normalizedPass": true,
+          "payloadSha256": "d6708e73f30a5220bd74d8dc6dc0454371bdcf71648dfdc2521a92925eb8eca9"
+        },
+        {
+          "profile": "chromium",
+          "target": "Google Search",
+          "round": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "payloadSha256": "f69153cafba281108d2b7441aba4106eb59b06702434b4b7697157d955290c18"
+        },
+        {
+          "profile": "firefox-b",
+          "target": "Google Search",
+          "round": 1,
+          "normalizedPass": true,
+          "payloadSha256": "7d4bd3869d67caffd38b14bb4958e1e5ff650c9d2d79020135bb3ec195d0f108"
+        },
+        {
+          "profile": "firefox-a",
+          "target": "Google Search",
+          "round": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "payloadSha256": "e8a8a2d20ed2ed37e8d75f30cfa29ec0b26df7507f7c216b732d11441dc7f452"
+        },
+        {
+          "profile": "chromium",
+          "target": "SeatGeek",
+          "round": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "payloadSha256": "d5d92b6ee8888bc9929050729519ab7ce186072fd576bbfb46b257b98f8c252c"
+        },
+        {
+          "profile": "firefox-a",
+          "target": "SeatGeek",
+          "round": 1,
+          "normalizedPass": true,
+          "payloadSha256": "4f40620d75608d765440804d5c0219ccfbcb01e4f059cc717da1ef19f2d8e0c8"
+        },
+        {
+          "profile": "firefox-b",
+          "target": "SeatGeek",
+          "round": 1,
+          "normalizedPass": true,
+          "payloadSha256": "ba9585db0508ee9c5ca9c2f99383abb704bdb86e4f3d55fbd8916ddeb0c16913"
+        },
+        {
+          "profile": "chromium",
+          "target": "github",
+          "round": 1,
+          "normalizedPass": true,
+          "payloadSha256": "884ffa560b1011b35672b9525c0ebcb5b7e4e794392180a91441359b13d620f5"
+        },
+        {
+          "profile": "firefox-a",
+          "target": "github",
+          "round": 1,
+          "normalizedPass": true,
+          "payloadSha256": "bdf22c450583c99570c2d96d29e2d5dec125a154b98c2975b3d266431553f30d"
+        },
+        {
+          "profile": "firefox-b",
+          "target": "github",
+          "round": 1,
+          "normalizedPass": true,
+          "payloadSha256": "31f20b85cbe5228079583ac102efc846db13c97387020a02464336fa14c52fc7"
+        },
+        {
+          "profile": "chromium",
+          "target": "lowes",
+          "round": 2,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "payloadSha256": "73e69bcaa94b33e6e0d5143621d975e7be8fa5f5b743332455012da27b00781d"
+        },
+        {
+          "profile": "firefox-b",
+          "target": "lowes",
+          "round": 2,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "payloadSha256": "f2149bab64b1392ca7cff4e4530985ab017fed9f67ec63109e4bee9c13b01996"
+        },
+        {
+          "profile": "firefox-a",
+          "target": "lowes",
+          "round": 2,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "payloadSha256": "60b0bd7cf4d4f123818e50cb63985c95f7afdc342d1a04768f57db41f4af1f27"
+        }
+      ],
+      "artifactHashes": {
+        "manifest.json": "9ab9b854df608558d6590c634dbaa16f6cfa66da2a45bd43499dcab9f1160f72",
+        "deployment.json": "481088a4f5641eb58904ccc0ea6ba8c2c5bdc47afe139f313b4562dc32785435",
+        "attempts.jsonl": "6c4d49732aca4204d063de89575d570ba36d1c31b128be3db581f999edaa3e19",
+        "cleanup.json": "ecaafa6ab164746a6de92f9eaab864310375515ebf78af123842e0e864f1c3ad"
+      }
+    },
+    {
+      "runDirectory": "_local/anti-bot/fallback-pool-pressure-aware-probe-2026-11-04",
+      "status": "complete",
+      "observations": 48,
+      "sourceCommit": "c65d3df2ff0b6a13c2b4d5c4fd09f75271059463",
+      "browserProductionSourceCommit": "02f47b3151e2b19b910ca5994ebc73c0f1d462cc",
+      "imageId": "sha256:4cf1c1eb4550e82504a0f11af5817e2a95143bc96e3b83f081400764e51a8244",
+      "globalConcurrency": 3,
+      "perOwnerConcurrency": 1,
+      "roundsPlanned": 2,
+      "expectedRequests": 48,
+      "upstreamProxy": false,
+      "hostedCalls": 0,
+      "profiles": {
+        "chromium": {
+          "requests": 16,
+          "uniqueTargets": 8,
+          "frontierPasses": 3,
+          "screenedPasses": 3,
+          "normalizedPasses": 3,
+          "frontierSuccessRate": 0.1875,
+          "screenedSuccessRate": 0.1875,
+          "normalizedSuccessRate": 0.1875,
+          "successfulLatencyP50Ms": 1329,
+          "successfulLatencyP95Ms": 2043,
+          "allAttemptLatencyP95Ms": 2043,
+          "failures": {
+            "target_status_403": 4,
+            "challenge": 9
+          }
+        },
+        "firefox-a": {
+          "requests": 16,
+          "uniqueTargets": 8,
+          "frontierPasses": 7,
+          "screenedPasses": 7,
+          "normalizedPasses": 7,
+          "frontierSuccessRate": 0.4375,
+          "screenedSuccessRate": 0.4375,
+          "normalizedSuccessRate": 0.4375,
+          "successfulLatencyP50Ms": 4081,
+          "successfulLatencyP95Ms": 8111,
+          "allAttemptLatencyP95Ms": 8111,
+          "failures": {
+            "target_status_403": 4,
+            "challenge": 5
+          }
+        },
+        "firefox-b": {
+          "requests": 16,
+          "uniqueTargets": 8,
+          "frontierPasses": 7,
+          "screenedPasses": 7,
+          "normalizedPasses": 7,
+          "frontierSuccessRate": 0.4375,
+          "screenedSuccessRate": 0.4375,
+          "normalizedSuccessRate": 0.4375,
+          "successfulLatencyP50Ms": 3117,
+          "successfulLatencyP95Ms": 7370,
+          "allAttemptLatencyP95Ms": 7370,
+          "failures": {
+            "target_status_403": 4,
+            "challenge": 5
+          }
+        }
+      },
+      "scoresAndHashesReplayed": 48,
+      "timingIntegrity": {
+        "valid": true,
+        "sampleIntervalMs": 1000,
+        "maximumAllowedGapMs": 10000,
+        "maximumObservedGapMs": 1003,
+        "gaps": []
+      },
+      "resources": {
+        "peakSampledMemoryMiB": {
+          "autogtm-firecrawl-pool-pressure-rebrowser-20261103": 702,
+          "autogtm-firecrawl-pool-pressure-patchright-20261103": 2196,
+          "autogtm-firecrawl-pool-pressure-camoufox-20261103": 1388
+        },
+        "maximumObservedEventCounters": {
+          "autogtm-firecrawl-pool-pressure-rebrowser-20261103": {
+            "memory.events:low": 0,
+            "memory.events:high": 0,
+            "memory.events:max": 0,
+            "memory.events:oom": 0,
+            "memory.events:oom_kill": 0,
+            "memory.events:oom_group_kill": 0,
+            "memory.events:sock_throttled": 478,
+            "pids.events:max": 0
+          },
+          "autogtm-firecrawl-pool-pressure-patchright-20261103": {
+            "memory.events:low": 0,
+            "memory.events:high": 0,
+            "memory.events:max": 0,
+            "memory.events:oom": 0,
+            "memory.events:oom_kill": 0,
+            "memory.events:oom_group_kill": 0,
+            "memory.events:sock_throttled": 791,
+            "pids.events:max": 0
+          },
+          "autogtm-firecrawl-pool-pressure-camoufox-20261103": {
+            "memory.events:low": 0,
+            "memory.events:high": 0,
+            "memory.events:max": 0,
+            "memory.events:oom": 0,
+            "memory.events:oom_kill": 0,
+            "memory.events:oom_group_kill": 0,
+            "memory.events:sock_throttled": 95,
+            "pids.events:max": 0
+          }
+        },
+        "threeContainersRemoved": true
+      },
+      "observationsByTarget": [
+        {
+          "profile": "chromium",
+          "target": "lowes",
+          "round": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "payloadSha256": "db88cc6b0a52636f45c4ddf6d9be6b60922b3ac1c507c5402815e4dfcb9c4033"
+        },
+        {
+          "profile": "firefox-b",
+          "target": "lowes",
+          "round": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "payloadSha256": "233269698a0cbbe980f30306173070a0029722183beeab6c2869b092d1e2491a"
+        },
+        {
+          "profile": "firefox-a",
+          "target": "lowes",
+          "round": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "payloadSha256": "c2430b8c52e05348f2d1207e850b0702ac58b0802ea1a63c7f76d5773fd9c2b0"
+        },
+        {
+          "profile": "chromium",
+          "target": "louisvuitton",
+          "round": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "payloadSha256": "300290ba4baacf19f7e062df4934170a891a2e3a3de33182d560ba7abb0bcead"
+        },
+        {
+          "profile": "firefox-a",
+          "target": "louisvuitton",
+          "round": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "payloadSha256": "c1e77f890626d2360d93f73694e6452456ff9b5dca551dfbec90fbe6c47fcd3d"
+        },
+        {
+          "profile": "firefox-b",
+          "target": "louisvuitton",
+          "round": 1,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "payloadSha256": "336155d24b08e01a915e23087277e0e62bd12fe557fbd2a8dedbec9af821fdea"
+        },
+        {
+          "profile": "chromium",
+          "target": "wsj",
+          "round": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "payloadSha256": "afadfc151d800edc9995545491edff31a04d262a60902c27ccb8870d82a4fd69"
+        },
+        {
+          "profile": "firefox-b",
+          "target": "wsj",
+          "round": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "payloadSha256": "1840ebab9820755d56d15676d9decbf58f453d2d6a7471497d750bcddfd48d00"
+        },
+        {
+          "profile": "firefox-a",
+          "target": "wsj",
+          "round": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "payloadSha256": "d0350e584f90a2fd6603fd6ad87313735436f2df8ac661f3eb5f1f85397c0bc9"
+        },
+        {
+          "profile": "chromium",
+          "target": "stockx",
+          "round": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "payloadSha256": "042cad2f1f8e63a60095559fdb519e21c2db68f3a285729286bb14fa96b10c60"
+        },
+        {
+          "profile": "firefox-a",
+          "target": "stockx",
+          "round": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "payloadSha256": "1ec8d1c413f027f45a2eaf81e33e5e2332769619fb1f9d22a53235e3e8e6f806"
+        },
+        {
+          "profile": "firefox-b",
+          "target": "stockx",
+          "round": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "payloadSha256": "0868d2b00d8f873e4cb1230936fc535a3af7602d6ba67fdecf5eff912b9f5d1a"
+        },
+        {
+          "profile": "chromium",
+          "target": "Capterra",
+          "round": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "payloadSha256": "d97bf777a777881b691e208fd86ccebd77fe5ab6d11a386b8a2f840f21f01146"
+        },
+        {
+          "profile": "firefox-b",
+          "target": "Capterra",
+          "round": 1,
+          "normalizedPass": true,
+          "payloadSha256": "0f3d6d96a259dd9b7a1650d1b79c076ba4e657ff82e2b9ea895319172707f6c3"
+        },
+        {
+          "profile": "firefox-a",
+          "target": "Capterra",
+          "round": 1,
+          "normalizedPass": true,
+          "payloadSha256": "50d84c174b944d241595a8c3f461fbd97351a2183ac5a398169a66e2da20dde4"
+        },
+        {
+          "profile": "chromium",
+          "target": "Google Search",
+          "round": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "payloadSha256": "57a4813c9f4dc85b6729ee6d8c9d1fe660399d7cdaa8a2b673da9266496f5397"
+        },
+        {
+          "profile": "firefox-b",
+          "target": "Google Search",
+          "round": 1,
+          "normalizedPass": true,
+          "payloadSha256": "c9aa168239b0d7c05ed0533f93cf7316ca74919711da178b5576db0d68680b40"
+        },
+        {
+          "profile": "firefox-a",
+          "target": "Google Search",
+          "round": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "payloadSha256": "026b6c23f81ca27a8c29955a76d0da6eb0a754feda1766826bf798306b26b2e4"
+        },
+        {
+          "profile": "chromium",
+          "target": "SeatGeek",
+          "round": 1,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "payloadSha256": "e6dea9c1b2fd2479ba7f028a7385fd5f5431f8d284c74385fdfb6f691ba2d426"
+        },
+        {
+          "profile": "firefox-b",
+          "target": "SeatGeek",
+          "round": 1,
+          "normalizedPass": true,
+          "payloadSha256": "26eb1707f52f003693f13c427ecb5365a9f18204f8e75bc6137991ef9f7fa3c6"
+        },
+        {
+          "profile": "firefox-a",
+          "target": "SeatGeek",
+          "round": 1,
+          "normalizedPass": true,
+          "payloadSha256": "819e034d436ebbdf92a8ef68739fb6fe20892d8375670b42ba39fcb7aa4dc188"
+        },
+        {
+          "profile": "chromium",
+          "target": "github",
+          "round": 1,
+          "normalizedPass": true,
+          "payloadSha256": "27e899a2c317385df4897a844a8cfd28c011e67b0766ab792404ee46d5958604"
+        },
+        {
+          "profile": "firefox-b",
+          "target": "github",
+          "round": 1,
+          "normalizedPass": true,
+          "payloadSha256": "655b5d78a90b7b8cca34b5c8d1c4dd6feb6f48d488c51123aa2de05b778e5224"
+        },
+        {
+          "profile": "firefox-a",
+          "target": "github",
+          "round": 1,
+          "normalizedPass": true,
+          "payloadSha256": "688e13316f21c55503d134968484a1bf831ab8af50b704ffd68e8f7089e6f288"
+        },
+        {
+          "profile": "chromium",
+          "target": "lowes",
+          "round": 2,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "payloadSha256": "4370295d55fc3a7f5b3745d66032432af35eb1a35fb6d69d72edc6120840f42c"
+        },
+        {
+          "profile": "firefox-b",
+          "target": "lowes",
+          "round": 2,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "payloadSha256": "0e8466c388632c3ca27fb65b8de193fc6d950851a19a95505e3a6c43910bb704"
+        },
+        {
+          "profile": "firefox-a",
+          "target": "lowes",
+          "round": 2,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "payloadSha256": "9fadc42c706e0be3ab87f302e60aec610a1c79a9193dcace3bd72126eb49abfe"
+        },
+        {
+          "profile": "chromium",
+          "target": "louisvuitton",
+          "round": 2,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "payloadSha256": "b15479297d5e04ba86b1b7cb5ade82b9fa956dc378399242c37f074fcd5711ab"
+        },
+        {
+          "profile": "firefox-b",
+          "target": "louisvuitton",
+          "round": 2,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "payloadSha256": "e02d7c650e05b47566ebc96c15b6fa0d12216c07df9a40b16ba5ffac577e99c8"
+        },
+        {
+          "profile": "firefox-a",
+          "target": "louisvuitton",
+          "round": 2,
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "payloadSha256": "a9789a3c1a3e2dc6439483ebced2a8c881314673a2c7cd5be530647e9fbcd7db"
+        },
+        {
+          "profile": "chromium",
+          "target": "wsj",
+          "round": 2,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "payloadSha256": "eb13d2ef7bcfc02e271d1394665a9ef56e0abd2b76167ac15c060ac7c2af5165"
+        },
+        {
+          "profile": "firefox-b",
+          "target": "wsj",
+          "round": 2,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "payloadSha256": "d12450d46cec637e414bbd987a916dd18fafb632b4f77f18b1373de517ed215f"
+        },
+        {
+          "profile": "firefox-a",
+          "target": "wsj",
+          "round": 2,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "payloadSha256": "36a5a7a908bcf60d8a71380dca4b313648582867bf262e8b034b26044d09731e"
+        },
+        {
+          "profile": "chromium",
+          "target": "stockx",
+          "round": 2,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "payloadSha256": "c9f6f48984a2acb6382a4337e20f5146d16d3c4141d7e3a7ca46971e3f0fa647"
+        },
+        {
+          "profile": "firefox-a",
+          "target": "stockx",
+          "round": 2,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "payloadSha256": "0aa57dcf794d7a179d05e06de6c251ab782a289e52ff6bb4368c2113b378cf55"
+        },
+        {
+          "profile": "firefox-b",
+          "target": "stockx",
+          "round": 2,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "payloadSha256": "c7d7ae5d9d2dc50e8cf6a75dcbe42eb63d7e9bfa8f379c5fa29e15828ea7a4d4"
+        },
+        {
+          "profile": "chromium",
+          "target": "Capterra",
+          "round": 2,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "payloadSha256": "9fc782c3a7bdcd116629664cec12ae7bcc654608a40a0a5d127a072e1db975c9"
+        },
+        {
+          "profile": "firefox-a",
+          "target": "Capterra",
+          "round": 2,
+          "normalizedPass": true,
+          "payloadSha256": "57b3ead575111ae5149721ec5fca7e24167a879e8e8faef434d95967727c3986"
+        },
+        {
+          "profile": "firefox-b",
+          "target": "Capterra",
+          "round": 2,
+          "normalizedPass": true,
+          "payloadSha256": "c313a24b7f7ae07f800d6fbe5ab5abb85eb43f6c8b3280c38dae98be449353e9"
+        },
+        {
+          "profile": "chromium",
+          "target": "Google Search",
+          "round": 2,
+          "normalizedPass": true,
+          "payloadSha256": "e9d92746e1f9076e81626980771c5c23bde5943205a7903b065cb45c31122cf8"
+        },
+        {
+          "profile": "firefox-a",
+          "target": "Google Search",
+          "round": 2,
+          "normalizedPass": true,
+          "payloadSha256": "2501616b63d8e2e0171339e62fc7c44bba70fe9034e7dc8232603450f376b749"
+        },
+        {
+          "profile": "firefox-b",
+          "target": "Google Search",
+          "round": 2,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "payloadSha256": "7025b823b15a0c824c5e75fa2d34ad832b214719f8d65a6f2e9687237ffda8a8"
+        },
+        {
+          "profile": "chromium",
+          "target": "SeatGeek",
+          "round": 2,
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "payloadSha256": "e7c90cc872f9dd577fc8be865c8682ab0885e351ca0cae69adc262b3e32f2388"
+        },
+        {
+          "profile": "firefox-b",
+          "target": "SeatGeek",
+          "round": 2,
+          "normalizedPass": true,
+          "payloadSha256": "f29992d41eb472431391c2f449baf5e199c09177b5cff61b0661807bdb879d39"
+        },
+        {
+          "profile": "firefox-a",
+          "target": "SeatGeek",
+          "round": 2,
+          "normalizedPass": true,
+          "payloadSha256": "44f733c520778ad22ac9c471a6c8fd7a5d9d98d5d995edadbfc0aad74f8dc82d"
+        },
+        {
+          "profile": "chromium",
+          "target": "github",
+          "round": 2,
+          "normalizedPass": true,
+          "payloadSha256": "e7ce2b5bbdd36ff99acb7c43aa23fee83e28715abd988feb6f39dd33da849f70"
+        },
+        {
+          "profile": "firefox-b",
+          "target": "github",
+          "round": 2,
+          "normalizedPass": true,
+          "payloadSha256": "e9fa1f6f0b723ed6a87feb05ffe6fbca94e0c7f45d5633229d2b3aa20b15e883"
+        },
+        {
+          "profile": "firefox-a",
+          "target": "github",
+          "round": 2,
+          "normalizedPass": true,
+          "payloadSha256": "86d325c23165bdbac204928cb8ed7b81e30ee7ff4fdb66cb9b0d5204acabd459"
+        }
+      ],
+      "artifactHashes": {
+        "manifest.json": "b6244cda6dd3c4fef81180848ff833263d8ca39d82c8ad5d4fbb0934c4138334",
+        "deployment.json": "f4adba1b74a61ccb79bd1890dc3493ee5e69b3ab36e5eea2d55842851d4e9183",
+        "attempts.jsonl": "3de541be001ca714f03c0c574e10bf5ddd77126ffc2923466413ff6def5a4fbf",
+        "cleanup.json": "f6ef89f7865eeb8c194ea9f8468f0de88c4524fa97e520c47b13620037fb3803"
+      }
+    }
+  ],
+  "verification": {
+    "apiClientContractChecksPassed": 29,
+    "controlledApiHarnessTestsPassed": 2,
+    "lostAlternateResponseDoesNotDispatchThirdAttempt": true,
+    "apiBuildPassed": true,
+    "browserCI": {
+      "url": "https://github.com/toreleon/firecrawl/actions/runs/41686748267",
+      "helperChecksPassed": 60,
+      "integrationChecksPassed": 97,
+      "productionDependencyAuditPassed": true,
+      "logSha256": "867813bd93578e4cf393391fdd716c2d8408b8e247d8c9f1acc4ee1d0d0bacbf"
+    },
+    "localLogSha256": {
+      "fallback-pool-api-unit-2026-11-04.log": "9b317689367498a581f0e530d6c8cf2a3760888e93eebd65a8cec8f990c2d01f",
+      "fallback-pool-api-build-2026-11-04.log": "5ac71a99decf5b92dbfe798066cbe8ea317395f8f764f5a8879fd3511ca99454",
+      "fallback-pool-protocol-harness-2026-11-04/harness.log": "229af10b78ce5308c555ac5686503daff291ecc2d1c58704c0431a4deb96c6f2"
+    }
+  },
+  "limits": [
+    "The 400-ms controlled browser-protocol fixtures model one slot per owner; their 3258 to 1654 ms batch result does not establish public-site speed or coverage gains.",
+    "The original 27-record run was stopped on memory.events:max without OOM. It remains partial. The separate 48-record run records pressure and aborts allocation/OOM/PID-limit failures.",
+    "Both independently launched Firefox owners matched 7/16 selected observations. Google Search varied by round. Generated-profile and live-time effects are not isolated.",
+    "Candidate rotation is local to each API process, with existing engine/boot/capability guards; it is not distributed load admission."
+  ],
+  "pressureCounterDocumentation": "https://www.kernel.org/doc/html/latest/admin-guide/cgroup-v2.html"
+}

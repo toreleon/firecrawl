@@ -1,0 +1,296 @@
+{
+  "status": "complete",
+  "measuredAt": "2026-11-03T10:58:49.031Z",
+  "sourceCommit": "38546557c78ad747144bdd81724bcdaf57131a15",
+  "baselineSourceCommit": "ac228cbf03ed8235a2a36a56f72fd1d3cc8a8b50",
+  "scope": "Corrected 100-target browser-service comparison; not a hosted or full public-target API comparison.",
+  "hostedCallsThisIteration": 0,
+  "protocol": {
+    "targets": 100,
+    "rounds": 2,
+    "requests": 400,
+    "globalConcurrency": 4,
+    "limitsPerBrowser": {
+      "cpuCount": 2,
+      "memoryGiB": 3,
+      "pageCapacity": 2
+    },
+    "egressCountry": "VN",
+    "upstreamProxy": false,
+    "freshContexts": true,
+    "mediaBlocked": false,
+    "workflow": "auto",
+    "consent": "rejectNonEssential",
+    "maxAttempts": 1,
+    "expectedTextSent": false,
+    "serviceDeadlineMs": 85000,
+    "clientDeadlineMs": 90000,
+    "defaultAutomaticBudgetMs": 5000,
+    "browser": "Linux ARM64 headful Rebrowser full Chromium under Xvfb",
+    "fixtureSha256": "a886fb57087e842c2857b89a7669e31d2fb7b98d6bd7deb60a2329f29581b76a",
+    "graderSha256": "ffd9f0d2e5996825aa77cb71b600a6667558e166d4471a084c20638bab9171d6",
+    "fallbackClassifierSha256": "3111f011045834a040e5497825cd0bf2c698a3fa8ca77a48c8479dddf2348817",
+    "images": {
+      "baseline": "sha256:c2dc05fe80bf91b6a59304f2c0623f15d57b8157781a2e314863d4df18ccecc0",
+      "candidate": "sha256:d17ce6e0bfc853daef04fef2729450a8a9a89b1a30dac1d2a77c043c7e28d818"
+    }
+  },
+  "profiles": {
+    "baseline": {
+      "requests": 200,
+      "uniqueTargets": 100,
+      "frontierPasses": 92,
+      "screenedPasses": 86,
+      "normalizedPasses": 88,
+      "frontierSuccessRate": 0.46,
+      "screenedSuccessRate": 0.43,
+      "normalizedSuccessRate": 0.44,
+      "successfulLatencyP50Ms": 3212,
+      "successfulLatencyP95Ms": 6752,
+      "allAttemptLatencyP95Ms": 6034,
+      "failures": {
+        "challenge": 43,
+        "marker_only_in_noncontent_markup": 4,
+        "target_status_403": 34,
+        "network_error": 8,
+        "rate_limited": 8,
+        "target_status_511": 2,
+        "target_status_417": 2,
+        "target_status_405": 2,
+        "missing_expected_marker": 8,
+        "target_status_400": 1,
+        "timeout": 2
+      }
+    },
+    "candidate": {
+      "requests": 200,
+      "uniqueTargets": 100,
+      "frontierPasses": 91,
+      "screenedPasses": 86,
+      "normalizedPasses": 88,
+      "frontierSuccessRate": 0.455,
+      "screenedSuccessRate": 0.43,
+      "normalizedSuccessRate": 0.44,
+      "successfulLatencyP50Ms": 3381,
+      "successfulLatencyP95Ms": 8767,
+      "allAttemptLatencyP95Ms": 7434,
+      "failures": {
+        "challenge": 45,
+        "marker_only_in_noncontent_markup": 3,
+        "target_status_403": 34,
+        "network_error": 8,
+        "rate_limited": 7,
+        "target_status_511": 2,
+        "target_status_417": 2,
+        "target_status_405": 2,
+        "missing_expected_marker": 7,
+        "target_status_400": 1,
+        "timeout": 3
+      }
+    }
+  },
+  "paired": {
+    "both": 87,
+    "baselineOnly": 1,
+    "candidateOnly": 1,
+    "neither": 111
+  },
+  "commonNormalizedSuccessLatency": {
+    "pairedObservations": 87,
+    "quantiles": "nearest rank",
+    "profiles": {
+      "baseline": {
+        "p50Ms": 3193,
+        "p95Ms": 6752
+      },
+      "candidate": {
+        "p50Ms": 3375,
+        "p95Ms": 8767
+      }
+    }
+  },
+  "targetCountChanges": [
+    {
+      "target": "ashleyfurniture",
+      "baseline": 2,
+      "candidate": 1,
+      "workflowSteps": []
+    },
+    {
+      "target": "Airbnb",
+      "baseline": 1,
+      "candidate": 2,
+      "workflowSteps": []
+    }
+  ],
+  "busyCases": [
+    {
+      "target": "Airbnb",
+      "profile": "candidate",
+      "round": 1,
+      "normalizedPass": true,
+      "automatic": {
+        "mode": "rendered-body",
+        "outcome": "ready",
+        "waitMs": 1757,
+        "timeoutMs": 5000,
+        "busyCount": 0,
+        "maxBusyCount": 15,
+        "busyScope": "body"
+      }
+    },
+    {
+      "target": "Best Buy",
+      "profile": "candidate",
+      "round": 1,
+      "normalizedPass": true,
+      "automatic": {
+        "mode": "rendered-body",
+        "outcome": "ready",
+        "waitMs": 2608,
+        "timeoutMs": 5000,
+        "busyCount": 0,
+        "maxBusyCount": 1,
+        "busyScope": "main"
+      }
+    },
+    {
+      "target": "Yahoo Finance",
+      "profile": "candidate",
+      "round": 1,
+      "normalizedPass": true,
+      "automatic": {
+        "mode": "rendered-body",
+        "outcome": "ready",
+        "waitMs": 1720,
+        "timeoutMs": 5000,
+        "busyCount": 0,
+        "maxBusyCount": 1,
+        "busyScope": "main"
+      }
+    },
+    {
+      "target": "Airbnb",
+      "profile": "candidate",
+      "round": 2,
+      "normalizedPass": true,
+      "automatic": {
+        "mode": "rendered-body",
+        "outcome": "ready",
+        "waitMs": 1185,
+        "timeoutMs": 5000,
+        "busyCount": 0,
+        "maxBusyCount": 15,
+        "busyScope": "body"
+      }
+    }
+  ],
+  "audit": {
+    "status": "complete",
+    "auditedRequests": 400,
+    "allUniquePairs": true,
+    "twoPerTargetPerProfile": true,
+    "allContentHashesMatch": true,
+    "allScoresReplay": true,
+    "allSummaryMetricsReplay": true,
+    "graderAndFallbackUnchanged": true,
+    "noOracleReadinessHint": true,
+    "historicalNormalizedSuccessesChecked": 424,
+    "historicalGateFalseRejections": 0,
+    "resourceSamples": 30,
+    "peakSampledMemoryMiB": {
+      "baseline": 1503,
+      "candidate": 1141
+    },
+    "resourceLimitEvents": 0,
+    "timingIntegrity": {
+      "valid": true,
+      "sampleIntervalMs": 1000,
+      "maximumAllowedGapMs": 10000,
+      "maximumObservedGapMs": 1010,
+      "gaps": []
+    },
+    "loading": {
+      "baseline": {
+        "observedBusy": 0,
+        "unresolvedBusy": 0,
+        "waitMs": 19658
+      },
+      "candidate": {
+        "observedBusy": 4,
+        "unresolvedBusy": 0,
+        "waitMs": 32445
+      }
+    },
+    "cleanupVerified": true,
+    "networkRequests": 0
+  },
+  "conclusion": "Aggregate normalized and screened counts tied. A targeted Airbnb recovery is offset by an Ashley Furniture loss. Successful latency increased, including on the common-success cohort; no aggregate performance gain or hosted parity established.",
+  "supersededCandidate": {
+    "sourceCommit": "7c3b35864deaf0e47f883e498afdd8a24e6bb2a6",
+    "requests": 400,
+    "baselineNormalized": 83,
+    "candidateNormalized": 87,
+    "reason": "Completed initial run exposed two Bloomberg false loading failures from an explicit advertisement placeholder. Corrected before the final comparison; earlier scores are not relabeled as corrected source.",
+    "reportSha256": "1d65eedf24067d4f981ff424d6026e784a0495867306f98d7dc49d77346e5a21",
+    "auditSha256": "d91cf084454b730dc0b2584ee4bf316148ba23ca64ec1805819a29ec57584260"
+  },
+  "verification": {
+    "browserCI": {
+      "url": "https://github.com/toreleon/firecrawl/actions/runs/41622740722",
+      "sourceCommit": "38546557c78ad747144bdd81724bcdaf57131a15",
+      "build": true,
+      "helpersPassed": 49,
+      "integrationPassed": 67,
+      "productionDependencyAudit": true,
+      "retainedLogSha256": "9cbc965fbd14d8c09bbe02f641b55a80f749d160cb25a935ba1f957bbae630ba"
+    },
+    "apiHarness": {
+      "realApiChecksPassed": 5,
+      "contractChecksPassed": 4,
+      "harnessExitCode": 0,
+      "sourcePins": {
+        "sourceFiles": {
+          "apps/api/src/lib/local-browser/controls.ts": "fa1646901a7dc0dcfc90cdb1b08fa64a32ba7450291a1a071f7cf1306706e1d2",
+          "apps/api/src/lib/local-browser/controls.test.ts": "bb499cdad7c2e029cec0a2911406d0f3e6038be97ee08a7073e7599305b18b31",
+          "apps/api/src/__tests__/snips/v2/browser-controls.test.ts": "69b26801bb9a8d50b247185f6b193381e55e5f9e1ce31f6e3ecf7fdf322c06a7"
+        },
+        "compiledControlsSha256": "bbf8877e6567a0e467cf00a47e7d0cede3d16c19dea677aad559afe6f717075f",
+        "verifiedCommit": "38546557c78ad747144bdd81724bcdaf57131a15"
+      },
+      "harnessLogSha256": "4abb523b820ab1addd1f3d1569eb1f2599a61788bdb52f2982e8399367a7dc08",
+      "coverage": [
+        "automatic busy-content hydration while an ad stays busy",
+        "1200ms timeout-only budget without oracle predicate",
+        "250ms unresolved partial capture metadata",
+        "invalid budget rejected before navigation",
+        "two owners, typed empty/verification failures and retained tab/handoff"
+      ],
+      "teardownNote": "Extract-worker logged an AMQP Channel closing error during teardown. Tests and harness exited zero, and task infrastructure was stopped."
+    },
+    "broaderServerAndSdkCI": "Queued on custom runners; not reported as passed."
+  },
+  "localEvidence": {
+    "directory": "_local/anti-bot/primary-busy-ad-corrected-full-2026-11-03",
+    "reportSha256": "c3059defb250c55a86ad72258a539c0834297095295fdd3a2f00d3b336e70b10",
+    "auditSha256": "d5231ed779e4496d64e789e6f8cc5c814b74d66748f4de22f1b9eebab01e65f4",
+    "deploymentSha256": "ba0d293112ae91c0a2da907f3cb076c436c3daeb59f2c397a73979039d24055b",
+    "cleanupSha256": "1e9a3ae11d8757f7876bcf60b1099bb4f2169434233a3bf85e835065e62f0774"
+  },
+  "limits": [
+    "Two rounds, live-site variation and shared egress are insufficient for broad causal coverage claims.",
+    "Explicit aria-busy is a loading hint and can be absent, incorrect or persistent; bounded caller budgets and explicit readiness remain necessary.",
+    "Google classification prevents a futile retry; it does not complete verification.",
+    "These match metrics are not extraction F1 or proof that every lazy section, crawl frontier or refresh pipeline is complete.",
+    "The last hosted 20-target API comparison has its own older source pin; it was not rerun for this source."
+  ],
+  "pairedLossDiagnostics": {
+    "target": "ashleyfurniture",
+    "candidateFailure": "SCRAPE_TIMEOUT",
+    "phase": "consent",
+    "lastDocumentStatus": 200,
+    "durationMs": 84867,
+    "readinessStarted": false,
+    "interpretation": "The loss occurred before automatic readiness. This identifies a consent-phase stall; it does not establish why the renderer stalled."
+  }
+}

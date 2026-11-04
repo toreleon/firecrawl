@@ -192,7 +192,15 @@ jobs:
 
       - name: Install Playwright Chromium
         if: matrix.engine == 'playwright' && steps.pw_cache.outputs.cache-hit != 'true'
-        run: pnpm exec playwright install chromium
+        run: |
+          node node_modules/playwright/cli.js install chromium
+          pnpm exec patchright install chromium
+          node node_modules/rebrowser-playwright/cli.js install chromium
+        working-directory: ./apps/playwright-service-ts
+
+      - name: Test browser service HTTP integration with all three drivers
+        if: matrix.engine == 'playwright' && matrix.proxy == 'no-proxy'
+        run: pnpm test:integration
         working-directory: ./apps/playwright-service-ts
 
       - name: Cache Playwright

@@ -1,0 +1,120 @@
+{
+  "checkedAt": "2026-11-03T18:59:30.683749+00:00",
+  "sourceCommit": "f93fbdb601d0974d64e3ea2095dfedc645f45a31",
+  "scope": "Scoped removal of experimental driver images, cache records and browser containers; production browser image and pinned base retained.",
+  "taskBrowserContainersRemoved": 7,
+  "browserCleanup": [
+    {
+      "run": "pydoll-driver-lab-2026-11-04",
+      "owner": "rebrowser",
+      "container": "autogtm-firecrawl-pydoll-lab-rebrowser-20261104",
+      "oomKilled": false
+    },
+    {
+      "run": "pydoll-driver-lab-2026-11-04",
+      "owner": "pydoll",
+      "container": "autogtm-firecrawl-pydoll-lab-pydoll-20261104",
+      "oomKilled": false
+    },
+    {
+      "run": "interception-driver-lab-2026-11-04",
+      "owner": "global",
+      "container": "autogtm-firecrawl-interception-lab-global-20261104",
+      "oomKilled": false
+    },
+    {
+      "run": "interception-driver-lab-2026-11-04",
+      "owner": "context",
+      "container": "autogtm-firecrawl-interception-lab-context-20261104",
+      "oomKilled": false
+    },
+    {
+      "run": "interception-driver-lab-corrected-2026-11-04",
+      "owner": "global",
+      "container": "autogtm-firecrawl-interception-lab-global-20261104",
+      "oomKilled": false
+    },
+    {
+      "run": "interception-driver-lab-corrected-2026-11-04",
+      "owner": "context",
+      "container": "autogtm-firecrawl-interception-lab-context-20261104",
+      "oomKilled": false
+    },
+    {
+      "run": "consent-mode-probe-2026-11-04",
+      "owner": "autogtm-firecrawl-consent-mode-probe-20261104",
+      "container": null,
+      "oomKilled": false
+    }
+  ],
+  "prototypeImageBuildOutputs": [
+    {
+      "id": "sha256:0c6337409c8a0c1428324719fae2e092810fab4c8cf2b7be26d0a61f700bc0ad",
+      "alreadyAbsent": true
+    },
+    {
+      "id": "sha256:c95c8d023ccc4393a22d69db3ae78d8cef59bb7f62e9e5b2cbe987c45d28bf43",
+      "alreadyAbsent": true
+    },
+    {
+      "id": "sha256:4c46f135c7ca0abc596c006870e5ea34ad57034b1a27c840a9d0b93ea1495c5b",
+      "repoTags": [
+        "autogtm/firecrawl-browser:pydoll-lab-2026-11-04"
+      ],
+      "logicalSizeBytes": 2165235476
+    },
+    {
+      "id": "sha256:6ba27ec82917ce48117214eeff055c8f0231ee861afb8fa40dc0b0f76c9c9fe3",
+      "repoTags": [
+        "autogtm/firecrawl-browser:interception-lab-2026-11-04"
+      ],
+      "logicalSizeBytes": 2165239513
+    }
+  ],
+  "prototypeImagesRemovedNow": 2,
+  "olderPrototypeBuildOutputsAlreadyAbsent": 2,
+  "cache": {
+    "newTaskRecordsSelected": 20,
+    "removedTaskRecords": 20,
+    "pruneReportedTotal": [
+      "Total:\t143MB"
+    ],
+    "remainingRecords": 59,
+    "allRemainingRecordsSharedWithRetainedImages": true,
+    "baseline59CacheRecordsPreserved": true,
+    "physicalBytesFreedNotMeasured": true
+  },
+  "productionAndUnrelatedImageIdsRestoredToBaseline": true,
+  "unrelatedRunningServicesPreserved": [
+    "lead-data-postgres",
+    "lead-data-redis",
+    "lead-data-web",
+    "opengtm-agent-runtime-1",
+    "opengtm-agent-test-pg",
+    "opengtm-api-go-1",
+    "opengtm-browser-1",
+    "opengtm-scheduler-go-1",
+    "opengtm-worker-go-1"
+  ],
+  "taskInfrastructureStopped": [
+    "autogtm-firecrawl-workflows-rabbit-20261103",
+    "autogtm-firecrawl-workflows-redis-20261103",
+    "autogtm-firecrawl-workflows-pg-20261103"
+  ],
+  "dataVolumesDeleted": 0,
+  "dataVolumeCountAfter": 114,
+  "volumeNamesUnchanged": true,
+  "globalPruneUsed": false,
+  "dockerSystemDfAfter": "TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE\nImages          52        10        28.92GB   11.29GB (39%)\nContainers      13        9         360.4kB   28.67kB (7%)\nLocal Volumes   114       5         6.324GB   6.151GB (97%)\nBuild Cache     59        0         2.132GB   0B\n",
+  "hostDiskAfter": "Filesystem      Size    Used   Avail Capacity iused ifree %iused  Mounted on\n/dev/disk3s5   460Gi   310Gi   126Gi    72%    5.4M  1.3G    0%   /System/Volumes/Data\n",
+  "hostedCalls": 0,
+  "evidenceHashes": {
+    "_local/anti-bot/pydoll-driver-lab-2026-11-04/cleanup.json": "bee0d7cad012e3bfa8ec0267806d058d1d83fb516ca7d898773fd443ca45535e",
+    "_local/anti-bot/interception-driver-lab-2026-11-04/cleanup.json": "2edb0632eef9996eb69219997100b67a6c34b6ccbb8bad21c8844e5c4e26af25",
+    "_local/anti-bot/interception-driver-lab-corrected-2026-11-04/cleanup.json": "0d04a9bdf0ab5a20bf5074f1194cf30da282d42421d45479849161f4f3ad097c",
+    "_local/anti-bot/consent-mode-probe-2026-11-04/cleanup.json": "f52bfa8f30623680bd32dd542184614ecd83f5bbdeea75a0213e792f13646d51",
+    "_local/anti-bot/driver-policy-cleanup-2026-11-04/preflight.json": "29f585511142f8b949149c2140e55bbcdc39003a0f4de8f60693d56ada59515d",
+    "_local/anti-bot/driver-policy-cleanup-2026-11-04/image-removal.json": "4f8fbdde07666647ef1183dc39def509ac9e1ee3acb3b38b223acd5afefc03f2",
+    "_local/anti-bot/driver-policy-cleanup-2026-11-04/cache-result.json": "758c3d2785b1d12e718e67443a67b5a7e3e5cdad751ae0c28f5814cdcd75ef34"
+  }
+}

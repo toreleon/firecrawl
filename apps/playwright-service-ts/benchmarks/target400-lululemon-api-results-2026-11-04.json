@@ -1,0 +1,500 @@
+{
+  "status": "complete",
+  "scope": "Matched full API policy comparison on one frozen lululemon URL, five fresh requests/profile. Same current API source; fallback disabled versus enabled, not a code-version comparison.",
+  "sourceCommit": "ffcb8b45e07a903a05b389f26a0de7fddd3c8ef9",
+  "browserRuntimeSourceCommit": "02f47b3151e2b19b910ca5994ebc73c0f1d462cc",
+  "browserImage": "sha256:4cf1c1eb4550e82504a0f11af5817e2a95143bc96e3b83f081400764e51a8244",
+  "protocol": {
+    "targets": 1,
+    "requests": 10,
+    "attemptsPerProfile": 5,
+    "globalConcurrency": 2,
+    "profileConcurrency": 1,
+    "minimumProfileIntervalMs": 1000,
+    "clientRetries": 0,
+    "clientTimeoutMs": 90000,
+    "serviceTimeoutMs": 85000,
+    "request": {
+      "url": "<target URL>",
+      "formats": [
+        "rawHtml",
+        "markdown"
+      ],
+      "onlyMainContent": false,
+      "maxAge": 0,
+      "storeInCache": false,
+      "waitFor": 0,
+      "timeout": 85000
+    },
+    "profiles": [
+      {
+        "name": "baseline",
+        "baseUrl": "http://127.0.0.1:33150",
+        "apiKeyEnv": "TEST_API_KEY",
+        "browserControls": {
+          "waitUntil": "domcontentloaded",
+          "consent": "rejectNonEssential",
+          "workflow": "auto",
+          "maxAttempts": 1,
+          "engineFallback": false
+        },
+        "maxConcurrentRequests": 1,
+        "minIntervalMs": 1000
+      },
+      {
+        "name": "adaptive",
+        "baseUrl": "http://127.0.0.1:33150",
+        "apiKeyEnv": "TEST_API_KEY",
+        "browserControls": {
+          "waitUntil": "domcontentloaded",
+          "consent": "rejectNonEssential",
+          "workflow": "auto",
+          "maxAttempts": 1,
+          "engineFallback": true
+        },
+        "maxConcurrentRequests": 1,
+        "minIntervalMs": 1000
+      }
+    ],
+    "expectedMarkerSent": false,
+    "upstreamProxy": false,
+    "egressCountry": "VN",
+    "ownerResources": {
+      "cpus": 2,
+      "memoryGiB": 3,
+      "pageCapacity": 2
+    },
+    "fixtureSha256": "a886fb57087e842c2857b89a7669e31d2fb7b98d6bd7deb60a2329f29581b76a",
+    "runnerSourceHashes": {
+      "helpers/api-benchmark.ts": "9e1bfb8449851cf50c54d68bbbae61b10d3391cd89a1c69ec1fd5da33c8735a4",
+      "helpers/waf-benchmark.ts": "ffd9f0d2e5996825aa77cb71b600a6667558e166d4471a084c20638bab9171d6",
+      "helpers/bot-detection.ts": "3111f011045834a040e5497825cd0bf2c698a3fa8ca77a48c8479dddf2348817",
+      "scripts/benchmark-api.ts": "0b42fef70efaade1e3ad4c5e2e8a6759d8ce8fe2b70cbe314bf889139e4027ed"
+    }
+  },
+  "profiles": {
+    "baseline": {
+      "overall": {
+        "requests": 5,
+        "uniqueTargets": 1,
+        "frontierPasses": 0,
+        "screenedPasses": 0,
+        "normalizedPasses": 0,
+        "frontierSuccessRate": 0,
+        "screenedSuccessRate": 0,
+        "normalizedSuccessRate": 0,
+        "successfulLatencyP50Ms": null,
+        "successfulLatencyP95Ms": null,
+        "allAttemptLatencyP95Ms": 1337,
+        "failures": {
+          "target_status_400": 5
+        }
+      },
+      "byWafLabel": {
+        "akamai": {
+          "requests": 5,
+          "uniqueTargets": 1,
+          "frontierPasses": 0,
+          "screenedPasses": 0,
+          "normalizedPasses": 0,
+          "frontierSuccessRate": 0,
+          "screenedSuccessRate": 0,
+          "normalizedSuccessRate": 0,
+          "successfulLatencyP50Ms": null,
+          "successfulLatencyP95Ms": null,
+          "allAttemptLatencyP95Ms": 1337,
+          "failures": {
+            "target_status_400": 5
+          }
+        }
+      },
+      "apiSuccesses": 5,
+      "providerRateLimits": 0,
+      "markdownMarkerPasses": 0,
+      "returnedCreditsUsed": 5,
+      "unknownCreditsCount": 0,
+      "cacheStateCounts": {
+        "not_reported": 5
+      }
+    },
+    "adaptive": {
+      "overall": {
+        "requests": 5,
+        "uniqueTargets": 1,
+        "frontierPasses": 5,
+        "screenedPasses": 5,
+        "normalizedPasses": 5,
+        "frontierSuccessRate": 1,
+        "screenedSuccessRate": 1,
+        "normalizedSuccessRate": 1,
+        "successfulLatencyP50Ms": 4408,
+        "successfulLatencyP95Ms": 4707,
+        "allAttemptLatencyP95Ms": 4707,
+        "failures": {}
+      },
+      "byWafLabel": {
+        "akamai": {
+          "requests": 5,
+          "uniqueTargets": 1,
+          "frontierPasses": 5,
+          "screenedPasses": 5,
+          "normalizedPasses": 5,
+          "frontierSuccessRate": 1,
+          "screenedSuccessRate": 1,
+          "normalizedSuccessRate": 1,
+          "successfulLatencyP50Ms": 4408,
+          "successfulLatencyP95Ms": 4707,
+          "allAttemptLatencyP95Ms": 4707,
+          "failures": {}
+        }
+      },
+      "apiSuccesses": 5,
+      "providerRateLimits": 0,
+      "markdownMarkerPasses": 5,
+      "returnedCreditsUsed": 5,
+      "unknownCreditsCount": 0,
+      "cacheStateCounts": {
+        "not_reported": 5
+      }
+    }
+  },
+  "cases": [
+    {
+      "profile": "baseline",
+      "attempt": 1,
+      "normalizedPass": false,
+      "failureReason": "target_status_400",
+      "latencyMs": 994,
+      "apiStatus": 200,
+      "pageStatus": 400,
+      "payloadSha256": "9003ef3f7d53aaddd27c4ad0390cfd966671274a6f5f22f939a17258647d2643",
+      "contentSha256": "df4c8fcd391f5f8007766061c298573f6e7a96c4c0b49e5a9c7dbfac90205ae0"
+    },
+    {
+      "profile": "adaptive",
+      "attempt": 1,
+      "normalizedPass": true,
+      "failureReason": null,
+      "latencyMs": 4408,
+      "apiStatus": 200,
+      "pageStatus": 200,
+      "payloadSha256": "e9fb35bffab25063e1ee45c806fdd7015100d76c5506e375267c13d3be03064b",
+      "contentSha256": "29ad2913787fc3b927dd467ce91058937766de116f1907a592472da36478a5a9",
+      "fallback": {
+        "attempted": true,
+        "usedSecondary": true,
+        "recovered": true,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "e3eafcfc-b0cf-4617-8a57-dd34504d9f0b",
+            "pageClosed": true,
+            "pageStatusCode": 400
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "c0b2edc2-2d0b-431f-8b90-2a4e92934f1f",
+            "pageClosed": true,
+            "pageStatusCode": 200
+          }
+        ]
+      },
+      "landedUrl": "https://shop.lululemon.com/p/ease-the-day-hoodie/goe12u95i1"
+    },
+    {
+      "profile": "baseline",
+      "attempt": 2,
+      "normalizedPass": false,
+      "failureReason": "target_status_400",
+      "latencyMs": 861,
+      "apiStatus": 200,
+      "pageStatus": 400,
+      "payloadSha256": "2e72ce46569c2d360f7df57bf0672c69cbe8155c04605c085f34a16373a26359",
+      "contentSha256": "df4c8fcd391f5f8007766061c298573f6e7a96c4c0b49e5a9c7dbfac90205ae0"
+    },
+    {
+      "profile": "baseline",
+      "attempt": 3,
+      "normalizedPass": false,
+      "failureReason": "target_status_400",
+      "latencyMs": 649,
+      "apiStatus": 200,
+      "pageStatus": 400,
+      "payloadSha256": "9094f742c5d06d4c69fa0fdf4cfc47584503b054a4219de2493419c883ec9bfa",
+      "contentSha256": "df4c8fcd391f5f8007766061c298573f6e7a96c4c0b49e5a9c7dbfac90205ae0"
+    },
+    {
+      "profile": "adaptive",
+      "attempt": 2,
+      "normalizedPass": true,
+      "failureReason": null,
+      "latencyMs": 3588,
+      "apiStatus": 200,
+      "pageStatus": 200,
+      "payloadSha256": "3593b041d3a552ad17318d1d5289f5d28ba8757b048ff9b6ebe03daecff26061",
+      "contentSha256": "f4c0bc26f1311aec68f36641a5e548bbc14a12c5dff05a07c5c0004080672c7d",
+      "fallback": {
+        "attempted": true,
+        "usedSecondary": true,
+        "recovered": true,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "135d9898-e460-4caa-8646-11f41185d2eb",
+            "pageClosed": true,
+            "pageStatusCode": 400
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "c0b2edc2-2d0b-431f-8b90-2a4e92934f1f",
+            "pageClosed": true,
+            "pageStatusCode": 200
+          }
+        ]
+      },
+      "landedUrl": "https://shop.lululemon.com/p/ease-the-day-hoodie/goe12u95i1"
+    },
+    {
+      "profile": "adaptive",
+      "attempt": 3,
+      "normalizedPass": true,
+      "failureReason": null,
+      "latencyMs": 4338,
+      "apiStatus": 200,
+      "pageStatus": 200,
+      "payloadSha256": "531693aaa6d1d88ed0a7418f1e3520da9e9afaf77e68e5e59938b863a8c3f87c",
+      "contentSha256": "026e6c0c67012668d62cf2146d27bc53c53336cb9fee25f0b99aa0383c920606",
+      "fallback": {
+        "attempted": true,
+        "usedSecondary": true,
+        "recovered": true,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "e3eafcfc-b0cf-4617-8a57-dd34504d9f0b",
+            "pageClosed": true,
+            "pageStatusCode": 400
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "c0b2edc2-2d0b-431f-8b90-2a4e92934f1f",
+            "pageClosed": true,
+            "pageStatusCode": 200
+          }
+        ]
+      },
+      "landedUrl": "https://shop.lululemon.com/p/ease-the-day-hoodie/goe12u95i1"
+    },
+    {
+      "profile": "baseline",
+      "attempt": 4,
+      "normalizedPass": false,
+      "failureReason": "target_status_400",
+      "latencyMs": 1337,
+      "apiStatus": 200,
+      "pageStatus": 400,
+      "payloadSha256": "d8176902813d3c3e22621cbabaf00961ee6eee2c3ba68ed9fec6579b53fedbf7",
+      "contentSha256": "df4c8fcd391f5f8007766061c298573f6e7a96c4c0b49e5a9c7dbfac90205ae0"
+    },
+    {
+      "profile": "baseline",
+      "attempt": 5,
+      "normalizedPass": false,
+      "failureReason": "target_status_400",
+      "latencyMs": 829,
+      "apiStatus": 200,
+      "pageStatus": 400,
+      "payloadSha256": "48d83f8dacca9dbd357426337aff7e4625a653678b1f21a63c7056968cd99365",
+      "contentSha256": "df4c8fcd391f5f8007766061c298573f6e7a96c4c0b49e5a9c7dbfac90205ae0"
+    },
+    {
+      "profile": "adaptive",
+      "attempt": 4,
+      "normalizedPass": true,
+      "failureReason": null,
+      "latencyMs": 4562,
+      "apiStatus": 200,
+      "pageStatus": 200,
+      "payloadSha256": "3bc7ca701d059979fc872fc5e5b42470747a31349600763460948d2a8604e5de",
+      "contentSha256": "bd74bdd399e87b60a8d2025e1a2803c356370addc287efaf41db20c0c556b215",
+      "fallback": {
+        "attempted": true,
+        "usedSecondary": true,
+        "recovered": true,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "135d9898-e460-4caa-8646-11f41185d2eb",
+            "pageClosed": true,
+            "pageStatusCode": 400
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "c0b2edc2-2d0b-431f-8b90-2a4e92934f1f",
+            "pageClosed": true,
+            "pageStatusCode": 200
+          }
+        ]
+      },
+      "landedUrl": "https://shop.lululemon.com/p/ease-the-day-hoodie/goe12u95i1"
+    },
+    {
+      "profile": "adaptive",
+      "attempt": 5,
+      "normalizedPass": true,
+      "failureReason": null,
+      "latencyMs": 4707,
+      "apiStatus": 200,
+      "pageStatus": 200,
+      "payloadSha256": "959762127531bbe4820c7e95832fd2b90bc2c3c03c7a9fa091c6cf5e3ad8b739",
+      "contentSha256": "3c0308ea017161cde8cd74c62a5412b31d6a3042e1af5dafc950e065f7a38f19",
+      "fallback": {
+        "attempted": true,
+        "usedSecondary": true,
+        "recovered": true,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "e3eafcfc-b0cf-4617-8a57-dd34504d9f0b",
+            "pageClosed": true,
+            "pageStatusCode": 400
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "c0b2edc2-2d0b-431f-8b90-2a4e92934f1f",
+            "pageClosed": true,
+            "pageStatusCode": 200
+          }
+        ]
+      },
+      "landedUrl": "https://shop.lululemon.com/p/ease-the-day-hoodie/goe12u95i1"
+    }
+  ],
+  "backendDispatchLedger": {
+    "primary": 10,
+    "alternate": 5,
+    "primaryOwnerCounts": {
+      "primary-a": 5,
+      "primary-b": 5
+    },
+    "allCallsUsedOriginalUrl": true,
+    "maximumBrowserAttemptsPerAdaptiveRecord": 2
+  },
+  "resources": {
+    "peakSampledMemoryMiB": {
+      "primary-a": 460,
+      "primary-b": 428,
+      "fallback": 1227
+    },
+    "maximumObservedEventCounters": {
+      "primary-a": {
+        "memory.events:low": 0,
+        "memory.events:high": 0,
+        "memory.events:max": 0,
+        "memory.events:oom": 0,
+        "memory.events:oom_kill": 0,
+        "memory.events:oom_group_kill": 0,
+        "memory.events:sock_throttled": 0,
+        "pids.events:max": 0
+      },
+      "primary-b": {
+        "memory.events:low": 0,
+        "memory.events:high": 0,
+        "memory.events:max": 0,
+        "memory.events:oom": 0,
+        "memory.events:oom_kill": 0,
+        "memory.events:oom_group_kill": 0,
+        "memory.events:sock_throttled": 0,
+        "pids.events:max": 0
+      },
+      "fallback": {
+        "memory.events:low": 0,
+        "memory.events:high": 0,
+        "memory.events:max": 0,
+        "memory.events:oom": 0,
+        "memory.events:oom_kill": 0,
+        "memory.events:oom_group_kill": 0,
+        "memory.events:sock_throttled": 0,
+        "pids.events:max": 0
+      }
+    },
+    "finalHealthHealthyAndCountsZero": true,
+    "containersRemovedAfterLogsPreserved": true
+  },
+  "scoreReplayAudit": {
+    "status": "complete",
+    "attempts": 10,
+    "uniquePairs": true,
+    "allEvidenceHashesMatch": true,
+    "allScoresReplay": true,
+    "sourceHashesMatch": true,
+    "networkRequests": 0,
+    "lifecycleLedgerVerified": true,
+    "profileConcurrencyLimitsChecked": 2,
+    "maxObservedConcurrency": 2,
+    "maxObservedConcurrencyByProfile": {
+      "baseline": 1,
+      "adaptive": 1
+    }
+  },
+  "verification": {
+    "apiClientContractChecksPassed": 27,
+    "unitLogSha256": "cbae9eacaf95e855ca5466d4e051fa11a9df7832f56ce471527694868285be0c",
+    "fullApiControlledProtocolFixture": {
+      "tests": 1,
+      "modes": 6,
+      "exitCode": 0,
+      "sourcePins": {
+        "sourceFiles": {
+          "apps/api/src/config.ts": "ff0125914ec73e0ef0d49e1d3e09777f71e43f1a62fae7b9cb1c209724ddba4e",
+          "apps/api/src/controllers/v2/types.ts": "8412c9b8e28d55f2ee8819b4ce53323e1cded94402e0bf2a2365d95f25de03b7",
+          "apps/api/src/controllers/v2/local-browser.ts": "a39de56910d964c19fe56b5bb01badb9341907969da72b29746f12b56cce30a0",
+          "apps/api/src/lib/local-browser/client.ts": "d7c9aa64f57e4df849355c23a0ba9e37684438751e7b241939d209728f9182e4",
+          "apps/api/src/lib/local-browser/controls.ts": "f80ee6e0f9d1251e40a82a22f7c4c2763d5d5acc688670ac976cf8fdcbbf6d28",
+          "apps/api/src/lib/local-browser/controls.test.ts": "bb499cdad7c2e029cec0a2911406d0f3e6038be97ee08a7073e7599305b18b31",
+          "apps/api/src/lib/local-browser/fallback.test.ts": "f35dc009ff7a6e4160cad797a49a08797e96346e081024501b292d25edda093d",
+          "apps/api/src/__tests__/snips/v2/browser-controls.test.ts": "d5f024b9708d7434a253c3b85777fce4ad7f4440f6cf2d165e39b4ba6f328420",
+          "apps/playwright-service-ts/api.ts": "2563a35dfc084d2fc3ba2133825ccf193c56141eb2afb9da24f05ab956bb1275",
+          "apps/playwright-service-ts/helpers/page-readiness.ts": "5a4dafabdc24401a2a83b44a49c97a894495229baa4877f2b059dda1007d8daa",
+          "apps/playwright-service-ts/helpers/scrape-page.ts": "f58c49f2766a038a01bfb68180c821f04a1e7e090e4a606dc4e894ed7f546034",
+          "apps/playwright-service-ts/helpers/workflows.ts": "2f829da96d5525bc05aee2290a3a138dc60d0dc31ff9745ab25c1e647104347a",
+          "apps/playwright-service-ts/helpers/scrape-control.ts": "5cf450f24b5681803b27485f7122b13ffe42eb172f7b0e601469723de5541f13",
+          "apps/api/src/__tests__/snips/v2/browser-target-status-fallback.test.ts": "64a09631d6d38ea278938b508640b676d755d61139bf7610018f970a8d17541c"
+        },
+        "compiledClientSha256": "1f1d9b221228c8b32911016612f85342de4c6c16fa9c53d67e1f9ba12399373e"
+      },
+      "logSha256": "49a4493b2bbc2e9824cd2b6ae3450d2ee646dcc5f2c466bf258be2825aa3534d",
+      "scope": "API/queue/worker path with controlled HTTP browser-protocol fixtures. Not real browsers."
+    },
+    "failureFirstSameFixture": {
+      "exitCode": 1,
+      "expectedFailure": "Target status 400 returned instead of recovered 200 before eligibility change",
+      "logSha256": "08e82213f160c5cfe9120856bc73033f8d8c35207784c21908914b4ae3c1e555"
+    },
+    "browserCI": {
+      "url": "https://github.com/toreleon/firecrawl/actions/runs/41680717955",
+      "sourceCommit": "ffcb8b45e07a903a05b389f26a0de7fddd3c8ef9",
+      "helpers": 60,
+      "integration": 97,
+      "productionDependencyAudit": true
+    }
+  },
+  "hostedCalls": 0,
+  "localEvidence": {
+    "directory": "_local/anti-bot/target400-lululemon-api-2026-11-04",
+    "harnessDirectory": "_local/anti-bot/target400-lululemon-api-harness-2026-11-04",
+    "hashes": {
+      "_local/anti-bot/target400-lululemon-api-2026-11-04/report.json": "a2c9ed19671658d0a29ba6d50e958e433f991667d9fdced55f70f03d4b5de29c",
+      "_local/anti-bot/target400-lululemon-api-2026-11-04/score-replay-audit.json": "6c8d01bd5249edf1871d29dfee880b99510affcf6ffbf3d66c786d3486e7dd81",
+      "_local/anti-bot/target400-lululemon-api-harness-2026-11-04/deployment.json": "1467b028459445d073c077461acd0526f3d898a258b72e66c08c0d082d8ac2e7",
+      "_local/anti-bot/target400-lululemon-api-harness-2026-11-04/cleanup.json": "57feed9466eb6f4a920cd7db69d187748f801c3009449d0d6dd7c0fc3efed7d8",
+      "_local/anti-bot/target400-lululemon-api-harness-2026-11-04/resource-samples.jsonl": "32f1dfe61eff58320551352ad641283d495e6f95ec1aefe9ba5b09f09b270f9c"
+    }
+  },
+  "limits": [
+    "Selected five-attempt policy comparison; not an all-target causal code-version gain, extraction F1 or hosted parity.",
+    "Recovered captures retained the original product through its observed canonical catalog redirect; this is not a semantic attestation of every product field.",
+    "Successful baseline latency is undefined because no baseline request matched. Extra Firefox requests consume additional work/time.",
+    "API request-validation errors, uncertain owner/cleanup and opt-out remain terminal for this policy; the target HTTP 400 result is a different protocol layer."
+  ]
+}

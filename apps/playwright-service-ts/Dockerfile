@@ -11,16 +11,44 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN pnpm install --frozen-lockfile
 
 COPY . .
+ARG INSTALL_WEBKIT=false
 
 ENV PLAYWRIGHT_BROWSERS_PATH=/usr/local/share/playwright
 
 # Install Playwright dependencies
-RUN pnpm exec playwright install chromium --with-deps
+RUN node node_modules/playwright/cli.js install chromium --with-deps
+RUN pnpm exec patchright install chromium
+RUN node node_modules/rebrowser-playwright/cli.js install chromium
+RUN if [ "$INSTALL_WEBKIT" = "true" ]; then \
+      node node_modules/playwright/cli.js install webkit --with-deps \
+      && apt-get update && apt-get install -y --no-install-recommends ca-certificates iptables \
+      && rm -rf /var/lib/apt/lists/*; \
+    fi
+
+# Headful Chromium under a private virtual display avoids headless-only signals.
+# install --with-deps above supplies Xvfb; xvfb-run also needs xauth.
+RUN apt-get update && apt-get install -y --no-install-recommends xauth \
+  && rm -rf /var/lib/apt/lists/*
+ENV BROWSER_ENGINE=rebrowser
+ENV BROWSER_HEADLESS=false
 
 RUN pnpm run build
 
-RUN chown -R node:node /usr/src/app \
+# The Firefox binary and identity model are provisioned only for owners that
+# opt in; ordinary Chromium images keep their existing browser installation.
+ARG INSTALL_CAMOUFOX=false
+ENV XDG_CACHE_HOME=/usr/local/share/browser-cache
+RUN if [ "$INSTALL_CAMOUFOX" = "true" ]; then \
+      node node_modules/playwright-core/cli.js install-deps firefox; \
+    fi
+
+RUN if [ "$INSTALL_WEBKIT" = "true" ]; then \
+      chown -R root:root /usr/src/app; \
+    else chown -R node:node /usr/src/app; fi \
+  && chmod 755 /usr/src/app/scripts/webkit-launcher.sh \
   && chmod -R a+rX /usr/local/share/playwright
+RUN mkdir -p /usr/local/share/browser-cache \
+  && chown -R node:node /usr/local/share/browser-cache
 
 ARG PORT
 ENV PORT=${PORT}
@@ -29,4 +57,10 @@ EXPOSE ${PORT}
 
 USER node
 
-CMD [ "pnpm", "start" ]
+# Download as the runtime user: recursively chowning the extracted Firefox/font
+# bundle in a later layer would duplicate several GB in every optional image.
+RUN if [ "$INSTALL_CAMOUFOX" = "true" ]; then \
+      node dist/scripts/prepare-camoufox.js; \
+    fi
+
+CMD [ "sh", "docker-entrypoint.sh" ]

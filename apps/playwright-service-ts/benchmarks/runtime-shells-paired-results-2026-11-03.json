@@ -1,0 +1,993 @@
+{
+  "status": "complete",
+  "sourceCommit": "6ed6b1024342b4734098f6ca76f0c47710a01e47",
+  "requests": 80,
+  "targets": 20,
+  "rounds": 2,
+  "scope": "Matched production Firefox browser-service images, not full API or hosted parity.",
+  "protocol": {
+    "fixtureSha256": "a886fb57087e842c2857b89a7669e31d2fb7b98d6bd7deb60a2329f29581b76a",
+    "graderSha256": "ffd9f0d2e5996825aa77cb71b600a6667558e166d4471a084c20638bab9171d6",
+    "frozenClassifierSha256": "3111f011045834a040e5497825cd0bf2c698a3fa8ca77a48c8479dddf2348817",
+    "globalHttpConcurrency": 4,
+    "profileConcurrency": 2,
+    "noExpectedTextHint": true,
+    "upstreamProxy": false,
+    "egressCountry": "VN",
+    "limitsPerOwner": {
+      "cpus": 2,
+      "memoryGiB": 3,
+      "pageCapacity": 2
+    }
+  },
+  "profiles": {
+    "baseline": {
+      "overall": {
+        "requests": 40,
+        "uniqueTargets": 20,
+        "frontierPasses": 22,
+        "screenedPasses": 21,
+        "normalizedPasses": 23,
+        "frontierSuccessRate": 0.55,
+        "screenedSuccessRate": 0.525,
+        "normalizedSuccessRate": 0.575,
+        "successfulLatencyP50Ms": 5695,
+        "successfulLatencyP95Ms": 10184,
+        "allAttemptLatencyP95Ms": 13561,
+        "failures": {
+          "marker_only_in_noncontent_markup": 1,
+          "target_status_403": 3,
+          "target_status_511": 2,
+          "missing_expected_marker": 10,
+          "target_status_405": 2,
+          "timeout": 1
+        }
+      },
+      "byWafLabel": {
+        "akamai": {
+          "requests": 10,
+          "uniqueTargets": 5,
+          "frontierPasses": 5,
+          "screenedPasses": 5,
+          "normalizedPasses": 5,
+          "frontierSuccessRate": 0.5,
+          "screenedSuccessRate": 0.5,
+          "normalizedSuccessRate": 0.5,
+          "successfulLatencyP50Ms": 5210,
+          "successfulLatencyP95Ms": 5713,
+          "allAttemptLatencyP95Ms": 5713,
+          "failures": {
+            "target_status_403": 3,
+            "missing_expected_marker": 2
+          }
+        },
+        "aws-waf": {
+          "requests": 6,
+          "uniqueTargets": 3,
+          "frontierPasses": 2,
+          "screenedPasses": 2,
+          "normalizedPasses": 2,
+          "frontierSuccessRate": 0.3333333333333333,
+          "screenedSuccessRate": 0.3333333333333333,
+          "normalizedSuccessRate": 0.3333333333333333,
+          "successfulLatencyP50Ms": 10184,
+          "successfulLatencyP95Ms": 13561,
+          "allAttemptLatencyP95Ms": 13561,
+          "failures": {
+            "target_status_511": 2,
+            "target_status_405": 2
+          }
+        },
+        "cloudflare": {
+          "requests": 4,
+          "uniqueTargets": 2,
+          "frontierPasses": 4,
+          "screenedPasses": 4,
+          "normalizedPasses": 4,
+          "frontierSuccessRate": 1,
+          "screenedSuccessRate": 1,
+          "normalizedSuccessRate": 1,
+          "successfulLatencyP50Ms": 4413,
+          "successfulLatencyP95Ms": 8963,
+          "allAttemptLatencyP95Ms": 8963,
+          "failures": {}
+        },
+        "datadome": {
+          "requests": 8,
+          "uniqueTargets": 4,
+          "frontierPasses": 8,
+          "screenedPasses": 8,
+          "normalizedPasses": 8,
+          "frontierSuccessRate": 1,
+          "screenedSuccessRate": 1,
+          "normalizedSuccessRate": 1,
+          "successfulLatencyP50Ms": 6143,
+          "successfulLatencyP95Ms": 8232,
+          "allAttemptLatencyP95Ms": 8232,
+          "failures": {}
+        },
+        "kasada": {
+          "requests": 2,
+          "uniqueTargets": 1,
+          "frontierPasses": 1,
+          "screenedPasses": 0,
+          "normalizedPasses": 0,
+          "frontierSuccessRate": 0.5,
+          "screenedSuccessRate": 0,
+          "normalizedSuccessRate": 0,
+          "successfulLatencyP50Ms": null,
+          "successfulLatencyP95Ms": null,
+          "allAttemptLatencyP95Ms": 23364,
+          "failures": {
+            "marker_only_in_noncontent_markup": 1,
+            "timeout": 1
+          }
+        },
+        "perimeterx": {
+          "requests": 2,
+          "uniqueTargets": 1,
+          "frontierPasses": 0,
+          "screenedPasses": 0,
+          "normalizedPasses": 0,
+          "frontierSuccessRate": 0,
+          "screenedSuccessRate": 0,
+          "normalizedSuccessRate": 0,
+          "successfulLatencyP50Ms": null,
+          "successfulLatencyP95Ms": null,
+          "allAttemptLatencyP95Ms": 4947,
+          "failures": {
+            "missing_expected_marker": 2
+          }
+        },
+        "temu": {
+          "requests": 2,
+          "uniqueTargets": 1,
+          "frontierPasses": 0,
+          "screenedPasses": 0,
+          "normalizedPasses": 0,
+          "frontierSuccessRate": 0,
+          "screenedSuccessRate": 0,
+          "normalizedSuccessRate": 0,
+          "successfulLatencyP50Ms": null,
+          "successfulLatencyP95Ms": null,
+          "allAttemptLatencyP95Ms": 1656,
+          "failures": {
+            "missing_expected_marker": 2
+          }
+        },
+        "unclassified": {
+          "requests": 6,
+          "uniqueTargets": 3,
+          "frontierPasses": 2,
+          "screenedPasses": 2,
+          "normalizedPasses": 4,
+          "frontierSuccessRate": 0.3333333333333333,
+          "screenedSuccessRate": 0.3333333333333333,
+          "normalizedSuccessRate": 0.6666666666666666,
+          "successfulLatencyP50Ms": 2692,
+          "successfulLatencyP95Ms": 3081,
+          "allAttemptLatencyP95Ms": 3081,
+          "failures": {
+            "missing_expected_marker": 4
+          }
+        }
+      }
+    },
+    "candidate": {
+      "overall": {
+        "requests": 40,
+        "uniqueTargets": 20,
+        "frontierPasses": 21,
+        "screenedPasses": 21,
+        "normalizedPasses": 23,
+        "frontierSuccessRate": 0.525,
+        "screenedSuccessRate": 0.525,
+        "normalizedSuccessRate": 0.575,
+        "successfulLatencyP50Ms": 5472,
+        "successfulLatencyP95Ms": 11207,
+        "allAttemptLatencyP95Ms": 11976,
+        "failures": {
+          "timeout": 2,
+          "target_status_403": 4,
+          "challenge": 7,
+          "missing_expected_marker": 6
+        }
+      },
+      "byWafLabel": {
+        "akamai": {
+          "requests": 10,
+          "uniqueTargets": 5,
+          "frontierPasses": 6,
+          "screenedPasses": 6,
+          "normalizedPasses": 6,
+          "frontierSuccessRate": 0.6,
+          "screenedSuccessRate": 0.6,
+          "normalizedSuccessRate": 0.6,
+          "successfulLatencyP50Ms": 4979,
+          "successfulLatencyP95Ms": 6959,
+          "allAttemptLatencyP95Ms": 6959,
+          "failures": {
+            "target_status_403": 4
+          }
+        },
+        "aws-waf": {
+          "requests": 6,
+          "uniqueTargets": 3,
+          "frontierPasses": 2,
+          "screenedPasses": 2,
+          "normalizedPasses": 2,
+          "frontierSuccessRate": 0.3333333333333333,
+          "screenedSuccessRate": 0.3333333333333333,
+          "normalizedSuccessRate": 0.3333333333333333,
+          "successfulLatencyP50Ms": 11207,
+          "successfulLatencyP95Ms": 11976,
+          "allAttemptLatencyP95Ms": 11976,
+          "failures": {
+            "challenge": 4
+          }
+        },
+        "cloudflare": {
+          "requests": 4,
+          "uniqueTargets": 2,
+          "frontierPasses": 3,
+          "screenedPasses": 3,
+          "normalizedPasses": 3,
+          "frontierSuccessRate": 0.75,
+          "screenedSuccessRate": 0.75,
+          "normalizedSuccessRate": 0.75,
+          "successfulLatencyP50Ms": 5382,
+          "successfulLatencyP95Ms": 8994,
+          "allAttemptLatencyP95Ms": 8994,
+          "failures": {
+            "challenge": 1
+          }
+        },
+        "datadome": {
+          "requests": 8,
+          "uniqueTargets": 4,
+          "frontierPasses": 8,
+          "screenedPasses": 8,
+          "normalizedPasses": 8,
+          "frontierSuccessRate": 1,
+          "screenedSuccessRate": 1,
+          "normalizedSuccessRate": 1,
+          "successfulLatencyP50Ms": 6253,
+          "successfulLatencyP95Ms": 8166,
+          "allAttemptLatencyP95Ms": 8166,
+          "failures": {}
+        },
+        "kasada": {
+          "requests": 2,
+          "uniqueTargets": 1,
+          "frontierPasses": 0,
+          "screenedPasses": 0,
+          "normalizedPasses": 0,
+          "frontierSuccessRate": 0,
+          "screenedSuccessRate": 0,
+          "normalizedSuccessRate": 0,
+          "successfulLatencyP50Ms": null,
+          "successfulLatencyP95Ms": null,
+          "allAttemptLatencyP95Ms": 17243,
+          "failures": {
+            "timeout": 2
+          }
+        },
+        "perimeterx": {
+          "requests": 2,
+          "uniqueTargets": 1,
+          "frontierPasses": 0,
+          "screenedPasses": 0,
+          "normalizedPasses": 0,
+          "frontierSuccessRate": 0,
+          "screenedSuccessRate": 0,
+          "normalizedSuccessRate": 0,
+          "successfulLatencyP50Ms": null,
+          "successfulLatencyP95Ms": null,
+          "allAttemptLatencyP95Ms": 9900,
+          "failures": {
+            "challenge": 2
+          }
+        },
+        "temu": {
+          "requests": 2,
+          "uniqueTargets": 1,
+          "frontierPasses": 0,
+          "screenedPasses": 0,
+          "normalizedPasses": 0,
+          "frontierSuccessRate": 0,
+          "screenedSuccessRate": 0,
+          "normalizedSuccessRate": 0,
+          "successfulLatencyP50Ms": null,
+          "successfulLatencyP95Ms": null,
+          "allAttemptLatencyP95Ms": 3425,
+          "failures": {
+            "missing_expected_marker": 2
+          }
+        },
+        "unclassified": {
+          "requests": 6,
+          "uniqueTargets": 3,
+          "frontierPasses": 2,
+          "screenedPasses": 2,
+          "normalizedPasses": 4,
+          "frontierSuccessRate": 0.3333333333333333,
+          "screenedSuccessRate": 0.3333333333333333,
+          "normalizedSuccessRate": 0.6666666666666666,
+          "successfulLatencyP50Ms": 3116,
+          "successfulLatencyP95Ms": 3409,
+          "allAttemptLatencyP95Ms": 3409,
+          "failures": {
+            "missing_expected_marker": 4
+          }
+        }
+      }
+    }
+  },
+  "byTarget": [
+    {
+      "target": "Amazon",
+      "baseline": 2,
+      "candidate": 2
+    },
+    {
+      "target": "canadagoose",
+      "baseline": 0,
+      "candidate": 0
+    },
+    {
+      "target": "indeed",
+      "baseline": 2,
+      "candidate": 2
+    },
+    {
+      "target": "aa",
+      "baseline": 0,
+      "candidate": 0
+    },
+    {
+      "target": "emag",
+      "baseline": 0,
+      "candidate": 0
+    },
+    {
+      "target": "louisvuitton",
+      "baseline": 2,
+      "candidate": 1
+    },
+    {
+      "target": "expedia",
+      "baseline": 2,
+      "candidate": 2
+    },
+    {
+      "target": "marketwatch",
+      "baseline": 2,
+      "candidate": 2
+    },
+    {
+      "target": "barrons",
+      "baseline": 2,
+      "candidate": 2
+    },
+    {
+      "target": "reuters",
+      "baseline": 2,
+      "candidate": 2
+    },
+    {
+      "target": "ebay",
+      "baseline": 0,
+      "candidate": 2
+    },
+    {
+      "target": "Capterra",
+      "baseline": 2,
+      "candidate": 1
+    },
+    {
+      "target": "Redfin",
+      "baseline": 0,
+      "candidate": 0
+    },
+    {
+      "target": "Skyscanner",
+      "baseline": 0,
+      "candidate": 0
+    },
+    {
+      "target": "SeatGeek",
+      "baseline": 2,
+      "candidate": 2
+    },
+    {
+      "target": "Allmenus",
+      "baseline": 0,
+      "candidate": 0
+    },
+    {
+      "target": "Apartments.com",
+      "baseline": 1,
+      "candidate": 1
+    },
+    {
+      "target": "temu",
+      "baseline": 0,
+      "candidate": 0
+    },
+    {
+      "target": "github",
+      "baseline": 2,
+      "candidate": 2
+    },
+    {
+      "target": "arxiv",
+      "baseline": 2,
+      "candidate": 2
+    }
+  ],
+  "observedStates": [
+    {
+      "target": "emag",
+      "profile": "candidate",
+      "round": 1,
+      "normalizedPass": false,
+      "state": "HUMAN_REQUIRED",
+      "protection": {
+        "provider": "aws-waf",
+        "reason": "AWS WAF CAPTCHA interstitial",
+        "interactive": true
+      },
+      "automatic": null
+    },
+    {
+      "target": "emag",
+      "profile": "baseline",
+      "round": 1,
+      "normalizedPass": false,
+      "state": "CONTENT_READY",
+      "protection": null,
+      "automatic": null
+    },
+    {
+      "target": "ebay",
+      "profile": "baseline",
+      "round": 1,
+      "normalizedPass": false,
+      "state": "CONTENT_READY",
+      "protection": null,
+      "automatic": {
+        "mode": "rendered-body",
+        "outcome": "ready",
+        "waitMs": 2,
+        "timeoutMs": 5000,
+        "busyCount": 0,
+        "ignoredComplementaryBusyCount": 0,
+        "maxBusyCount": 0,
+        "busyScope": "body"
+      }
+    },
+    {
+      "target": "ebay",
+      "profile": "candidate",
+      "round": 1,
+      "normalizedPass": true,
+      "state": "CONTENT_READY",
+      "protection": null,
+      "automatic": {
+        "mode": "rendered-body",
+        "outcome": "ready",
+        "waitMs": 2959,
+        "timeoutMs": 5000,
+        "busyCount": 0,
+        "ignoredComplementaryBusyCount": 0,
+        "maxBusyCount": 0,
+        "busyScope": "body"
+      }
+    },
+    {
+      "target": "Redfin",
+      "profile": "baseline",
+      "round": 1,
+      "normalizedPass": false,
+      "state": "CONTENT_READY",
+      "protection": null,
+      "automatic": null
+    },
+    {
+      "target": "Redfin",
+      "profile": "candidate",
+      "round": 1,
+      "normalizedPass": false,
+      "state": "HUMAN_REQUIRED",
+      "protection": {
+        "provider": "aws-waf",
+        "reason": "AWS WAF captcha response header",
+        "interactive": true
+      },
+      "automatic": null
+    },
+    {
+      "target": "Skyscanner",
+      "profile": "baseline",
+      "round": 1,
+      "normalizedPass": false,
+      "state": "CONTENT_READY",
+      "protection": null,
+      "automatic": {
+        "mode": "rendered-body",
+        "outcome": "ready",
+        "waitMs": 1,
+        "timeoutMs": 5000,
+        "busyCount": 0,
+        "ignoredComplementaryBusyCount": 0,
+        "maxBusyCount": 0,
+        "busyScope": "body"
+      }
+    },
+    {
+      "target": "Skyscanner",
+      "profile": "candidate",
+      "round": 1,
+      "normalizedPass": false,
+      "state": "VERIFICATION_REQUIRED",
+      "protection": {
+        "provider": "perimeterx",
+        "reason": "HUMAN/PerimeterX verification interstitial"
+      },
+      "automatic": {
+        "mode": "rendered-body",
+        "outcome": "verification",
+        "waitMs": 5957,
+        "timeoutMs": 5000,
+        "busyCount": 0,
+        "ignoredComplementaryBusyCount": 0,
+        "maxBusyCount": 0,
+        "busyScope": "body"
+      }
+    },
+    {
+      "target": "temu",
+      "profile": "baseline",
+      "round": 1,
+      "normalizedPass": false,
+      "state": "CONTENT_READY",
+      "protection": null,
+      "automatic": {
+        "mode": "rendered-body",
+        "outcome": "ready",
+        "waitMs": 5,
+        "timeoutMs": 5000,
+        "busyCount": 0,
+        "ignoredComplementaryBusyCount": 0,
+        "maxBusyCount": 0,
+        "busyScope": "body"
+      }
+    },
+    {
+      "target": "temu",
+      "profile": "candidate",
+      "round": 1,
+      "normalizedPass": false,
+      "state": "CONTENT_READY",
+      "protection": null,
+      "automatic": {
+        "mode": "rendered-body",
+        "outcome": "ready",
+        "waitMs": 1390,
+        "timeoutMs": 5000,
+        "busyCount": 0,
+        "ignoredComplementaryBusyCount": 0,
+        "maxBusyCount": 0,
+        "busyScope": "body"
+      }
+    },
+    {
+      "target": "emag",
+      "profile": "candidate",
+      "round": 2,
+      "normalizedPass": false,
+      "state": "HUMAN_REQUIRED",
+      "protection": {
+        "provider": "aws-waf",
+        "reason": "AWS WAF CAPTCHA interstitial",
+        "interactive": true
+      },
+      "automatic": null
+    },
+    {
+      "target": "emag",
+      "profile": "baseline",
+      "round": 2,
+      "normalizedPass": false,
+      "state": "CONTENT_READY",
+      "protection": null,
+      "automatic": null
+    },
+    {
+      "target": "ebay",
+      "profile": "baseline",
+      "round": 2,
+      "normalizedPass": false,
+      "state": "CONTENT_READY",
+      "protection": null,
+      "automatic": {
+        "mode": "rendered-body",
+        "outcome": "ready",
+        "waitMs": 2,
+        "timeoutMs": 5000,
+        "busyCount": 0,
+        "ignoredComplementaryBusyCount": 0,
+        "maxBusyCount": 0,
+        "busyScope": "body"
+      }
+    },
+    {
+      "target": "ebay",
+      "profile": "candidate",
+      "round": 2,
+      "normalizedPass": true,
+      "state": "CONTENT_READY",
+      "protection": null,
+      "automatic": {
+        "mode": "rendered-body",
+        "outcome": "ready",
+        "waitMs": 3509,
+        "timeoutMs": 5000,
+        "busyCount": 0,
+        "ignoredComplementaryBusyCount": 0,
+        "maxBusyCount": 0,
+        "busyScope": "main"
+      }
+    },
+    {
+      "target": "Redfin",
+      "profile": "candidate",
+      "round": 2,
+      "normalizedPass": false,
+      "state": "HUMAN_REQUIRED",
+      "protection": {
+        "provider": "aws-waf",
+        "reason": "AWS WAF captcha response header",
+        "interactive": true
+      },
+      "automatic": null
+    },
+    {
+      "target": "Redfin",
+      "profile": "baseline",
+      "round": 2,
+      "normalizedPass": false,
+      "state": "CONTENT_READY",
+      "protection": null,
+      "automatic": null
+    },
+    {
+      "target": "Skyscanner",
+      "profile": "candidate",
+      "round": 2,
+      "normalizedPass": false,
+      "state": "HUMAN_REQUIRED",
+      "protection": {
+        "provider": "perimeterx",
+        "reason": "HUMAN CAPTCHA container on a dedicated verification route",
+        "interactive": true
+      },
+      "automatic": {
+        "mode": "rendered-body",
+        "outcome": "verification",
+        "waitMs": 17,
+        "timeoutMs": 5000,
+        "busyCount": 0,
+        "ignoredComplementaryBusyCount": 0,
+        "maxBusyCount": 0,
+        "busyScope": "body"
+      }
+    },
+    {
+      "target": "Skyscanner",
+      "profile": "baseline",
+      "round": 2,
+      "normalizedPass": false,
+      "state": "CONTENT_READY",
+      "protection": null,
+      "automatic": {
+        "mode": "rendered-body",
+        "outcome": "ready",
+        "waitMs": 7,
+        "timeoutMs": 5000,
+        "busyCount": 0,
+        "ignoredComplementaryBusyCount": 0,
+        "maxBusyCount": 0,
+        "busyScope": "body"
+      }
+    },
+    {
+      "target": "temu",
+      "profile": "baseline",
+      "round": 2,
+      "normalizedPass": false,
+      "state": "CONTENT_READY",
+      "protection": null,
+      "automatic": {
+        "mode": "rendered-body",
+        "outcome": "ready",
+        "waitMs": 5,
+        "timeoutMs": 5000,
+        "busyCount": 0,
+        "ignoredComplementaryBusyCount": 0,
+        "maxBusyCount": 0,
+        "busyScope": "body"
+      }
+    },
+    {
+      "target": "temu",
+      "profile": "candidate",
+      "round": 2,
+      "normalizedPass": false,
+      "state": "CONTENT_READY",
+      "protection": null,
+      "automatic": {
+        "mode": "rendered-body",
+        "outcome": "ready",
+        "waitMs": 2037,
+        "timeoutMs": 5000,
+        "busyCount": 0,
+        "ignoredComplementaryBusyCount": 0,
+        "maxBusyCount": 0,
+        "busyScope": "body"
+      }
+    }
+  ],
+  "audit": {
+    "allUniquePairs": true,
+    "allHashesAndScoresReplay": true,
+    "summaryReplay": true,
+    "peakGlobalConcurrency": 4,
+    "peakProfileConcurrency": {
+      "baseline": 2,
+      "candidate": 2
+    },
+    "timing": {
+      "valid": true,
+      "sampleIntervalMs": 1000,
+      "maximumAllowedGapMs": 10000,
+      "maximumObservedGapMs": 1003,
+      "gaps": []
+    },
+    "peakMemoryMiB": {
+      "baseline": 2175,
+      "candidate": 2024
+    },
+    "resourceEvents": {
+      "baseline": {
+        "memory.events:low": 0,
+        "memory.events:high": 0,
+        "memory.events:max": 0,
+        "memory.events:oom": 0,
+        "memory.events:oom_kill": 0,
+        "memory.events:oom_group_kill": 0,
+        "memory.events:sock_throttled": 554,
+        "pids.events:max": 0
+      },
+      "candidate": {
+        "memory.events:low": 0,
+        "memory.events:high": 0,
+        "memory.events:max": 0,
+        "memory.events:oom": 0,
+        "memory.events:oom_kill": 0,
+        "memory.events:oom_group_kill": 0,
+        "memory.events:sock_throttled": 677,
+        "pids.events:max": 0
+      }
+    },
+    "cleanupVerified": true,
+    "networkRequests": 0
+  },
+  "deployment": {
+    "profiles": [
+      {
+        "name": "baseline",
+        "container": "autogtm-firecrawl-runtime-shells-baseline-20261103",
+        "port": 33185,
+        "image": "sha256:30a3d3a0988726a9724e88623e28290faac94f10d8bd03cab818aa8e1cdb8ba0",
+        "sourceCommit": "90cd76c6ca877a41bc62fac2ca8ff09839456a83",
+        "health": {
+          "status": "healthy",
+          "browserEngine": "camoufox",
+          "headless": false,
+          "maxConcurrentPages": 2,
+          "activePages": 0,
+          "browserSessions": 0,
+          "blockAds": true,
+          "blockMedia": false,
+          "ownerBootId": "29ba58c7-02a6-444b-8c0f-c172ace51c16",
+          "capabilities": {
+            "version": 1,
+            "readiness": true,
+            "actions": [
+              "click",
+              "wait",
+              "write",
+              "press",
+              "scroll",
+              "scrape"
+            ],
+            "workflows": [
+              "none",
+              "auto",
+              "bestbuy-us@1",
+              "product-details@1"
+            ],
+            "consent": true,
+            "retainedPages": true,
+            "fencedSessions": true,
+            "pageScopedHandoff": true
+          },
+          "serviceWorkers": "block"
+        },
+        "runtimeSourceAndCompiledHashes": {
+          "api.ts": "50b2daec49bfff77aa5fc80be72fde0ab1b8287b4fc9581bf8098671ad9bd0f9",
+          "helpers/browser.ts": "0205ad8aa08a05cecefe83adf2b4e257d8af48eca0794e1a8437e946b38cc98a",
+          "helpers/browser-sessions.ts": "d67253bc869f97206083c7fa7c2c2ae9d711005960c8590ad44725fb12ceb41f",
+          "helpers/cookies.ts": "94736b093cf95fe8244f52c6e8ee9925cdd39ea7cd64cf08156be05a45240dcb",
+          "helpers/get_error.ts": "1c15475f5f048c869be847c62dbfb9610cf4130ab93538db2c00dbd567d01aea",
+          "helpers/resource-policy.ts": "7c54984bc6187baf1c0ce2ff18cb50373109c8dcd961edc65b9186d5d2e2e774",
+          "helpers/scrape-control.ts": "228fc82c0663d0cba5d8131a1457915a48f7c17b8860ba6a0bb337eeb66ad874",
+          "helpers/scrape-page.ts": "e020a3d9faa3094a28c0d9e8a3cb197fa87167265f4412a167bc003f032360b9",
+          "helpers/ssrf.ts": "78df1d6e5191ca70442af84a28cffebe0751fa12a75d0a11314bf23287a5bca6",
+          "helpers/workflows.ts": "8ca6dd7ec17bfd4ea66150c4636bb70a799e2aeaf54c8998034d5869df28be3e",
+          "helpers/page-readiness.ts": "a186dbb6032e82f207de7b07d356eb4e3f8a5ade2be895d519d0e6d9034b229f",
+          "helpers/waf-benchmark.ts": "ffd9f0d2e5996825aa77cb71b600a6667558e166d4471a084c20638bab9171d6",
+          "helpers/bot-detection.ts": "3111f011045834a040e5497825cd0bf2c698a3fa8ca77a48c8479dddf2348817",
+          "dist/api.js": "8b5d306f28386d33393c14bd8c966bd57c19db8430f4c026a8decacc69c9b1d2",
+          "dist/helpers/browser.js": "9c927eaf21a636fb7a8a28baa44b8ccacd450af0ad8c99fe9ccc2f8d38af5d71",
+          "dist/helpers/browser-sessions.js": "715e61bf0a2fe9b43de9ab1dc733f5f775e0a92e60c5268dbe6e0b8620f9f549",
+          "dist/helpers/cookies.js": "0d7a5e0f76b861992a1b304b6acf6f70eacaaa7a09f8269d93434dcdbc23bc57",
+          "dist/helpers/get_error.js": "5edbde83afd8bceb2280455d500bdb7c3d62f5318d54c82cc01629c6681cd6a7",
+          "dist/helpers/resource-policy.js": "3c079ef3d980dde1a91090007396929a506962a57ee1cd83a9baa48fc7bce2f1",
+          "dist/helpers/scrape-control.js": "48da74695080f73cea869acc6bbd295876d1ebfbe12c6e4cd09c5ef6dcf3b69d",
+          "dist/helpers/scrape-page.js": "eefba28f2008585c9df60138e5dc51b5676ae5fd5da116322582a030e54a0e55",
+          "dist/helpers/ssrf.js": "452ae1dbec8a6103cba710e56b6d0c5740606021d34c2bc415025a8676a2c68d",
+          "dist/helpers/workflows.js": "ced8fb7842250e57bc5fa48a198558fb40cc38433f208e3def97c4cca37c6f76",
+          "dist/helpers/page-readiness.js": "9e36791b7225f6cbc0de7b7a6d3d9ba67a4602e23fabad6c02de302a02aebc0b",
+          "dist/helpers/waf-benchmark.js": "4eea26db4617351a9daa9ad546c8d9d16983d2d736f5a1d435a3159fe7a96f4d",
+          "dist/helpers/bot-detection.js": "77a197cbbe0942b6106db2eb2579fc1af8dc7a167e3e959de51a89f8ed7a746e"
+        },
+        "network": {
+          "country": "VN",
+          "proxyConfigured": false
+        }
+      },
+      {
+        "name": "candidate",
+        "container": "autogtm-firecrawl-runtime-shells-candidate-20261103",
+        "port": 33186,
+        "image": "sha256:6a7bc7fba7c7ae5704ad93b3962d36c0a9707c42d7ab5a6594a6920aa6be9c4a",
+        "sourceCommit": "6ed6b1024342b4734098f6ca76f0c47710a01e47",
+        "health": {
+          "status": "healthy",
+          "browserEngine": "camoufox",
+          "headless": false,
+          "maxConcurrentPages": 2,
+          "activePages": 0,
+          "browserSessions": 0,
+          "blockAds": true,
+          "blockMedia": false,
+          "ownerBootId": "62acee58-da7c-4d0d-8593-b4c468074aef",
+          "capabilities": {
+            "version": 1,
+            "readiness": true,
+            "actions": [
+              "click",
+              "wait",
+              "write",
+              "press",
+              "scroll",
+              "scrape"
+            ],
+            "workflows": [
+              "none",
+              "auto",
+              "bestbuy-us@1",
+              "product-details@1"
+            ],
+            "consent": true,
+            "retainedPages": true,
+            "fencedSessions": true,
+            "pageScopedHandoff": true
+          },
+          "serviceWorkers": "block"
+        },
+        "runtimeSourceAndCompiledHashes": {
+          "api.ts": "2563a35dfc084d2fc3ba2133825ccf193c56141eb2afb9da24f05ab956bb1275",
+          "helpers/browser.ts": "0205ad8aa08a05cecefe83adf2b4e257d8af48eca0794e1a8437e946b38cc98a",
+          "helpers/browser-sessions.ts": "d67253bc869f97206083c7fa7c2c2ae9d711005960c8590ad44725fb12ceb41f",
+          "helpers/cookies.ts": "94736b093cf95fe8244f52c6e8ee9925cdd39ea7cd64cf08156be05a45240dcb",
+          "helpers/get_error.ts": "1c15475f5f048c869be847c62dbfb9610cf4130ab93538db2c00dbd567d01aea",
+          "helpers/resource-policy.ts": "7c54984bc6187baf1c0ce2ff18cb50373109c8dcd961edc65b9186d5d2e2e774",
+          "helpers/scrape-control.ts": "228fc82c0663d0cba5d8131a1457915a48f7c17b8860ba6a0bb337eeb66ad874",
+          "helpers/scrape-page.ts": "098c609f899c7513b137048ceb7c0f1a2ca28edbcd95840e071378efe6a378f9",
+          "helpers/ssrf.ts": "78df1d6e5191ca70442af84a28cffebe0751fa12a75d0a11314bf23287a5bca6",
+          "helpers/workflows.ts": "401bd32747d98bebf2fd7d9fc538d1c4c7101d84268c1852c9973ffc17516c88",
+          "helpers/page-readiness.ts": "3a37d495bb74fcf9f2f4810e18d85350907ec5afee9a23b10e980123902c14b8",
+          "helpers/waf-benchmark.ts": "ffd9f0d2e5996825aa77cb71b600a6667558e166d4471a084c20638bab9171d6",
+          "helpers/bot-detection.ts": "3111f011045834a040e5497825cd0bf2c698a3fa8ca77a48c8479dddf2348817",
+          "dist/api.js": "a6216e4a60d0a9ce5b55e1f8eff59aa77fe416148fa98b81286a6fa3689ca990",
+          "dist/helpers/browser.js": "9c927eaf21a636fb7a8a28baa44b8ccacd450af0ad8c99fe9ccc2f8d38af5d71",
+          "dist/helpers/browser-sessions.js": "715e61bf0a2fe9b43de9ab1dc733f5f775e0a92e60c5268dbe6e0b8620f9f549",
+          "dist/helpers/cookies.js": "0d7a5e0f76b861992a1b304b6acf6f70eacaaa7a09f8269d93434dcdbc23bc57",
+          "dist/helpers/get_error.js": "5edbde83afd8bceb2280455d500bdb7c3d62f5318d54c82cc01629c6681cd6a7",
+          "dist/helpers/resource-policy.js": "3c079ef3d980dde1a91090007396929a506962a57ee1cd83a9baa48fc7bce2f1",
+          "dist/helpers/scrape-control.js": "48da74695080f73cea869acc6bbd295876d1ebfbe12c6e4cd09c5ef6dcf3b69d",
+          "dist/helpers/scrape-page.js": "71dd7a38c2d0b4df2639d0cde3a105be2d6f017a290f3c1ace3a093e63778ec8",
+          "dist/helpers/ssrf.js": "452ae1dbec8a6103cba710e56b6d0c5740606021d34c2bc415025a8676a2c68d",
+          "dist/helpers/workflows.js": "058145f080954b490631a5868a0e43e9656084a5aaa80ab3ab107858ec6ba961",
+          "dist/helpers/page-readiness.js": "8e131aded6e5d312a98954e9c660aff440b02fbc6dbfa7db99d73c546ffb3420",
+          "dist/helpers/waf-benchmark.js": "4eea26db4617351a9daa9ad546c8d9d16983d2d736f5a1d435a3159fe7a96f4d",
+          "dist/helpers/bot-detection.js": "77a197cbbe0942b6106db2eb2579fc1af8dc7a167e3e959de51a89f8ed7a746e"
+        },
+        "network": {
+          "country": "VN",
+          "proxyConfigured": false
+        }
+      }
+    ],
+    "checkedAt": "2026-11-03T14:33:42.326288+00:00",
+    "limitsPerBrowser": {
+      "cpuCount": 2,
+      "memoryGiB": 3,
+      "pageCapacity": 2
+    },
+    "totalClientConcurrency": 4,
+    "sourceCommit": "6ed6b1024342b4734098f6ca76f0c47710a01e47",
+    "candidateImageId": "sha256:6a7bc7fba7c7ae5704ad93b3962d36c0a9707c42d7ab5a6594a6920aa6be9c4a",
+    "scope": "Matched production Firefox images; additional runtime detection and bounded passive waits only. No hosted or proxy calls.",
+    "benchmarkScriptSha256": "c77bd4c1305bcd5d7657cb84b0fa6a8bb11d7d9e2a8f29a7fc2d64e5a7e8c768"
+  },
+  "localEvidence": {
+    "directory": "_local/anti-bot/runtime-shells-paired-2026-11-03",
+    "reportSha256": "f5bef14b2e9129d949d5c86844b7e6a008e2c34bfd0089fa359dc349de6308cd"
+  },
+  "historicalClassificationAudit": {
+    "networkRequests": 0,
+    "normalizedSuccessesChecked": 1037,
+    "newRejections": [],
+    "runs": [
+      {
+        "run": "waf-regression-repair-full-2026-11-03",
+        "normalizedSuccessesChecked": 209,
+        "reportSha256": "824fa447a8c2d47a5358918f9657b82b093713887f8af87a556b178b74da084f"
+      },
+      {
+        "run": "content-readiness-corrected-paired-full-2026-11-03",
+        "normalizedSuccessesChecked": 169,
+        "reportSha256": "90bd7068a13979b313c901cf8d4e1338aef00eb9a4db23439f758eb36a124e4c"
+      },
+      {
+        "run": "primary-busy-ad-corrected-full-2026-11-03",
+        "normalizedSuccessesChecked": 176,
+        "reportSha256": "c3059defb250c55a86ad72258a539c0834297095295fdd3a2f00d3b336e70b10"
+      },
+      {
+        "run": "consent-probe-primary-paired-full-2026-11-03",
+        "normalizedSuccessesChecked": 176,
+        "reportSha256": "f6135896f85bad5e0ebc7e90f3739b503e576156db94b2a7545487680cbc2782"
+      },
+      {
+        "run": "complementary-readiness-paired-full-2026-11-03",
+        "normalizedSuccessesChecked": 85,
+        "reportSha256": "56037a14ece60b674a502605178e3fcb80890d698a9bd329c81aa9aed5dcd86c"
+      },
+      {
+        "run": "api-frontier-2026-11-03",
+        "normalizedSuccessesChecked": 122,
+        "reportSha256": "89fe37d6fb7c9f5007a22a65f826ec41bcd38c851bbf602060aae3c0afb49256"
+      },
+      {
+        "run": "api-engine-fallback-full-corrected-2026-11-03",
+        "normalizedSuccessesChecked": 100,
+        "reportSha256": "8f993f63eb8f5df0b3f02e150f9e5eec3396e9d5a0f394d0d36d61d58b1270f8"
+      }
+    ]
+  }
+}

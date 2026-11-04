@@ -1,4 +1,14 @@
 import express from "express";
+import {
+  localBrowserCreate,
+  localBrowserStatus,
+  localBrowserDelete,
+  localBrowserResume,
+  localBrowserHandoff,
+  localBrowserView,
+  localBrowserSnapshot,
+  localBrowserInput,
+} from "../controllers/v2/local-browser";
 import multer from "multer";
 import { config } from "../config";
 import { RateLimiterMode } from "../types";
@@ -665,6 +675,43 @@ v2Router.delete(
 );
 v2Router.post("/slack/commands", wrap(slackCommandsController));
 v2Router.post("/slack/events", wrap(slackEventsController));
+
+v2Router.post(
+  "/browser/sessions",
+  authMiddleware(RateLimiterMode.Browser),
+  countryCheck,
+  scrapeBlocklistMiddleware,
+  wrap(localBrowserCreate),
+);
+v2Router.get(
+  "/browser/sessions/:sessionId",
+  authMiddleware(RateLimiterMode.BrowserExecute),
+  wrap(localBrowserStatus),
+);
+v2Router.delete(
+  "/browser/sessions/:sessionId",
+  authMiddleware(RateLimiterMode.BrowserExecute),
+  wrap(localBrowserDelete),
+);
+v2Router.post(
+  "/browser/sessions/:sessionId/handoff",
+  authMiddleware(RateLimiterMode.BrowserExecute),
+  wrap(localBrowserHandoff),
+);
+v2Router.post(
+  "/browser/sessions/:sessionId/resume",
+  authMiddleware(RateLimiterMode.BrowserExecute),
+  wrap(localBrowserResume),
+);
+v2Router.get("/browser/sessions/:sessionId/view", wrap(localBrowserView));
+v2Router.get(
+  "/browser/sessions/:sessionId/handoff/snapshot",
+  wrap(localBrowserSnapshot),
+);
+v2Router.post(
+  "/browser/sessions/:sessionId/handoff/input",
+  wrap(localBrowserInput),
+);
 
 v2Router.post(
   ["/browser", "/interact"],

@@ -7,6 +7,22 @@ type Resolver = (hostname: string) => Promise<LookupAddress[]>;
 
 const defaultResolver: Resolver = (hostname) => lookup(hostname, { all: true });
 
+/** Blob resources are resolved in the browser's store. Check their HTTP origin
+ * with the same destination policy; keep navigation and opaque schemes strict.
+ */
+export const resourceSecurityUrl = (
+  url: string,
+  navigation: boolean,
+): string => {
+  const parsed = new URL(url);
+  if (!navigation && parsed.protocol === 'blob:' && parsed.origin !== 'null') {
+    const origin = new URL(parsed.origin);
+    if (origin.protocol === 'http:' || origin.protocol === 'https:')
+      return origin.origin;
+  }
+  return url;
+};
+
 /**
  * Resolves `hostname` once. Returns the addresses if all of them are public
  * unicast, or null if the host is empty, does not resolve, or has any

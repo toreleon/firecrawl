@@ -1,0 +1,2098 @@
+{
+  "status": "complete",
+  "startedAt": "2026-11-03T15:04:48.107Z",
+  "sourceCommit": "025f01ec118ca369ad46e5fa9d09be20fa4e0106",
+  "scope": "Fresh full v2 API baseline versus opt-in engine fallback after Amazon navigation-commit and Gecko transport repairs, all 100 frozen targets. Not a matched code-version comparison with the prior 51/100 result. No hosted calls.",
+  "protocol": {
+    "targets": 100,
+    "requests": 200,
+    "attemptsPerTargetPerProfile": 1,
+    "globalHttpConcurrency": 4,
+    "profileConcurrency": 2,
+    "clientDeadlineMs": 90000,
+    "requestTimeoutMs": 85000,
+    "clientRetries": 0,
+    "primaryOwnerCount": 2,
+    "fallbackOwnerCount": 1,
+    "limitsPerOwner": {
+      "cpus": 2,
+      "memoryGiB": 3,
+      "pageCapacity": 2
+    },
+    "egressCountry": "VN",
+    "upstreamProxy": false,
+    "freshContexts": true,
+    "mediaBlocked": false,
+    "expectedMarkerSent": false,
+    "controls": [
+      {
+        "name": "baseline",
+        "baseUrl": "http://127.0.0.1:33150",
+        "apiKeyEnv": "TEST_API_KEY",
+        "browserControls": {
+          "waitUntil": "domcontentloaded",
+          "consent": "rejectNonEssential",
+          "workflow": "auto",
+          "maxAttempts": 1,
+          "engineFallback": false
+        },
+        "maxConcurrentRequests": 2
+      },
+      {
+        "name": "adaptive",
+        "baseUrl": "http://127.0.0.1:33150",
+        "apiKeyEnv": "TEST_API_KEY",
+        "browserControls": {
+          "waitUntil": "domcontentloaded",
+          "consent": "rejectNonEssential",
+          "workflow": "auto",
+          "maxAttempts": 1,
+          "engineFallback": true
+        },
+        "maxConcurrentRequests": 2
+      }
+    ],
+    "fixtureSha256": "a886fb57087e842c2857b89a7669e31d2fb7b98d6bd7deb60a2329f29581b76a",
+    "sourceHashes": {
+      "helpers/api-benchmark.ts": "9e1bfb8449851cf50c54d68bbbae61b10d3391cd89a1c69ec1fd5da33c8735a4",
+      "helpers/waf-benchmark.ts": "ffd9f0d2e5996825aa77cb71b600a6667558e166d4471a084c20638bab9171d6",
+      "helpers/bot-detection.ts": "3111f011045834a040e5497825cd0bf2c698a3fa8ca77a48c8479dddf2348817",
+      "scripts/benchmark-api.ts": "0b42fef70efaade1e3ad4c5e2e8a6759d8ce8fe2b70cbe314bf889139e4027ed"
+    },
+    "imageId": "sha256:a5413c5abd91f8ff3e12fe83e64c5e19936be23e1faa13596b49c51fc139f295",
+    "resourceDifference": "Adaptive requests may consume a second sequential browser attempt on an additional 2-CPU/3-GiB owner; not an equal-cost browser replacement."
+  },
+  "profiles": {
+    "baseline": {
+      "overall": {
+        "requests": 100,
+        "uniqueTargets": 100,
+        "frontierPasses": 45,
+        "screenedPasses": 43,
+        "normalizedPasses": 44,
+        "frontierSuccessRate": 0.45,
+        "screenedSuccessRate": 0.43,
+        "normalizedSuccessRate": 0.44,
+        "successfulLatencyP50Ms": 3479,
+        "successfulLatencyP95Ms": 6844,
+        "allAttemptLatencyP95Ms": 6757,
+        "failures": {
+          "challenge": 20,
+          "marker_only_in_noncontent_markup": 1,
+          "service_error": 1,
+          "target_status_403": 20,
+          "network_error": 3,
+          "target_status_400": 1,
+          "rate_limited": 3,
+          "target_status_511": 1,
+          "target_status_417": 1,
+          "target_status_405": 1,
+          "content_not_ready": 1,
+          "missing_expected_marker": 3,
+          "timeout": 1
+        }
+      },
+      "byWafLabel": {
+        "akamai": {
+          "requests": 20,
+          "uniqueTargets": 20,
+          "frontierPasses": 7,
+          "screenedPasses": 7,
+          "normalizedPasses": 7,
+          "frontierSuccessRate": 0.35,
+          "screenedSuccessRate": 0.35,
+          "normalizedSuccessRate": 0.35,
+          "successfulLatencyP50Ms": 4402,
+          "successfulLatencyP95Ms": 6115,
+          "allAttemptLatencyP95Ms": 5989,
+          "failures": {
+            "target_status_403": 10,
+            "target_status_400": 1,
+            "rate_limited": 1,
+            "target_status_417": 1
+          }
+        },
+        "aws-waf": {
+          "requests": 7,
+          "uniqueTargets": 7,
+          "frontierPasses": 2,
+          "screenedPasses": 2,
+          "normalizedPasses": 2,
+          "frontierSuccessRate": 0.2857142857142857,
+          "screenedSuccessRate": 0.2857142857142857,
+          "normalizedSuccessRate": 0.2857142857142857,
+          "successfulLatencyP50Ms": 3681,
+          "successfulLatencyP95Ms": 4834,
+          "allAttemptLatencyP95Ms": 9481,
+          "failures": {
+            "service_error": 1,
+            "target_status_511": 1,
+            "rate_limited": 1,
+            "target_status_405": 1,
+            "target_status_403": 1
+          }
+        },
+        "cloudflare": {
+          "requests": 15,
+          "uniqueTargets": 15,
+          "frontierPasses": 3,
+          "screenedPasses": 3,
+          "normalizedPasses": 3,
+          "frontierSuccessRate": 0.2,
+          "screenedSuccessRate": 0.2,
+          "normalizedSuccessRate": 0.2,
+          "successfulLatencyP50Ms": 3338,
+          "successfulLatencyP95Ms": 4274,
+          "allAttemptLatencyP95Ms": 4274,
+          "failures": {
+            "target_status_403": 5,
+            "challenge": 7
+          }
+        },
+        "custom": {
+          "requests": 9,
+          "uniqueTargets": 9,
+          "frontierPasses": 8,
+          "screenedPasses": 7,
+          "normalizedPasses": 7,
+          "frontierSuccessRate": 0.8888888888888888,
+          "screenedSuccessRate": 0.7777777777777778,
+          "normalizedSuccessRate": 0.7777777777777778,
+          "successfulLatencyP50Ms": 1771,
+          "successfulLatencyP95Ms": 4164,
+          "allAttemptLatencyP95Ms": 4164,
+          "failures": {
+            "network_error": 1,
+            "challenge": 1
+          }
+        },
+        "datadome": {
+          "requests": 20,
+          "uniqueTargets": 20,
+          "frontierPasses": 5,
+          "screenedPasses": 5,
+          "normalizedPasses": 5,
+          "frontierSuccessRate": 0.25,
+          "screenedSuccessRate": 0.25,
+          "normalizedSuccessRate": 0.25,
+          "successfulLatencyP50Ms": 5454,
+          "successfulLatencyP95Ms": 10059,
+          "allAttemptLatencyP95Ms": 7195,
+          "failures": {
+            "challenge": 11,
+            "network_error": 2,
+            "target_status_403": 2
+          }
+        },
+        "fastly": {
+          "requests": 1,
+          "uniqueTargets": 1,
+          "frontierPasses": 0,
+          "screenedPasses": 0,
+          "normalizedPasses": 0,
+          "frontierSuccessRate": 0,
+          "screenedSuccessRate": 0,
+          "normalizedSuccessRate": 0,
+          "successfulLatencyP50Ms": null,
+          "successfulLatencyP95Ms": null,
+          "allAttemptLatencyP95Ms": 84528,
+          "failures": {
+            "timeout": 1
+          }
+        },
+        "incapsula": {
+          "requests": 1,
+          "uniqueTargets": 1,
+          "frontierPasses": 0,
+          "screenedPasses": 0,
+          "normalizedPasses": 0,
+          "frontierSuccessRate": 0,
+          "screenedSuccessRate": 0,
+          "normalizedSuccessRate": 0,
+          "successfulLatencyP50Ms": null,
+          "successfulLatencyP95Ms": null,
+          "allAttemptLatencyP95Ms": 677,
+          "failures": {
+            "target_status_403": 1
+          }
+        },
+        "kasada": {
+          "requests": 3,
+          "uniqueTargets": 3,
+          "frontierPasses": 2,
+          "screenedPasses": 1,
+          "normalizedPasses": 1,
+          "frontierSuccessRate": 0.6666666666666666,
+          "screenedSuccessRate": 0.3333333333333333,
+          "normalizedSuccessRate": 0.3333333333333333,
+          "successfulLatencyP50Ms": 1820,
+          "successfulLatencyP95Ms": 1820,
+          "allAttemptLatencyP95Ms": 5444,
+          "failures": {
+            "marker_only_in_noncontent_markup": 1,
+            "rate_limited": 1
+          }
+        },
+        "perimeterx": {
+          "requests": 9,
+          "uniqueTargets": 9,
+          "frontierPasses": 7,
+          "screenedPasses": 7,
+          "normalizedPasses": 7,
+          "frontierSuccessRate": 0.7777777777777778,
+          "screenedSuccessRate": 0.7777777777777778,
+          "normalizedSuccessRate": 0.7777777777777778,
+          "successfulLatencyP50Ms": 3387,
+          "successfulLatencyP95Ms": 4461,
+          "allAttemptLatencyP95Ms": 4461,
+          "failures": {
+            "challenge": 1,
+            "content_not_ready": 1
+          }
+        },
+        "temu": {
+          "requests": 1,
+          "uniqueTargets": 1,
+          "frontierPasses": 0,
+          "screenedPasses": 0,
+          "normalizedPasses": 0,
+          "frontierSuccessRate": 0,
+          "screenedSuccessRate": 0,
+          "normalizedSuccessRate": 0,
+          "successfulLatencyP50Ms": null,
+          "successfulLatencyP95Ms": null,
+          "allAttemptLatencyP95Ms": 4437,
+          "failures": {
+            "missing_expected_marker": 1
+          }
+        },
+        "ticketmaster": {
+          "requests": 1,
+          "uniqueTargets": 1,
+          "frontierPasses": 1,
+          "screenedPasses": 1,
+          "normalizedPasses": 1,
+          "frontierSuccessRate": 1,
+          "screenedSuccessRate": 1,
+          "normalizedSuccessRate": 1,
+          "successfulLatencyP50Ms": 4329,
+          "successfulLatencyP95Ms": 4329,
+          "allAttemptLatencyP95Ms": 4329,
+          "failures": {}
+        },
+        "unclassified": {
+          "requests": 13,
+          "uniqueTargets": 13,
+          "frontierPasses": 10,
+          "screenedPasses": 10,
+          "normalizedPasses": 11,
+          "frontierSuccessRate": 0.7692307692307693,
+          "screenedSuccessRate": 0.7692307692307693,
+          "normalizedSuccessRate": 0.8461538461538461,
+          "successfulLatencyP50Ms": 3595,
+          "successfulLatencyP95Ms": 6844,
+          "allAttemptLatencyP95Ms": 6844,
+          "failures": {
+            "missing_expected_marker": 2,
+            "target_status_403": 1
+          }
+        }
+      },
+      "apiSuccesses": 95,
+      "providerRateLimits": 0,
+      "markdownMarkerPasses": 40,
+      "returnedCreditsUsed": 95,
+      "unknownCreditsCount": 5,
+      "cacheStateCounts": {
+        "not_reported": 100
+      }
+    },
+    "adaptive": {
+      "overall": {
+        "requests": 100,
+        "uniqueTargets": 100,
+        "frontierPasses": 53,
+        "screenedPasses": 51,
+        "normalizedPasses": 52,
+        "frontierSuccessRate": 0.53,
+        "screenedSuccessRate": 0.51,
+        "normalizedSuccessRate": 0.52,
+        "successfulLatencyP50Ms": 3976,
+        "successfulLatencyP95Ms": 8318,
+        "allAttemptLatencyP95Ms": 8429,
+        "failures": {
+          "challenge": 15,
+          "service_error": 2,
+          "marker_only_in_noncontent_markup": 1,
+          "target_status_403": 17,
+          "network_error": 2,
+          "target_status_400": 1,
+          "rate_limited": 2,
+          "target_status_511": 1,
+          "target_status_406": 1,
+          "target_status_417": 1,
+          "target_status_405": 1,
+          "content_not_ready": 1,
+          "missing_expected_marker": 3,
+          "timeout": 1
+        }
+      },
+      "byWafLabel": {
+        "akamai": {
+          "requests": 20,
+          "uniqueTargets": 20,
+          "frontierPasses": 7,
+          "screenedPasses": 7,
+          "normalizedPasses": 7,
+          "frontierSuccessRate": 0.35,
+          "screenedSuccessRate": 0.35,
+          "normalizedSuccessRate": 0.35,
+          "successfulLatencyP50Ms": 4340,
+          "successfulLatencyP95Ms": 6746,
+          "allAttemptLatencyP95Ms": 7984,
+          "failures": {
+            "target_status_403": 10,
+            "target_status_400": 1,
+            "service_error": 1,
+            "target_status_417": 1
+          }
+        },
+        "aws-waf": {
+          "requests": 7,
+          "uniqueTargets": 7,
+          "frontierPasses": 2,
+          "screenedPasses": 2,
+          "normalizedPasses": 2,
+          "frontierSuccessRate": 0.2857142857142857,
+          "screenedSuccessRate": 0.2857142857142857,
+          "normalizedSuccessRate": 0.2857142857142857,
+          "successfulLatencyP50Ms": 3865,
+          "successfulLatencyP95Ms": 7437,
+          "allAttemptLatencyP95Ms": 9162,
+          "failures": {
+            "service_error": 1,
+            "target_status_511": 1,
+            "rate_limited": 1,
+            "target_status_405": 1,
+            "target_status_403": 1
+          }
+        },
+        "cloudflare": {
+          "requests": 15,
+          "uniqueTargets": 15,
+          "frontierPasses": 7,
+          "screenedPasses": 7,
+          "normalizedPasses": 7,
+          "frontierSuccessRate": 0.4666666666666667,
+          "screenedSuccessRate": 0.4666666666666667,
+          "normalizedSuccessRate": 0.4666666666666667,
+          "successfulLatencyP50Ms": 4045,
+          "successfulLatencyP95Ms": 7428,
+          "allAttemptLatencyP95Ms": 7428,
+          "failures": {
+            "challenge": 6,
+            "target_status_403": 2
+          }
+        },
+        "custom": {
+          "requests": 9,
+          "uniqueTargets": 9,
+          "frontierPasses": 8,
+          "screenedPasses": 7,
+          "normalizedPasses": 7,
+          "frontierSuccessRate": 0.8888888888888888,
+          "screenedSuccessRate": 0.7777777777777778,
+          "normalizedSuccessRate": 0.7777777777777778,
+          "successfulLatencyP50Ms": 2405,
+          "successfulLatencyP95Ms": 4427,
+          "allAttemptLatencyP95Ms": 4427,
+          "failures": {
+            "network_error": 1,
+            "challenge": 1
+          }
+        },
+        "datadome": {
+          "requests": 20,
+          "uniqueTargets": 20,
+          "frontierPasses": 9,
+          "screenedPasses": 9,
+          "normalizedPasses": 9,
+          "frontierSuccessRate": 0.45,
+          "screenedSuccessRate": 0.45,
+          "normalizedSuccessRate": 0.45,
+          "successfulLatencyP50Ms": 6069,
+          "successfulLatencyP95Ms": 16584,
+          "allAttemptLatencyP95Ms": 12214,
+          "failures": {
+            "challenge": 7,
+            "network_error": 1,
+            "target_status_403": 2,
+            "target_status_406": 1
+          }
+        },
+        "fastly": {
+          "requests": 1,
+          "uniqueTargets": 1,
+          "frontierPasses": 0,
+          "screenedPasses": 0,
+          "normalizedPasses": 0,
+          "frontierSuccessRate": 0,
+          "screenedSuccessRate": 0,
+          "normalizedSuccessRate": 0,
+          "successfulLatencyP50Ms": null,
+          "successfulLatencyP95Ms": null,
+          "allAttemptLatencyP95Ms": 84523,
+          "failures": {
+            "timeout": 1
+          }
+        },
+        "incapsula": {
+          "requests": 1,
+          "uniqueTargets": 1,
+          "frontierPasses": 0,
+          "screenedPasses": 0,
+          "normalizedPasses": 0,
+          "frontierSuccessRate": 0,
+          "screenedSuccessRate": 0,
+          "normalizedSuccessRate": 0,
+          "successfulLatencyP50Ms": null,
+          "successfulLatencyP95Ms": null,
+          "allAttemptLatencyP95Ms": 2545,
+          "failures": {
+            "target_status_403": 1
+          }
+        },
+        "kasada": {
+          "requests": 3,
+          "uniqueTargets": 3,
+          "frontierPasses": 2,
+          "screenedPasses": 1,
+          "normalizedPasses": 1,
+          "frontierSuccessRate": 0.6666666666666666,
+          "screenedSuccessRate": 0.3333333333333333,
+          "normalizedSuccessRate": 0.3333333333333333,
+          "successfulLatencyP50Ms": 2237,
+          "successfulLatencyP95Ms": 2237,
+          "allAttemptLatencyP95Ms": 7569,
+          "failures": {
+            "marker_only_in_noncontent_markup": 1,
+            "rate_limited": 1
+          }
+        },
+        "perimeterx": {
+          "requests": 9,
+          "uniqueTargets": 9,
+          "frontierPasses": 7,
+          "screenedPasses": 7,
+          "normalizedPasses": 7,
+          "frontierSuccessRate": 0.7777777777777778,
+          "screenedSuccessRate": 0.7777777777777778,
+          "normalizedSuccessRate": 0.7777777777777778,
+          "successfulLatencyP50Ms": 3976,
+          "successfulLatencyP95Ms": 5316,
+          "allAttemptLatencyP95Ms": 5316,
+          "failures": {
+            "challenge": 1,
+            "content_not_ready": 1
+          }
+        },
+        "temu": {
+          "requests": 1,
+          "uniqueTargets": 1,
+          "frontierPasses": 0,
+          "screenedPasses": 0,
+          "normalizedPasses": 0,
+          "frontierSuccessRate": 0,
+          "screenedSuccessRate": 0,
+          "normalizedSuccessRate": 0,
+          "successfulLatencyP50Ms": null,
+          "successfulLatencyP95Ms": null,
+          "allAttemptLatencyP95Ms": 8429,
+          "failures": {
+            "missing_expected_marker": 1
+          }
+        },
+        "ticketmaster": {
+          "requests": 1,
+          "uniqueTargets": 1,
+          "frontierPasses": 1,
+          "screenedPasses": 1,
+          "normalizedPasses": 1,
+          "frontierSuccessRate": 1,
+          "screenedSuccessRate": 1,
+          "normalizedSuccessRate": 1,
+          "successfulLatencyP50Ms": 2842,
+          "successfulLatencyP95Ms": 2842,
+          "allAttemptLatencyP95Ms": 2842,
+          "failures": {}
+        },
+        "unclassified": {
+          "requests": 13,
+          "uniqueTargets": 13,
+          "frontierPasses": 10,
+          "screenedPasses": 10,
+          "normalizedPasses": 11,
+          "frontierSuccessRate": 0.7692307692307693,
+          "screenedSuccessRate": 0.7692307692307693,
+          "normalizedSuccessRate": 0.8461538461538461,
+          "successfulLatencyP50Ms": 2406,
+          "successfulLatencyP95Ms": 9420,
+          "allAttemptLatencyP95Ms": 9420,
+          "failures": {
+            "missing_expected_marker": 2,
+            "target_status_403": 1
+          }
+        }
+      },
+      "apiSuccesses": 95,
+      "providerRateLimits": 0,
+      "markdownMarkerPasses": 47,
+      "returnedCreditsUsed": 95,
+      "unknownCreditsCount": 5,
+      "cacheStateCounts": {
+        "not_reported": 100
+      }
+    }
+  },
+  "pairedNormalizedMatches": {
+    "both": 43,
+    "baselineOnly": 1,
+    "adaptiveOnly": 9,
+    "neither": 47
+  },
+  "targetChanges": [
+    {
+      "target": "indeed",
+      "outcome": "adaptiveOnly",
+      "baselineReason": "target_status_403",
+      "adaptiveReason": null,
+      "baselineLatencyMs": 3211,
+      "adaptiveLatencyMs": 4064,
+      "adaptiveRecoveredOnAlternate": true
+    },
+    {
+      "target": "expedia",
+      "outcome": "adaptiveOnly",
+      "baselineReason": "rate_limited",
+      "adaptiveReason": null,
+      "baselineLatencyMs": 1737,
+      "adaptiveLatencyMs": 5662,
+      "adaptiveRecoveredOnAlternate": true
+    },
+    {
+      "target": "glassdoor",
+      "outcome": "adaptiveOnly",
+      "baselineReason": "target_status_403",
+      "adaptiveReason": null,
+      "baselineLatencyMs": 778,
+      "adaptiveLatencyMs": 1925,
+      "adaptiveRecoveredOnAlternate": false
+    },
+    {
+      "target": "marketwatch",
+      "outcome": "adaptiveOnly",
+      "baselineReason": "challenge",
+      "adaptiveReason": null,
+      "baselineLatencyMs": 1143,
+      "adaptiveLatencyMs": 7004,
+      "adaptiveRecoveredOnAlternate": true
+    },
+    {
+      "target": "barrons",
+      "outcome": "adaptiveOnly",
+      "baselineReason": "challenge",
+      "adaptiveReason": null,
+      "baselineLatencyMs": 788,
+      "adaptiveLatencyMs": 8033,
+      "adaptiveRecoveredOnAlternate": true
+    },
+    {
+      "target": "reuters",
+      "outcome": "adaptiveOnly",
+      "baselineReason": "challenge",
+      "adaptiveReason": null,
+      "baselineLatencyMs": 2486,
+      "adaptiveLatencyMs": 4954,
+      "adaptiveRecoveredOnAlternate": true
+    },
+    {
+      "target": "ebay",
+      "outcome": "baselineOnly",
+      "baselineReason": null,
+      "adaptiveReason": "service_error",
+      "baselineLatencyMs": 6115,
+      "adaptiveLatencyMs": 8052,
+      "adaptiveRecoveredOnAlternate": false
+    },
+    {
+      "target": "Capterra",
+      "outcome": "adaptiveOnly",
+      "baselineReason": "challenge",
+      "adaptiveReason": null,
+      "baselineLatencyMs": 760,
+      "adaptiveLatencyMs": 6028,
+      "adaptiveRecoveredOnAlternate": true
+    },
+    {
+      "target": "SeatGeek",
+      "outcome": "adaptiveOnly",
+      "baselineReason": "challenge",
+      "adaptiveReason": null,
+      "baselineLatencyMs": 1052,
+      "adaptiveLatencyMs": 16584,
+      "adaptiveRecoveredOnAlternate": true
+    },
+    {
+      "target": "DigiKey",
+      "outcome": "adaptiveOnly",
+      "baselineReason": "challenge",
+      "adaptiveReason": null,
+      "baselineLatencyMs": 1569,
+      "adaptiveLatencyMs": 2673,
+      "adaptiveRecoveredOnAlternate": false
+    }
+  ],
+  "commonNormalizedSuccessLatency": {
+    "pairedObservations": 43,
+    "quantiles": "nearest rank",
+    "profiles": {
+      "baseline": {
+        "p50Ms": 3444,
+        "p95Ms": 6844
+      },
+      "adaptive": {
+        "p50Ms": 3810,
+        "p95Ms": 7437
+      }
+    }
+  },
+  "fallbackDiagnosticsReturnedOnly": {
+    "present": 95,
+    "attempted": 49,
+    "usedSecondary": 12,
+    "recovered": 10,
+    "normalizedRecoveries": 9,
+    "skipped": {
+      "not_needed": 46
+    },
+    "missing": 5,
+    "unknownMissingTargets": [
+      "Amazon",
+      "saksfifthavenue",
+      "ebay",
+      "LinkedIn",
+      "roblox"
+    ],
+    "receiptCount": 144,
+    "pairedAdaptiveOnlyWithRecoveredAlternate": 7
+  },
+  "fallbackCases": [
+    {
+      "target": "allegro",
+      "normalizedPass": false,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": false,
+        "recovered": false,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "3c36c101-7a37-4329-9d57-a36a97f5523c",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          }
+        ]
+      }
+    },
+    {
+      "target": "indeed",
+      "normalizedPass": true,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": true,
+        "recovered": true,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "936a8f4f-bdf3-4af9-8ae4-27c20a9a08d7",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 200
+          }
+        ]
+      }
+    },
+    {
+      "target": "lowes",
+      "normalizedPass": false,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": false,
+        "recovered": false,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "3c36c101-7a37-4329-9d57-a36a97f5523c",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          }
+        ]
+      }
+    },
+    {
+      "target": "safeway",
+      "normalizedPass": false,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": false,
+        "recovered": false,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "936a8f4f-bdf3-4af9-8ae4-27c20a9a08d7",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          }
+        ]
+      }
+    },
+    {
+      "target": "neimanmarcus",
+      "normalizedPass": false,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": true,
+        "recovered": false,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "936a8f4f-bdf3-4af9-8ae4-27c20a9a08d7",
+            "pageClosed": true,
+            "errorCode": "NETWORK_ERROR"
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          }
+        ]
+      }
+    },
+    {
+      "target": "g2",
+      "normalizedPass": false,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": false,
+        "recovered": false,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "3c36c101-7a37-4329-9d57-a36a97f5523c",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          }
+        ]
+      }
+    },
+    {
+      "target": "aa",
+      "normalizedPass": false,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": false,
+        "recovered": false,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "936a8f4f-bdf3-4af9-8ae4-27c20a9a08d7",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          }
+        ]
+      }
+    },
+    {
+      "target": "hyatt",
+      "normalizedPass": false,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": false,
+        "recovered": false,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "3c36c101-7a37-4329-9d57-a36a97f5523c",
+            "pageClosed": true,
+            "pageStatusCode": 429
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 429
+          }
+        ]
+      }
+    },
+    {
+      "target": "macys",
+      "normalizedPass": false,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": false,
+        "recovered": false,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "936a8f4f-bdf3-4af9-8ae4-27c20a9a08d7",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          }
+        ]
+      }
+    },
+    {
+      "target": "yelp",
+      "normalizedPass": false,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": false,
+        "recovered": false,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "3c36c101-7a37-4329-9d57-a36a97f5523c",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          }
+        ]
+      }
+    },
+    {
+      "target": "louisvuitton",
+      "normalizedPass": true,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": true,
+        "recovered": true,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "936a8f4f-bdf3-4af9-8ae4-27c20a9a08d7",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 200
+          }
+        ]
+      }
+    },
+    {
+      "target": "autozone",
+      "normalizedPass": false,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": false,
+        "recovered": false,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "3c36c101-7a37-4329-9d57-a36a97f5523c",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          }
+        ]
+      }
+    },
+    {
+      "target": "homedepot",
+      "normalizedPass": false,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": false,
+        "recovered": false,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "3c36c101-7a37-4329-9d57-a36a97f5523c",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          }
+        ]
+      }
+    },
+    {
+      "target": "emag",
+      "normalizedPass": false,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": false,
+        "recovered": false,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "936a8f4f-bdf3-4af9-8ae4-27c20a9a08d7",
+            "pageClosed": true,
+            "pageStatusCode": 511
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 511
+          }
+        ]
+      }
+    },
+    {
+      "target": "expedia",
+      "normalizedPass": true,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": true,
+        "recovered": true,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "3c36c101-7a37-4329-9d57-a36a97f5523c",
+            "pageClosed": true,
+            "pageStatusCode": 429
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 200
+          }
+        ]
+      }
+    },
+    {
+      "target": "marketwatch",
+      "normalizedPass": true,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": true,
+        "recovered": true,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "3c36c101-7a37-4329-9d57-a36a97f5523c",
+            "pageClosed": true,
+            "pageStatusCode": 401
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 200
+          }
+        ]
+      }
+    },
+    {
+      "target": "barrons",
+      "normalizedPass": true,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": true,
+        "recovered": true,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "936a8f4f-bdf3-4af9-8ae4-27c20a9a08d7",
+            "pageClosed": true,
+            "pageStatusCode": 401
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 200
+          }
+        ]
+      }
+    },
+    {
+      "target": "monster",
+      "normalizedPass": false,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": false,
+        "recovered": false,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "3c36c101-7a37-4329-9d57-a36a97f5523c",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          }
+        ]
+      }
+    },
+    {
+      "target": "mouser",
+      "normalizedPass": false,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": false,
+        "recovered": false,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "936a8f4f-bdf3-4af9-8ae4-27c20a9a08d7",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 403,
+            "errorCode": "CONTENT_NOT_READY"
+          }
+        ]
+      }
+    },
+    {
+      "target": "realtor",
+      "normalizedPass": false,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": false,
+        "recovered": false,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "3c36c101-7a37-4329-9d57-a36a97f5523c",
+            "pageClosed": true,
+            "pageStatusCode": 429
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 429
+          }
+        ]
+      }
+    },
+    {
+      "target": "tripadvisor",
+      "normalizedPass": false,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": false,
+        "recovered": false,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "3c36c101-7a37-4329-9d57-a36a97f5523c",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          }
+        ]
+      }
+    },
+    {
+      "target": "wsj",
+      "normalizedPass": false,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": false,
+        "recovered": false,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "3c36c101-7a37-4329-9d57-a36a97f5523c",
+            "pageClosed": true,
+            "pageStatusCode": 401
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 401
+          }
+        ]
+      }
+    },
+    {
+      "target": "reuters",
+      "normalizedPass": true,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": true,
+        "recovered": true,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "3c36c101-7a37-4329-9d57-a36a97f5523c",
+            "pageClosed": true,
+            "pageStatusCode": 401
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 200
+          }
+        ]
+      }
+    },
+    {
+      "target": "coupang",
+      "normalizedPass": false,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": false,
+        "recovered": false,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "3c36c101-7a37-4329-9d57-a36a97f5523c",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          }
+        ]
+      }
+    },
+    {
+      "target": "stockx",
+      "normalizedPass": false,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": false,
+        "recovered": false,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "3c36c101-7a37-4329-9d57-a36a97f5523c",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          }
+        ]
+      }
+    },
+    {
+      "target": "cargurus",
+      "normalizedPass": false,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": true,
+        "recovered": false,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "3c36c101-7a37-4329-9d57-a36a97f5523c",
+            "pageClosed": true,
+            "errorCode": "NETWORK_ERROR"
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 406
+          }
+        ]
+      }
+    },
+    {
+      "target": "cars.com",
+      "normalizedPass": false,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": false,
+        "recovered": false,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "3c36c101-7a37-4329-9d57-a36a97f5523c",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          }
+        ]
+      }
+    },
+    {
+      "target": "crunchbase",
+      "normalizedPass": false,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": false,
+        "recovered": false,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "936a8f4f-bdf3-4af9-8ae4-27c20a9a08d7",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          }
+        ]
+      }
+    },
+    {
+      "target": "verizon",
+      "normalizedPass": false,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": false,
+        "recovered": false,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "3c36c101-7a37-4329-9d57-a36a97f5523c",
+            "pageClosed": true,
+            "pageStatusCode": 417
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 417
+          }
+        ]
+      }
+    },
+    {
+      "target": "att",
+      "normalizedPass": false,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": false,
+        "recovered": false,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "936a8f4f-bdf3-4af9-8ae4-27c20a9a08d7",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          }
+        ]
+      }
+    },
+    {
+      "target": "goodrx",
+      "normalizedPass": false,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": false,
+        "recovered": false,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "3c36c101-7a37-4329-9d57-a36a97f5523c",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          }
+        ]
+      }
+    },
+    {
+      "target": "Capterra",
+      "normalizedPass": true,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": true,
+        "recovered": true,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "936a8f4f-bdf3-4af9-8ae4-27c20a9a08d7",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 200
+          }
+        ]
+      }
+    },
+    {
+      "target": "Reddit",
+      "normalizedPass": false,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": false,
+        "recovered": false,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "3c36c101-7a37-4329-9d57-a36a97f5523c",
+            "pageClosed": true,
+            "pageStatusCode": 200,
+            "errorCode": "CONTENT_NOT_READY"
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          }
+        ]
+      }
+    },
+    {
+      "target": "Google Search",
+      "normalizedPass": true,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": true,
+        "recovered": true,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "936a8f4f-bdf3-4af9-8ae4-27c20a9a08d7",
+            "pageClosed": true,
+            "pageStatusCode": 429
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 200
+          }
+        ]
+      }
+    },
+    {
+      "target": "Redfin",
+      "normalizedPass": false,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": false,
+        "recovered": false,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "3c36c101-7a37-4329-9d57-a36a97f5523c",
+            "pageClosed": true,
+            "pageStatusCode": 405
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 405
+          }
+        ]
+      }
+    },
+    {
+      "target": "SeatGeek",
+      "normalizedPass": true,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": true,
+        "recovered": true,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "3c36c101-7a37-4329-9d57-a36a97f5523c",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 200
+          }
+        ]
+      }
+    },
+    {
+      "target": "ZipRecruiter",
+      "normalizedPass": false,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": false,
+        "recovered": false,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "3c36c101-7a37-4329-9d57-a36a97f5523c",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          }
+        ]
+      }
+    },
+    {
+      "target": "Idealista",
+      "normalizedPass": false,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": false,
+        "recovered": false,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "3c36c101-7a37-4329-9d57-a36a97f5523c",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          }
+        ]
+      }
+    },
+    {
+      "target": "Skyscanner",
+      "normalizedPass": false,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": false,
+        "recovered": false,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "936a8f4f-bdf3-4af9-8ae4-27c20a9a08d7",
+            "pageClosed": true,
+            "pageStatusCode": 200,
+            "errorCode": "CONTENT_NOT_READY"
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 200,
+            "errorCode": "CONTENT_NOT_READY"
+          }
+        ]
+      }
+    },
+    {
+      "target": "Congress.gov",
+      "normalizedPass": false,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": false,
+        "recovered": false,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "3c36c101-7a37-4329-9d57-a36a97f5523c",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          }
+        ]
+      }
+    },
+    {
+      "target": "Apartments.com",
+      "normalizedPass": false,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": false,
+        "recovered": false,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "936a8f4f-bdf3-4af9-8ae4-27c20a9a08d7",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          }
+        ]
+      }
+    },
+    {
+      "target": "Zoopla",
+      "normalizedPass": false,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": false,
+        "recovered": false,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "3c36c101-7a37-4329-9d57-a36a97f5523c",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          }
+        ]
+      }
+    },
+    {
+      "target": "Trustpilot",
+      "normalizedPass": false,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": false,
+        "recovered": false,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "3c36c101-7a37-4329-9d57-a36a97f5523c",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          }
+        ]
+      }
+    },
+    {
+      "target": "temu",
+      "normalizedPass": false,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": true,
+        "recovered": true,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "936a8f4f-bdf3-4af9-8ae4-27c20a9a08d7",
+            "pageClosed": true,
+            "pageStatusCode": 200,
+            "errorCode": "CONTENT_NOT_READY"
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 200
+          }
+        ]
+      }
+    },
+    {
+      "target": "kroger",
+      "normalizedPass": false,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": false,
+        "recovered": false,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "936a8f4f-bdf3-4af9-8ae4-27c20a9a08d7",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          }
+        ]
+      }
+    },
+    {
+      "target": "axs",
+      "normalizedPass": false,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": false,
+        "recovered": false,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "3c36c101-7a37-4329-9d57-a36a97f5523c",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          }
+        ]
+      }
+    },
+    {
+      "target": "draftkings",
+      "normalizedPass": false,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": false,
+        "recovered": false,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "3c36c101-7a37-4329-9d57-a36a97f5523c",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          }
+        ]
+      }
+    },
+    {
+      "target": "stackoverflow",
+      "normalizedPass": false,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": false,
+        "recovered": false,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "936a8f4f-bdf3-4af9-8ae4-27c20a9a08d7",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          }
+        ]
+      }
+    },
+    {
+      "target": "buybuybaby",
+      "normalizedPass": false,
+      "apiStatus": 200,
+      "diagnostics": {
+        "attempted": true,
+        "usedSecondary": false,
+        "recovered": false,
+        "attempts": [
+          {
+            "engine": "rebrowser",
+            "ownerBootId": "936a8f4f-bdf3-4af9-8ae4-27c20a9a08d7",
+            "pageClosed": true,
+            "pageStatusCode": 403
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "6e665ea7-34c1-4c56-91b8-3e9a7f9641f0",
+            "pageClosed": true,
+            "pageStatusCode": 406
+          }
+        ]
+      }
+    }
+  ],
+  "backendDispatchLedger": {
+    "primaryRequests": 200,
+    "primaryOwnerRequests": {
+      "primary-a": 100,
+      "primary-b": 100
+    },
+    "fallbackRequests": 52,
+    "allPrimaryUrlsTwice": true,
+    "allFallbackUrlsAtMostOnce": true,
+    "source": "Original request URLs in retained browser-owner logs. This includes API errors with no returned fallback diagnostics.",
+    "primaryPerApiRequest": 1,
+    "maximumBrowserAttemptsPerAdaptiveRequest": 2
+  },
+  "resourceAudit": {
+    "samples": 22,
+    "peakSampledMemoryMiB": {
+      "primary-a": 1352,
+      "primary-b": 1535,
+      "fallback": 1503
+    },
+    "maximumObservedEventCounters": {
+      "primary-a": {
+        "memory.events:low": 0,
+        "memory.events:high": 0,
+        "memory.events:max": 0,
+        "memory.events:oom": 0,
+        "memory.events:oom_kill": 0,
+        "memory.events:oom_group_kill": 0,
+        "memory.events:sock_throttled": 0,
+        "pids.events:max": 0
+      },
+      "primary-b": {
+        "memory.events:low": 0,
+        "memory.events:high": 0,
+        "memory.events:max": 0,
+        "memory.events:oom": 0,
+        "memory.events:oom_kill": 0,
+        "memory.events:oom_group_kill": 0,
+        "memory.events:sock_throttled": 0,
+        "pids.events:max": 0
+      },
+      "fallback": {
+        "memory.events:low": 0,
+        "memory.events:high": 0,
+        "memory.events:max": 0,
+        "memory.events:oom": 0,
+        "memory.events:oom_kill": 0,
+        "memory.events:oom_group_kill": 0,
+        "memory.events:sock_throttled": 31,
+        "pids.events:max": 0
+      }
+    },
+    "fatalMemoryProcessLimitEvents": 0,
+    "socketThrottlingIsReportedSeparately": true,
+    "socketThrottlingDocumentation": "https://www.kernel.org/doc/html/latest/admin-guide/cgroup-v2.html",
+    "timingIntegrity": {
+      "valid": true,
+      "sampleIntervalMs": 1000,
+      "maximumAllowedGapMs": 10000,
+      "maximumObservedGapMs": 1081,
+      "gaps": []
+    },
+    "finalPagesAndSessionsZero": true,
+    "createdBrowserContainersRemoved": true
+  },
+  "scoreReplayAudit": {
+    "status": "complete",
+    "attempts": 200,
+    "uniquePairs": true,
+    "allEvidenceHashesMatch": true,
+    "allScoresReplay": true,
+    "sourceHashesMatch": true,
+    "networkRequests": 0,
+    "lifecycleLedgerVerified": true,
+    "profileConcurrencyLimitsChecked": 2,
+    "maxObservedConcurrency": 4,
+    "maxObservedConcurrencyByProfile": {
+      "baseline": 2,
+      "adaptive": 2
+    }
+  },
+  "verification": {
+    "browserCI": {
+      "sourceCommit": "025f01ec118ca369ad46e5fa9d09be20fa4e0106",
+      "url": "https://github.com/toreleon/firecrawl/actions/runs/41659246359",
+      "helperChecksPassed": 59,
+      "integrationChecksPassed": 91,
+      "productionDependencyAudit": true,
+      "logSha256": "4780a223f3f7ca98562e9a5f139ad72db67f0dd0835b945f7c6c49e477a068ba"
+    },
+    "apiHarness": {
+      "checksPassed": 8,
+      "exitCode": 0,
+      "sourcePins": {
+        "sourceFiles": {
+          "apps/api/src/config.ts": "ff0125914ec73e0ef0d49e1d3e09777f71e43f1a62fae7b9cb1c209724ddba4e",
+          "apps/api/src/controllers/v2/types.ts": "8412c9b8e28d55f2ee8819b4ce53323e1cded94402e0bf2a2365d95f25de03b7",
+          "apps/api/src/controllers/v2/local-browser.ts": "a39de56910d964c19fe56b5bb01badb9341907969da72b29746f12b56cce30a0",
+          "apps/api/src/lib/local-browser/client.ts": "1a335da1585a6dde568256d7d960dd78fa83fa909e4f98558d57b35fa5ebd82e",
+          "apps/api/src/lib/local-browser/controls.ts": "f80ee6e0f9d1251e40a82a22f7c4c2763d5d5acc688670ac976cf8fdcbbf6d28",
+          "apps/api/src/lib/local-browser/controls.test.ts": "bb499cdad7c2e029cec0a2911406d0f3e6038be97ee08a7073e7599305b18b31",
+          "apps/api/src/lib/local-browser/fallback.test.ts": "09502f58739b751a2786ce5f2a9933af1585fdf6660af20bac142d3c3867f035",
+          "apps/api/src/__tests__/snips/v2/browser-controls.test.ts": "d5f024b9708d7434a253c3b85777fce4ad7f4440f6cf2d165e39b4ba6f328420",
+          "apps/playwright-service-ts/api.ts": "2563a35dfc084d2fc3ba2133825ccf193c56141eb2afb9da24f05ab956bb1275",
+          "apps/playwright-service-ts/helpers/page-readiness.ts": "cd4bda620220220bdc60cb935f3aa8c522251cbda837a9df49599dcbd4e7c790",
+          "apps/playwright-service-ts/helpers/scrape-page.ts": "098c609f899c7513b137048ceb7c0f1a2ca28edbcd95840e071378efe6a378f9",
+          "apps/playwright-service-ts/helpers/workflows.ts": "2f829da96d5525bc05aee2290a3a138dc60d0dc31ff9745ab25c1e647104347a",
+          "apps/playwright-service-ts/helpers/scrape-control.ts": "5cf450f24b5681803b27485f7122b13ffe42eb172f7b0e601469723de5541f13"
+        },
+        "compiledControlsSha256": "ebf7397eb5b556525729492cee6fdc58a12a073825af40f4034b6dc0f73c6f6a",
+        "verifiedCommit": "025f01ec118ca369ad46e5fa9d09be20fa4e0106"
+      },
+      "harnessLogSha256": "b830a1685fd5c8f5181ccab570ae2e4d1438e0b8b05a00d6a661dab7086d615b",
+      "teardownNote": "Extract-worker logged AMQP Channel closing during test harness teardown; tests and harness exited zero."
+    },
+    "inheritedUnchangedApiClientSdkChecks": {
+      "sourceCommit": "90cd76c6ca877a41bc62fac2ca8ff09839456a83",
+      "apiClientContractChecks": 20,
+      "jsSdkChecks": 5,
+      "jsSdkBuild": true,
+      "pythonSerializationChecks": 2,
+      "rerunForBrowserOnlyRepair": false
+    },
+    "newPackagedBrowserContractChecks": 16
+  },
+  "lastHostedApiComparison": {
+    "sourceCommit": "4a363134f7d5dd50943338c4b18109d151395817",
+    "forkNormalizedMatches": 42,
+    "hostedNormalizedMatches": 80,
+    "targets": 100,
+    "rerunForThisSource": false,
+    "receipt": "full-api-frontier-results-2026-11-03.json"
+  },
+  "hostedCalls": 0,
+  "localEvidence": {
+    "runDirectory": "_local/anti-bot/amazon-gecko-full-api-2026-11-03",
+    "harnessDirectory": "_local/anti-bot/amazon-gecko-full-api-harness-2026-11-03",
+    "hashes": {
+      "_local/anti-bot/amazon-gecko-full-api-2026-11-03/report.json": "d3d435eb6a509d4a0894a8904e94a36258c4008aa7b1bf5eb753452da6fa55c0",
+      "_local/anti-bot/amazon-gecko-full-api-2026-11-03/score-replay-audit.json": "18c4060516e0a8c7996e6858ba2c690bb9cfce27eef03d51d614c65d0ce7c6f2",
+      "_local/anti-bot/amazon-gecko-full-api-harness-2026-11-03/deployment.json": "0003c2911dc60d86762e670323a968e9cdcfd1b99c16321bea5cbda1f19282ea",
+      "_local/anti-bot/amazon-gecko-full-api-harness-2026-11-03/cleanup.json": "92ac2db0bdff51491f3ba735cba06f3d19071f956985ccd7617e3e1322975c1d",
+      "_local/anti-bot/amazon-gecko-full-api-harness-2026-11-03/resource-samples.jsonl": "4d7cf548cabf27e5076fd89b653872eab8e60a36c024f27609033f89aaef7b76"
+    }
+  },
+  "limits": [
+    "One fresh round does not establish stable per-target or WAF-brand success rates. Labels are from the frozen publisher fixture, not proof of active commercial WAF rules.",
+    "Normalized marker retrieval does not measure CSS visibility, extraction F1, complete crawling or recurring refresh.",
+    "Additional owner capacity, sequential attempts, live-site variation and socket throttling can affect latency. No equal-resource or causal browser-effect claim.",
+    "Returned recovery metadata is not identical to frozen-marker success. Missing diagnostics on API errors remain unknown; backend logs account for actual dispatches.",
+    "Hosted comparison remains source-pinned to the earlier deployment; no current hosted parity is inferred."
+  ],
+  "unmatchedPriorComparison": {
+    "sourceCommit": "b7da5a8a047896ba1b60526012e823b2e877c7b3",
+    "priorAdaptiveMatches": 51,
+    "currentAdaptiveMatches": 52,
+    "causalVersionComparison": false,
+    "changedTargets": [
+      {
+        "target": "louisvuitton",
+        "priorPass": false,
+        "currentPass": true,
+        "priorReason": "target_status_403",
+        "currentReason": null
+      },
+      {
+        "target": "ebay",
+        "priorPass": true,
+        "currentPass": false,
+        "priorReason": null,
+        "currentReason": "service_error"
+      },
+      {
+        "target": "Yahoo Finance",
+        "priorPass": false,
+        "currentPass": true,
+        "priorReason": "service_error",
+        "currentReason": null
+      }
+    ]
+  },
+  "targetFailureInvestigation": {
+    "Amazon": {
+      "baseline": {
+        "normalizedPass": false,
+        "failureReason": "service_error",
+        "apiErrorCode": "WORKFLOW_NAVIGATION_MISMATCH",
+        "targetStatus": null
+      },
+      "adaptive": {
+        "normalizedPass": false,
+        "failureReason": "service_error",
+        "apiErrorCode": "WORKFLOW_NAVIGATION_MISMATCH",
+        "targetStatus": null
+      }
+    },
+    "Yahoo Finance": {
+      "baseline": {
+        "normalizedPass": true,
+        "failureReason": null,
+        "apiErrorCode": null,
+        "targetStatus": 200
+      },
+      "adaptive": {
+        "normalizedPass": true,
+        "failureReason": null,
+        "apiErrorCode": null,
+        "targetStatus": 200
+      }
+    },
+    "ebay": {
+      "baseline": {
+        "normalizedPass": true,
+        "failureReason": null,
+        "apiErrorCode": null,
+        "targetStatus": 200
+      },
+      "adaptive": {
+        "normalizedPass": false,
+        "failureReason": "service_error",
+        "apiErrorCode": "CONTENT_NOT_READY",
+        "targetStatus": null
+      }
+    }
+  },
+  "conclusion": "Eight-point current policy difference (44/100 versus 52/100) with nine adaptive-only and one baseline-only match. No causal code-version gain is established. Amazon identity failures remain unresolved; Yahoo succeeded in both current profiles. Hosted parity remains unproven."
+}

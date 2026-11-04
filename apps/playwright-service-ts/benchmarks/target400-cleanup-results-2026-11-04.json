@@ -1,0 +1,65 @@
+{
+  "checkedAt": "2026-11-03T17:18:33.777628+00:00",
+  "sourceCommit": "ffcb8b45e07a903a05b389f26a0de7fddd3c8ef9",
+  "createdBenchmarkBrowserContainersRemoved": 19,
+  "cleanupEvidence": [
+    {
+      "path": "_local/anti-bot/transport-consent-probe-2026-11-03/cleanup.json",
+      "containers": 2,
+      "sha256": "af97c12389ed6f02f5a27c7e265e756f5fe4125f4fd2eb6cb035b8b0ae6c6465"
+    },
+    {
+      "path": "_local/anti-bot/engine-portfolio-2026-11-03/cleanup.json",
+      "containers": 3,
+      "sha256": "69a3b7fa0aa9263f902da70b110f61c660a941354d5a6fb8236bb162c4a4fef7"
+    },
+    {
+      "path": "_local/anti-bot/origin-warmup-2026-11-03/cleanup.json",
+      "containers": 2,
+      "sha256": "89bb2caf7684dbbd7fae477e4b28e8bde3f28d05d79417a02952038bbfc9a8be"
+    },
+    {
+      "path": "_local/anti-bot/edge-400-probe-2026-11-03/cleanup.json",
+      "containers": 3,
+      "sha256": "9b95075bdab16e32957fbcba8a18c5dd6c4c07b0eccbb59fd39df733bd264b35"
+    },
+    {
+      "path": "_local/anti-bot/current-hosted-full-api-harness-2026-11-03/cleanup.json",
+      "containers": 3,
+      "sha256": "d1954251bbdd11d0ab23146609a61a7746c0d95076ac80b62b2b38351204d87e"
+    },
+    {
+      "path": "_local/anti-bot/target400-lululemon-api-harness-2026-11-04/cleanup.json",
+      "containers": 3,
+      "sha256": "57feed9466eb6f4a920cd7db69d187748f801c3009449d0d6dd7c0fc3efed7d8"
+    },
+    {
+      "path": "_local/anti-bot/target400-full-api-harness-2026-11-04/cleanup.json",
+      "containers": 3,
+      "sha256": "9b7bce2098e4febcadcbc2ca27cfc9da3b1723dfb95713271af6f592f89f99bf"
+    }
+  ],
+  "remainingTaskInfrastructure": [
+    {
+      "name": "autogtm-firecrawl-workflows-rabbit-20261103",
+      "state": "exited"
+    },
+    {
+      "name": "autogtm-firecrawl-workflows-redis-20261103",
+      "state": "exited"
+    },
+    {
+      "name": "autogtm-firecrawl-workflows-pg-20261103",
+      "state": "exited"
+    }
+  ],
+  "unrelatedRunningServicesUntouched": 9,
+  "volumesRemoved": 0,
+  "globalPruneUsed": false,
+  "newBrowserImageBuiltForApiOnlyRepair": false,
+  "retainedBrowserImage": "sha256:4cf1c1eb4550e82504a0f11af5817e2a95143bc96e3b83f081400764e51a8244",
+  "dockerSummary": "TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE\nImages          54        10        28.92GB   11.29GB (39%)\nContainers      13        9         360.4kB   28.67kB (7%)\nLocal Volumes   114       5         6.324GB   6.151GB (97%)\nBuild Cache     65        0         5.29GB    56.37MB\n",
+  "temporaryHostedKeyAndDirectoryRemoved": true,
+  "credentialRedactionPassed": true,
+  "credentialAuditSha256": "5a63df1bb6761948a6f96fa061978b6e3b5afc96223ee0e7a47f04d6170153b1"
+}

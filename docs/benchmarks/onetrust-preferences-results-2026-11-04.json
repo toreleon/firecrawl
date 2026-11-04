@@ -1,0 +1,420 @@
+{
+  "recordedAt": "2026-11-04T08:33:22.674034+00:00",
+  "sourceCommit": "b49464b6f4a1d90181109dc1e577b2c6b02ccd90",
+  "scope": "Native OneTrust category-preference rejection when no unique visible direct Reject button exists; standard preference layout and observed Canada Goose cookie-settings opener. Functional owned verification only, zero public-target requests.",
+  "research": {
+    "checkedAt": "2026-11-04T08:25:06.382565+00:00",
+    "sourceRun": "country-budget-full-api-2026-11-04",
+    "sourcePayload": "_local/anti-bot/country-budget-full-api-2026-11-04/evidence/0003-webkit-firefox.json",
+    "sourcePayloadSha256": "6cacc946131737838e5f2be692197dbdd2b1716ba8b91754b19dfd1cb065413d",
+    "rawHtmlSha256": "aaded46632a3cff1874fdc7310e64b82488ec313fa06b84fe55b02c6f96723b9",
+    "observations": {
+      "directRejectButtonPresent": false,
+      "nativeFooterSettingsButtonPresent": true,
+      "categorySwitches": [
+        {
+          "id": "ot-group-id-C0002",
+          "data-optanongroupid": "C0002",
+          "type": "checkbox",
+          "role": "switch",
+          "checked": ""
+        },
+        {
+          "id": "ot-group-id-C0003",
+          "data-optanongroupid": "C0003",
+          "type": "checkbox",
+          "role": "switch",
+          "checked": ""
+        },
+        {
+          "id": "ot-group-id-C0004",
+          "data-optanongroupid": "C0004",
+          "type": "checkbox",
+          "role": "switch",
+          "checked": ""
+        }
+      ],
+      "nativeCheckboxCss": "position:absolute;opacity:0;width:0;height:0",
+      "consentOutcome": "unresolved",
+      "productDetailsOutcome": "unresolved",
+      "productDetailsReason": "action_timeout"
+    },
+    "limits": [
+      "Saved source review only; the current live DOM is not reconstructed.",
+      "A resolved consent step does not prove retrieval of the outdated frozen product sentence or a population success-rate gain."
+    ],
+    "primarySources": [
+      {
+        "url": "https://developer.onetrust.com/onetrust/docs/javascript-api",
+        "supports": "Close uses the default model, RejectAll excludes strictly necessary categories, ToggleInfoDisplay opens the preference center. The implementation uses native UI rather than those JS methods."
+      },
+      {
+        "url": "https://my.onetrust.com/articles/en_US/Knowledge/UUID-bdeeeab3-4aa9-2b39-aab6-cf837bb9c1f9",
+        "supports": "Official banner/preference-center control selectors and the difference between default groups and changed consent."
+      },
+      {
+        "url": "https://playwright.dev/docs/api/class-locator#locator-uncheck",
+        "supports": "Native checkbox actionability, scrolling and state checks; a zero-area input motivates a native associated-label click followed by an explicit state read."
+      }
+    ]
+  },
+  "implementation": {
+    "consentVersion": "autoconsent-17.3.0+local-3",
+    "preferenceBudgetMs": 5000,
+    "nativeOperationMaximumMs": 1000,
+    "callerReserveMs": 300,
+    "maximumCategorySwitches": 16,
+    "directRejectPreferred": true,
+    "supportedLayout": "One unique preference panel and save button; immutable C0001 Always Active marker; unique standard Cxxxx optional checkbox IDs and matching group IDs; no mutable required category or disabled/read-only category.",
+    "actions": "One native settings operation; native associated-label clicks for checked zero-area inputs, or native uncheck for actionable inputs; verify unchecked state and stable category identities before saving. Await every native operation; only read-only discovery is raced.",
+    "completion": "Applied requires verified optional choices before one completed Save and observed hidden preference panel and banner.",
+    "controlsUnchanged": true,
+    "apiAndSdkControlFieldsAdded": 0,
+    "newConsentMetadata": "preferenceCenter outcome, phase, reason, native action attempt/completion counts, category counts, settings/save observations and duration.",
+    "ssrfBoundaryUnchanged": true,
+    "proxyRequired": false
+  },
+  "pairedOwnedReproduction": {
+    "checkedAt": "2026-11-04T08:25:42.716346+00:00",
+    "fixtureSha256": "2f83d1230409dedf446a7cbcbd2ff7cd37bcf4eeb7d1a05d11ff76196bb22c0a",
+    "scriptSha256": "a51c1e900492878b2f7b2a2508b8a5cec87f8e7a936b980974f052d781bbd610",
+    "before": {
+      "imageId": "sha256:c4171b75361aa03edc292425982daa9ab07794205fa3aaea8e6db434ffef047b",
+      "probe": {
+        "browserVersion": "156.0.8078.4",
+        "consent": {
+          "policy": "rejectNonEssential",
+          "outcome": "unresolved",
+          "version": "autoconsent-17.3.0+local-2",
+          "diagnostics": {
+            "framesScanned": 1,
+            "probeTimeouts": 0,
+            "mainFrameProbeTimeouts": 0,
+            "auxiliaryProbeTimeouts": 0,
+            "probeErrors": 0,
+            "actionErrors": 0,
+            "limited": false,
+            "durationMs": 287
+          },
+          "cmp": "Onetrust"
+        },
+        "workflow": {
+          "id": "auto",
+          "steps": [
+            {
+              "type": "product-details",
+              "outcome": "unresolved"
+            }
+          ],
+          "observations": {
+            "entryHost": "owned.canadagoose.com",
+            "productDetails": {
+              "outcome": "unresolved",
+              "phase": "click",
+              "clickAttempted": true,
+              "clickCompleted": false,
+              "durationMs": 2024,
+              "candidateCount": 1,
+              "reason": "action_timeout"
+            }
+          }
+        },
+        "state": {
+          "opens": "0",
+          "toggles": "0",
+          "saves": "0",
+          "saved": "unset",
+          "accepts": "0",
+          "expanded": "false",
+          "detailsVisible": false,
+          "optionalStates": [
+            true,
+            false,
+            true
+          ]
+        },
+        "durationMs": 2340,
+        "fixtureRequests": 1,
+        "publicCaptures": 0,
+        "pageClosed": true,
+        "contextClosed": true,
+        "scope": "Owned offline dependency-level native before/after; not a live-site or API latency measurement"
+      },
+      "containerState": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-04T08:25:38.230237459Z",
+        "FinishedAt": "2026-11-04T08:25:41.297339711Z"
+      },
+      "containerRemovedAfterReceipt": true
+    },
+    "after": {
+      "imageId": "sha256:218d6b40a5682abb00f4d5b30f37d4c6e15a2480925bf8fb625d12289e553137",
+      "probe": {
+        "browserVersion": "156.0.8078.4",
+        "consent": {
+          "policy": "rejectNonEssential",
+          "outcome": "applied",
+          "version": "autoconsent-17.3.0+local-3",
+          "diagnostics": {
+            "framesScanned": 1,
+            "probeTimeouts": 0,
+            "mainFrameProbeTimeouts": 0,
+            "auxiliaryProbeTimeouts": 0,
+            "probeErrors": 0,
+            "actionErrors": 0,
+            "limited": false,
+            "durationMs": 468
+          },
+          "cmp": "Onetrust",
+          "preferenceCenter": {
+            "outcome": "applied",
+            "phase": "confirm",
+            "settingsOpened": true,
+            "categoriesFound": 3,
+            "categoriesChanged": 2,
+            "categoryActionsAttempted": 2,
+            "categoryActionsCompleted": 2,
+            "saveAttempted": true,
+            "saveCompleted": true,
+            "durationMs": 154
+          }
+        },
+        "workflow": {
+          "id": "auto",
+          "steps": [
+            {
+              "type": "product-details",
+              "outcome": "expanded"
+            }
+          ],
+          "observations": {
+            "entryHost": "owned.canadagoose.com",
+            "productDetails": {
+              "outcome": "expanded",
+              "phase": "confirm",
+              "clickAttempted": true,
+              "clickCompleted": true,
+              "durationMs": 38,
+              "candidateCount": 1
+            }
+          }
+        },
+        "state": {
+          "opens": "1",
+          "toggles": "2",
+          "saves": "1",
+          "saved": "000",
+          "accepts": "0",
+          "expanded": "true",
+          "detailsVisible": true,
+          "optionalStates": [
+            false,
+            false,
+            false
+          ]
+        },
+        "durationMs": 518,
+        "fixtureRequests": 1,
+        "publicCaptures": 0,
+        "pageClosed": true,
+        "contextClosed": true,
+        "scope": "Owned offline dependency-level native before/after; not a live-site or API latency measurement"
+      },
+      "containerState": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-11-04T08:25:41.469863044Z",
+        "FinishedAt": "2026-11-04T08:25:42.623795586Z"
+      },
+      "containerRemovedAfterReceipt": true
+    },
+    "publicCaptures": 0,
+    "causalFunctionalRecovery": true,
+    "causalLiveLatencyGainEstablished": false
+  },
+  "validation": {
+    "helpersPassed": 91,
+    "nativeParentChildChecksPassed": 7,
+    "nativeBySuite": {
+      "ordinary": 5,
+      "webkit": 2
+    },
+    "newNativeScenarios": 55,
+    "newScenariosPerEngine": 11,
+    "engines": [
+      "playwright",
+      "patchright",
+      "rebrowser",
+      "camoufox",
+      "webkit"
+    ],
+    "scenarios": [
+      "standard opener",
+      "Canada Goose footer opener",
+      "unsupported required-category layout",
+      "ambiguous save",
+      "covered switch",
+      "reverted state",
+      "changed/duplicate category identity",
+      "unconfirmed save",
+      "consent off",
+      "accept policy isolation",
+      "foreign-origin custom-opener exclusion"
+    ],
+    "ownedFullApiSnipsPassed": 2,
+    "apiBrowserCapturesByEngine": {
+      "webkit": 2,
+      "camoufox": 0
+    },
+    "apiTypecheckExitCode": 0,
+    "apiTypecheckLimit": "Typecheck passed after removing the cross-root fixture import and before correcting a test assertion about omitted opt-out fallback metadata. Vitest compiled and passed the final test source. API production source is unchanged.",
+    "browserBuildExitCode": 0,
+    "freshCi": "Pending at publication; push triggers the browser integration workflow including the new contained-WebKit case. No current CI success is claimed.",
+    "broaderServerSdkWorkflowsClaimed": false,
+    "harnessTeardownLimit": "Current-image harness exited zero and terminated its processes, but still logged the existing extract-worker channel-closing teardown error. Clean shutdown remains unproven.",
+    "earlierAttempts": [
+      "Initial API typecheck rejected a fixture import outside rootDir; the API owns its own fixture now.",
+      "Initial API assertions expected engineFallback metadata with fallback disabled; the correct contract omits it. Both current-image API cases pass with the corrected assertion.",
+      "An added native category-identity mutation case initially reported unconfirmed instead of the expected unsupported-layout reason; the reason was corrected, action counters added, and all five engines pass on the final image.",
+      "An initial thin build used an unsupported local SHA reference; the final build verifies the local base tag ID and uses an explicit context. No dependencies were downloaded."
+    ]
+  },
+  "lastCompleteBenchmark": {
+    "sourceCommit": "72a7b7956b18223bb5754d64d97324a67e1849d0",
+    "normalizedMatches": 57,
+    "requests": 100,
+    "browserCaptures": 157,
+    "appliesToThisImplementation": false,
+    "currentImplementationFullBenchmark": "Not run yet",
+    "historicalHostedMatches": 82,
+    "freshHostedCalls": 0,
+    "parityEstablished": false
+  },
+  "deployment": {
+    "imageId": "sha256:218d6b40a5682abb00f4d5b30f37d4c6e15a2480925bf8fb625d12289e553137",
+    "baseImageId": "sha256:c4171b75361aa03edc292425982daa9ab07794205fa3aaea8e6db434ffef047b",
+    "sourceAndCompiledHashes": {
+      "apps/playwright-service-ts/helpers/onetrust-preferences.ts": "1f1611d7f8bdef3bdc5b9984b11d512614f7e7508a9024be5fa44c8f5361bcee",
+      "apps/playwright-service-ts/helpers/onetrust-preferences.spec.ts": "3179f7377cfbd3bb712a08b78c7fba4adf4f0f7d9fc1ca1c43e148f2a8b95f98",
+      "apps/playwright-service-ts/helpers/workflows.ts": "50815019fc833b9c4262c321fb4749c0a23c0ed80e24f1694d760480cc1c4e5e",
+      "apps/playwright-service-ts/dist/helpers/onetrust-preferences.js": "51275c592b75aef90c69afdbb43d90f50ad6ddc7a278cc309ee7fb94c4959877",
+      "apps/playwright-service-ts/dist/helpers/workflows.js": "78e68f79f6c31b2e3542cbb0f1dbc62f49a0db1ab5e8e19852ac228a64cb7666",
+      "apps/playwright-service-ts/integration/onetrust-preferences.spec.ts": "1750fe03fb291e5aee5585162923b062c69f6fbed94ec57764292a6825acbbe5",
+      "apps/playwright-service-ts/integration/fixtures/onetrust-preferences.ts": "928ec7971500607e6eba7b0a43f29853fb7a3ec7fe9663588e6ec7ce88564434",
+      "apps/api/src/__tests__/snips/v2/browser-onetrust-preferences.test.ts": "1872b583064aa7d0d92b1ac71203ce4e245de0aa37d941851f0bde81abdf47ee",
+      ".github/workflows/test-browser-engines.yml": "fbfaf3275367b9b0014f6694a657fb8608b71a678b1edf347d7b76df87f93368"
+    },
+    "buildNetwork": "none",
+    "ownedNativeNetwork": "none",
+    "publicTargetCalls": 0,
+    "hostedCalls": 0,
+    "upstreamProxy": false
+  },
+  "limits": [
+    "This fixes a functional consent gap; it does not establish a live-site latency, frozen-marker or population coverage gain.",
+    "The Canada Goose frozen sentence previously appeared only in metadata even when earlier probes expanded Details. Consent success does not authorize changing the grader or synthesizing that sentence.",
+    "Unsupported layouts, missing/ambiguous controls, covered controls, category-state/identity changes and unconfirmed saves stay unresolved. Some eligible settings UIs may be blocked, slow or use an unsupported configuration.",
+    "Applied describes the observed native UI path and pre-save switch state plus dismissal; it does not independently prove server-side persistence, network cookie enforcement or consent completion across every embedded origin.",
+    "No Accept/Close substitution, forced/synthetic clicks, page SDK calls, hidden-text promotion, proxy rerouting or CAPTCHA solving is added. Caller expiry/cancellation and non-timeout browser failures remain terminal.",
+    "The optional preference path can spend up to five seconds; a successful capture or this bound does not universally reserve alternate-engine budget."
+  ],
+  "cleanup": {
+    "checkedAt": "2026-11-04T08:31:04.123386+00:00",
+    "taskContainersRemoved": 16,
+    "candidateImageRetained": "sha256:218d6b40a5682abb00f4d5b30f37d4c6e15a2480925bf8fb625d12289e553137",
+    "obsoleteTaskImagesRemoved": [],
+    "obsoleteTaskImagesAlreadyAbsent": [
+      "sha256:1b55a00c4dd81131d4e727632c2e0860183a99cf85969aaa2b0f3f7e7e3bfbc9",
+      "sha256:faf4ebe714d1b2cbae34a7f2d4f3903afcf9e5585251c7136ed3abf857af7707",
+      "sha256:4bb84b7125113eea9960e9e2fe8580a318e76c36e568f5ce64508bb8db1c3bf7"
+    ],
+    "baselineImagesPreserved": 65,
+    "cacheRecordsRemoved": 92,
+    "baselineCacheRecordsPreserved": 128,
+    "newCacheRecordsPreserved": 0,
+    "dockerReportedPruneTotal": [
+      "Total:\t329.2MB"
+    ],
+    "physicalBytesFreedNotMeasured": true,
+    "unrelatedRunningServicesPreserved": 9,
+    "dataVolumesPreserved": 114,
+    "volumeNamesUnchanged": true,
+    "volumesDeleted": 0,
+    "taskInfrastructureStopped": [
+      "autogtm-firecrawl-workflows-pg-20261103",
+      "autogtm-firecrawl-workflows-redis-20261103",
+      "autogtm-firecrawl-workflows-rabbit-20261103"
+    ],
+    "taskPortsClosed": true,
+    "rawEvidenceRetained": true,
+    "buildContextsRetained": true,
+    "globalPruneUsed": false,
+    "ownershipMethod": "Explicit own-image receipts; five exact own build windows without overlapping builds, baseline inventory, parent-chain checks and exact cache-ID preview. Shared/in-use cache was excluded.",
+    "systemDfAfter": "TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE\nImages          66        10        30.26GB   11.35GB (37%)\nContainers      13        9         360.4kB   28.67kB (7%)\nLocal Volumes   114       5         6.328GB   6.151GB (97%)\nBuild Cache     128       0         5.644GB   2.716GB\n"
+  },
+  "evidence": {
+    "hashes": {
+      "_local/anti-bot/onetrust-preferences-2026-11-04/docker-before.json": "6ad9b793139e819962450f7b536876599523a64ac93814281fb265055b394020",
+      "_local/anti-bot/onetrust-preferences-2026-11-04/research.json": "1adf04b84de03002279d0ae0017dfe921d930dead1ebefc8e8c9dde71c2d4343",
+      "_local/anti-bot/onetrust-preferences-2026-11-04/image.json": "45ae37791f69481282f5d5cfd913e9fbbaa413b780399d945f76f08c560dcc02",
+      "_local/anti-bot/onetrust-preferences-2026-11-04/build-input-hashes.json": "c1311cba8f220b1b4aba1c0c970c71095853913cd93439723d04b1a986508bc6",
+      "_local/anti-bot/onetrust-preferences-2026-11-04/build.log": "5112ed14519f9244b00eddc4bf98e1337111a3a14f1fd6482b3b78ab0e11d736",
+      "_local/anti-bot/onetrust-preferences-2026-11-04/build-initial-failed.log": "7d2b18262f6adb4df486cbbeeb0b3112e3ab139887341dbe02db53858a8d7438",
+      "_local/anti-bot/onetrust-preferences-2026-11-04/api-typecheck.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "_local/anti-bot/onetrust-preferences-2026-11-04/api-typecheck-initial-failed.log": "8d4b6b8f5b7b33f3976071660b76d3fe2d10940263869d6b8a969ce3824b8da9",
+      "_local/anti-bot/onetrust-preferences-2026-11-04/helpers-final.log": "d19ad053b5d5166fd3d00f5509e432a31cd66ee5c9dcfe5ae8d6ecef0d9a34e2",
+      "_local/anti-bot/onetrust-preferences-2026-11-04/native-runs.json": "5c929a37710ebb19e78297373860edd7ef9902d9cf3f7f315c4fbbb74749caae",
+      "_local/anti-bot/onetrust-preferences-2026-11-04/native-ordinary.log": "5b4474e5a8593e9cb391bc1fe8e75ea0566bbe5a93a270b2d57c877f8b0bb259",
+      "_local/anti-bot/onetrust-preferences-2026-11-04/native-webkit.log": "bdfd13584c4ca076fd8a2d68da7bbd0dcf2b83f26983d2de04dd874e744949bb",
+      "_local/anti-bot/onetrust-preferences-2026-11-04/native-cleanup.json": "8b8e0ce3a4ef327080cdc12df1c6b301784fe6a3379691f0da83973ddf169c60",
+      "_local/anti-bot/onetrust-preferences-2026-11-04/paired-probe.cjs": "a51c1e900492878b2f7b2a2508b8a5cec87f8e7a936b980974f052d781bbd610",
+      "_local/anti-bot/onetrust-preferences-2026-11-04/owned-consent.html": "2f83d1230409dedf446a7cbcbd2ff7cd37bcf4eeb7d1a05d11ff76196bb22c0a",
+      "_local/anti-bot/onetrust-preferences-2026-11-04/paired-results.json": "c017a2f9f1e640483cfa37ac7cf3f477bebed59c78bfdfd42075c1b7cead42b8",
+      "_local/anti-bot/onetrust-preferences-2026-11-04/paired-before.stdout.log": "7f7a38fa09c940338f9f2ad24c0705fc3011d8bf3455ce7aa54bc31c5b3a05ff",
+      "_local/anti-bot/onetrust-preferences-2026-11-04/paired-before.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "_local/anti-bot/onetrust-preferences-2026-11-04/paired-after.stdout.log": "1db836a82cef54682fa0a901737e68552b5407e264161ebaded9691f31f09029",
+      "_local/anti-bot/onetrust-preferences-2026-11-04/paired-after.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "_local/anti-bot/onetrust-preferences-2026-11-04/cleanup-preflight.json": "74137f7978501810ac000285ad6b5092b22f8b93a0579a298de803ee70232cf1",
+      "_local/anti-bot/onetrust-preferences-2026-11-04/cleanup-prune.json": "c4792d7663173aa55c19da8b2966b8ddf9ef9329ae606e9b89b7bcccf62f53e9",
+      "_local/anti-bot/onetrust-preferences-2026-11-04/cleanup-receipt.json": "9d5f7104f331e9d017d25030b7931c21fd8e62ab0758b4e4c962320bc9f3a891",
+      "_local/anti-bot/onetrust-preferences-2026-11-04/cleanup-initial-failure.json": "c3a0a044cc92453614f9aa41ff4f9b1c60a55057ae69dca6d8d6aafbb1e17972",
+      "_local/anti-bot/onetrust-preferences-api-harness-current-image-2026-11-04/deployment.json": "95e3f66847a417c00152127579eb74a6f3ef07f782da74260547b7fc3d5a5105",
+      "_local/anti-bot/onetrust-preferences-api-harness-current-image-2026-11-04/result.json": "50bb7d27f3ae3db08cc2fe1a127d36411a692e4e0c276e612446fed842a87f76",
+      "_local/anti-bot/onetrust-preferences-api-harness-current-image-2026-11-04/final-health.json": "7e2907aec16e89228da26669faa1dc7f7e5809e405d88f2ad503ab0f5fd30a3f",
+      "_local/anti-bot/onetrust-preferences-api-harness-current-image-2026-11-04/harness.log": "6e07c9d8256da547be4ed0105427cd68c36693c8f32529b3bdd73548e96c8204",
+      "_local/anti-bot/onetrust-preferences-api-harness-current-image-2026-11-04/webkit-service.log": "eea05628b9ccd3e89be989310c28dafd836ca0009fa5f294a980b78c57e92572",
+      "_local/anti-bot/onetrust-preferences-api-harness-current-image-2026-11-04/camoufox-service.log": "348e240b6c572c10c14e28bc7f1814cdd5e3a58ecf22c9480ad8758ee5da8a55",
+      "_local/anti-bot/onetrust-preferences-api-harness-current-image-2026-11-04/cleanup.json": "973e113b065cde7792239e2f1827156cb99df6c1b49a8d388b0156add85b5ea8",
+      "_local/anti-bot/onetrust-preferences-api-harness-2026-11-04/harness.log": "78e4d32148d7d1914152cfe1413c2fa05a972d654b34c1b76d686d525da39ab1",
+      "_local/anti-bot/onetrust-preferences-api-harness-final-2026-11-04/harness.log": "7d767dc11083a73e9daa95dd45d25c8149f8617d7749d3b7cd72eb2c44d4e74b",
+      "_local/anti-bot/onetrust-preferences-2026-11-04/initial-image/image.json": "75d6649f11b51f0d3f1e59b3072ddc744bc6077e6bda195215ee0da6b0f67aa3",
+      "_local/anti-bot/onetrust-preferences-2026-11-04/initial-image/build-input-hashes.json": "c774e46d214d67d2cbe21543d1bd84df5c7cdb39c3f62f79337121d42a610fd8",
+      "_local/anti-bot/onetrust-preferences-2026-11-04/initial-image/native-ordinary.log": "fd4b5b5bf45d07197e77240f26bbe1ff9519f7c9c18179fdcaf1b8e9f41fa04b",
+      "_local/anti-bot/onetrust-preferences-2026-11-04/initial-image/native-webkit.log": "1bbdc4c61fc01e3bb6034e34eae62357fc3de6821047a065d7d7f4abd8bc2208",
+      "_local/anti-bot/onetrust-preferences-2026-11-04/initial-image/native-cleanup.json": "510bfa6a26d511dc79925acb066346e2bb6951e37f76a9bf1f51c7f45d1434ac",
+      "_local/anti-bot/onetrust-preferences-2026-11-04/layout-guard-image/image.json": "c1b16725a48daeeea4482555b72af45f885bce9410dcce8e31305e36d24a141c",
+      "_local/anti-bot/onetrust-preferences-2026-11-04/layout-guard-image/build-input-hashes.json": "ac0024a34ea109f2e071ace42c34d382a6795d877ac9eca7bbf65738863432aa",
+      "_local/anti-bot/onetrust-preferences-2026-11-04/layout-guard-image/native-ordinary.log": "33cae1c0b1c144cfe25c7895f8d85062361ae28a10d5062031ddc7edf5cdd2b4",
+      "_local/anti-bot/onetrust-preferences-2026-11-04/layout-guard-image/native-webkit.log": "cdeb5741dceed65f2f50d5fd380d766ef38667cb0c1f4e0422570a14a47032a3",
+      "_local/anti-bot/onetrust-preferences-2026-11-04/layout-guard-image/native-cleanup.json": "ef259b14d18bbf30b86def12e47d2bbc8f8e18142ba3b9119714f9c15143f908",
+      "_local/anti-bot/onetrust-preferences-2026-11-04/initial-image/paired-results.json": "c3b39d89d04cd59d3112016a9eb36bb8ee20eda865c139c39342eae3760bd2a3",
+      "_local/anti-bot/onetrust-preferences-2026-11-04/formatted-image/image.json": "89e961c5bc9912b347d2a84b363c3599bff85fa9dbf3502b5dbb29db490db627",
+      "_local/anti-bot/Dockerfile.onetrust-preferences-2026-11-04": "7854a0a2e301e52e75824022f3f377ced319d2dba587b61516d9e224a6345416"
+    }
+  }
+}

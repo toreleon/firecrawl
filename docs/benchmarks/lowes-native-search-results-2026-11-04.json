@@ -1,0 +1,414 @@
+{
+  "recordedAt": "2026-11-04T14:40:53.777058+00:00",
+  "measuredSourceCommit": "2476425d821b650106d355aaeceabdb723f2351b",
+  "currentReusableImage": "sha256:89c13f2bf8ecf656382ee35e08694e61dba50437e992baac3d21fdfb81bca6ea",
+  "scope": "Native public-navigation development and selected proxy-free browser-service comparisons. The final full100 API run is a separate artifact; selected results never alter a full-run score.",
+  "changes": [
+    "Under workflow auto, fresh stateless Firefox visits to canonical www.lowes.com product URLs use the public homepage search form and a URL-derived numeric product identifier.",
+    "The observed search GET redirects to the requested product. No homepage, results page, foreign origin or different product is accepted as a ready product capture.",
+    "A five-second passive settle before Enter stays inside the original caller deadline. Retained sessions, explicit actions and other engines keep their existing paths.",
+    "Final navigation honors load or domcontentloaded and the caller navigation cap. The workflow rechecks the caller deadline after settling and before Enter; native operations are awaited.",
+    "The API extends its existing requested-product identity check and closed stateless alternate eligibility to this recognized storefront; no additional engine stage or client retry is added."
+  ],
+  "empiricalFindings": {
+    "manualPrototype": "The retained native-search prototype reached and passed the original product. Its first action call was INVALID_OPTIONS because it combined actions with auto; no action ran, and that rejected setup is retained separately.",
+    "immediateCompiledCandidate": "Neither WebKit nor Firefox recovered the product in the immediate version. That version was not published.",
+    "sameImageTimingPairs": "Two delayed Firefox captures passed unchanged normalized HTML grading; two immediate captures failed. Variant order was reversed for the second pair. Both controls passed.",
+    "finalCompiledCandidate": "The final Firefox-only implementation recovered the original product while its contemporaneous direct baseline returned403; both controls passed.",
+    "limits": [
+      "Small selected-case evidence; not a general Lowe's success rate or hosted parity.",
+      "Underlying access-decision or cookie mechanism was not identified. The settling interval is empirical, not a promise that waiting clears WAFs.",
+      "The native owned fixture uses a client navigation after a trusted form submission because Playwright routes only the first URL in an HTTP redirect chain. The live retained prototype and public comparisons supply the real HTTP301 evidence."
+    ]
+  },
+  "protocol": {
+    "cleanPairedCaptures": 18,
+    "workers": 1,
+    "maxAttemptsPerCapture": 1,
+    "clientRetries": 0,
+    "proxies": false,
+    "hostedCalls": 0,
+    "solverCalls": 0,
+    "expectedBodyMarkerSent": false,
+    "frozenDatasetAndGradersChanged": false,
+    "configuredMinimumDispatchIntervalMs": 7000
+  },
+  "selectedComparisons": {
+    "lowes-search-paired-2026-11-04": {
+      "requests": 8,
+      "rows": [
+        {
+          "target": "github",
+          "engine": "webkit",
+          "variant": "baseline",
+          "normalizedPass": true,
+          "failureReason": null,
+          "latencyMs": 3483,
+          "pageStatus": 200,
+          "landedUrl": "https://github.com/react/react"
+        },
+        {
+          "target": "github",
+          "engine": "webkit",
+          "variant": "candidate",
+          "normalizedPass": true,
+          "failureReason": null,
+          "latencyMs": 2585,
+          "pageStatus": 200,
+          "landedUrl": "https://github.com/react/react"
+        },
+        {
+          "target": "lowes",
+          "engine": "webkit",
+          "variant": "baseline",
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "latencyMs": 3924,
+          "pageStatus": 403,
+          "landedUrl": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827"
+        },
+        {
+          "target": "lowes",
+          "engine": "webkit",
+          "variant": "candidate",
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "latencyMs": 15618,
+          "pageStatus": 403,
+          "landedUrl": "https://www.lowes.com/search?searchTerm=5013813827"
+        },
+        {
+          "target": "github",
+          "engine": "camoufox",
+          "variant": "candidate",
+          "normalizedPass": true,
+          "failureReason": null,
+          "latencyMs": 2462,
+          "pageStatus": 200,
+          "landedUrl": "https://github.com/react/react"
+        },
+        {
+          "target": "github",
+          "engine": "camoufox",
+          "variant": "baseline",
+          "normalizedPass": true,
+          "failureReason": null,
+          "latencyMs": 1788,
+          "pageStatus": 200,
+          "landedUrl": "https://github.com/react/react"
+        },
+        {
+          "target": "lowes",
+          "engine": "camoufox",
+          "variant": "candidate",
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "latencyMs": 13483,
+          "pageStatus": 403,
+          "landedUrl": "https://www.lowes.com/search?searchTerm=5013813827"
+        },
+        {
+          "target": "lowes",
+          "engine": "camoufox",
+          "variant": "baseline",
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "latencyMs": 1660,
+          "pageStatus": 403,
+          "landedUrl": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827"
+        }
+      ],
+      "allSingleAttemptsAndPageContextClosesConfirmed": true,
+      "timing": {
+        "samples": 81,
+        "maxGapMs": 1450,
+        "valid": true
+      },
+      "memoryOomPidLimitEvents": 0,
+      "taskContainersRemoved": 4,
+      "unrelatedBaselineMissing": {
+        "runningContainers": [],
+        "volumeNames": [],
+        "imageIds": []
+      },
+      "evidenceSha256": {
+        "_local/anti-bot/lowes-search-paired-2026-11-04/protocol.json": "527c2ef7e1e6ee738aff45f2e3837571cf9e1d02e85f7c7cefe75a276fc30c33",
+        "_local/anti-bot/lowes-search-paired-2026-11-04/grades.json": "2f09abd6819166e217e627a3217cd8c368774ff0e991bfd42d30248142119246",
+        "_local/anti-bot/lowes-search-paired-2026-11-04/result.json": "25cf434aee71d82c128e2e64cc07604bc64edcb5026fe229c3dcdf53ae0db3d9",
+        "_local/anti-bot/lowes-search-paired-2026-11-04/cleanup.json": "9a983eece213ca7db161c01480237422f29cbf1a77e44c03d0722346d6e038f2",
+        "_local/anti-bot/lowes-search-paired-2026-11-04/resources.jsonl": "bdc4350eaad2160edb41b6c1109c5171b3b1c93dbf63d04f4223fe7df8521e47",
+        "_local/anti-bot/lowes-search-paired-2026-11-04/timing.json": "828c7c5872e05a8f78edcf5078b3d8a42ee5bd1f0e65b8c4b2d3d7614d078912"
+      }
+    },
+    "lowes-search-settle-2026-11-04": {
+      "requests": 6,
+      "rows": [
+        {
+          "target": "github",
+          "engine": "camoufox",
+          "variant": "candidate",
+          "normalizedPass": true,
+          "failureReason": null,
+          "latencyMs": 2598,
+          "pageStatus": 200,
+          "landedUrl": "https://github.com/react/react"
+        },
+        {
+          "target": "github",
+          "engine": "camoufox",
+          "variant": "baseline",
+          "normalizedPass": true,
+          "failureReason": null,
+          "latencyMs": 1868,
+          "pageStatus": 200,
+          "landedUrl": "https://github.com/react/react"
+        },
+        {
+          "target": "lowes",
+          "engine": "camoufox",
+          "variant": "candidate",
+          "normalizedPass": true,
+          "failureReason": null,
+          "latencyMs": 14873,
+          "pageStatus": 200,
+          "landedUrl": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827?idProductFound=false&idExtracted=true"
+        },
+        {
+          "target": "lowes",
+          "engine": "camoufox",
+          "variant": "baseline",
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "latencyMs": 6068,
+          "pageStatus": 403,
+          "landedUrl": "https://www.lowes.com/search?searchTerm=5013813827"
+        },
+        {
+          "target": "lowes",
+          "engine": "camoufox",
+          "variant": "baseline",
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "latencyMs": 7482,
+          "pageStatus": 403,
+          "landedUrl": "https://www.lowes.com/search?searchTerm=5013813827"
+        },
+        {
+          "target": "lowes",
+          "engine": "camoufox",
+          "variant": "candidate",
+          "normalizedPass": true,
+          "failureReason": null,
+          "latencyMs": 12726,
+          "pageStatus": 200,
+          "landedUrl": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827?idProductFound=false&idExtracted=true"
+        }
+      ],
+      "allSingleAttemptsAndPageContextClosesConfirmed": true,
+      "timing": {
+        "samples": 63,
+        "maxGapMs": 1441,
+        "valid": true
+      },
+      "memoryOomPidLimitEvents": 0,
+      "taskContainersRemoved": 2,
+      "unrelatedBaselineMissing": {
+        "runningContainers": [],
+        "volumeNames": [],
+        "imageIds": []
+      },
+      "evidenceSha256": {
+        "_local/anti-bot/lowes-search-settle-2026-11-04/protocol.json": "b554b15dc1f8f92ea56602d0e55f1c6b0754fff42ca3837e9f84edb305e97646",
+        "_local/anti-bot/lowes-search-settle-2026-11-04/grades.json": "592ba266c83102f0e09746f9175c05c2544e7ad1dfff9ac80dc273fccd60f106",
+        "_local/anti-bot/lowes-search-settle-2026-11-04/result.json": "1a5c5192297dfc015ed4fca71eacdb313f12c0fba73a9896b1fbf51be8e7ef15",
+        "_local/anti-bot/lowes-search-settle-2026-11-04/cleanup.json": "768bad47a1b2fd184c8b95122f3ae4bd646dc3b4f6b1cfc71ce6b5851b27b85d",
+        "_local/anti-bot/lowes-search-settle-2026-11-04/resources.jsonl": "8997ab8302de363160f9e5fde59207c70cd6ac1b17736d0d78ec1cd7ad63139a",
+        "_local/anti-bot/lowes-search-settle-2026-11-04/timing.json": "2c74c8253bcbd9ce268905aa9000e75bdede92db6f202175dccfa3f0016bec70"
+      }
+    },
+    "lowes-search-final-paired-2026-11-04": {
+      "requests": 4,
+      "rows": [
+        {
+          "target": "github",
+          "engine": "camoufox",
+          "variant": "candidate",
+          "normalizedPass": true,
+          "failureReason": null,
+          "latencyMs": 2616,
+          "pageStatus": 200,
+          "landedUrl": "https://github.com/react/react"
+        },
+        {
+          "target": "github",
+          "engine": "camoufox",
+          "variant": "baseline",
+          "normalizedPass": true,
+          "failureReason": null,
+          "latencyMs": 1761,
+          "pageStatus": 200,
+          "landedUrl": "https://github.com/react/react"
+        },
+        {
+          "target": "lowes",
+          "engine": "camoufox",
+          "variant": "candidate",
+          "normalizedPass": true,
+          "failureReason": null,
+          "latencyMs": 16649,
+          "pageStatus": 200,
+          "landedUrl": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827?idProductFound=false&idExtracted=true"
+        },
+        {
+          "target": "lowes",
+          "engine": "camoufox",
+          "variant": "baseline",
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "latencyMs": 1122,
+          "pageStatus": 403,
+          "landedUrl": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827"
+        }
+      ],
+      "allSingleAttemptsAndPageContextClosesConfirmed": true,
+      "timing": {
+        "samples": 39,
+        "maxGapMs": 1427,
+        "valid": true
+      },
+      "memoryOomPidLimitEvents": 0,
+      "taskContainersRemoved": 2,
+      "unrelatedBaselineMissing": {
+        "runningContainers": [],
+        "volumeNames": [],
+        "imageIds": []
+      },
+      "evidenceSha256": {
+        "_local/anti-bot/lowes-search-final-paired-2026-11-04/protocol.json": "54d4040e61b55040a3223514fdb6ec807b0c834975ba7a154d6efe162eea5711",
+        "_local/anti-bot/lowes-search-final-paired-2026-11-04/grades.json": "ebab2279ced20b4351136a6a44053a89e613e4c58dd168cb8c46d7af12e29139",
+        "_local/anti-bot/lowes-search-final-paired-2026-11-04/result.json": "c2ed90a997b2b8dd052435ff335ee357f36662006b8a3cc5b4a7c0dde0cb081a",
+        "_local/anti-bot/lowes-search-final-paired-2026-11-04/cleanup.json": "a937ca209af8f6ed89b9f218d1f0b5caada0bc0af55a019497ed0432495dd548",
+        "_local/anti-bot/lowes-search-final-paired-2026-11-04/resources.jsonl": "4801a29fa602ee422c63b137edaab63b3d8bfa2e6735a929a7cc4f2fb53b2db4",
+        "_local/anti-bot/lowes-search-final-paired-2026-11-04/timing.json": "078d1a520660796988cd8914b27f06ffcd4902437532a3bb5703ce2ebc252759"
+      }
+    }
+  },
+  "verification": {
+    "ownedNativeBehaviorCases": 17,
+    "nativeDrivers": [
+      "playwright",
+      "patchright",
+      "rebrowser",
+      "camoufox",
+      "webkit"
+    ],
+    "currentOwnedNativeTAPChecks": 25,
+    "urlBoundaryGuardTests": 1,
+    "apiProtocolCases": 14,
+    "apiProtocolScope": "Real API/queue/worker path with two controlled HTTP browser-protocol fixtures; not real browser or public-site evidence.",
+    "ci": {
+      "verifiedAt": "2026-11-04T14:36:37.240637+00:00",
+      "sourceCommit": "2476425d821b650106d355aaeceabdb723f2351b",
+      "workflowRun": 41847722226,
+      "url": "https://github.com/toreleon/firecrawl/actions/runs/41847722226",
+      "browserJobsConclusion": "success",
+      "jobs": {
+        "ordinary": {
+          "jobId": 126635526038,
+          "counts": {
+            "tests": [
+              102,
+              223
+            ],
+            "pass": [
+              102,
+              216
+            ],
+            "fail": [
+              0,
+              0
+            ],
+            "skipped": [
+              0,
+              7
+            ]
+          },
+          "logSha256": "5dac8eb808a49a90357f37ed3b9777081e5b2a91dfeaa20cf1a3c209f9d9171a"
+        },
+        "webkit": {
+          "jobId": 126635525616,
+          "counts": {
+            "tests": [
+              38
+            ],
+            "pass": [
+              38
+            ],
+            "fail": [
+              0
+            ],
+            "skipped": [
+              0
+            ]
+          },
+          "logSha256": "842ab3781733431fc737bd8a9beeac7928909e712ba5025149db197868cde72d"
+        }
+      },
+      "scope": "Current-source browser CI jobs. Does not assert that unrelated Blacksmith workflows completed, nor that hosted parity is achieved."
+    },
+    "failFirstEvidence": "_local/anti-bot/lowes-native-search-implementation-2026-11-04/before-firefox-final-fixture.json",
+    "fixtureSetupFailuresRetained": [
+      "candidate-1-native-ordinary.log",
+      "candidate-2-native-ordinary.log"
+    ],
+    "fixtureRepair": "Browser offline mode and then synthetic HTTP301 responses independently prevented fixture redirects. The denying proxy and Docker network none remained; client navigation made fixture delivery local."
+  },
+  "lastFullRunBeforeThisChange": {
+    "normalizedPasses": 56,
+    "targets": 100,
+    "source": "docs/benchmarks/homepage-interruption-full-api-results-2026-11-04.json"
+  },
+  "researchSources": [
+    {
+      "url": "https://www.lowes.com/l/help",
+      "finding": "The public help page documents searching by item number."
+    },
+    {
+      "url": "https://playwright.dev/docs/api/class-page#page-route",
+      "finding": "A route handler is called for only the first URL in an HTTP redirect chain."
+    }
+  ],
+  "cleanup": {
+    "pairedExperimentContainersRemoved": 8,
+    "currentImageAndOriginalBaseVerified": true,
+    "obsoleteImageReceipt": {
+      "at": "2026-11-04T14:32:45.591056+00:00",
+      "removedObsoleteTaskImages": [],
+      "alreadyAbsentBeforeCleanup": [
+        "sha256:fc5035aee31b534379d09567a6b19a3034ab747abeb1b699ea33d9dcfca83f11",
+        "sha256:9f02302e93279beaed6351b1a7359443837bc7179ea5682d9f984d0c11ab6bd7",
+        "sha256:caa47fb85eaf71a17a7c7b76fea01223609c8dc1240d84f9654583e4ccd9d003"
+      ],
+      "absenceCause": "Unobserved; not attributed to this cleanup",
+      "unexpectedReferencesPreserved": [],
+      "retainedImagesVerified": [
+        "sha256:89c13f2bf8ecf656382ee35e08694e61dba50437e992baac3d21fdfb81bca6ea",
+        "sha256:4dd2f44f6136227fc88bd429c9ccf5559e63d358639da9ea0ec4de7912ef2573",
+        "sha256:218d6b40a5682abb00f4d5b30f37d4c6e15a2480925bf8fb625d12289e553137"
+      ],
+      "volumesRemoved": 0,
+      "globalPrune": false,
+      "buildCachePruned": false
+    },
+    "volumesRemoved": 0,
+    "globalPrune": false
+  },
+  "evidenceSha256": {
+    "_local/anti-bot/lowes-native-search-implementation-2026-11-04/source-publication.json": "8497ae7c1ae8b9c551b902970778e5697857c631ec50828ddc77748a29a30acc",
+    "_local/anti-bot/lowes-native-search-implementation-2026-11-04/candidate-4-inputs.json": "f0c31455ad80a15211daadcc646a69c5e56f24fd37a8d22c9d09b65d2c2b76b0",
+    "_local/anti-bot/lowes-native-search-implementation-2026-11-04/candidate-4-native-results.json": "b59723d771dbc1293e9d54cb8b5ebb4db876aaf66fadce88650ef0d08c03fe01",
+    "_local/anti-bot/lowes-native-search-implementation-2026-11-04/verified-current-ci.json": "3a165c484e456e963c58f6df94c614ec485923991cd3640a066be78eaeaf9277",
+    "_local/anti-bot/lowes-identity-protocol-harness-2026-11-04/result.json": "800e407d4cb19716ecf8394842bdbbada89b7c031c77105141385ffa280487f0"
+  },
+  "metricDefinition": "The unchanged HTML text screen strips markup and script/style/noscript content but retains title text; it is not a CSS-visibility or complete-page-quality test."
+}

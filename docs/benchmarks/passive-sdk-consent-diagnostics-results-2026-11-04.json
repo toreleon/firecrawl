@@ -1,0 +1,231 @@
+{
+  "recordedAt": "2026-11-04T10:44:53.709501+00:00",
+  "sourceCommit": "9b1e313edf482dce54a6774509060eda212d5f64",
+  "runtimeImplementationByteEquivalentTo": "b49464b6f4a1d90181109dc1e577b2c6b02ccd90",
+  "scope": "Bounded proxy-free diagnostics of script-backed 429 pages and the observed native consent opener failure. No new full API or hosted comparison.",
+  "previousGoalTurnClassification": "progress: fresh wait/engine experiments excluded unsupported policy changes.",
+  "apiRequests": 15,
+  "browserCaptures": 19,
+  "maximumWorkers": 2,
+  "clientRetries": 0,
+  "hostedCalls": 0,
+  "proxies": false,
+  "frozenDatasetAndGradersChanged": false,
+  "bootstrapTrace": {
+    "apiRequests": 6,
+    "browserCaptures": 6,
+    "targetEnginePairs": 4,
+    "normalizedTargetPasses": 0,
+    "controlPasses": 2,
+    "ipsScripts": {
+      "delivered200AndFinished": 4
+    },
+    "targetHostSdkPosts": {
+      "returned200AndFinished": 4
+    },
+    "finalMainDocumentStatus": 429,
+    "uncaughtExceptions": {
+      "hyattWebkit": 0,
+      "hyattFirefox": 0,
+      "realtorWebkit": 0,
+      "realtorFirefox": 1
+    },
+    "exceptionLimit": "The Firefox Realtor TypeError was observed without a source stack. It also occurred during the retry phase; WebKit remained blocked without that exception. No shared failure or code repair is established.",
+    "decision": "Do not add a missing-script workaround or extend passive waits on this evidence. A completed SDK HTTP200 response does not prove access approval."
+  },
+  "contextRetry": {
+    "apiRequests": 6,
+    "browserCaptures": 10,
+    "targetEnginePairs": 4,
+    "serviceMaxAttempts": 2,
+    "controlPasses": 2,
+    "normalizedTargetPasses": 0,
+    "sameContextUsedForBothPages": true,
+    "cookiesPresentBeforeSecondNavigation": {
+      "hyattWebkit": 4,
+      "hyattFirefox": 4,
+      "realtorWebkit": 2,
+      "realtorFirefox": 2
+    },
+    "everyTargetAttemptStatus": 429,
+    "retryDelayMs": 250,
+    "cookieHandlingLimit": "The browser cookie API returned objects internally; the probe persisted names/counts and attributes, never cookie values, and never manually replayed a value. Presence before navigation is not independent proof that every cookie was sent or accepted.",
+    "decision": "Do not change defaults or permit additional fallback attempts solely to address an unproven context-reset problem."
+  },
+  "consentActionability": {
+    "apiRequests": 2,
+    "browserCaptures": 2,
+    "observedFirefoxStatus": 200,
+    "observedWebkitStatus": 403,
+    "opener": "Canada Goose native footer Choose Cookies button",
+    "observedFailure": "OneTrust banner descendants intercepted the native pointer click after the footer scrolled into view. The button was enabled, stable during several attempts, not inert and had loaded fonts.",
+    "bannerControlsObserved": [
+      "Privacy Policy link",
+      "Accept All Cookies",
+      "Close"
+    ],
+    "resourceAudit": {
+      "runnerExitCode": 1,
+      "phase": "post-capture resource check",
+      "publicApiRequestsCompleted": 2,
+      "browserCapturesCompleted": 2,
+      "observed": {
+        "memoryCurrentBytes": 2176458752,
+        "memoryPeakBytes": 2216947712,
+        "memoryMax": 0,
+        "oom": 0,
+        "oomKill": 0,
+        "sockThrottled": 50,
+        "pidsCurrent": 203,
+        "pidsMax": 0
+      },
+      "cleanupCompleted": true,
+      "finalHealthReceiptMissing": true,
+      "limits": "Use recorded pointer interception and DOM observations for diagnosis; this is not a clean performance run. The subsequent one-owner focus-only observation is a different diagnostic study, not a replay replacing this failed resource check."
+    },
+    "decision": "A longer pointer timeout is not justified by the recorded overlay interception. Do not force-click, remove the overlay, invoke a page SDK or substitute Accept/Close for nonessential rejection."
+  },
+  "consentKeyboardFocus": {
+    "apiRequests": 1,
+    "browserCaptures": 1,
+    "engine": "camoufox",
+    "pageStatus": 200,
+    "nativeSettingsClickStillUnresolved": true,
+    "maximumReverseTabKeys": 6,
+    "observedReverseTabKeys": 5,
+    "observedFocusSequence": [
+      "OneTrust banner",
+      "Chat button",
+      "Close button",
+      "Accept All Cookies button",
+      "Privacy Policy link",
+      "OneTrust banner"
+    ],
+    "focusReturnedToPreviouslyObservedElement": true,
+    "footerSettingsReached": false,
+    "activationSent": false,
+    "finalConsentOutcome": "unresolved",
+    "limit": "This bounded reverse-Tab probe does not establish that every possible human interaction path is unavailable.",
+    "decision": "No keyboard activation path is supported by this observation; preserve unresolved consent and the original choices."
+  },
+  "implementationChanged": false,
+  "lastCompleteForkResult": {
+    "normalizedPasses": 59,
+    "targets": 100,
+    "newFullRunConducted": false
+  },
+  "operationalAudit": {
+    "publicCapturePageClosesConfirmed": 19,
+    "terminalContextClosesConfirmed": 15,
+    "taskContainersRemoved": 7,
+    "taskBuilds": 0,
+    "imagesRemoved": 0,
+    "cacheRecordsRemoved": 0,
+    "baselineVolumesImagesAndCachePreserved": true,
+    "reusableImagePreserved": true,
+    "globalPrune": false,
+    "unrelatedRunningStateChanges": []
+  },
+  "limits": [
+    "Temporary driver event listeners and read-only DOM probes can affect timing and execution. No isolated latency claim is made.",
+    "The two script/context phases and final one-owner focus phase completed their resource gates; the first consent actionability phase did not.",
+    "Temporary trace listeners did not record request headers, cookie values or challenge POST response bodies. They retained statuses, selected header names and URL hashes; ordinary scraper payloads remain private. No personal browser profile was used.",
+    "The observations do not establish that a different region, IP or browser configuration would improve access."
+  ],
+  "nextDevelopmentEvidence": "The trace also confirms that each owner /health request allocates a context and page. Source review shows these allocations occur outside the scrape semaphore. Before changing that path, test bounded/coalesced health behavior with owned concurrent probes and preserve current boot identity, fresh capacity counts and real browser liveness checks. This is a performance/reliability candidate, not a claimed WAF recovery.",
+  "researchSources": [
+    {
+      "url": "https://playwright.dev/docs/api/class-request",
+      "finding": "HTTP error responses still finish successfully at the transport event layer; requestfailed does not count every HTTP denial."
+    },
+    {
+      "url": "https://playwright.dev/docs/api/class-page#page-event-pageerror",
+      "finding": "Page errors are distinct from transport failures."
+    },
+    {
+      "url": "https://www.w3.org/WAI/ARIA/apg/patterns/button/",
+      "finding": "A focused native button supports Enter/Space activation; the diagnostic focus probe sent neither."
+    },
+    {
+      "url": "https://playwright.dev/docs/api/class-keyboard#keyboard-press",
+      "finding": "Keyboard press provides keyboard events; no direct DOM click or forced focus was used in the focus-only probe."
+    }
+  ],
+  "evidenceSha256": {
+    "_local/anti-bot/active429-resource-trace-2026-11-04/final-health.json": "a0cd3bd735945903f9069ffd3eafe258e8f48fcea64b921e4037a32a637e4760",
+    "_local/anti-bot/active429-resource-trace-2026-11-04/audit.json": "b60d2b23a91a3d8dc8a1e9a253ff53122e18a95e00b6c392b9b701890d00d430",
+    "_local/anti-bot/active429-resource-trace-2026-11-04/docker-before.json": "49456455051dcb0e7b78722f616e006e0bad1a66958eea937dda7a167be07a4a",
+    "_local/anti-bot/active429-resource-trace-2026-11-04/00-github-webkit-0.json": "7abfbc45bc4ce611dcbf6f0f28e33dba48eb8125c2d3a017dae73b15c7a8458b",
+    "_local/anti-bot/active429-resource-trace-2026-11-04/result.json": "887f7060f54e55a6607869da0c41a0bff026f1abd7b77b3db2a786b7a5265b3f",
+    "_local/anti-bot/active429-resource-trace-2026-11-04/deployment-webkit.json": "9ba82518d258decb2375eecd61b02de1e79d7476d607bd260a091aac9fdf0000",
+    "_local/anti-bot/active429-resource-trace-2026-11-04/dispatches.jsonl": "284c0d00086fc07bd670ef6bb8a9fb23c19f5d679e40dd7b17bce30dcf2d19e8",
+    "_local/anti-bot/active429-resource-trace-2026-11-04/docker-after.json": "998cb05220a6b27e68b76661869f75446bb9e1283de89d677b942a5a38acfafd",
+    "_local/anti-bot/active429-resource-trace-2026-11-04/02-hyatt-webkit-10000.json": "aa203a6538e4d78f30fdfa7f1cbc78a17bd815515e46ed10a19818f501fda9ff",
+    "_local/anti-bot/active429-resource-trace-2026-11-04/resource-samples.jsonl": "2fc89d3b1acad02cccde89fc7721a935e37e143551d18306c71652f0a75b6619",
+    "_local/anti-bot/active429-resource-trace-2026-11-04/deployment-camoufox.json": "0acfd557c8add91966fbda8a04de04630db08225a9866d4059b0a73a13d8dfaf",
+    "_local/anti-bot/active429-resource-trace-2026-11-04/cleanup.json": "cbf073ce9090afb8afff6bc11c292eef8e85798b4c53d77b0d8bd5940a5f4c11",
+    "_local/anti-bot/active429-resource-trace-2026-11-04/05-realtor-camoufox-10000.json": "c3e3fc1b04e11abff5bf29ed17448562c59562a76ca3becd452e197f8a8380b3",
+    "_local/anti-bot/active429-resource-trace-2026-11-04/autogtm-firecrawl-resource-trace-webkit-20261104.log": "ff5f2ad76590947a8e244959038e5e4c94a708e7b04f2159bf093a157fa8f536",
+    "_local/anti-bot/active429-resource-trace-2026-11-04/protocol.json": "ab3a6c2b9fc27c47405de55634a1593522549c3c3080105bf64f9496b0923f8d",
+    "_local/anti-bot/active429-resource-trace-2026-11-04/timing-integrity.json": "80e09f25ef93e5cf8872d0d1a6fe96c0d6c0531355140abfb555cfc08a39539f",
+    "_local/anti-bot/active429-resource-trace-2026-11-04/03-hyatt-camoufox-10000.json": "a2e89a2fb5d2ab68d852aaba98dbb28d02af97552f052f3852a98a47dda8377a",
+    "_local/anti-bot/active429-resource-trace-2026-11-04/autogtm-firecrawl-resource-trace-camoufox-20261104.log": "d7513c022fbc3cc5459cff8d0026ccdffaab7c00b81951a55aaf5e08cb960341",
+    "_local/anti-bot/active429-resource-trace-2026-11-04/01-github-camoufox-0.json": "895cd1a492c3d9da21bed87f827ea87807157c67f9210a6b2730ba299d80417a",
+    "_local/anti-bot/active429-resource-trace-2026-11-04/04-realtor-webkit-10000.json": "4b16d5cfe8686d0ebce67fb42453cc74472dca6a423426a0fe16794250fb1865",
+    "_local/anti-bot/active429-context-retry-2026-11-04/final-health.json": "bf9065ad3bc1c1361e447b2c108e2e61dfdd0f433a89b108f4689b13ac40d7d1",
+    "_local/anti-bot/active429-context-retry-2026-11-04/audit.json": "9f61f0ea18c71472684c75fd225b694b99e8a973d7b8457b9bfedbb5ebd0c3a5",
+    "_local/anti-bot/active429-context-retry-2026-11-04/docker-before.json": "87dc484142233cfc10a83c5969b45a27a7ad7cf65cfe63f6b8dd104113cf47c6",
+    "_local/anti-bot/active429-context-retry-2026-11-04/00-github-webkit-0.json": "a15bbea03c6787dc2e0d1c5f0f52ea0592847f06719134e3c570624dbb0b4764",
+    "_local/anti-bot/active429-context-retry-2026-11-04/result.json": "23721c01292e86b37191ee0dbb7c8f0f9858b7baa4866ed9fb5f04aed562a16b",
+    "_local/anti-bot/active429-context-retry-2026-11-04/deployment-webkit.json": "d67a3208a5fc6d4be17da21a752b632b03ef0dcfaffab55d51209b492ec253cd",
+    "_local/anti-bot/active429-context-retry-2026-11-04/autogtm-firecrawl-context-retry-webkit-20261104.log": "64e2c64925d386343aa17347030695229ecb24a60c0d0b207a9efc1b3c15767d",
+    "_local/anti-bot/active429-context-retry-2026-11-04/dispatches.jsonl": "fdb78f63d9aab3987e79a7d7f19e5eda31f8db250d3322c359d2017e5a176388",
+    "_local/anti-bot/active429-context-retry-2026-11-04/docker-after.json": "00a937a6017a8d55a050226336cdf4bfb3d0db69a76fdf98fbd79f865315410d",
+    "_local/anti-bot/active429-context-retry-2026-11-04/02-hyatt-webkit-10000.json": "5b23ea7040f85672e5e7c15bb8da72beb542c3a74d1a9f99f1a9e26a90049910",
+    "_local/anti-bot/active429-context-retry-2026-11-04/resource-samples.jsonl": "31e1e9b957fdf19fe499870681636436f733530bb9fca01dfcf4ac5055559031",
+    "_local/anti-bot/active429-context-retry-2026-11-04/deployment-camoufox.json": "c1d3a796282620f8859fee64892628ff67099a2f8d2500089f91d3ead8924707",
+    "_local/anti-bot/active429-context-retry-2026-11-04/cleanup.json": "6878e6006b56f1ef865937b5f789847bea0d12ba897fbf5f84613b1037edc346",
+    "_local/anti-bot/active429-context-retry-2026-11-04/autogtm-firecrawl-context-retry-camoufox-20261104.log": "87d205c10194ec1b5674468920812ea5b83d8143eb0576a35c6f330d88f7531e",
+    "_local/anti-bot/active429-context-retry-2026-11-04/05-realtor-camoufox-10000.json": "f6caa6cbab7b5933ee4f9797d9a78809094599f6ef6acd2ba7b61df167dab860",
+    "_local/anti-bot/active429-context-retry-2026-11-04/protocol.json": "fab2fd55e5fb64a695601d8305fb3b2d13c1077e3036ba940e436c7f3fbd8351",
+    "_local/anti-bot/active429-context-retry-2026-11-04/timing-integrity.json": "f3cb53966bc06c9eb55223a85e2dab963ee7298f2c88256c350317ca23839581",
+    "_local/anti-bot/active429-context-retry-2026-11-04/03-hyatt-camoufox-10000.json": "f30e22f170ae6ef20fa9349c2b47deb68846c71f1ea32daa93a378bc39b88208",
+    "_local/anti-bot/active429-context-retry-2026-11-04/01-github-camoufox-0.json": "7d0f3da81c49a149fc797bcdbd5f2ea09924212ccf85b9a3d630695d83c5f34f",
+    "_local/anti-bot/active429-context-retry-2026-11-04/04-realtor-webkit-10000.json": "ca03f063901b519155f76e313c06d7293768efd93b240e1b1fce5fb5abbf3a80",
+    "_local/anti-bot/consent-actionability-2026-11-04/docker-before.json": "244064b721edc40f8e1956db20a4ffff12ca42102c50d08574867af6e64ba707",
+    "_local/anti-bot/consent-actionability-2026-11-04/00-canadagoose-webkit-0.json": "44070dd1802df57437ca6a0c499868ffb96426b3a351f46231fa0a0b9d754268",
+    "_local/anti-bot/consent-actionability-2026-11-04/deployment-webkit.json": "e79fd9343703c0990d6f42008868bcc4c50a303444bd7508b83ec83f692e92d1",
+    "_local/anti-bot/consent-actionability-2026-11-04/dispatches.jsonl": "60f8248271a903eb4cf9254ff0664bb131e50b61a266fb2135b8fa9457be661c",
+    "_local/anti-bot/consent-actionability-2026-11-04/docker-after.json": "04c619cb7f08ec0ffaaaf8d58113bfa2e1f8fc1bd622c0da46202c58b0bff098",
+    "_local/anti-bot/consent-actionability-2026-11-04/autogtm-firecrawl-consent-actionability-camoufox-20261104.log": "5084cdff40f0544301f87c099bbc2ba94ae29006730c80af81d1d1f24282edd3",
+    "_local/anti-bot/consent-actionability-2026-11-04/01-canadagoose-camoufox-0.json": "99cb96183a55ce73cfb3dc204af7c12055cd8bcff871b708d382faf1e8787d48",
+    "_local/anti-bot/consent-actionability-2026-11-04/resource-samples.jsonl": "36d2230bfbb4c1e6d421d6b00f123b79e5a45387547f55528e4644343d9caf8c",
+    "_local/anti-bot/consent-actionability-2026-11-04/deployment-camoufox.json": "9140a58b5beb4967622aa2c42288c0e8339eb8c91ee826b8e820e2dd3f4d20f8",
+    "_local/anti-bot/consent-actionability-2026-11-04/cleanup.json": "afd30b9c3a69c693cf4dfdae0079f76c1351fe54d6758fd44966ef6964c2e9fd",
+    "_local/anti-bot/consent-actionability-2026-11-04/autogtm-firecrawl-consent-actionability-webkit-20261104.log": "dc681fd15fcee4b4bccd0e67455f19a75d6ef07c62878a8f352b0cf6fe603597",
+    "_local/anti-bot/consent-actionability-2026-11-04/protocol.json": "80566838c844fc558201d16c2e997baac9d3d805c6eb65a15193c6598b1d7f02",
+    "_local/anti-bot/consent-actionability-2026-11-04/timing-integrity.json": "9fad0e319171f73f5ccd5612595e8e9084681dc820a28ef70ac1c69283f44619",
+    "_local/anti-bot/consent-keyboard-focus-2026-11-04/autogtm-firecrawl-consent-keyboard-focus-20261104.log": "e7b41aebd1037d41f08e309bc11b0bd050ee857aff063c0dd8b115b21948e18f",
+    "_local/anti-bot/consent-keyboard-focus-2026-11-04/00-canadagoose-camoufox-0.json": "6dfb70ee11cb4311523b80dfc320bbdc6737dc38b502612a345af67c4c8558cf",
+    "_local/anti-bot/consent-keyboard-focus-2026-11-04/final-health.json": "bed43321701a2c16f6f3b0ab605a6e20c3be0ba3f1fceeec881eb791f1c74ade",
+    "_local/anti-bot/consent-keyboard-focus-2026-11-04/docker-before.json": "18a953b50fabb71d1338f1430dc0b560754520cf808931a39a0eb2f175ea8883",
+    "_local/anti-bot/consent-keyboard-focus-2026-11-04/result.json": "0db8fd150e35d476e3b50d37eb33b06edf9d0d478a1f57c7e1051997f64b35ee",
+    "_local/anti-bot/consent-keyboard-focus-2026-11-04/dispatches.jsonl": "6a87d401b4dd68b39bc11acdef9c4369de8653182a7312f174e6976919f90dfd",
+    "_local/anti-bot/consent-keyboard-focus-2026-11-04/docker-after.json": "89b0deeab4383b01c961976da15aff52d709738b470408ed30eeb518dc16bec8",
+    "_local/anti-bot/consent-keyboard-focus-2026-11-04/resource-samples.jsonl": "639de3652772d4471c9dbd30a96569b31dddb269e23fc3d5956f94de9ea55605",
+    "_local/anti-bot/consent-keyboard-focus-2026-11-04/deployment-camoufox.json": "906b16f18bffda6780159e2ec2ee610968eecc1fb7664468d1c4c7ece0e56b09",
+    "_local/anti-bot/consent-keyboard-focus-2026-11-04/cleanup.json": "ea31c258589e9fa577b7d836d410994317c120bae680ed6c118778621f714bd5",
+    "_local/anti-bot/consent-keyboard-focus-2026-11-04/protocol.json": "3bab2a25e8bda7134243b46b1067b0fccf3e49285ed84d6faec2e9a0b0178ea1",
+    "_local/anti-bot/consent-keyboard-focus-2026-11-04/timing-integrity.json": "989f4ceec9c99b8c5ae68c4de40b95ae5e3779e02688f5c839cc4c6e34594dc9",
+    "_local/anti-bot/consent-actionability-2026-11-04/resource-failure.json": "a84eab0d9ee9f71014a0a4e9e52b55431c1e678f9f64f8350036c6cd8ec05a6e",
+    "_local/anti-bot/active429-trace-preload-2026-11-04.cjs": "53172ebd48be3bbf6c6fb5decc42bb6c9e58f6a89e2477457a1efdcafeec1a6f",
+    "_local/anti-bot/active429-context-preload-2026-11-04.cjs": "3765f4a09e58e9303ad3f99df62e4a42d2a7844474d83fd686a476b0e42050a3",
+    "_local/anti-bot/consent-actionability-preload-2026-11-04.cjs": "231245efd614203292efa8102365ebd9d36af83cf6726d8e833f87d625380d0e",
+    "_local/anti-bot/consent-keyboard-focus-preload-2026-11-04.cjs": "7dc0f41a664649a13c39a7cdb681b6ea00c12ec7395df32cee8b5fe04124e201",
+    "_local/anti-bot/audit-active429-studies-2026-11-04.ts": "aa3ea58a1a36def7101c83b8f9891c5066dd103cf73f35bd979dcd26518ad186",
+    "_local/anti-bot/run-active429-resource-trace-2026-11-04.py": "fd0d5177f503f7404561b1ddda419cf07fb48cc63a7febdfe12f1e5170c7c4a7",
+    "_local/anti-bot/run-active429-context-retry-2026-11-04.py": "4eb65a5b5b9ffb1e2a6836b455dea4e2a9986a03703fb80be338e589b840de17",
+    "_local/anti-bot/run-consent-actionability-2026-11-04.py": "b46431a7e1705622f6fec23bba835b705a9ecdf7adc4fa4b1bc1368f4e7a8ecc",
+    "_local/anti-bot/run-consent-keyboard-focus-2026-11-04.py": "294b8647cc01b714cfa333d528931e60058ccdda699ab9346fc2782c1799db62"
+  }
+}

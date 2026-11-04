@@ -77,6 +77,7 @@ class BaseResponse(BaseModel, Generic[T]):
 # Document and content types
 class DocumentMetadata(BaseModel):
     """Metadata for scraped documents (snake_case only; API camelCase normalized in code)."""
+    browser: Optional[Dict[str, Any]] = None
 
     model_config = {"extra": "allow"}
 
@@ -880,10 +881,32 @@ class AuditMetadata(BaseModel):
     model_config = {"extra": "forbid"}
 
 
+class BrowserReadiness(BaseModel):
+    selector: Optional[str] = None
+    text: Optional[str] = None
+    scope: Optional[Literal["body", "title"]] = None
+    timeout_ms: Optional[int] = Field(default=None, alias="timeoutMs")
+    model_config = {"populate_by_name": True, "extra": "forbid"}
+
+
+class BrowserControls(BaseModel):
+    wait_until: Optional[Literal["load", "domcontentloaded"]] = Field(default=None, alias="waitUntil")
+    navigation_timeout: Optional[int] = Field(default=None, alias="navigationTimeout", ge=100, le=120000)
+    readiness: Optional[BrowserReadiness] = None
+    consent: Optional[Literal["off", "rejectNonEssential", "acceptAll"]] = None
+    workflow: Optional[Literal["none", "auto", "bestbuy-us@1", "product-details@1"]] = None
+    max_attempts: Optional[int] = Field(default=None, alias="maxAttempts")
+    engine_fallback: Optional[bool] = Field(default=None, alias="engineFallback")
+    session_id: Optional[str] = Field(default=None, alias="sessionId")
+    continue_session: Optional[bool] = Field(default=None, alias="continueSession")
+    model_config = {"populate_by_name": True, "extra": "forbid"}
+
+
 class ScrapeOptions(BaseModel):
     """Options for scraping operations."""
 
     formats: Optional[Union["ScrapeFormats", List[FormatOption]]] = None
+    browser_controls: Optional[BrowserControls] = Field(default=None, alias="browserControls")
     headers: Optional[Dict[str, str]] = None
     include_tags: Optional[List[str]] = None
     exclude_tags: Optional[List[str]] = None

@@ -1,0 +1,3966 @@
+{
+  "sourceCommit": "f93fbdb601d0974d64e3ea2095dfedc645f45a31",
+  "scope": "Selected no-proxy driver, interception/proxy-scope and production consent-policy experiments. No production source or default changed; no new full API benchmark or hosted calls.",
+  "scoredObservationsReplayed": 76,
+  "studies": [
+    {
+      "runDirectory": "_local/anti-bot/pydoll-driver-lab-2026-11-04",
+      "status": "complete",
+      "sourceCommit": "f93fbdb601d0974d64e3ea2095dfedc645f45a31",
+      "imageId": "sha256:4c46f135c7ca0abc596c006870e5ea34ad57034b1a27c840a9d0b93ea1495c5b",
+      "protocol": {
+        "status": "complete",
+        "startedAt": "2026-11-03T18:42:33.835Z",
+        "sourceCommit": "f93fbdb601d0974d64e3ea2095dfedc645f45a31",
+        "imageId": "sha256:4c46f135c7ca0abc596c006870e5ea34ad57034b1a27c840a9d0b93ea1495c5b",
+        "fixtureSha256": "a886fb57087e842c2857b89a7669e31d2fb7b98d6bd7deb60a2329f29581b76a",
+        "expectedRequests": 32,
+        "rounds": 2,
+        "targets": [
+          "lowes",
+          "stockx",
+          "wsj",
+          "g2",
+          "neimanmarcus",
+          "LinkedIn",
+          "github",
+          "arxiv"
+        ],
+        "globalConcurrency": 2,
+        "perOwnerConcurrency": 1,
+        "clientTimeoutMs": 35000,
+        "serviceTimeoutMs": 30000,
+        "waitAfterLoadMs": 5000,
+        "consent": "off",
+        "workflow": "none",
+        "adBlocking": false,
+        "serviceWorkers": "allow",
+        "freshContexts": true,
+        "expectedMarkerSent": false,
+        "upstreamProxy": false,
+        "hostedCalls": 0,
+        "scope": "Two isolated experimental driver/launch bundles on the same Chromium binary and image. Same shared DOM capture and runtime protection detector, fixed five-second capture delay. This does not exercise production consent, readiness workflows, sessions, API or service-worker blocking.",
+        "finishedAt": "2026-11-03T18:43:59.400Z",
+        "scoresAndHashesReplayed": 32,
+        "publicControlsPassed": true,
+        "timingIntegrity": {
+          "valid": true,
+          "sampleIntervalMs": 1000,
+          "maximumAllowedGapMs": 10000,
+          "maximumObservedGapMs": 1003,
+          "gaps": []
+        }
+      },
+      "sameChromiumBinaryAndVersion": {
+        "sha256": "2b3a2bb9c4308ce74cb680dcd50305cfae1f79589305dc92b993f876b5a94f65",
+        "version": "156.0.8078.4",
+        "allOwnersMatch": true
+      },
+      "prototypeLaunchBundles": [
+        {
+          "profile": "rebrowser",
+          "launchArgs": [
+            [
+              "/usr/local/share/playwright/chromium-1248/chrome-linux-arm64/chrome",
+              "--disable-field-trial-config",
+              "--disable-background-networking",
+              "--disable-background-timer-throttling",
+              "--disable-backgrounding-occluded-windows",
+              "--disable-back-forward-cache",
+              "--disable-breakpad",
+              "--disable-client-side-phishing-detection",
+              "--disable-component-extensions-with-background-pages",
+              "--disable-component-update",
+              "--no-default-browser-check",
+              "--disable-default-apps",
+              "--disable-dev-shm-usage",
+              "--disable-edgeupdater",
+              "--disable-extensions",
+              "--disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,BlockOriginHeaderModificationOnRedirect,AvoidCorsURLLoaderRestartOnRedirect,Translate,AutoDeElevate,OptimizationHints,NetworkTimeServiceQuerying,AimEnabled,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion",
+              "--enable-features=CDPScreenshotNewSurface",
+              "--allow-pre-commit-input",
+              "--disable-hang-monitor",
+              "--disable-prompt-on-repost",
+              "--disable-renderer-backgrounding",
+              "--disable-updater-scheduler",
+              "--force-color-profile=srgb",
+              "--metrics-recording-only",
+              "--no-first-run",
+              "--password-store=basic",
+              "--use-mock-keychain",
+              "--no-service-autorun",
+              "--export-tagged-pdf",
+              "--disable-search-engine-choice-screen",
+              "--unsafely-disable-devtools-self-xss-warnings",
+              "--edge-skip-compat-layer-relaunch",
+              "--disable-infobars",
+              "--disable-search-engine-choice-screen",
+              "--disable-sync",
+              "--enable-unsafe-swiftshader",
+              "--no-sandbox",
+              "--proxy-server=http://127.0.0.1:43923",
+              "--proxy-bypass-list=<-loopback>",
+              "--disable-blink-features=AutomationControlled",
+              "--no-sandbox",
+              "--disable-setuid-sandbox",
+              "--disable-dev-shm-usage",
+              "--window-size=1365,900",
+              "--proxy-bypass-list=<-loopback>",
+              "--webrtc-ip-handling-policy=disable_non_proxied_udp",
+              "--user-data-dir=<temporary>",
+              "--remote-debugging-pipe",
+              "--no-startup-window"
+            ]
+          ],
+          "health": {
+            "status": "healthy",
+            "prototype": true,
+            "browserEngine": "rebrowser",
+            "ownerBootId": "f45dbf12-c70c-45aa-9818-d298a30d0bfe",
+            "browserVersion": "156.0.8078.4",
+            "browserExecutable": "/usr/local/share/playwright/chromium-1248/chrome-linux-arm64/chrome",
+            "binarySha256": "2b3a2bb9c4308ce74cb680dcd50305cfae1f79589305dc92b993f876b5a94f65",
+            "activePages": 0,
+            "browserSessions": 0,
+            "serviceWorkers": "allow",
+            "blockAds": false,
+            "headless": false,
+            "dependencies": "aiofiles==25.1.0\naiohappyeyeballs==2.7.1\naiohttp==3.14.5\naiosignal==1.4.0\nannotated-types==0.8.0\nattrs==26.1.0\nfrozenlist==1.8.0\nidna==3.20\nmultidict==7.2.1\npropcache==0.5.4\npydantic==2.14.2\npydantic_core==2.50.2\npydoll-python @ file:///tmp/pydoll_python-3.0.0-py3-none-any.whl\ntyping-inspection==0.4.4\ntyping_extensions==4.16.0\nwebsockets==16.1.1\nyarl==1.25.1\n",
+            "args": [
+              "--no-sandbox",
+              "--disable-setuid-sandbox",
+              "--disable-dev-shm-usage",
+              "--window-size=1365,900",
+              "--proxy-bypass-list=<-loopback>",
+              "--webrtc-ip-handling-policy=disable_non_proxied_udp"
+            ]
+          },
+          "runtimeHashes": {
+            "prototype-owner.cjs": "290b45e1d2e95e4dea1de94cd0c968ed2e2a8dd263787b2323163e6caa2f6d27",
+            "prototype-driver.py": "74eeeb78e4eed20d056543114264b58d52759cc7559f12fb495723ebfd9cc925",
+            "dist/helpers/page-readiness.js": "144e114d2597b9f0a9aa82848ce7519e77107d947c83da6ec283401f16dd42dd",
+            "dist/helpers/ssrf.js": "452ae1dbec8a6103cba710e56b6d0c5740606021d34c2bc415025a8676a2c68d",
+            "dist/helpers/waf-benchmark.js": "4eea26db4617351a9daa9ad546c8d9d16983d2d736f5a1d435a3159fe7a96f4d",
+            "dist/helpers/bot-detection.js": "77a197cbbe0942b6106db2eb2579fc1af8dc7a167e3e959de51a89f8ed7a746e"
+          }
+        },
+        {
+          "profile": "pydoll",
+          "launchArgs": [
+            [
+              "/usr/local/share/playwright/chromium-1248/chrome-linux-arm64/chrome",
+              "--remote-debugging-port=<ephemeral>",
+              "--proxy-server=http://127.0.0.1:34141",
+              "--no-sandbox",
+              "--disable-setuid-sandbox",
+              "--disable-dev-shm-usage",
+              "--window-size=1365,900",
+              "--proxy-bypass-list=<-loopback>",
+              "--webrtc-ip-handling-policy=disable_non_proxied_udp",
+              "--no-first-run",
+              "--no-default-browser-check",
+              "--user-data-dir=<temporary>"
+            ]
+          ],
+          "health": {
+            "status": "healthy",
+            "prototype": true,
+            "browserEngine": "pydoll",
+            "ownerBootId": "2065cf66-8276-49ea-a7ca-13b03c4a9cee",
+            "browserVersion": "156.0.8078.4",
+            "browserExecutable": "/usr/local/share/playwright/chromium-1248/chrome-linux-arm64/chrome",
+            "binarySha256": "2b3a2bb9c4308ce74cb680dcd50305cfae1f79589305dc92b993f876b5a94f65",
+            "activePages": 0,
+            "browserSessions": 0,
+            "serviceWorkers": "allow",
+            "blockAds": false,
+            "headless": false,
+            "dependencies": "aiofiles==25.1.0\naiohappyeyeballs==2.7.1\naiohttp==3.14.5\naiosignal==1.4.0\nannotated-types==0.8.0\nattrs==26.1.0\nfrozenlist==1.8.0\nidna==3.20\nmultidict==7.2.1\npropcache==0.5.4\npydantic==2.14.2\npydantic_core==2.50.2\npydoll-python @ file:///tmp/pydoll_python-3.0.0-py3-none-any.whl\ntyping-inspection==0.4.4\ntyping_extensions==4.16.0\nwebsockets==16.1.1\nyarl==1.25.1\n",
+            "args": [
+              "--no-sandbox",
+              "--disable-setuid-sandbox",
+              "--disable-dev-shm-usage",
+              "--window-size=1365,900",
+              "--proxy-bypass-list=<-loopback>",
+              "--webrtc-ip-handling-policy=disable_non_proxied_udp"
+            ]
+          },
+          "runtimeHashes": {
+            "prototype-owner.cjs": "290b45e1d2e95e4dea1de94cd0c968ed2e2a8dd263787b2323163e6caa2f6d27",
+            "prototype-driver.py": "74eeeb78e4eed20d056543114264b58d52759cc7559f12fb495723ebfd9cc925",
+            "dist/helpers/page-readiness.js": "144e114d2597b9f0a9aa82848ce7519e77107d947c83da6ec283401f16dd42dd",
+            "dist/helpers/ssrf.js": "452ae1dbec8a6103cba710e56b6d0c5740606021d34c2bc415025a8676a2c68d",
+            "dist/helpers/waf-benchmark.js": "4eea26db4617351a9daa9ad546c8d9d16983d2d736f5a1d435a3159fe7a96f4d",
+            "dist/helpers/bot-detection.js": "77a197cbbe0942b6106db2eb2579fc1af8dc7a167e3e959de51a89f8ed7a746e"
+          }
+        }
+      ],
+      "byProfile": {
+        "rebrowser": {
+          "overall": {
+            "requests": 16,
+            "uniqueTargets": 8,
+            "frontierPasses": 3,
+            "screenedPasses": 3,
+            "normalizedPasses": 5,
+            "frontierSuccessRate": 0.1875,
+            "screenedSuccessRate": 0.1875,
+            "normalizedSuccessRate": 0.3125,
+            "successfulLatencyP50Ms": 6320,
+            "successfulLatencyP95Ms": 6984,
+            "allAttemptLatencyP95Ms": 6984,
+            "failures": {
+              "challenge": 8,
+              "service_error": 2,
+              "missing_expected_marker": 2,
+              "target_status_403": 1
+            }
+          },
+          "byWafLabel": {
+            "akamai": {
+              "requests": 2,
+              "uniqueTargets": 1,
+              "frontierPasses": 1,
+              "screenedPasses": 1,
+              "normalizedPasses": 1,
+              "frontierSuccessRate": 0.5,
+              "screenedSuccessRate": 0.5,
+              "normalizedSuccessRate": 0.5,
+              "successfulLatencyP50Ms": 6320,
+              "successfulLatencyP95Ms": 6320,
+              "allAttemptLatencyP95Ms": 6320,
+              "failures": {
+                "target_status_403": 1
+              }
+            },
+            "cloudflare": {
+              "requests": 2,
+              "uniqueTargets": 1,
+              "frontierPasses": 0,
+              "screenedPasses": 0,
+              "normalizedPasses": 0,
+              "frontierSuccessRate": 0,
+              "screenedSuccessRate": 0,
+              "normalizedSuccessRate": 0,
+              "successfulLatencyP50Ms": null,
+              "successfulLatencyP95Ms": null,
+              "allAttemptLatencyP95Ms": 5296,
+              "failures": {
+                "challenge": 2
+              }
+            },
+            "custom": {
+              "requests": 2,
+              "uniqueTargets": 1,
+              "frontierPasses": 0,
+              "screenedPasses": 0,
+              "normalizedPasses": 0,
+              "frontierSuccessRate": 0,
+              "screenedSuccessRate": 0,
+              "normalizedSuccessRate": 0,
+              "successfulLatencyP50Ms": null,
+              "successfulLatencyP95Ms": null,
+              "allAttemptLatencyP95Ms": 235,
+              "failures": {
+                "service_error": 2
+              }
+            },
+            "datadome": {
+              "requests": 6,
+              "uniqueTargets": 3,
+              "frontierPasses": 0,
+              "screenedPasses": 0,
+              "normalizedPasses": 0,
+              "frontierSuccessRate": 0,
+              "screenedSuccessRate": 0,
+              "normalizedSuccessRate": 0,
+              "successfulLatencyP50Ms": null,
+              "successfulLatencyP95Ms": null,
+              "allAttemptLatencyP95Ms": 6980,
+              "failures": {
+                "challenge": 6
+              }
+            },
+            "unclassified": {
+              "requests": 4,
+              "uniqueTargets": 2,
+              "frontierPasses": 2,
+              "screenedPasses": 2,
+              "normalizedPasses": 4,
+              "frontierSuccessRate": 0.5,
+              "screenedSuccessRate": 0.5,
+              "normalizedSuccessRate": 1,
+              "successfulLatencyP50Ms": 5751,
+              "successfulLatencyP95Ms": 6984,
+              "allAttemptLatencyP95Ms": 6984,
+              "failures": {
+                "missing_expected_marker": 2
+              }
+            }
+          }
+        },
+        "pydoll": {
+          "overall": {
+            "requests": 16,
+            "uniqueTargets": 8,
+            "frontierPasses": 3,
+            "screenedPasses": 3,
+            "normalizedPasses": 5,
+            "frontierSuccessRate": 0.1875,
+            "screenedSuccessRate": 0.1875,
+            "normalizedSuccessRate": 0.3125,
+            "successfulLatencyP50Ms": 6346,
+            "successfulLatencyP95Ms": 6993,
+            "allAttemptLatencyP95Ms": 6993,
+            "failures": {
+              "challenge": 6,
+              "service_error": 4,
+              "missing_expected_marker": 2,
+              "target_status_403": 1
+            }
+          },
+          "byWafLabel": {
+            "akamai": {
+              "requests": 2,
+              "uniqueTargets": 1,
+              "frontierPasses": 1,
+              "screenedPasses": 1,
+              "normalizedPasses": 1,
+              "frontierSuccessRate": 0.5,
+              "screenedSuccessRate": 0.5,
+              "normalizedSuccessRate": 0.5,
+              "successfulLatencyP50Ms": 6346,
+              "successfulLatencyP95Ms": 6346,
+              "allAttemptLatencyP95Ms": 6346,
+              "failures": {
+                "target_status_403": 1
+              }
+            },
+            "cloudflare": {
+              "requests": 2,
+              "uniqueTargets": 1,
+              "frontierPasses": 0,
+              "screenedPasses": 0,
+              "normalizedPasses": 0,
+              "frontierSuccessRate": 0,
+              "screenedSuccessRate": 0,
+              "normalizedSuccessRate": 0,
+              "successfulLatencyP50Ms": null,
+              "successfulLatencyP95Ms": null,
+              "allAttemptLatencyP95Ms": 5349,
+              "failures": {
+                "challenge": 2
+              }
+            },
+            "custom": {
+              "requests": 2,
+              "uniqueTargets": 1,
+              "frontierPasses": 0,
+              "screenedPasses": 0,
+              "normalizedPasses": 0,
+              "frontierSuccessRate": 0,
+              "screenedSuccessRate": 0,
+              "normalizedSuccessRate": 0,
+              "successfulLatencyP50Ms": null,
+              "successfulLatencyP95Ms": null,
+              "allAttemptLatencyP95Ms": 243,
+              "failures": {
+                "service_error": 2
+              }
+            },
+            "datadome": {
+              "requests": 6,
+              "uniqueTargets": 3,
+              "frontierPasses": 0,
+              "screenedPasses": 0,
+              "normalizedPasses": 0,
+              "frontierSuccessRate": 0,
+              "screenedSuccessRate": 0,
+              "normalizedSuccessRate": 0,
+              "successfulLatencyP50Ms": null,
+              "successfulLatencyP95Ms": null,
+              "allAttemptLatencyP95Ms": 6807,
+              "failures": {
+                "challenge": 4,
+                "service_error": 2
+              }
+            },
+            "unclassified": {
+              "requests": 4,
+              "uniqueTargets": 2,
+              "frontierPasses": 2,
+              "screenedPasses": 2,
+              "normalizedPasses": 4,
+              "frontierSuccessRate": 0.5,
+              "screenedSuccessRate": 0.5,
+              "normalizedSuccessRate": 1,
+              "successfulLatencyP50Ms": 5799,
+              "successfulLatencyP95Ms": 6993,
+              "allAttemptLatencyP95Ms": 6993,
+              "failures": {
+                "missing_expected_marker": 2
+              }
+            }
+          }
+        }
+      },
+      "byTargetAndProfile": {
+        "rebrowser": {
+          "lowes": {
+            "requests": 2,
+            "normalizedMatches": 1,
+            "renderedExactMatches": 0
+          },
+          "stockx": {
+            "requests": 2,
+            "normalizedMatches": 0,
+            "renderedExactMatches": 0
+          },
+          "wsj": {
+            "requests": 2,
+            "normalizedMatches": 0,
+            "renderedExactMatches": 0
+          },
+          "g2": {
+            "requests": 2,
+            "normalizedMatches": 0,
+            "renderedExactMatches": 0
+          },
+          "neimanmarcus": {
+            "requests": 2,
+            "normalizedMatches": 0,
+            "renderedExactMatches": 0
+          },
+          "LinkedIn": {
+            "requests": 2,
+            "normalizedMatches": 0,
+            "renderedExactMatches": 0
+          },
+          "github": {
+            "requests": 2,
+            "normalizedMatches": 2,
+            "renderedExactMatches": 2
+          },
+          "arxiv": {
+            "requests": 2,
+            "normalizedMatches": 2,
+            "renderedExactMatches": 2
+          }
+        },
+        "pydoll": {
+          "lowes": {
+            "requests": 2,
+            "normalizedMatches": 1,
+            "renderedExactMatches": 0
+          },
+          "stockx": {
+            "requests": 2,
+            "normalizedMatches": 0,
+            "renderedExactMatches": 0
+          },
+          "wsj": {
+            "requests": 2,
+            "normalizedMatches": 0,
+            "renderedExactMatches": 0
+          },
+          "g2": {
+            "requests": 2,
+            "normalizedMatches": 0,
+            "renderedExactMatches": 0
+          },
+          "neimanmarcus": {
+            "requests": 2,
+            "normalizedMatches": 0,
+            "renderedExactMatches": 0
+          },
+          "LinkedIn": {
+            "requests": 2,
+            "normalizedMatches": 0,
+            "renderedExactMatches": 0
+          },
+          "github": {
+            "requests": 2,
+            "normalizedMatches": 2,
+            "renderedExactMatches": 2
+          },
+          "arxiv": {
+            "requests": 2,
+            "normalizedMatches": 2,
+            "renderedExactMatches": 2
+          }
+        }
+      },
+      "observations": [
+        {
+          "target": "lowes",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "wafLabel": "akamai",
+          "startedAt": "2026-11-03T18:42:33.844Z",
+          "latencyMs": 6320,
+          "evidenceFile": "evidence/002.json",
+          "evidenceSha256": "8584bb34aaea25a5b2fbd63c32fead9431d43df81fe908f838a64a46c71d5084",
+          "frontierPass": true,
+          "screenedPass": true,
+          "normalizedPass": true,
+          "serviceAttemptCount": 1,
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "rawMarkerPresent": true,
+          "textMarkerPresent": true,
+          "landedUrl": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "title": "James Martin Vanities Bristol 72-in Whitewashed Walnut Undermount Double Sink Bathroom Vanity with Eternal Jasmine Pearl Quartz Top 157-V72-WW-3EJP at Lowes.com",
+          "contentBytes": 382182,
+          "contentSha256": "e5bde2282d97bb078e16a7ccc0576f8d90b98a1e7dabd567316389b56239b1c1",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+              "status": 200
+            },
+            {
+              "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+              "status": 200
+            }
+          ]
+        },
+        {
+          "target": "lowes",
+          "profile": "pydoll",
+          "attempt": 1,
+          "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "wafLabel": "akamai",
+          "startedAt": "2026-11-03T18:42:33.836Z",
+          "latencyMs": 6346,
+          "evidenceFile": "evidence/001.json",
+          "evidenceSha256": "acd7fa437ad4dbf42d681ac5fa4b5de49ab621bb07e831c2e1365889d36e6244",
+          "frontierPass": true,
+          "screenedPass": true,
+          "normalizedPass": true,
+          "serviceAttemptCount": 1,
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "rawMarkerPresent": true,
+          "textMarkerPresent": true,
+          "landedUrl": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "title": "James Martin Vanities Bristol 72-in Whitewashed Walnut Undermount Double Sink Bathroom Vanity with Eternal Jasmine Pearl Quartz Top 157-V72-WW-3EJP at Lowes.com",
+          "contentBytes": 453776,
+          "contentSha256": "f6bbd32d290f22fec06268071e30a6f964c3a6b6d50a7a240c9ac29f43e2cd4a",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+              "status": 200
+            },
+            {
+              "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+              "status": 200
+            }
+          ]
+        },
+        {
+          "target": "stockx",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "url": "https://stockx.com/air-jordan-5-retro-black-university-blue-2026",
+          "wafLabel": "cloudflare",
+          "startedAt": "2026-11-03T18:42:40.186Z",
+          "latencyMs": 5296,
+          "evidenceFile": "evidence/003.json",
+          "evidenceSha256": "a0fb09ac8222fe89c81d2895a4e55722036c62137f2a47362d9c4be1e540c471",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "",
+          "landedUrl": "https://stockx.com/air-jordan-5-retro-black-university-blue-2026",
+          "title": "Just a moment...",
+          "contentBytes": 44877,
+          "contentSha256": "c4fa3d407bc220681365d709961591eda94be6d40fb4cc9b19b52936a3198191",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://stockx.com/air-jordan-5-retro-black-university-blue-2026",
+              "status": 307
+            },
+            {
+              "url": "https://stockx.com/air-jordan-5-retro-black-university-blue-2026",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "stockx",
+          "profile": "pydoll",
+          "attempt": 1,
+          "url": "https://stockx.com/air-jordan-5-retro-black-university-blue-2026",
+          "wafLabel": "cloudflare",
+          "startedAt": "2026-11-03T18:42:40.186Z",
+          "latencyMs": 5349,
+          "evidenceFile": "evidence/004.json",
+          "evidenceSha256": "f5d15e6b32d6632d3e8d43ab5ef30c046f238fcd73973492d3bd9aecd8516370",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "",
+          "landedUrl": "https://stockx.com/air-jordan-5-retro-black-university-blue-2026",
+          "title": "Just a moment...",
+          "contentBytes": 44877,
+          "contentSha256": "02d159746117dc86b4cd79f763c4dcef4c13e6b7a2d49481a28284ddb3f59fdd",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://stockx.com/air-jordan-5-retro-black-university-blue-2026",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "wsj",
+          "profile": "pydoll",
+          "attempt": 1,
+          "url": "https://www.wsj.com/livecoverage/iran-war-2026-trump-deadline-latest-news",
+          "wafLabel": "datadome",
+          "startedAt": "2026-11-03T18:42:45.536Z",
+          "latencyMs": 5604,
+          "evidenceFile": "evidence/005.json",
+          "evidenceSha256": "a8e613723b6c8cfd4ab4d5f584f3ffd9fc0f2f4388823f0cfbcb416a4abeda30",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 401,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "",
+          "landedUrl": "https://www.wsj.com/livecoverage/iran-war-2026-trump-deadline-latest-news",
+          "title": "wsj.com",
+          "contentBytes": 1546,
+          "contentSha256": "cfd2af60a02fbe0ec4a5c9fa6442404af2a433229ed4887126d444116e10ea53",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.wsj.com/livecoverage/iran-war-2026-trump-deadline-latest-news",
+              "status": 401
+            }
+          ]
+        },
+        {
+          "target": "wsj",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "url": "https://www.wsj.com/livecoverage/iran-war-2026-trump-deadline-latest-news",
+          "wafLabel": "datadome",
+          "startedAt": "2026-11-03T18:42:45.536Z",
+          "latencyMs": 6746,
+          "evidenceFile": "evidence/006.json",
+          "evidenceSha256": "3ccdd0897404c38c65bed197045e6441e77cb010a7972c85815534d72be7fa38",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 401,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "",
+          "landedUrl": "https://www.wsj.com/livecoverage/iran-war-2026-trump-deadline-latest-news",
+          "title": "wsj.com",
+          "contentBytes": 1546,
+          "contentSha256": "536e00b3fd770fd30a7efaa3a864308e335211cf708ce4228db7238f5e7c472c",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.wsj.com/livecoverage/iran-war-2026-trump-deadline-latest-news",
+              "status": 401
+            }
+          ]
+        },
+        {
+          "target": "g2",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "url": "https://www.g2.com/categories/emerging-ai-software?order=g2_score&page=92&_pjax=%23ajax-container#product-list",
+          "wafLabel": "datadome",
+          "startedAt": "2026-11-03T18:42:52.282Z",
+          "latencyMs": 5436,
+          "evidenceFile": "evidence/007.json",
+          "evidenceSha256": "8ec8d9d17d0d3300a06295ae08319782ee3b9cfa5cc0f243a92ef98c5a64101e",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "",
+          "landedUrl": "https://www.g2.com/categories/emerging-ai-software?order=g2_score&page=92&_pjax=%23ajax-container#product-list",
+          "title": "g2.com",
+          "contentBytes": 2896,
+          "contentSha256": "45539cc5af416fe6d7b65e3f9e041a0fcc6b98373ca34082eb4a130773dfe9b4",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.g2.com/categories/emerging-ai-software?order=g2_score&page=92&_pjax=%23ajax-container",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "g2",
+          "profile": "pydoll",
+          "attempt": 1,
+          "url": "https://www.g2.com/categories/emerging-ai-software?order=g2_score&page=92&_pjax=%23ajax-container#product-list",
+          "wafLabel": "datadome",
+          "startedAt": "2026-11-03T18:42:52.282Z",
+          "latencyMs": 6224,
+          "evidenceFile": "evidence/008.json",
+          "evidenceSha256": "d5b5ec376a01c2dfd01f0d2f958f051b1f1e852ea8f57cd3faf3d0d0b6810fff",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "service_error",
+          "apiStatus": 500,
+          "pageStatus": null,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "contentBytes": 0,
+          "contentSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "renderedExactMarkerPresent": false,
+          "serviceErrorCode": "BROWSER_ERROR",
+          "errorType": "RuntimeError",
+          "error": "Document changed repeatedly during capture",
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.g2.com/categories/emerging-ai-software?order=g2_score&page=92&_pjax=%23ajax-container",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "neimanmarcus",
+          "profile": "pydoll",
+          "attempt": 1,
+          "url": "https://www.neimanmarcus.com/p/gorski-reversible-toscana-lamb-shearling-jacket-prod282500173",
+          "wafLabel": "datadome",
+          "startedAt": "2026-11-03T18:42:58.506Z",
+          "latencyMs": 6031,
+          "evidenceFile": "evidence/009.json",
+          "evidenceSha256": "55e6b560e134803dfad74ba787e5c4d6db34a503451a8a60cc7918aa7621396e",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "",
+          "landedUrl": "https://www.neimanmarcus.com/p/gorski-reversible-toscana-lamb-shearling-jacket-prod282500173",
+          "title": "neimanmarcus.com",
+          "contentBytes": 1543,
+          "contentSha256": "c322d60737221d39d69f56c457746b153b4c17ad0f4f1e4a961f353485beb462",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.neimanmarcus.com/p/gorski-reversible-toscana-lamb-shearling-jacket-prod282500173",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "neimanmarcus",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "url": "https://www.neimanmarcus.com/p/gorski-reversible-toscana-lamb-shearling-jacket-prod282500173",
+          "wafLabel": "datadome",
+          "startedAt": "2026-11-03T18:42:58.506Z",
+          "latencyMs": 6589,
+          "evidenceFile": "evidence/010.json",
+          "evidenceSha256": "e4f548260a015feccb44c41eb4828492f2d703db25a142e142ee6890d1351213",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "",
+          "landedUrl": "https://www.neimanmarcus.com/p/gorski-reversible-toscana-lamb-shearling-jacket-prod282500173",
+          "title": "neimanmarcus.com",
+          "contentBytes": 1543,
+          "contentSha256": "62b2507791480781fe75704e2d6d2f778b9d5fe162509b504a57faabdd086bec",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.neimanmarcus.com/p/gorski-reversible-toscana-lamb-shearling-jacket-prod282500173",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "LinkedIn",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "url": "https://www.linkedin.com/company/microsoft/",
+          "wafLabel": "custom",
+          "startedAt": "2026-11-03T18:43:05.096Z",
+          "latencyMs": 235,
+          "evidenceFile": "evidence/011.json",
+          "evidenceSha256": "b05b11abfc5980bffcb738a8cbb11abe55ff6b6017d659bbe3bebf438363cf3b",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "service_error",
+          "apiStatus": 500,
+          "pageStatus": null,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "contentBytes": 0,
+          "contentSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "renderedExactMarkerPresent": false,
+          "serviceErrorCode": "BROWSER_ERROR",
+          "errorType": "Error",
+          "error": "Error: page.goto: net::ERR_CONNECTION_CLOSED at https://www.linkedin.com/company/microsoft/\nCall log:\n  - navigating to \"https://www.linkedin.com/company/microsoft/\", waiting until \"domcontentloaded\"\n",
+          "mainFrameNavigations": []
+        },
+        {
+          "target": "LinkedIn",
+          "profile": "pydoll",
+          "attempt": 1,
+          "url": "https://www.linkedin.com/company/microsoft/",
+          "wafLabel": "custom",
+          "startedAt": "2026-11-03T18:43:05.096Z",
+          "latencyMs": 243,
+          "evidenceFile": "evidence/012.json",
+          "evidenceSha256": "86dffadaa573ecfccc4915020333ef57cfaccfa2d0436c70932a6e182cb67391",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "service_error",
+          "apiStatus": 500,
+          "pageStatus": null,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "contentBytes": 0,
+          "contentSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "renderedExactMarkerPresent": false,
+          "serviceErrorCode": "BROWSER_ERROR",
+          "errorType": "Error",
+          "error": "net::ERR_CONNECTION_CLOSED at https://www.linkedin.com/company/microsoft/",
+          "mainFrameNavigations": []
+        },
+        {
+          "target": "github",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "url": "https://github.com/facebook/react",
+          "wafLabel": "unclassified",
+          "startedAt": "2026-11-03T18:43:05.340Z",
+          "latencyMs": 6984,
+          "evidenceFile": "evidence/014.json",
+          "evidenceSha256": "8ec62fde571361ed5cc7af0781dcea09e5e4ae80d3c74eed0fbd1b2664da8e36",
+          "frontierPass": true,
+          "screenedPass": true,
+          "normalizedPass": true,
+          "serviceAttemptCount": 1,
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "rawMarkerPresent": true,
+          "textMarkerPresent": true,
+          "landedUrl": "https://github.com/react/react",
+          "title": "GitHub - react/react: The library for web and native user interfaces. \u00b7 GitHub",
+          "contentBytes": 456969,
+          "contentSha256": "9fbd8b6edc6728afdd10e7b3229b16bc44f7c4ec0c9dfc91edfb2bebd8878aff",
+          "renderedExactMarkerPresent": true,
+          "mainFrameNavigations": [
+            {
+              "url": "https://github.com/facebook/react",
+              "status": 301
+            },
+            {
+              "url": "https://github.com/react/react",
+              "status": 200
+            }
+          ]
+        },
+        {
+          "target": "github",
+          "profile": "pydoll",
+          "attempt": 1,
+          "url": "https://github.com/facebook/react",
+          "wafLabel": "unclassified",
+          "startedAt": "2026-11-03T18:43:05.339Z",
+          "latencyMs": 6993,
+          "evidenceFile": "evidence/013.json",
+          "evidenceSha256": "bc6701ba0a11c0aa864badc40f7b1a504357861db2ef3f15f5086994a3a36cba",
+          "frontierPass": true,
+          "screenedPass": true,
+          "normalizedPass": true,
+          "serviceAttemptCount": 1,
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "rawMarkerPresent": true,
+          "textMarkerPresent": true,
+          "landedUrl": "https://github.com/react/react",
+          "title": "GitHub - react/react: The library for web and native user interfaces. \u00b7 GitHub",
+          "contentBytes": 456969,
+          "contentSha256": "a44270222065d412ce0e91129ac225f01dc50a0630ac0df04b421f831e4f077e",
+          "renderedExactMarkerPresent": true,
+          "mainFrameNavigations": [
+            {
+              "url": "https://github.com/react/react",
+              "status": 200
+            }
+          ]
+        },
+        {
+          "target": "arxiv",
+          "profile": "pydoll",
+          "attempt": 1,
+          "url": "https://arxiv.org/abs/1706.03762",
+          "wafLabel": "unclassified",
+          "startedAt": "2026-11-03T18:43:12.336Z",
+          "latencyMs": 5543,
+          "evidenceFile": "evidence/016.json",
+          "evidenceSha256": "93e201e750b38f60684ef357810a8bc10df9835712ee731de8e3c6d5749a941e",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": true,
+          "serviceAttemptCount": 1,
+          "failureReason": "missing_expected_marker",
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": true,
+          "landedUrl": "https://arxiv.org/abs/1706.03762",
+          "title": "[1706.03762] Attention Is All You Need",
+          "contentBytes": 48481,
+          "contentSha256": "0e42e76af93194d9fc25717342dc3755c0615e172eea3e8cbe945633c0b81180",
+          "renderedExactMarkerPresent": true,
+          "mainFrameNavigations": [
+            {
+              "url": "https://arxiv.org/abs/1706.03762",
+              "status": 200
+            }
+          ]
+        },
+        {
+          "target": "arxiv",
+          "profile": "rebrowser",
+          "attempt": 1,
+          "url": "https://arxiv.org/abs/1706.03762",
+          "wafLabel": "unclassified",
+          "startedAt": "2026-11-03T18:43:12.336Z",
+          "latencyMs": 5547,
+          "evidenceFile": "evidence/015.json",
+          "evidenceSha256": "3e559d7517cd4f6bdc07abcb1c759e06ba5a9b3cdcb82ffc1b31e52b4ac5cbc2",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": true,
+          "serviceAttemptCount": 1,
+          "failureReason": "missing_expected_marker",
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": true,
+          "landedUrl": "https://arxiv.org/abs/1706.03762",
+          "title": "[1706.03762] Attention Is All You Need",
+          "contentBytes": 48481,
+          "contentSha256": "0e42e76af93194d9fc25717342dc3755c0615e172eea3e8cbe945633c0b81180",
+          "renderedExactMarkerPresent": true,
+          "mainFrameNavigations": [
+            {
+              "url": "https://arxiv.org/abs/1706.03762",
+              "status": 200
+            }
+          ]
+        },
+        {
+          "target": "g2",
+          "profile": "pydoll",
+          "attempt": 2,
+          "url": "https://www.g2.com/categories/emerging-ai-software?order=g2_score&page=92&_pjax=%23ajax-container#product-list",
+          "wafLabel": "datadome",
+          "startedAt": "2026-11-03T18:43:17.885Z",
+          "latencyMs": 5764,
+          "evidenceFile": "evidence/018.json",
+          "evidenceSha256": "4b3cfc7c54cd142fcf99cae2a2b49b4d515c9939d6d89c22e2258b19a6e65e58",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "service_error",
+          "apiStatus": 500,
+          "pageStatus": null,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "contentBytes": 0,
+          "contentSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "renderedExactMarkerPresent": false,
+          "serviceErrorCode": "BROWSER_ERROR",
+          "errorType": "RuntimeError",
+          "error": "Document changed repeatedly during capture",
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.g2.com/categories/emerging-ai-software?order=g2_score&page=92&_pjax=%23ajax-container",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "g2",
+          "profile": "rebrowser",
+          "attempt": 2,
+          "url": "https://www.g2.com/categories/emerging-ai-software?order=g2_score&page=92&_pjax=%23ajax-container#product-list",
+          "wafLabel": "datadome",
+          "startedAt": "2026-11-03T18:43:17.884Z",
+          "latencyMs": 5874,
+          "evidenceFile": "evidence/017.json",
+          "evidenceSha256": "a7388dd2461a706751a78f8ff99d9dbb744fe2a51b3a973687f588d437270111",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "",
+          "landedUrl": "https://www.g2.com/categories/emerging-ai-software?order=g2_score&page=92&_pjax=%23ajax-container#product-list",
+          "title": "g2.com",
+          "contentBytes": 2896,
+          "contentSha256": "7e7a50485434c59b5c2bf46cfb64f3251f5d0aeb57b6f714769dddb0f1148a78",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.g2.com/categories/emerging-ai-software?order=g2_score&page=92&_pjax=%23ajax-container",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "neimanmarcus",
+          "profile": "pydoll",
+          "attempt": 2,
+          "url": "https://www.neimanmarcus.com/p/gorski-reversible-toscana-lamb-shearling-jacket-prod282500173",
+          "wafLabel": "datadome",
+          "startedAt": "2026-11-03T18:43:23.758Z",
+          "latencyMs": 6807,
+          "evidenceFile": "evidence/019.json",
+          "evidenceSha256": "8ecfd120a1c284c6a0c5411a9d1439b077378b146b1085f3e009f54f8b73b622",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "",
+          "landedUrl": "https://www.neimanmarcus.com/p/gorski-reversible-toscana-lamb-shearling-jacket-prod282500173",
+          "title": "neimanmarcus.com",
+          "contentBytes": 1543,
+          "contentSha256": "9733e7cdf99c15a623712577ec734812123cbe0f471b9497c1be740e83ddce11",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.neimanmarcus.com/p/gorski-reversible-toscana-lamb-shearling-jacket-prod282500173",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "neimanmarcus",
+          "profile": "rebrowser",
+          "attempt": 2,
+          "url": "https://www.neimanmarcus.com/p/gorski-reversible-toscana-lamb-shearling-jacket-prod282500173",
+          "wafLabel": "datadome",
+          "startedAt": "2026-11-03T18:43:23.758Z",
+          "latencyMs": 6980,
+          "evidenceFile": "evidence/020.json",
+          "evidenceSha256": "3183a37ee63c25014eb49c76529b24f0e687bb4d97ce8bab8b7156d34c786b81",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "",
+          "landedUrl": "https://www.neimanmarcus.com/p/gorski-reversible-toscana-lamb-shearling-jacket-prod282500173",
+          "title": "neimanmarcus.com",
+          "contentBytes": 1543,
+          "contentSha256": "ecc95fa8347ef85e12a2442dde7fce121cdc456d0f6f9cd1d00ec30bfe42e759",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.neimanmarcus.com/p/gorski-reversible-toscana-lamb-shearling-jacket-prod282500173",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "LinkedIn",
+          "profile": "rebrowser",
+          "attempt": 2,
+          "url": "https://www.linkedin.com/company/microsoft/",
+          "wafLabel": "custom",
+          "startedAt": "2026-11-03T18:43:30.738Z",
+          "latencyMs": 165,
+          "evidenceFile": "evidence/021.json",
+          "evidenceSha256": "9b4ecb4735732e17a146a04543a2a402b6ce17e0d5ad465212b7d3cde688e91c",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "service_error",
+          "apiStatus": 500,
+          "pageStatus": null,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "contentBytes": 0,
+          "contentSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "renderedExactMarkerPresent": false,
+          "serviceErrorCode": "BROWSER_ERROR",
+          "errorType": "Error",
+          "error": "Error: page.goto: net::ERR_CONNECTION_CLOSED at https://www.linkedin.com/company/microsoft/\nCall log:\n  - navigating to \"https://www.linkedin.com/company/microsoft/\", waiting until \"domcontentloaded\"\n",
+          "mainFrameNavigations": []
+        },
+        {
+          "target": "LinkedIn",
+          "profile": "pydoll",
+          "attempt": 2,
+          "url": "https://www.linkedin.com/company/microsoft/",
+          "wafLabel": "custom",
+          "startedAt": "2026-11-03T18:43:30.739Z",
+          "latencyMs": 164,
+          "evidenceFile": "evidence/022.json",
+          "evidenceSha256": "815d1866f049a0bd756c968eb4819ebe23002ac743d993339dd9b241c3271d5c",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "service_error",
+          "apiStatus": 500,
+          "pageStatus": null,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "contentBytes": 0,
+          "contentSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "renderedExactMarkerPresent": false,
+          "serviceErrorCode": "BROWSER_ERROR",
+          "errorType": "Error",
+          "error": "net::ERR_CONNECTION_CLOSED at https://www.linkedin.com/company/microsoft/",
+          "mainFrameNavigations": []
+        },
+        {
+          "target": "github",
+          "profile": "rebrowser",
+          "attempt": 2,
+          "url": "https://github.com/facebook/react",
+          "wafLabel": "unclassified",
+          "startedAt": "2026-11-03T18:43:30.904Z",
+          "latencyMs": 5751,
+          "evidenceFile": "evidence/024.json",
+          "evidenceSha256": "9ca50fcb2370e87d55594fed9a67674340bb7a348a730204d99ca38e32eda2f7",
+          "frontierPass": true,
+          "screenedPass": true,
+          "normalizedPass": true,
+          "serviceAttemptCount": 1,
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "rawMarkerPresent": true,
+          "textMarkerPresent": true,
+          "landedUrl": "https://github.com/react/react",
+          "title": "GitHub - react/react: The library for web and native user interfaces. \u00b7 GitHub",
+          "contentBytes": 456968,
+          "contentSha256": "a548bb94cbd9bd6abe59280bc801bab5717a1f638fdd5e43df12bd404cc20ba6",
+          "renderedExactMarkerPresent": true,
+          "mainFrameNavigations": [
+            {
+              "url": "https://github.com/facebook/react",
+              "status": 301
+            },
+            {
+              "url": "https://github.com/react/react",
+              "status": 200
+            }
+          ]
+        },
+        {
+          "target": "github",
+          "profile": "pydoll",
+          "attempt": 2,
+          "url": "https://github.com/facebook/react",
+          "wafLabel": "unclassified",
+          "startedAt": "2026-11-03T18:43:30.903Z",
+          "latencyMs": 5799,
+          "evidenceFile": "evidence/023.json",
+          "evidenceSha256": "92b7c304dbd8886f9c753429fb20db1438346eefbda09c1cd8ec3fbf1c6d0928",
+          "frontierPass": true,
+          "screenedPass": true,
+          "normalizedPass": true,
+          "serviceAttemptCount": 1,
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "rawMarkerPresent": true,
+          "textMarkerPresent": true,
+          "landedUrl": "https://github.com/react/react",
+          "title": "GitHub - react/react: The library for web and native user interfaces. \u00b7 GitHub",
+          "contentBytes": 456969,
+          "contentSha256": "d5ed98371d8abcda071f178a8bfd4b0f871ab6a1e97c6797d50ca47693465111",
+          "renderedExactMarkerPresent": true,
+          "mainFrameNavigations": [
+            {
+              "url": "https://github.com/react/react",
+              "status": 200
+            }
+          ]
+        },
+        {
+          "target": "arxiv",
+          "profile": "pydoll",
+          "attempt": 2,
+          "url": "https://arxiv.org/abs/1706.03762",
+          "wafLabel": "unclassified",
+          "startedAt": "2026-11-03T18:43:36.710Z",
+          "latencyMs": 5424,
+          "evidenceFile": "evidence/026.json",
+          "evidenceSha256": "fcc4364af06a5b8cb377199af11020bf03bdd753dee495c501d6dcf4d1988f63",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": true,
+          "serviceAttemptCount": 1,
+          "failureReason": "missing_expected_marker",
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": true,
+          "landedUrl": "https://arxiv.org/abs/1706.03762",
+          "title": "[1706.03762] Attention Is All You Need",
+          "contentBytes": 48481,
+          "contentSha256": "0e42e76af93194d9fc25717342dc3755c0615e172eea3e8cbe945633c0b81180",
+          "renderedExactMarkerPresent": true,
+          "mainFrameNavigations": [
+            {
+              "url": "https://arxiv.org/abs/1706.03762",
+              "status": 200
+            }
+          ]
+        },
+        {
+          "target": "arxiv",
+          "profile": "rebrowser",
+          "attempt": 2,
+          "url": "https://arxiv.org/abs/1706.03762",
+          "wafLabel": "unclassified",
+          "startedAt": "2026-11-03T18:43:36.710Z",
+          "latencyMs": 5428,
+          "evidenceFile": "evidence/025.json",
+          "evidenceSha256": "8d8e1baeffb67e835138ceac19475b507b6a9636390f952aabadf09b27819dae",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": true,
+          "serviceAttemptCount": 1,
+          "failureReason": "missing_expected_marker",
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": true,
+          "landedUrl": "https://arxiv.org/abs/1706.03762",
+          "title": "[1706.03762] Attention Is All You Need",
+          "contentBytes": 48481,
+          "contentSha256": "0e42e76af93194d9fc25717342dc3755c0615e172eea3e8cbe945633c0b81180",
+          "renderedExactMarkerPresent": true,
+          "mainFrameNavigations": [
+            {
+              "url": "https://arxiv.org/abs/1706.03762",
+              "status": 200
+            }
+          ]
+        },
+        {
+          "target": "lowes",
+          "profile": "rebrowser",
+          "attempt": 2,
+          "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "wafLabel": "akamai",
+          "startedAt": "2026-11-03T18:43:42.140Z",
+          "latencyMs": 5703,
+          "evidenceFile": "evidence/028.json",
+          "evidenceSha256": "746064ebb845020a00d9daf908451ae91db803001108575a720aa9c5d6edf14f",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "",
+          "landedUrl": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "title": "Access Denied",
+          "contentBytes": 434,
+          "contentSha256": "a3d4d0f68a5474eb5bb8cdd4b09050dea853fcaea3cece8aa2f1f0b53a824ddd",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "lowes",
+          "profile": "pydoll",
+          "attempt": 2,
+          "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "wafLabel": "akamai",
+          "startedAt": "2026-11-03T18:43:42.140Z",
+          "latencyMs": 5787,
+          "evidenceFile": "evidence/027.json",
+          "evidenceSha256": "6326872c8c0e7bddd7b560dbe4b27c7f466ede5a395f6fe480f82f74d53a5675",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "",
+          "landedUrl": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "title": "Access Denied",
+          "contentBytes": 434,
+          "contentSha256": "2785971e7214476b58b47055ed966f8cae463ea3b48e7cc207d575dfc7fb442c",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "stockx",
+          "profile": "rebrowser",
+          "attempt": 2,
+          "url": "https://stockx.com/air-jordan-5-retro-black-university-blue-2026",
+          "wafLabel": "cloudflare",
+          "startedAt": "2026-11-03T18:43:47.927Z",
+          "latencyMs": 5276,
+          "evidenceFile": "evidence/029.json",
+          "evidenceSha256": "44b6b9c2475eb7c3c23869df5dcda27253c6a71245e6775d0f1fcb9acb40d3ac",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "",
+          "landedUrl": "https://stockx.com/air-jordan-5-retro-black-university-blue-2026",
+          "title": "Just a moment...",
+          "contentBytes": 44877,
+          "contentSha256": "f721d5e50d7a228cd1809033155f67e57cd436a6ced600262f76119644c5c12c",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://stockx.com/air-jordan-5-retro-black-university-blue-2026",
+              "status": 307
+            },
+            {
+              "url": "https://stockx.com/air-jordan-5-retro-black-university-blue-2026",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "stockx",
+          "profile": "pydoll",
+          "attempt": 2,
+          "url": "https://stockx.com/air-jordan-5-retro-black-university-blue-2026",
+          "wafLabel": "cloudflare",
+          "startedAt": "2026-11-03T18:43:47.928Z",
+          "latencyMs": 5298,
+          "evidenceFile": "evidence/030.json",
+          "evidenceSha256": "b2169194b691ea9971754cea4121682d5f2d6479d1584940d71cee6effc1ed3c",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "",
+          "landedUrl": "https://stockx.com/air-jordan-5-retro-black-university-blue-2026",
+          "title": "Just a moment...",
+          "contentBytes": 44877,
+          "contentSha256": "e8358fc4097a53fbbbf4da3237bd87e114b01c36a09078eb6d4d9bd9b016e3fe",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://stockx.com/air-jordan-5-retro-black-university-blue-2026",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "wsj",
+          "profile": "pydoll",
+          "attempt": 2,
+          "url": "https://www.wsj.com/livecoverage/iran-war-2026-trump-deadline-latest-news",
+          "wafLabel": "datadome",
+          "startedAt": "2026-11-03T18:43:53.226Z",
+          "latencyMs": 5492,
+          "evidenceFile": "evidence/031.json",
+          "evidenceSha256": "1ee68d1178437e8a239b4e6275b32a10732c4f263214ce95be137630c92f62fa",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 401,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "",
+          "landedUrl": "https://www.wsj.com/livecoverage/iran-war-2026-trump-deadline-latest-news",
+          "title": "wsj.com",
+          "contentBytes": 1546,
+          "contentSha256": "d777a65e677f5ae5380a89f2d6a81dc317a1fbfa553fedbfb45ca277eb6062f3",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.wsj.com/livecoverage/iran-war-2026-trump-deadline-latest-news",
+              "status": 401
+            }
+          ]
+        },
+        {
+          "target": "wsj",
+          "profile": "rebrowser",
+          "attempt": 2,
+          "url": "https://www.wsj.com/livecoverage/iran-war-2026-trump-deadline-latest-news",
+          "wafLabel": "datadome",
+          "startedAt": "2026-11-03T18:43:53.226Z",
+          "latencyMs": 6129,
+          "evidenceFile": "evidence/032.json",
+          "evidenceSha256": "938738eef5bc2af92a8add02262b739654f427e7cacabed906167aacf1313146",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 401,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "",
+          "landedUrl": "https://www.wsj.com/livecoverage/iran-war-2026-trump-deadline-latest-news",
+          "title": "wsj.com",
+          "contentBytes": 1546,
+          "contentSha256": "618ad4638381e9d52c4a92fc186ac09eb75193a2ff4fa9804ea4cf6a124707fd",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.wsj.com/livecoverage/iran-war-2026-trump-deadline-latest-news",
+              "status": 401
+            }
+          ]
+        }
+      ],
+      "privateAddressNegativeControls": [
+        {
+          "profile": "rebrowser",
+          "privateLoopbackNavigationDenied": true,
+          "receiptSha256": "4343b89ca4675974fda2771f357dd251111e264e2c88a519eb79505d73d90d83"
+        },
+        {
+          "profile": "pydoll",
+          "privateLoopbackNavigationDenied": true,
+          "receiptSha256": "27802c994016d65ecda4e33dcbaa93e0a9135fa10454ba6d06abf3050c5e62c7"
+        }
+      ],
+      "resourceAudit": {
+        "samples": 10,
+        "peakSampledMemoryMiB": {
+          "rebrowser": 633,
+          "pydoll": 979
+        },
+        "maximumObservedEventCounters": {
+          "rebrowser": {
+            "memory.events:low": 0,
+            "memory.events:high": 0,
+            "memory.events:max": 0,
+            "memory.events:oom": 0,
+            "memory.events:oom_kill": 0,
+            "memory.events:oom_group_kill": 0,
+            "memory.events:sock_throttled": 0,
+            "pids.events:max": 0
+          },
+          "pydoll": {
+            "memory.events:low": 0,
+            "memory.events:high": 0,
+            "memory.events:max": 0,
+            "memory.events:oom": 0,
+            "memory.events:oom_kill": 0,
+            "memory.events:oom_group_kill": 0,
+            "memory.events:sock_throttled": 0,
+            "pids.events:max": 0
+          }
+        },
+        "createdContainersRemoved": true,
+        "finalActiveRequestCountersZero": true,
+        "prototypeCounterLimit": "Prototype health counts active commands, not a census of the browser initial blank tab. Every request has context-close proof and all containers were subsequently removed."
+      },
+      "artifactHashes": {
+        "report.json": "e09b64ddc63d2c1c73a3107441deeb8431bf3aca9429a4d7ee004d663162134e",
+        "attempts.jsonl": "4823d548418dafe58dc1a9d575ee1b05477b0cc22d680f1b3e9a1d0f4b4758b5",
+        "deployment.json": "13b155e111c62015ee27c8380fe5a8ad293b173d33a2c52847179a8e0be74428",
+        "cleanup.json": "bee0d7cad012e3bfa8ec0267806d058d1d83fb516ca7d898773fd443ca45535e",
+        "resource-samples.jsonl": "ae6bf6c29792ebbed28a2c7cd7ee8c8114756395976bdaf9066103228a958a68",
+        "final-health.json": "9c4137b4dd81c5f9e817b05b839e0f1d27d015fb5e80d1ad2ae7d9a03d36b427"
+      },
+      "sourceSnapshotHashes": {
+        "benchmark-pydoll-driver-lab-2026-11-04.ts": "8584e96be96383dcadf592b183ee0777faf9221376821ec0c697dc5e833b843d",
+        "package-pin.json": "1eadebfe28127488f61eb2bbe53d8660005b43fd01af6aa37911828cec513bcb",
+        "Dockerfile": "9555c5984dee890bdf3a9c3c9ea8aa8e01f2feed00eb7558b758dfce2bd3f6ac",
+        "owner.cjs": "290b45e1d2e95e4dea1de94cd0c968ed2e2a8dd263787b2323163e6caa2f6d27",
+        "run-pydoll-driver-lab-2026-11-04.py": "d15ee6d0467b3e2ddec7fde7fd8417339f7f322d471548e710b1bf579b85021d",
+        "driver.py": "74eeeb78e4eed20d056543114264b58d52759cc7559f12fb495723ebfd9cc925",
+        "python-freeze.txt": "dee1a9bbe87cc0dc52688d61fef83ef7a1a0229b98674da79dbb56ed703e589c"
+      }
+    },
+    {
+      "runDirectory": "_local/anti-bot/interception-driver-lab-corrected-2026-11-04",
+      "status": "complete",
+      "sourceCommit": "f93fbdb601d0974d64e3ea2095dfedc645f45a31",
+      "imageId": "sha256:6ba27ec82917ce48117214eeff055c8f0231ee861afb8fa40dc0b0f76c9c9fe3",
+      "protocol": {
+        "status": "complete",
+        "startedAt": "2026-11-03T18:49:10.337Z",
+        "sourceCommit": "f93fbdb601d0974d64e3ea2095dfedc645f45a31",
+        "imageId": "sha256:6ba27ec82917ce48117214eeff055c8f0231ee861afb8fa40dc0b0f76c9c9fe3",
+        "fixtureSha256": "a886fb57087e842c2857b89a7669e31d2fb7b98d6bd7deb60a2329f29581b76a",
+        "expectedRequests": 20,
+        "rounds": 4,
+        "targets": [
+          "lowes",
+          "github"
+        ],
+        "globalConcurrency": 2,
+        "perOwnerConcurrency": 1,
+        "clientTimeoutMs": 35000,
+        "serviceTimeoutMs": 30000,
+        "waitAfterLoadMs": 5000,
+        "consent": "off",
+        "workflow": "none",
+        "adBlocking": false,
+        "serviceWorkers": "block",
+        "freshContexts": true,
+        "expectedMarkerSent": false,
+        "upstreamProxy": false,
+        "hostedCalls": 0,
+        "scope": "Two-by-two Rebrowser prototype comparison: browser-global versus per-context filtering proxy, with or without guarded request interception. Four Lowes rounds/cell and one GitHub control/cell, fixed five-second capture delay, service workers blocked, ads and consent automation off. Not a production API or full-target measurement.",
+        "finishedAt": "2026-11-03T18:50:10.802Z",
+        "scoresAndHashesReplayed": 20,
+        "publicControlsPassed": true,
+        "timingIntegrity": {
+          "valid": true,
+          "sampleIntervalMs": 1000,
+          "maximumAllowedGapMs": 10000,
+          "maximumObservedGapMs": 1003,
+          "gaps": []
+        }
+      },
+      "sameChromiumBinaryAndVersion": {
+        "sha256": "2b3a2bb9c4308ce74cb680dcd50305cfae1f79589305dc92b993f876b5a94f65",
+        "version": "156.0.8078.4",
+        "allOwnersMatch": true
+      },
+      "prototypeLaunchBundles": [
+        {
+          "profile": "global",
+          "launchArgs": [
+            [
+              "/usr/local/share/playwright/chromium-1248/chrome-linux-arm64/chrome",
+              "--disable-field-trial-config",
+              "--disable-background-networking",
+              "--disable-background-timer-throttling",
+              "--disable-backgrounding-occluded-windows",
+              "--disable-back-forward-cache",
+              "--disable-breakpad",
+              "--disable-client-side-phishing-detection",
+              "--disable-component-extensions-with-background-pages",
+              "--disable-component-update",
+              "--no-default-browser-check",
+              "--disable-default-apps",
+              "--disable-dev-shm-usage",
+              "--disable-edgeupdater",
+              "--disable-extensions",
+              "--disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,BlockOriginHeaderModificationOnRedirect,AvoidCorsURLLoaderRestartOnRedirect,Translate,AutoDeElevate,OptimizationHints,NetworkTimeServiceQuerying,AimEnabled,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion",
+              "--enable-features=CDPScreenshotNewSurface",
+              "--allow-pre-commit-input",
+              "--disable-hang-monitor",
+              "--disable-prompt-on-repost",
+              "--disable-renderer-backgrounding",
+              "--disable-updater-scheduler",
+              "--force-color-profile=srgb",
+              "--metrics-recording-only",
+              "--no-first-run",
+              "--password-store=basic",
+              "--use-mock-keychain",
+              "--no-service-autorun",
+              "--export-tagged-pdf",
+              "--disable-search-engine-choice-screen",
+              "--unsafely-disable-devtools-self-xss-warnings",
+              "--edge-skip-compat-layer-relaunch",
+              "--disable-infobars",
+              "--disable-search-engine-choice-screen",
+              "--disable-sync",
+              "--enable-unsafe-swiftshader",
+              "--no-sandbox",
+              "--proxy-server=http://127.0.0.1:38903",
+              "--proxy-bypass-list=<-loopback>",
+              "--disable-blink-features=AutomationControlled",
+              "--no-sandbox",
+              "--disable-setuid-sandbox",
+              "--disable-dev-shm-usage",
+              "--window-size=1365,900",
+              "--proxy-bypass-list=<-loopback>",
+              "--webrtc-ip-handling-policy=disable_non_proxied_udp",
+              "--user-data-dir=<temporary>",
+              "--remote-debugging-pipe",
+              "--no-startup-window"
+            ]
+          ],
+          "health": {
+            "status": "healthy",
+            "prototype": true,
+            "browserEngine": "rebrowser",
+            "ownerBootId": "24b263c7-a409-4077-8cbe-7f7da7b7bac8",
+            "browserVersion": "156.0.8078.4",
+            "browserExecutable": "/usr/local/share/playwright/chromium-1248/chrome-linux-arm64/chrome",
+            "binarySha256": "2b3a2bb9c4308ce74cb680dcd50305cfae1f79589305dc92b993f876b5a94f65",
+            "activePages": 0,
+            "browserSessions": 0,
+            "serviceWorkers": "block",
+            "proxyScope": "global",
+            "blockAds": false,
+            "headless": false,
+            "dependencies": "aiofiles==25.1.0\naiohappyeyeballs==2.7.1\naiohttp==3.14.5\naiosignal==1.4.0\nannotated-types==0.8.0\nattrs==26.1.0\nfrozenlist==1.8.0\nidna==3.20\nmultidict==7.2.1\npropcache==0.5.4\npydantic==2.14.2\npydantic_core==2.50.2\npydoll-python @ file:///tmp/pydoll_python-3.0.0-py3-none-any.whl\ntyping-inspection==0.4.4\ntyping_extensions==4.16.0\nwebsockets==16.1.1\nyarl==1.25.1\n",
+            "args": [
+              "--no-sandbox",
+              "--disable-setuid-sandbox",
+              "--disable-dev-shm-usage",
+              "--window-size=1365,900",
+              "--proxy-bypass-list=<-loopback>",
+              "--webrtc-ip-handling-policy=disable_non_proxied_udp"
+            ]
+          },
+          "runtimeHashes": {
+            "prototype-owner.cjs": "48e472df69a05ba728e6be4a401b19edda466732aaecc2fbf9dfe37a568919ab",
+            "prototype-driver.py": "74eeeb78e4eed20d056543114264b58d52759cc7559f12fb495723ebfd9cc925",
+            "dist/helpers/page-readiness.js": "144e114d2597b9f0a9aa82848ce7519e77107d947c83da6ec283401f16dd42dd",
+            "dist/helpers/ssrf.js": "452ae1dbec8a6103cba710e56b6d0c5740606021d34c2bc415025a8676a2c68d",
+            "dist/helpers/waf-benchmark.js": "4eea26db4617351a9daa9ad546c8d9d16983d2d736f5a1d435a3159fe7a96f4d",
+            "dist/helpers/bot-detection.js": "77a197cbbe0942b6106db2eb2579fc1af8dc7a167e3e959de51a89f8ed7a746e"
+          }
+        },
+        {
+          "profile": "context",
+          "launchArgs": [
+            [
+              "/usr/local/share/playwright/chromium-1248/chrome-linux-arm64/chrome",
+              "--disable-field-trial-config",
+              "--disable-background-networking",
+              "--disable-background-timer-throttling",
+              "--disable-backgrounding-occluded-windows",
+              "--disable-back-forward-cache",
+              "--disable-breakpad",
+              "--disable-client-side-phishing-detection",
+              "--disable-component-extensions-with-background-pages",
+              "--disable-component-update",
+              "--no-default-browser-check",
+              "--disable-default-apps",
+              "--disable-dev-shm-usage",
+              "--disable-edgeupdater",
+              "--disable-extensions",
+              "--disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,BlockOriginHeaderModificationOnRedirect,AvoidCorsURLLoaderRestartOnRedirect,Translate,AutoDeElevate,OptimizationHints,NetworkTimeServiceQuerying,AimEnabled,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion",
+              "--enable-features=CDPScreenshotNewSurface",
+              "--allow-pre-commit-input",
+              "--disable-hang-monitor",
+              "--disable-prompt-on-repost",
+              "--disable-renderer-backgrounding",
+              "--disable-updater-scheduler",
+              "--force-color-profile=srgb",
+              "--metrics-recording-only",
+              "--no-first-run",
+              "--password-store=basic",
+              "--use-mock-keychain",
+              "--no-service-autorun",
+              "--export-tagged-pdf",
+              "--disable-search-engine-choice-screen",
+              "--unsafely-disable-devtools-self-xss-warnings",
+              "--edge-skip-compat-layer-relaunch",
+              "--disable-infobars",
+              "--disable-search-engine-choice-screen",
+              "--disable-sync",
+              "--enable-unsafe-swiftshader",
+              "--no-sandbox",
+              "--disable-blink-features=AutomationControlled",
+              "--no-sandbox",
+              "--disable-setuid-sandbox",
+              "--disable-dev-shm-usage",
+              "--window-size=1365,900",
+              "--proxy-bypass-list=<-loopback>",
+              "--webrtc-ip-handling-policy=disable_non_proxied_udp",
+              "--user-data-dir=<temporary>",
+              "--remote-debugging-pipe",
+              "--no-startup-window"
+            ]
+          ],
+          "health": {
+            "status": "healthy",
+            "prototype": true,
+            "browserEngine": "rebrowser",
+            "ownerBootId": "b3e4a5c6-4c5f-4507-b976-f5432a22e4a1",
+            "browserVersion": "156.0.8078.4",
+            "browserExecutable": "/usr/local/share/playwright/chromium-1248/chrome-linux-arm64/chrome",
+            "binarySha256": "2b3a2bb9c4308ce74cb680dcd50305cfae1f79589305dc92b993f876b5a94f65",
+            "activePages": 0,
+            "browserSessions": 0,
+            "serviceWorkers": "block",
+            "proxyScope": "context",
+            "blockAds": false,
+            "headless": false,
+            "dependencies": "aiofiles==25.1.0\naiohappyeyeballs==2.7.1\naiohttp==3.14.5\naiosignal==1.4.0\nannotated-types==0.8.0\nattrs==26.1.0\nfrozenlist==1.8.0\nidna==3.20\nmultidict==7.2.1\npropcache==0.5.4\npydantic==2.14.2\npydantic_core==2.50.2\npydoll-python @ file:///tmp/pydoll_python-3.0.0-py3-none-any.whl\ntyping-inspection==0.4.4\ntyping_extensions==4.16.0\nwebsockets==16.1.1\nyarl==1.25.1\n",
+            "args": [
+              "--no-sandbox",
+              "--disable-setuid-sandbox",
+              "--disable-dev-shm-usage",
+              "--window-size=1365,900",
+              "--proxy-bypass-list=<-loopback>",
+              "--webrtc-ip-handling-policy=disable_non_proxied_udp"
+            ]
+          },
+          "runtimeHashes": {
+            "prototype-owner.cjs": "48e472df69a05ba728e6be4a401b19edda466732aaecc2fbf9dfe37a568919ab",
+            "prototype-driver.py": "74eeeb78e4eed20d056543114264b58d52759cc7559f12fb495723ebfd9cc925",
+            "dist/helpers/page-readiness.js": "144e114d2597b9f0a9aa82848ce7519e77107d947c83da6ec283401f16dd42dd",
+            "dist/helpers/ssrf.js": "452ae1dbec8a6103cba710e56b6d0c5740606021d34c2bc415025a8676a2c68d",
+            "dist/helpers/waf-benchmark.js": "4eea26db4617351a9daa9ad546c8d9d16983d2d736f5a1d435a3159fe7a96f4d",
+            "dist/helpers/bot-detection.js": "77a197cbbe0942b6106db2eb2579fc1af8dc7a167e3e959de51a89f8ed7a746e"
+          }
+        }
+      ],
+      "byProfile": {
+        "global-guarded": {
+          "overall": {
+            "requests": 5,
+            "uniqueTargets": 2,
+            "frontierPasses": 1,
+            "screenedPasses": 1,
+            "normalizedPasses": 1,
+            "frontierSuccessRate": 0.2,
+            "screenedSuccessRate": 0.2,
+            "normalizedSuccessRate": 0.2,
+            "successfulLatencyP50Ms": 5840,
+            "successfulLatencyP95Ms": 5840,
+            "allAttemptLatencyP95Ms": 5840,
+            "failures": {
+              "target_status_403": 4
+            }
+          },
+          "byWafLabel": {
+            "akamai": {
+              "requests": 4,
+              "uniqueTargets": 1,
+              "frontierPasses": 0,
+              "screenedPasses": 0,
+              "normalizedPasses": 0,
+              "frontierSuccessRate": 0,
+              "screenedSuccessRate": 0,
+              "normalizedSuccessRate": 0,
+              "successfulLatencyP50Ms": null,
+              "successfulLatencyP95Ms": null,
+              "allAttemptLatencyP95Ms": 5730,
+              "failures": {
+                "target_status_403": 4
+              }
+            },
+            "unclassified": {
+              "requests": 1,
+              "uniqueTargets": 1,
+              "frontierPasses": 1,
+              "screenedPasses": 1,
+              "normalizedPasses": 1,
+              "frontierSuccessRate": 1,
+              "screenedSuccessRate": 1,
+              "normalizedSuccessRate": 1,
+              "successfulLatencyP50Ms": 5840,
+              "successfulLatencyP95Ms": 5840,
+              "allAttemptLatencyP95Ms": 5840,
+              "failures": {}
+            }
+          }
+        },
+        "global-unintercepted": {
+          "overall": {
+            "requests": 5,
+            "uniqueTargets": 2,
+            "frontierPasses": 1,
+            "screenedPasses": 1,
+            "normalizedPasses": 1,
+            "frontierSuccessRate": 0.2,
+            "screenedSuccessRate": 0.2,
+            "normalizedSuccessRate": 0.2,
+            "successfulLatencyP50Ms": 6660,
+            "successfulLatencyP95Ms": 6660,
+            "allAttemptLatencyP95Ms": 6660,
+            "failures": {
+              "target_status_403": 4
+            }
+          },
+          "byWafLabel": {
+            "akamai": {
+              "requests": 4,
+              "uniqueTargets": 1,
+              "frontierPasses": 0,
+              "screenedPasses": 0,
+              "normalizedPasses": 0,
+              "frontierSuccessRate": 0,
+              "screenedSuccessRate": 0,
+              "normalizedSuccessRate": 0,
+              "successfulLatencyP50Ms": null,
+              "successfulLatencyP95Ms": null,
+              "allAttemptLatencyP95Ms": 6165,
+              "failures": {
+                "target_status_403": 4
+              }
+            },
+            "unclassified": {
+              "requests": 1,
+              "uniqueTargets": 1,
+              "frontierPasses": 1,
+              "screenedPasses": 1,
+              "normalizedPasses": 1,
+              "frontierSuccessRate": 1,
+              "screenedSuccessRate": 1,
+              "normalizedSuccessRate": 1,
+              "successfulLatencyP50Ms": 6660,
+              "successfulLatencyP95Ms": 6660,
+              "allAttemptLatencyP95Ms": 6660,
+              "failures": {}
+            }
+          }
+        },
+        "context-guarded": {
+          "overall": {
+            "requests": 5,
+            "uniqueTargets": 2,
+            "frontierPasses": 1,
+            "screenedPasses": 1,
+            "normalizedPasses": 1,
+            "frontierSuccessRate": 0.2,
+            "screenedSuccessRate": 0.2,
+            "normalizedSuccessRate": 0.2,
+            "successfulLatencyP50Ms": 5851,
+            "successfulLatencyP95Ms": 5851,
+            "allAttemptLatencyP95Ms": 5851,
+            "failures": {
+              "target_status_403": 4
+            }
+          },
+          "byWafLabel": {
+            "akamai": {
+              "requests": 4,
+              "uniqueTargets": 1,
+              "frontierPasses": 0,
+              "screenedPasses": 0,
+              "normalizedPasses": 0,
+              "frontierSuccessRate": 0,
+              "screenedSuccessRate": 0,
+              "normalizedSuccessRate": 0,
+              "successfulLatencyP50Ms": null,
+              "successfulLatencyP95Ms": null,
+              "allAttemptLatencyP95Ms": 5533,
+              "failures": {
+                "target_status_403": 4
+              }
+            },
+            "unclassified": {
+              "requests": 1,
+              "uniqueTargets": 1,
+              "frontierPasses": 1,
+              "screenedPasses": 1,
+              "normalizedPasses": 1,
+              "frontierSuccessRate": 1,
+              "screenedSuccessRate": 1,
+              "normalizedSuccessRate": 1,
+              "successfulLatencyP50Ms": 5851,
+              "successfulLatencyP95Ms": 5851,
+              "allAttemptLatencyP95Ms": 5851,
+              "failures": {}
+            }
+          }
+        },
+        "context-unintercepted": {
+          "overall": {
+            "requests": 5,
+            "uniqueTargets": 2,
+            "frontierPasses": 1,
+            "screenedPasses": 1,
+            "normalizedPasses": 1,
+            "frontierSuccessRate": 0.2,
+            "screenedSuccessRate": 0.2,
+            "normalizedSuccessRate": 0.2,
+            "successfulLatencyP50Ms": 6683,
+            "successfulLatencyP95Ms": 6683,
+            "allAttemptLatencyP95Ms": 7437,
+            "failures": {
+              "target_status_403": 4
+            }
+          },
+          "byWafLabel": {
+            "akamai": {
+              "requests": 4,
+              "uniqueTargets": 1,
+              "frontierPasses": 0,
+              "screenedPasses": 0,
+              "normalizedPasses": 0,
+              "frontierSuccessRate": 0,
+              "screenedSuccessRate": 0,
+              "normalizedSuccessRate": 0,
+              "successfulLatencyP50Ms": null,
+              "successfulLatencyP95Ms": null,
+              "allAttemptLatencyP95Ms": 7437,
+              "failures": {
+                "target_status_403": 4
+              }
+            },
+            "unclassified": {
+              "requests": 1,
+              "uniqueTargets": 1,
+              "frontierPasses": 1,
+              "screenedPasses": 1,
+              "normalizedPasses": 1,
+              "frontierSuccessRate": 1,
+              "screenedSuccessRate": 1,
+              "normalizedSuccessRate": 1,
+              "successfulLatencyP50Ms": 6683,
+              "successfulLatencyP95Ms": 6683,
+              "allAttemptLatencyP95Ms": 6683,
+              "failures": {}
+            }
+          }
+        }
+      },
+      "byTargetAndProfile": {
+        "context-unintercepted": {
+          "lowes": {
+            "requests": 4,
+            "normalizedMatches": 0,
+            "renderedExactMatches": 0
+          },
+          "github": {
+            "requests": 1,
+            "normalizedMatches": 1,
+            "renderedExactMatches": 1
+          }
+        },
+        "global-unintercepted": {
+          "lowes": {
+            "requests": 4,
+            "normalizedMatches": 0,
+            "renderedExactMatches": 0
+          },
+          "github": {
+            "requests": 1,
+            "normalizedMatches": 1,
+            "renderedExactMatches": 1
+          }
+        },
+        "context-guarded": {
+          "lowes": {
+            "requests": 4,
+            "normalizedMatches": 0,
+            "renderedExactMatches": 0
+          },
+          "github": {
+            "requests": 1,
+            "normalizedMatches": 1,
+            "renderedExactMatches": 1
+          }
+        },
+        "global-guarded": {
+          "lowes": {
+            "requests": 4,
+            "normalizedMatches": 0,
+            "renderedExactMatches": 0
+          },
+          "github": {
+            "requests": 1,
+            "normalizedMatches": 1,
+            "renderedExactMatches": 1
+          }
+        }
+      },
+      "observations": [
+        {
+          "target": "lowes",
+          "profile": "context-unintercepted",
+          "attempt": 1,
+          "proxyScope": "context",
+          "interceptGuard": false,
+          "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "wafLabel": "akamai",
+          "startedAt": "2026-11-03T18:49:10.338Z",
+          "latencyMs": 5589,
+          "evidenceFile": "evidence/001.json",
+          "evidenceSha256": "cb042bccbcd8e5b140c8f61b7aaaf149dd1a15643607e73591c7dc6a34fdd17f",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "",
+          "landedUrl": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "title": "Access Denied",
+          "contentBytes": 436,
+          "contentSha256": "bea9513ee2b068f7c33a5084e164e7c8e77cdd170efd254695bdec19f833092e",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "lowes",
+          "profile": "global-unintercepted",
+          "attempt": 1,
+          "proxyScope": "global",
+          "interceptGuard": false,
+          "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "wafLabel": "akamai",
+          "startedAt": "2026-11-03T18:49:10.346Z",
+          "latencyMs": 5979,
+          "evidenceFile": "evidence/002.json",
+          "evidenceSha256": "870b99b273388b7aab8e57a9e5ee39e721b74055b8e962c372d38ac4ad567e5f",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "",
+          "landedUrl": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "title": "Access Denied",
+          "contentBytes": 434,
+          "contentSha256": "457e17487ff18889c70cd15f36271da1d73d99b6064bcfca5bc7e556bb32d697",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+              "status": 200
+            },
+            {
+              "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "lowes",
+          "profile": "context-guarded",
+          "attempt": 1,
+          "proxyScope": "context",
+          "interceptGuard": true,
+          "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "wafLabel": "akamai",
+          "startedAt": "2026-11-03T18:49:16.327Z",
+          "latencyMs": 5452,
+          "evidenceFile": "evidence/004.json",
+          "evidenceSha256": "8876ff2244ac2f4bfce9ec2ef83b4ebf4bd38b53b9411168cc3afebcb58a78fc",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "",
+          "landedUrl": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "title": "Access Denied",
+          "contentBytes": 436,
+          "contentSha256": "6792458817095a51c2edbdcc6dccc68e5e37febf904c446e4becfb543ae0b654",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "lowes",
+          "profile": "global-guarded",
+          "attempt": 1,
+          "proxyScope": "global",
+          "interceptGuard": true,
+          "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "wafLabel": "akamai",
+          "startedAt": "2026-11-03T18:49:16.326Z",
+          "latencyMs": 5481,
+          "evidenceFile": "evidence/003.json",
+          "evidenceSha256": "177967142ccd53a7a57c05d5a4a50222ce53018c3ea279e377ca7f898bd14c63",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "",
+          "landedUrl": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "title": "Access Denied",
+          "contentBytes": 436,
+          "contentSha256": "93d1cc9d7fc8c2b22ca000c14596d5bd8efd30fc133ef5fcdbaf90e8506bf59d",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "lowes",
+          "profile": "context-guarded",
+          "attempt": 2,
+          "proxyScope": "context",
+          "interceptGuard": true,
+          "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "wafLabel": "akamai",
+          "startedAt": "2026-11-03T18:49:21.808Z",
+          "latencyMs": 5533,
+          "evidenceFile": "evidence/006.json",
+          "evidenceSha256": "c08d628fc9ea7751a62f67e3de5584640a8b2ab0fa745f7b8d63bbd47d16610d",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "",
+          "landedUrl": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "title": "Access Denied",
+          "contentBytes": 436,
+          "contentSha256": "9291dc46bec1dc627a68b0a4df58f7703ea8142cac61e30dd722a573a532bb0e",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "lowes",
+          "profile": "global-guarded",
+          "attempt": 2,
+          "proxyScope": "global",
+          "interceptGuard": true,
+          "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "wafLabel": "akamai",
+          "startedAt": "2026-11-03T18:49:21.807Z",
+          "latencyMs": 5567,
+          "evidenceFile": "evidence/005.json",
+          "evidenceSha256": "406207cd54f42096bec11cbbf757143ed1f6b52b8eca2e3715568dfd57eb451d",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "",
+          "landedUrl": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "title": "Access Denied",
+          "contentBytes": 434,
+          "contentSha256": "5c5c619133356e6d42de791cdbbb3f99b3ffe440a8aa8308b1ad9bf766836b7e",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "lowes",
+          "profile": "global-unintercepted",
+          "attempt": 2,
+          "proxyScope": "global",
+          "interceptGuard": false,
+          "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "wafLabel": "akamai",
+          "startedAt": "2026-11-03T18:49:27.375Z",
+          "latencyMs": 6165,
+          "evidenceFile": "evidence/008.json",
+          "evidenceSha256": "bff673a7b6a5db9a8830de018c12d670a7cd2dbb2ed100250696928f045dc72c",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "",
+          "landedUrl": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "title": "Access Denied",
+          "contentBytes": 436,
+          "contentSha256": "d8dd4cd0739f45dbeba0a5f6131381ff1b798a76fbd1779d9243b53352c00eb3",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+              "status": 200
+            },
+            {
+              "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "lowes",
+          "profile": "context-unintercepted",
+          "attempt": 2,
+          "proxyScope": "context",
+          "interceptGuard": false,
+          "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "wafLabel": "akamai",
+          "startedAt": "2026-11-03T18:49:27.374Z",
+          "latencyMs": 6167,
+          "evidenceFile": "evidence/007.json",
+          "evidenceSha256": "469c480a068e17197dc3e829312d55a7c2890382a292a08784e5a2f58c4ddffa",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "",
+          "landedUrl": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "title": "Access Denied",
+          "contentBytes": 436,
+          "contentSha256": "3294c33b2ce8b93e325bc2b2a768ca8fbb87675066211c6e5ca18ef25691e45f",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+              "status": 200
+            },
+            {
+              "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "lowes",
+          "profile": "global-unintercepted",
+          "attempt": 3,
+          "proxyScope": "global",
+          "interceptGuard": false,
+          "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "wafLabel": "akamai",
+          "startedAt": "2026-11-03T18:49:33.542Z",
+          "latencyMs": 6107,
+          "evidenceFile": "evidence/010.json",
+          "evidenceSha256": "d07df565586abec7dd6f6c2d84061631a9c1b7b95f2c7f078d6c444cc42e15d2",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "",
+          "landedUrl": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "title": "Access Denied",
+          "contentBytes": 434,
+          "contentSha256": "e20b55208d14c0dc0606e2cfa3530d8a5c77b1633b4603678470f19a92901a17",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+              "status": 200
+            },
+            {
+              "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "lowes",
+          "profile": "context-unintercepted",
+          "attempt": 3,
+          "proxyScope": "context",
+          "interceptGuard": false,
+          "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "wafLabel": "akamai",
+          "startedAt": "2026-11-03T18:49:33.541Z",
+          "latencyMs": 6109,
+          "evidenceFile": "evidence/009.json",
+          "evidenceSha256": "e800e20d2f5e89f9312db8e499084f935c52a68e063cab274b5479631553241c",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "",
+          "landedUrl": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "title": "Access Denied",
+          "contentBytes": 436,
+          "contentSha256": "8ef63c6e76e76485e16ce5b7739af3b66898e4cfcde374e78935a4bba8f62219",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+              "status": 200
+            },
+            {
+              "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "lowes",
+          "profile": "context-guarded",
+          "attempt": 3,
+          "proxyScope": "context",
+          "interceptGuard": true,
+          "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "wafLabel": "akamai",
+          "startedAt": "2026-11-03T18:49:39.650Z",
+          "latencyMs": 5500,
+          "evidenceFile": "evidence/012.json",
+          "evidenceSha256": "d0b377cc539ae15f6af8abf5425fd44e756d98831d328440c0a0bf32f02c5549",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "",
+          "landedUrl": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "title": "Access Denied",
+          "contentBytes": 434,
+          "contentSha256": "9f46f826718d312aacab6c030ef08d7ff61db325ddcd1ed80a19339638da7c86",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "lowes",
+          "profile": "global-guarded",
+          "attempt": 3,
+          "proxyScope": "global",
+          "interceptGuard": true,
+          "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "wafLabel": "akamai",
+          "startedAt": "2026-11-03T18:49:39.650Z",
+          "latencyMs": 5730,
+          "evidenceFile": "evidence/011.json",
+          "evidenceSha256": "638719e0886acd808f15201c8ad3548776040997435aeca2b3089dbc4ceafa5b",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "",
+          "landedUrl": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "title": "Access Denied",
+          "contentBytes": 436,
+          "contentSha256": "ed151942bee5369be924a3ab9a678be4ec434c1395bc3cb284b5f7d7d0a44020",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "lowes",
+          "profile": "context-guarded",
+          "attempt": 4,
+          "proxyScope": "context",
+          "interceptGuard": true,
+          "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "wafLabel": "akamai",
+          "startedAt": "2026-11-03T18:49:45.381Z",
+          "latencyMs": 5418,
+          "evidenceFile": "evidence/014.json",
+          "evidenceSha256": "b32218183c0cb31e0850246aede70b81a923691c82143d5dc552a08af501c7cd",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "",
+          "landedUrl": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "title": "Access Denied",
+          "contentBytes": 434,
+          "contentSha256": "6bac2f467a709c7c228e316ca07b47217e133a56a66dd1d70d28af2b291231a3",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "lowes",
+          "profile": "global-guarded",
+          "attempt": 4,
+          "proxyScope": "global",
+          "interceptGuard": true,
+          "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "wafLabel": "akamai",
+          "startedAt": "2026-11-03T18:49:45.381Z",
+          "latencyMs": 5424,
+          "evidenceFile": "evidence/013.json",
+          "evidenceSha256": "5d80a3cab9aad0a9ee32db7e39ef9d9b5d8debeeeb255a3aed4c2d7d7f61b5d6",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "",
+          "landedUrl": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "title": "Access Denied",
+          "contentBytes": 434,
+          "contentSha256": "516531067cb5fbf6b277a142abcc3285c997cea81e62045e2bb5006ed91eaf62",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "lowes",
+          "profile": "global-unintercepted",
+          "attempt": 4,
+          "proxyScope": "global",
+          "interceptGuard": false,
+          "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "wafLabel": "akamai",
+          "startedAt": "2026-11-03T18:49:50.805Z",
+          "latencyMs": 5550,
+          "evidenceFile": "evidence/016.json",
+          "evidenceSha256": "912f8a71008e49615947a24d27292add8631331e8aa56230dfe3c038bf618d36",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "",
+          "landedUrl": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "title": "Access Denied",
+          "contentBytes": 436,
+          "contentSha256": "57774172409d5ed64fa9289f71ada0e4dc3c6d0818ea2fc7b09c7488db7d5ea6",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "lowes",
+          "profile": "context-unintercepted",
+          "attempt": 4,
+          "proxyScope": "context",
+          "interceptGuard": false,
+          "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "wafLabel": "akamai",
+          "startedAt": "2026-11-03T18:49:50.805Z",
+          "latencyMs": 7437,
+          "evidenceFile": "evidence/015.json",
+          "evidenceSha256": "3b277ffd9e4390ca21f1feb613cdd913071d3a698ff9c410f4fb83551e4a1560",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "",
+          "landedUrl": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "title": "Access Denied",
+          "contentBytes": 436,
+          "contentSha256": "eecee8e5e72308f9fee107131c053b9a8d29c6bc1aaf01e91b3d9c776c9aca18",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+              "status": 200
+            },
+            {
+              "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "github",
+          "profile": "global-unintercepted",
+          "attempt": 1,
+          "proxyScope": "global",
+          "interceptGuard": false,
+          "url": "https://github.com/facebook/react",
+          "wafLabel": "unclassified",
+          "startedAt": "2026-11-03T18:49:58.242Z",
+          "latencyMs": 6660,
+          "evidenceFile": "evidence/018.json",
+          "evidenceSha256": "6957c39ceb0d4c576ce97d1d88836816ae3257b61f2c5e280d151cd59255a425",
+          "frontierPass": true,
+          "screenedPass": true,
+          "normalizedPass": true,
+          "serviceAttemptCount": 1,
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "rawMarkerPresent": true,
+          "textMarkerPresent": true,
+          "landedUrl": "https://github.com/react/react",
+          "title": "GitHub - react/react: The library for web and native user interfaces. \u00b7 GitHub",
+          "contentBytes": 456957,
+          "contentSha256": "ca68efe2fe45b0232fb13db37187627339c0a0154b2af4b39fa89864e0725237",
+          "renderedExactMarkerPresent": true,
+          "mainFrameNavigations": [
+            {
+              "url": "https://github.com/facebook/react",
+              "status": 301
+            },
+            {
+              "url": "https://github.com/react/react",
+              "status": 200
+            }
+          ]
+        },
+        {
+          "target": "github",
+          "profile": "context-unintercepted",
+          "attempt": 1,
+          "proxyScope": "context",
+          "interceptGuard": false,
+          "url": "https://github.com/facebook/react",
+          "wafLabel": "unclassified",
+          "startedAt": "2026-11-03T18:49:58.242Z",
+          "latencyMs": 6683,
+          "evidenceFile": "evidence/017.json",
+          "evidenceSha256": "f0dcec36f53d57a96c65d27d717b725ead6a005b20033c47a82a67e615a67e31",
+          "frontierPass": true,
+          "screenedPass": true,
+          "normalizedPass": true,
+          "serviceAttemptCount": 1,
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "rawMarkerPresent": true,
+          "textMarkerPresent": true,
+          "landedUrl": "https://github.com/react/react",
+          "title": "GitHub - react/react: The library for web and native user interfaces. \u00b7 GitHub",
+          "contentBytes": 456958,
+          "contentSha256": "5ac3bf893eea03d2c0262408b30ab00f4833f14713319874a4348dce794705cd",
+          "renderedExactMarkerPresent": true,
+          "mainFrameNavigations": [
+            {
+              "url": "https://github.com/facebook/react",
+              "status": 301
+            },
+            {
+              "url": "https://github.com/react/react",
+              "status": 200
+            }
+          ]
+        },
+        {
+          "target": "github",
+          "profile": "global-guarded",
+          "attempt": 1,
+          "proxyScope": "global",
+          "interceptGuard": true,
+          "url": "https://github.com/facebook/react",
+          "wafLabel": "unclassified",
+          "startedAt": "2026-11-03T18:50:04.929Z",
+          "latencyMs": 5840,
+          "evidenceFile": "evidence/019.json",
+          "evidenceSha256": "a8c5c81de7a925eec564228431b8dad4e3121b9369257c5e2dd6bd4e45c78d61",
+          "frontierPass": true,
+          "screenedPass": true,
+          "normalizedPass": true,
+          "serviceAttemptCount": 1,
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "rawMarkerPresent": true,
+          "textMarkerPresent": true,
+          "landedUrl": "https://github.com/react/react",
+          "title": "GitHub - react/react: The library for web and native user interfaces. \u00b7 GitHub",
+          "contentBytes": 456958,
+          "contentSha256": "5120b15495ec758c848ae8cbaef7bf4b9cfb2f2cac0ddc828e51acc1646ed56d",
+          "renderedExactMarkerPresent": true,
+          "mainFrameNavigations": [
+            {
+              "url": "https://github.com/facebook/react",
+              "status": 301
+            },
+            {
+              "url": "https://github.com/react/react",
+              "status": 200
+            }
+          ]
+        },
+        {
+          "target": "github",
+          "profile": "context-guarded",
+          "attempt": 1,
+          "proxyScope": "context",
+          "interceptGuard": true,
+          "url": "https://github.com/facebook/react",
+          "wafLabel": "unclassified",
+          "startedAt": "2026-11-03T18:50:04.929Z",
+          "latencyMs": 5851,
+          "evidenceFile": "evidence/020.json",
+          "evidenceSha256": "55efcba9d22a5f936f5fb92222c0d305abf03acbeffcc1e48dff7892962567dd",
+          "frontierPass": true,
+          "screenedPass": true,
+          "normalizedPass": true,
+          "serviceAttemptCount": 1,
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "rawMarkerPresent": true,
+          "textMarkerPresent": true,
+          "landedUrl": "https://github.com/react/react",
+          "title": "GitHub - react/react: The library for web and native user interfaces. \u00b7 GitHub",
+          "contentBytes": 456952,
+          "contentSha256": "6935695ae783d4ba806445929dcef28b05114c683fd1da9ec904521b11b9d8dc",
+          "renderedExactMarkerPresent": true,
+          "mainFrameNavigations": [
+            {
+              "url": "https://github.com/facebook/react",
+              "status": 301
+            },
+            {
+              "url": "https://github.com/react/react",
+              "status": 200
+            }
+          ]
+        }
+      ],
+      "privateAddressNegativeControls": [
+        {
+          "profile": "global",
+          "privateLoopbackNavigationDenied": true,
+          "receiptSha256": "a183b9b17d28baefd3afb29e72003043c21025d9a7c751f3ea3a9bd972257e4e"
+        },
+        {
+          "profile": "context",
+          "privateLoopbackNavigationDenied": true,
+          "receiptSha256": "4583137f7265cc8356761425de47292fe19882187b7829fcd9f1ed544bf50aa3"
+        }
+      ],
+      "resourceAudit": {
+        "samples": 8,
+        "peakSampledMemoryMiB": {
+          "global": 560,
+          "context": 565
+        },
+        "maximumObservedEventCounters": {
+          "global": {
+            "memory.events:low": 0,
+            "memory.events:high": 0,
+            "memory.events:max": 0,
+            "memory.events:oom": 0,
+            "memory.events:oom_kill": 0,
+            "memory.events:oom_group_kill": 0,
+            "memory.events:sock_throttled": 0,
+            "pids.events:max": 0
+          },
+          "context": {
+            "memory.events:low": 0,
+            "memory.events:high": 0,
+            "memory.events:max": 0,
+            "memory.events:oom": 0,
+            "memory.events:oom_kill": 0,
+            "memory.events:oom_group_kill": 0,
+            "memory.events:sock_throttled": 0,
+            "pids.events:max": 0
+          }
+        },
+        "createdContainersRemoved": true,
+        "finalActiveRequestCountersZero": true,
+        "prototypeCounterLimit": "Prototype health counts active commands, not a census of the browser initial blank tab. Every request has context-close proof and all containers were subsequently removed."
+      },
+      "artifactHashes": {
+        "report.json": "d95ace3171e4241f3cc6944c5e38669c13966603a940cbf9a7db87c08ff5b167",
+        "attempts.jsonl": "d213ca85224caf2471fd053bfd271fd5b5f9e437e1cf65556909e2407dcf6b84",
+        "deployment.json": "8ea1475aebb041fb6a2ad4e465acf183124dcc21c60666c87feb7d4e27f70638",
+        "cleanup.json": "0d04a9bdf0ab5a20bf5074f1194cf30da282d42421d45479849161f4f3ad097c",
+        "resource-samples.jsonl": "9029b566c1673f0ad79b5b6167210e01ec25c6bc421fa24f3252ba625ecf612c",
+        "final-health.json": "30c05a64b42372ba3991f5c15c8a4cd35f09644063d4ba21b745b851bc2dff6d"
+      },
+      "sourceSnapshotHashes": {
+        "run-interception-driver-lab-corrected-2026-11-04.py": "d8cf07c0af68d5e9f8dc8965f296cc83d4f62ff8993700790f6a786f32c04d67",
+        "Dockerfile": "2dce71821cfb4b7dede3c572f57208918afbadb1d54c1512fd31769955847877",
+        "benchmark-interception-driver-lab-corrected-2026-11-04.ts": "eb7e48b02d2fe2e00cb34d2f358331e50df6bc74f1a1da9bfe2c59e8513f5e44",
+        "owner.cjs": "48e472df69a05ba728e6be4a401b19edda466732aaecc2fbf9dfe37a568919ab",
+        "python-freeze.txt": "dee1a9bbe87cc0dc52688d61fef83ef7a1a0229b98674da79dbb56ed703e589c"
+      }
+    },
+    {
+      "runDirectory": "_local/anti-bot/consent-mode-probe-2026-11-04",
+      "status": "complete",
+      "sourceCommit": "f93fbdb601d0974d64e3ea2095dfedc645f45a31",
+      "imageId": "sha256:464401ac076ef7b541178f4baf61a61952dca6e4b331ea1368a168e23b69f737",
+      "protocol": {
+        "status": "complete",
+        "startedAt": "2026-11-03T18:52:43.537Z",
+        "sourceCommit": "f93fbdb601d0974d64e3ea2095dfedc645f45a31",
+        "imageId": "sha256:464401ac076ef7b541178f4baf61a61952dca6e4b331ea1368a168e23b69f737",
+        "fixtureSha256": "a886fb57087e842c2857b89a7669e31d2fb7b98d6bd7deb60a2329f29581b76a",
+        "expectedRequests": 24,
+        "rounds": 2,
+        "targets": [
+          "lowes",
+          "stockx",
+          "wsj",
+          "g2",
+          "neimanmarcus",
+          "github"
+        ],
+        "globalConcurrency": 2,
+        "perOwnerConcurrency": 2,
+        "clientTimeoutMs": 35000,
+        "serviceTimeoutMs": 30000,
+        "waitAfterLoadMs": 0,
+        "consent": "profile-policy",
+        "workflow": "auto",
+        "adBlocking": true,
+        "serviceWorkers": "block",
+        "freshContexts": true,
+        "expectedMarkerSent": false,
+        "upstreamProxy": false,
+        "hostedCalls": 0,
+        "scope": "Consent off versus rejectNonEssential on the unchanged production Rebrowser service. Two rounds on five persistent failures and a GitHub control, fresh contexts, automatic readiness, two global workers/one per policy. No workflow or proxy-scope changes.",
+        "finishedAt": "2026-11-03T18:53:01.638Z",
+        "scoresAndHashesReplayed": 24,
+        "publicControlsPassed": true,
+        "timingIntegrity": {
+          "valid": true,
+          "sampleIntervalMs": 1000,
+          "maximumAllowedGapMs": 10000,
+          "maximumObservedGapMs": 1002,
+          "gaps": []
+        }
+      },
+      "sameChromiumBinaryAndVersion": null,
+      "prototypeLaunchBundles": null,
+      "byProfile": {
+        "off": {
+          "overall": {
+            "requests": 12,
+            "uniqueTargets": 6,
+            "frontierPasses": 2,
+            "screenedPasses": 2,
+            "normalizedPasses": 2,
+            "frontierSuccessRate": 0.16666666666666666,
+            "screenedSuccessRate": 0.16666666666666666,
+            "normalizedSuccessRate": 0.16666666666666666,
+            "successfulLatencyP50Ms": 1923,
+            "successfulLatencyP95Ms": 2737,
+            "allAttemptLatencyP95Ms": 2737,
+            "failures": {
+              "target_status_403": 2,
+              "challenge": 8
+            }
+          },
+          "byWafLabel": {
+            "akamai": {
+              "requests": 2,
+              "uniqueTargets": 1,
+              "frontierPasses": 0,
+              "screenedPasses": 0,
+              "normalizedPasses": 0,
+              "frontierSuccessRate": 0,
+              "screenedSuccessRate": 0,
+              "normalizedSuccessRate": 0,
+              "successfulLatencyP50Ms": null,
+              "successfulLatencyP95Ms": null,
+              "allAttemptLatencyP95Ms": 842,
+              "failures": {
+                "target_status_403": 2
+              }
+            },
+            "cloudflare": {
+              "requests": 2,
+              "uniqueTargets": 1,
+              "frontierPasses": 0,
+              "screenedPasses": 0,
+              "normalizedPasses": 0,
+              "frontierSuccessRate": 0,
+              "screenedSuccessRate": 0,
+              "normalizedSuccessRate": 0,
+              "successfulLatencyP50Ms": null,
+              "successfulLatencyP95Ms": null,
+              "allAttemptLatencyP95Ms": 389,
+              "failures": {
+                "challenge": 2
+              }
+            },
+            "datadome": {
+              "requests": 6,
+              "uniqueTargets": 3,
+              "frontierPasses": 0,
+              "screenedPasses": 0,
+              "normalizedPasses": 0,
+              "frontierSuccessRate": 0,
+              "screenedSuccessRate": 0,
+              "normalizedSuccessRate": 0,
+              "successfulLatencyP50Ms": null,
+              "successfulLatencyP95Ms": null,
+              "allAttemptLatencyP95Ms": 2195,
+              "failures": {
+                "challenge": 6
+              }
+            },
+            "unclassified": {
+              "requests": 2,
+              "uniqueTargets": 1,
+              "frontierPasses": 2,
+              "screenedPasses": 2,
+              "normalizedPasses": 2,
+              "frontierSuccessRate": 1,
+              "screenedSuccessRate": 1,
+              "normalizedSuccessRate": 1,
+              "successfulLatencyP50Ms": 1923,
+              "successfulLatencyP95Ms": 2737,
+              "allAttemptLatencyP95Ms": 2737,
+              "failures": {}
+            }
+          }
+        },
+        "rejectNonEssential": {
+          "overall": {
+            "requests": 12,
+            "uniqueTargets": 6,
+            "frontierPasses": 2,
+            "screenedPasses": 2,
+            "normalizedPasses": 2,
+            "frontierSuccessRate": 0.16666666666666666,
+            "screenedSuccessRate": 0.16666666666666666,
+            "normalizedSuccessRate": 0.16666666666666666,
+            "successfulLatencyP50Ms": 1943,
+            "successfulLatencyP95Ms": 2697,
+            "allAttemptLatencyP95Ms": 2697,
+            "failures": {
+              "target_status_403": 2,
+              "challenge": 8
+            }
+          },
+          "byWafLabel": {
+            "akamai": {
+              "requests": 2,
+              "uniqueTargets": 1,
+              "frontierPasses": 0,
+              "screenedPasses": 0,
+              "normalizedPasses": 0,
+              "frontierSuccessRate": 0,
+              "screenedSuccessRate": 0,
+              "normalizedSuccessRate": 0,
+              "successfulLatencyP50Ms": null,
+              "successfulLatencyP95Ms": null,
+              "allAttemptLatencyP95Ms": 1116,
+              "failures": {
+                "target_status_403": 2
+              }
+            },
+            "cloudflare": {
+              "requests": 2,
+              "uniqueTargets": 1,
+              "frontierPasses": 0,
+              "screenedPasses": 0,
+              "normalizedPasses": 0,
+              "frontierSuccessRate": 0,
+              "screenedSuccessRate": 0,
+              "normalizedSuccessRate": 0,
+              "successfulLatencyP50Ms": null,
+              "successfulLatencyP95Ms": null,
+              "allAttemptLatencyP95Ms": 802,
+              "failures": {
+                "challenge": 2
+              }
+            },
+            "datadome": {
+              "requests": 6,
+              "uniqueTargets": 3,
+              "frontierPasses": 0,
+              "screenedPasses": 0,
+              "normalizedPasses": 0,
+              "frontierSuccessRate": 0,
+              "screenedSuccessRate": 0,
+              "normalizedSuccessRate": 0,
+              "successfulLatencyP50Ms": null,
+              "successfulLatencyP95Ms": null,
+              "allAttemptLatencyP95Ms": 1940,
+              "failures": {
+                "challenge": 6
+              }
+            },
+            "unclassified": {
+              "requests": 2,
+              "uniqueTargets": 1,
+              "frontierPasses": 2,
+              "screenedPasses": 2,
+              "normalizedPasses": 2,
+              "frontierSuccessRate": 1,
+              "screenedSuccessRate": 1,
+              "normalizedSuccessRate": 1,
+              "successfulLatencyP50Ms": 1943,
+              "successfulLatencyP95Ms": 2697,
+              "allAttemptLatencyP95Ms": 2697,
+              "failures": {}
+            }
+          }
+        }
+      },
+      "byTargetAndProfile": {
+        "off": {
+          "lowes": {
+            "requests": 2,
+            "normalizedMatches": 0,
+            "renderedExactMatches": 0
+          },
+          "stockx": {
+            "requests": 2,
+            "normalizedMatches": 0,
+            "renderedExactMatches": 0
+          },
+          "wsj": {
+            "requests": 2,
+            "normalizedMatches": 0,
+            "renderedExactMatches": 0
+          },
+          "g2": {
+            "requests": 2,
+            "normalizedMatches": 0,
+            "renderedExactMatches": 0
+          },
+          "neimanmarcus": {
+            "requests": 2,
+            "normalizedMatches": 0,
+            "renderedExactMatches": 0
+          },
+          "github": {
+            "requests": 2,
+            "normalizedMatches": 2,
+            "renderedExactMatches": 2
+          }
+        },
+        "rejectNonEssential": {
+          "lowes": {
+            "requests": 2,
+            "normalizedMatches": 0,
+            "renderedExactMatches": 0
+          },
+          "stockx": {
+            "requests": 2,
+            "normalizedMatches": 0,
+            "renderedExactMatches": 0
+          },
+          "wsj": {
+            "requests": 2,
+            "normalizedMatches": 0,
+            "renderedExactMatches": 0
+          },
+          "g2": {
+            "requests": 2,
+            "normalizedMatches": 0,
+            "renderedExactMatches": 0
+          },
+          "neimanmarcus": {
+            "requests": 2,
+            "normalizedMatches": 0,
+            "renderedExactMatches": 0
+          },
+          "github": {
+            "requests": 2,
+            "normalizedMatches": 2,
+            "renderedExactMatches": 2
+          }
+        }
+      },
+      "observations": [
+        {
+          "target": "lowes",
+          "profile": "off",
+          "attempt": 1,
+          "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "wafLabel": "akamai",
+          "startedAt": "2026-11-03T18:52:43.546Z",
+          "latencyMs": 842,
+          "evidenceFile": "evidence/002.json",
+          "evidenceSha256": "103434df4b5217bccdc4c6b035a832c88512e74b1f2de0247d9d22721b314e9f",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "Forbidden",
+          "landedUrl": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "title": "Access Denied",
+          "contentBytes": 436,
+          "contentSha256": "346a1f4df4379ed86c5f5b96a34072b80e17f19358e053ae22e94e0f6d9b000e",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "lowes",
+          "profile": "rejectNonEssential",
+          "attempt": 1,
+          "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "wafLabel": "akamai",
+          "startedAt": "2026-11-03T18:52:43.538Z",
+          "latencyMs": 1116,
+          "evidenceFile": "evidence/001.json",
+          "evidenceSha256": "2526f5c4dca546450124e7d64eb47aea06e08c028c129f9aee43a055a7fffa8d",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "Forbidden",
+          "landedUrl": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "title": "Access Denied",
+          "contentBytes": 436,
+          "contentSha256": "83514536c7efc6570b7a61fd759b8159f1a38090bc5b598dc439c9974425b8a1",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "stockx",
+          "profile": "off",
+          "attempt": 1,
+          "url": "https://stockx.com/air-jordan-5-retro-black-university-blue-2026",
+          "wafLabel": "cloudflare",
+          "startedAt": "2026-11-03T18:52:44.654Z",
+          "latencyMs": 389,
+          "evidenceFile": "evidence/003.json",
+          "evidenceSha256": "0800375b86306d76b861f186630749da3fd10fb04803f2274385b43b79b78a88",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "Bot protection challenge remains (cloudflare): cf-mitigated challenge response",
+          "landedUrl": "https://stockx.com/air-jordan-5-retro-black-university-blue-2026?__cf_chl_rt_tk=DFStCq.EcaGj4bO0J1xZ1_Kq3EL_KRysZydMwrurRh8-1793731965-1.0.1.1-x2v8mTcO2A6hqpoC_HNNbVOuSY2jKKrv7_QE0o0bKzk",
+          "title": "Just a moment...",
+          "contentBytes": 6233,
+          "contentSha256": "403938e404c782d51d42a5ce03ae21a13e0ca2afceffdd0b64b80f86b92761fd",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://stockx.com/air-jordan-5-retro-black-university-blue-2026",
+              "status": 307
+            },
+            {
+              "url": "https://stockx.com/air-jordan-5-retro-black-university-blue-2026",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "stockx",
+          "profile": "rejectNonEssential",
+          "attempt": 1,
+          "url": "https://stockx.com/air-jordan-5-retro-black-university-blue-2026",
+          "wafLabel": "cloudflare",
+          "startedAt": "2026-11-03T18:52:44.655Z",
+          "latencyMs": 802,
+          "evidenceFile": "evidence/004.json",
+          "evidenceSha256": "125e1123e542460df7f9c0bf839cdffaa28383604bbad2da3ab33017a75dd7db",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "Bot protection challenge remains (cloudflare): cf-mitigated challenge response",
+          "landedUrl": "https://stockx.com/air-jordan-5-retro-black-university-blue-2026",
+          "title": "Just a moment...",
+          "contentBytes": 44713,
+          "contentSha256": "5cf8e49b490a0c741ee26e659149901f42bb0e1972f934f9f56debe25419aa09",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://stockx.com/air-jordan-5-retro-black-university-blue-2026",
+              "status": 307
+            },
+            {
+              "url": "https://stockx.com/air-jordan-5-retro-black-university-blue-2026",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "wsj",
+          "profile": "off",
+          "attempt": 1,
+          "url": "https://www.wsj.com/livecoverage/iran-war-2026-trump-deadline-latest-news",
+          "wafLabel": "datadome",
+          "startedAt": "2026-11-03T18:52:45.457Z",
+          "latencyMs": 1264,
+          "evidenceFile": "evidence/006.json",
+          "evidenceSha256": "4d03502317b4803614e97132e40f9efa3bc5ffe6c89f69b840910660bd096af5",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 401,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "Bot protection challenge remains (datadome): DataDome challenge bootstrap document",
+          "landedUrl": "https://www.wsj.com/livecoverage/iran-war-2026-trump-deadline-latest-news",
+          "title": "wsj.com",
+          "contentBytes": 1546,
+          "contentSha256": "1989e668e4f2aecd2f155e9ef86d431b6fb484f5d4049410bff6b6d111c352df",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.wsj.com/livecoverage/iran-war-2026-trump-deadline-latest-news",
+              "status": 401
+            }
+          ]
+        },
+        {
+          "target": "wsj",
+          "profile": "rejectNonEssential",
+          "attempt": 1,
+          "url": "https://www.wsj.com/livecoverage/iran-war-2026-trump-deadline-latest-news",
+          "wafLabel": "datadome",
+          "startedAt": "2026-11-03T18:52:45.457Z",
+          "latencyMs": 1940,
+          "evidenceFile": "evidence/005.json",
+          "evidenceSha256": "e66315ab9ac841f29ccc283c0965f97bb9cbe03ff9c23f13c74a9e8c91d76a2d",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 401,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "Bot protection challenge remains (datadome): DataDome challenge bootstrap document",
+          "landedUrl": "https://www.wsj.com/livecoverage/iran-war-2026-trump-deadline-latest-news",
+          "title": "wsj.com",
+          "contentBytes": 1546,
+          "contentSha256": "6c34db621b1598c5f464ec56e4aa928625bd25422d758886063acf825cf1fcdc",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.wsj.com/livecoverage/iran-war-2026-trump-deadline-latest-news",
+              "status": 401
+            }
+          ]
+        },
+        {
+          "target": "g2",
+          "profile": "off",
+          "attempt": 1,
+          "url": "https://www.g2.com/categories/emerging-ai-software?order=g2_score&page=92&_pjax=%23ajax-container#product-list",
+          "wafLabel": "datadome",
+          "startedAt": "2026-11-03T18:52:47.398Z",
+          "latencyMs": 655,
+          "evidenceFile": "evidence/007.json",
+          "evidenceSha256": "85f558992e43cd6091e5dd10a0ddf056c6f638d58a36bcb7820ab8d290cf40eb",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "Bot protection challenge remains (datadome): DataDome challenge bootstrap document",
+          "landedUrl": "https://www.g2.com/categories/emerging-ai-software?order=g2_score&page=92&_pjax=%23ajax-container#product-list",
+          "title": "g2.com",
+          "contentBytes": 2896,
+          "contentSha256": "71cc3cb96ffd6a7ca6232d62fb6e332ebe8d88e3cd7c50bfb30f316e9bf91cd4",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.g2.com/categories/emerging-ai-software?order=g2_score&page=92&_pjax=%23ajax-container",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "g2",
+          "profile": "rejectNonEssential",
+          "attempt": 1,
+          "url": "https://www.g2.com/categories/emerging-ai-software?order=g2_score&page=92&_pjax=%23ajax-container#product-list",
+          "wafLabel": "datadome",
+          "startedAt": "2026-11-03T18:52:47.398Z",
+          "latencyMs": 1263,
+          "evidenceFile": "evidence/008.json",
+          "evidenceSha256": "29422399d32fcb94700bcb455aba2aa994950c0d54f6331dacbb861fcae41812",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "Bot protection challenge remains (datadome): DataDome challenge bootstrap document",
+          "landedUrl": "https://www.g2.com/categories/emerging-ai-software?order=g2_score&page=92&_pjax=%23ajax-container#product-list",
+          "title": "g2.com",
+          "contentBytes": 2896,
+          "contentSha256": "d5414522da0877d41ebb722673cdd4fd888ec6f04f80f869751e25ece9f8f617",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.g2.com/categories/emerging-ai-software?order=g2_score&page=92&_pjax=%23ajax-container",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "neimanmarcus",
+          "profile": "rejectNonEssential",
+          "attempt": 1,
+          "url": "https://www.neimanmarcus.com/p/gorski-reversible-toscana-lamb-shearling-jacket-prod282500173",
+          "wafLabel": "datadome",
+          "startedAt": "2026-11-03T18:52:48.662Z",
+          "latencyMs": 1220,
+          "evidenceFile": "evidence/009.json",
+          "evidenceSha256": "2e683507873eaafd9f6baa2a7d762f9b44616e73b257914f655d385c2cf5f3e3",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "Bot protection challenge remains (datadome): DataDome challenge bootstrap document",
+          "landedUrl": "https://www.neimanmarcus.com/p/gorski-reversible-toscana-lamb-shearling-jacket-prod282500173",
+          "title": "neimanmarcus.com",
+          "contentBytes": 1561,
+          "contentSha256": "81375836bf729ff776b0ddd1793b719818bdb27678dd79b6d0a135af4532a744",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.neimanmarcus.com/p/gorski-reversible-toscana-lamb-shearling-jacket-prod282500173",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "neimanmarcus",
+          "profile": "off",
+          "attempt": 1,
+          "url": "https://www.neimanmarcus.com/p/gorski-reversible-toscana-lamb-shearling-jacket-prod282500173",
+          "wafLabel": "datadome",
+          "startedAt": "2026-11-03T18:52:48.662Z",
+          "latencyMs": 1535,
+          "evidenceFile": "evidence/010.json",
+          "evidenceSha256": "316f5d91b16b38a9fb75fe446b368511de29d596fc1d532c9d69fe2539309248",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "Bot protection challenge remains (datadome): DataDome challenge bootstrap document",
+          "landedUrl": "https://www.neimanmarcus.com/p/gorski-reversible-toscana-lamb-shearling-jacket-prod282500173",
+          "title": "neimanmarcus.com",
+          "contentBytes": 1561,
+          "contentSha256": "83db47ebdf122cdfae7a884f791c67b4fd655266ffac78399e6f8bea17bb931a",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.neimanmarcus.com/p/gorski-reversible-toscana-lamb-shearling-jacket-prod282500173",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "github",
+          "profile": "rejectNonEssential",
+          "attempt": 1,
+          "url": "https://github.com/facebook/react",
+          "wafLabel": "unclassified",
+          "startedAt": "2026-11-03T18:52:50.198Z",
+          "latencyMs": 2697,
+          "evidenceFile": "evidence/012.json",
+          "evidenceSha256": "fde069f2b100eb9b5b36a56732a71762502652296788cb81935c7fe410cc2d82",
+          "frontierPass": true,
+          "screenedPass": true,
+          "normalizedPass": true,
+          "serviceAttemptCount": 1,
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "rawMarkerPresent": true,
+          "textMarkerPresent": true,
+          "landedUrl": "https://github.com/react/react",
+          "title": "GitHub - react/react: The library for web and native user interfaces. \u00b7 GitHub",
+          "contentBytes": 332945,
+          "contentSha256": "ab40fb3e190831c78aca4278d2d12073757dc83d6c1d4e80815132a514565a8d",
+          "renderedExactMarkerPresent": true,
+          "mainFrameNavigations": [
+            {
+              "url": "https://github.com/facebook/react",
+              "status": 301
+            },
+            {
+              "url": "https://github.com/react/react",
+              "status": 200
+            }
+          ]
+        },
+        {
+          "target": "github",
+          "profile": "off",
+          "attempt": 1,
+          "url": "https://github.com/facebook/react",
+          "wafLabel": "unclassified",
+          "startedAt": "2026-11-03T18:52:50.198Z",
+          "latencyMs": 2737,
+          "evidenceFile": "evidence/011.json",
+          "evidenceSha256": "b3d96613413a34c17af1fd18235f404d1ebc60dcc77ab09e51cc7a49b1ef3337",
+          "frontierPass": true,
+          "screenedPass": true,
+          "normalizedPass": true,
+          "serviceAttemptCount": 1,
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "rawMarkerPresent": true,
+          "textMarkerPresent": true,
+          "landedUrl": "https://github.com/react/react",
+          "title": "GitHub - react/react: The library for web and native user interfaces. \u00b7 GitHub",
+          "contentBytes": 333004,
+          "contentSha256": "ab44734599b1bd54c404be8902154a34c3966365087280aa7837258121f37c97",
+          "renderedExactMarkerPresent": true,
+          "mainFrameNavigations": [
+            {
+              "url": "https://github.com/facebook/react",
+              "status": 301
+            },
+            {
+              "url": "https://github.com/react/react",
+              "status": 200
+            }
+          ]
+        },
+        {
+          "target": "g2",
+          "profile": "off",
+          "attempt": 2,
+          "url": "https://www.g2.com/categories/emerging-ai-software?order=g2_score&page=92&_pjax=%23ajax-container#product-list",
+          "wafLabel": "datadome",
+          "startedAt": "2026-11-03T18:52:52.941Z",
+          "latencyMs": 655,
+          "evidenceFile": "evidence/013.json",
+          "evidenceSha256": "a71db0f6cdc8968dde4e44c06aed94cb6d4beb49d85ab5d0f05e21e9515a60aa",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "Bot protection challenge remains (datadome): DataDome challenge bootstrap document",
+          "landedUrl": "https://www.g2.com/categories/emerging-ai-software?order=g2_score&page=92&_pjax=%23ajax-container#product-list",
+          "title": "g2.com",
+          "contentBytes": 2896,
+          "contentSha256": "85bfe6fa3291bbd4e95a6b794712fe5741b5b2a4f8ad01f44f55cda9f19684ac",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.g2.com/categories/emerging-ai-software?order=g2_score&page=92&_pjax=%23ajax-container",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "g2",
+          "profile": "rejectNonEssential",
+          "attempt": 2,
+          "url": "https://www.g2.com/categories/emerging-ai-software?order=g2_score&page=92&_pjax=%23ajax-container#product-list",
+          "wafLabel": "datadome",
+          "startedAt": "2026-11-03T18:52:52.942Z",
+          "latencyMs": 1093,
+          "evidenceFile": "evidence/014.json",
+          "evidenceSha256": "ea6d20c46a8cc29f1fbc646aa41f79cea7d5fefa50994e54526ed0f1788a130e",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "Bot protection challenge remains (datadome): DataDome challenge bootstrap document",
+          "landedUrl": "https://www.g2.com/categories/emerging-ai-software?order=g2_score&page=92&_pjax=%23ajax-container#product-list",
+          "title": "g2.com",
+          "contentBytes": 2896,
+          "contentSha256": "4e6a917367843689af4dcc9127c4919bfcd26fc08acce1c3127482186cf7a946",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.g2.com/categories/emerging-ai-software?order=g2_score&page=92&_pjax=%23ajax-container",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "neimanmarcus",
+          "profile": "rejectNonEssential",
+          "attempt": 2,
+          "url": "https://www.neimanmarcus.com/p/gorski-reversible-toscana-lamb-shearling-jacket-prod282500173",
+          "wafLabel": "datadome",
+          "startedAt": "2026-11-03T18:52:54.035Z",
+          "latencyMs": 1143,
+          "evidenceFile": "evidence/015.json",
+          "evidenceSha256": "2ace1a9c805a33b975c0d6c44a85cbe6ae96452986b9a86376fd2149dbac3955",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "Bot protection challenge remains (datadome): DataDome challenge bootstrap document",
+          "landedUrl": "https://www.neimanmarcus.com/p/gorski-reversible-toscana-lamb-shearling-jacket-prod282500173",
+          "title": "neimanmarcus.com",
+          "contentBytes": 1561,
+          "contentSha256": "6bd2ac464cbd83051dd319c6dac2169c123e2eed35e28a07a6d76f38d266a3b7",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.neimanmarcus.com/p/gorski-reversible-toscana-lamb-shearling-jacket-prod282500173",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "neimanmarcus",
+          "profile": "off",
+          "attempt": 2,
+          "url": "https://www.neimanmarcus.com/p/gorski-reversible-toscana-lamb-shearling-jacket-prod282500173",
+          "wafLabel": "datadome",
+          "startedAt": "2026-11-03T18:52:54.035Z",
+          "latencyMs": 1641,
+          "evidenceFile": "evidence/016.json",
+          "evidenceSha256": "873ea80e31ff6b977f3ba51586e44563a7371db7ad603270940637302ded2e97",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "Bot protection challenge remains (datadome): DataDome challenge bootstrap document",
+          "landedUrl": "https://www.neimanmarcus.com/p/gorski-reversible-toscana-lamb-shearling-jacket-prod282500173",
+          "title": "neimanmarcus.com",
+          "contentBytes": 1561,
+          "contentSha256": "bb3fe9d25d8246426ed906d6a100d908414d1e4dd22dcd2f0f7b5bece09e9b93",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.neimanmarcus.com/p/gorski-reversible-toscana-lamb-shearling-jacket-prod282500173",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "github",
+          "profile": "off",
+          "attempt": 2,
+          "url": "https://github.com/facebook/react",
+          "wafLabel": "unclassified",
+          "startedAt": "2026-11-03T18:52:55.677Z",
+          "latencyMs": 1923,
+          "evidenceFile": "evidence/017.json",
+          "evidenceSha256": "acf5061edf43dcc693f181e6c06c4a8158153f82980e61ea8eb91abd02c5b46e",
+          "frontierPass": true,
+          "screenedPass": true,
+          "normalizedPass": true,
+          "serviceAttemptCount": 1,
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "rawMarkerPresent": true,
+          "textMarkerPresent": true,
+          "landedUrl": "https://github.com/react/react",
+          "title": "GitHub - react/react: The library for web and native user interfaces. \u00b7 GitHub",
+          "contentBytes": 337259,
+          "contentSha256": "619c39bfb503d57cc527b7693d174fa760d1872f156b671aa8ff316d45ddb1fa",
+          "renderedExactMarkerPresent": true,
+          "mainFrameNavigations": [
+            {
+              "url": "https://github.com/facebook/react",
+              "status": 301
+            },
+            {
+              "url": "https://github.com/react/react",
+              "status": 200
+            }
+          ]
+        },
+        {
+          "target": "github",
+          "profile": "rejectNonEssential",
+          "attempt": 2,
+          "url": "https://github.com/facebook/react",
+          "wafLabel": "unclassified",
+          "startedAt": "2026-11-03T18:52:55.677Z",
+          "latencyMs": 1943,
+          "evidenceFile": "evidence/018.json",
+          "evidenceSha256": "b5b8d008dfd62e8a0a7cc2a92178ffc9cb0af2e12fb097ed3c44751a7bec9d5c",
+          "frontierPass": true,
+          "screenedPass": true,
+          "normalizedPass": true,
+          "serviceAttemptCount": 1,
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "rawMarkerPresent": true,
+          "textMarkerPresent": true,
+          "landedUrl": "https://github.com/react/react",
+          "title": "GitHub - react/react: The library for web and native user interfaces. \u00b7 GitHub",
+          "contentBytes": 337258,
+          "contentSha256": "bf82544bb0b7b6170478cfb4968c0481f3077f5d8c33eb0435c1064191df4fdd",
+          "renderedExactMarkerPresent": true,
+          "mainFrameNavigations": [
+            {
+              "url": "https://github.com/facebook/react",
+              "status": 301
+            },
+            {
+              "url": "https://github.com/react/react",
+              "status": 200
+            }
+          ]
+        },
+        {
+          "target": "lowes",
+          "profile": "off",
+          "attempt": 2,
+          "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "wafLabel": "akamai",
+          "startedAt": "2026-11-03T18:52:57.623Z",
+          "latencyMs": 580,
+          "evidenceFile": "evidence/020.json",
+          "evidenceSha256": "cd87c3992a12979a88c7451793660704efeceb8841df1040f028bedd937d0b08",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "Forbidden",
+          "landedUrl": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "title": "Access Denied",
+          "contentBytes": 434,
+          "contentSha256": "72f0af7ab3528c23d9b2713b6a844b54923fa485036629fbcbb8f5565cad673d",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "lowes",
+          "profile": "rejectNonEssential",
+          "attempt": 2,
+          "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "wafLabel": "akamai",
+          "startedAt": "2026-11-03T18:52:57.623Z",
+          "latencyMs": 994,
+          "evidenceFile": "evidence/019.json",
+          "evidenceSha256": "9fe12f3eba922321400ac4f69bb0a9efc70b0dd6938d289d378f0b21b8638049",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "target_status_403",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "Forbidden",
+          "landedUrl": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+          "title": "Access Denied",
+          "contentBytes": 436,
+          "contentSha256": "3c1cfbb6acd77a49be70eaf264875cfc9160a8c522f6658e5041089a2134886c",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.lowes.com/pd/James-Martin-Vanities-Bristol-72-in-Whitewashed-Walnut-Undermount-Double-Sink-Bathroom-Vanity-with-Eternal-Jasmine-Pearl-Quartz-Top/5013813827",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "stockx",
+          "profile": "off",
+          "attempt": 2,
+          "url": "https://stockx.com/air-jordan-5-retro-black-university-blue-2026",
+          "wafLabel": "cloudflare",
+          "startedAt": "2026-11-03T18:52:58.618Z",
+          "latencyMs": 346,
+          "evidenceFile": "evidence/021.json",
+          "evidenceSha256": "4c841934ea8249c00e703149516b3a639f5d5b2320eae258f482c0b0d588144d",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "Bot protection challenge remains (cloudflare): cf-mitigated challenge response",
+          "landedUrl": "https://stockx.com/air-jordan-5-retro-black-university-blue-2026?__cf_chl_rt_tk=3uUZ4l23CrgjSeUKS6.e0JzL.nHciNnkxYnO6eeWV2g-1793731978-1.0.1.1-QJ8eL2Mwp_zNWrlpWUvtylRtAAchX1p9jM0Iti2qsZo",
+          "title": "Just a moment...",
+          "contentBytes": 6233,
+          "contentSha256": "f8b8f7be2ff191abaac13ca7ca7c55052e68bae98c91b5c82df91049c4072336",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://stockx.com/air-jordan-5-retro-black-university-blue-2026",
+              "status": 307
+            },
+            {
+              "url": "https://stockx.com/air-jordan-5-retro-black-university-blue-2026",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "stockx",
+          "profile": "rejectNonEssential",
+          "attempt": 2,
+          "url": "https://stockx.com/air-jordan-5-retro-black-university-blue-2026",
+          "wafLabel": "cloudflare",
+          "startedAt": "2026-11-03T18:52:58.618Z",
+          "latencyMs": 802,
+          "evidenceFile": "evidence/022.json",
+          "evidenceSha256": "fca63ff1759c047c4274c6dad82adca8b8005d4bbb31389e1fe58d650bd0d422",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "Bot protection challenge remains (cloudflare): cf-mitigated challenge response",
+          "landedUrl": "https://stockx.com/air-jordan-5-retro-black-university-blue-2026",
+          "title": "Just a moment...",
+          "contentBytes": 44734,
+          "contentSha256": "39b9dcdc44bc3e089d3f4d51b62f89988c3884983aff3e27669bd3b322ce07b0",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://stockx.com/air-jordan-5-retro-black-university-blue-2026",
+              "status": 307
+            },
+            {
+              "url": "https://stockx.com/air-jordan-5-retro-black-university-blue-2026",
+              "status": 403
+            }
+          ]
+        },
+        {
+          "target": "wsj",
+          "profile": "rejectNonEssential",
+          "attempt": 2,
+          "url": "https://www.wsj.com/livecoverage/iran-war-2026-trump-deadline-latest-news",
+          "wafLabel": "datadome",
+          "startedAt": "2026-11-03T18:52:59.421Z",
+          "latencyMs": 1175,
+          "evidenceFile": "evidence/023.json",
+          "evidenceSha256": "40268a7a05e5ce038d702f5fa77a8689481182d9f9ba8806680222407ca8f8a1",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 401,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "Bot protection challenge remains (datadome): DataDome challenge bootstrap document",
+          "landedUrl": "https://www.wsj.com/livecoverage/iran-war-2026-trump-deadline-latest-news",
+          "title": "wsj.com",
+          "contentBytes": 1546,
+          "contentSha256": "5ec0376ec2b9438733fbc4489cf0f55073c3e5ed828bf5364ece35995263abc3",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.wsj.com/livecoverage/iran-war-2026-trump-deadline-latest-news",
+              "status": 401
+            }
+          ]
+        },
+        {
+          "target": "wsj",
+          "profile": "off",
+          "attempt": 2,
+          "url": "https://www.wsj.com/livecoverage/iran-war-2026-trump-deadline-latest-news",
+          "wafLabel": "datadome",
+          "startedAt": "2026-11-03T18:52:59.421Z",
+          "latencyMs": 2195,
+          "evidenceFile": "evidence/024.json",
+          "evidenceSha256": "a408c2b62143cd4cf99ca0f675a0ebf8e58580ceb10b09bb19eb0893aa9b75f4",
+          "frontierPass": false,
+          "screenedPass": false,
+          "normalizedPass": false,
+          "serviceAttemptCount": 1,
+          "failureReason": "challenge",
+          "apiStatus": 200,
+          "pageStatus": 401,
+          "rawMarkerPresent": false,
+          "textMarkerPresent": false,
+          "pageError": "Bot protection challenge remains (datadome): DataDome challenge bootstrap document",
+          "landedUrl": "https://www.wsj.com/livecoverage/iran-war-2026-trump-deadline-latest-news",
+          "title": "wsj.com",
+          "contentBytes": 1546,
+          "contentSha256": "449c56e8d6b7cdac2b5be9139e41867c9b2cb7eda91edf6652cb54a89e0a864b",
+          "renderedExactMarkerPresent": false,
+          "mainFrameNavigations": [
+            {
+              "url": "https://www.wsj.com/livecoverage/iran-war-2026-trump-deadline-latest-news",
+              "status": 401
+            }
+          ]
+        }
+      ],
+      "privateAddressNegativeControls": [],
+      "resourceAudit": {
+        "samples": 3,
+        "peakSampledMemoryMiB": {
+          "autogtm-firecrawl-consent-mode-probe-20261104": 569
+        },
+        "maximumObservedEventCounters": {
+          "autogtm-firecrawl-consent-mode-probe-20261104": {
+            "memory.events:low": 0,
+            "memory.events:high": 0,
+            "memory.events:max": 0,
+            "memory.events:oom": 0,
+            "memory.events:oom_kill": 0,
+            "memory.events:oom_group_kill": 0,
+            "memory.events:sock_throttled": 0,
+            "pids.events:max": 0
+          }
+        },
+        "createdContainersRemoved": true,
+        "finalActiveRequestCountersZero": true,
+        "prototypeCounterLimit": "Prototype health counts active commands, not a census of the browser initial blank tab. Every request has context-close proof and all containers were subsequently removed."
+      },
+      "artifactHashes": {
+        "report.json": "813bd4c1801c023a85cfe34baf252470c21f55ef6b090b0935c680194fb38acf",
+        "attempts.jsonl": "7d15d816d9589aa8d8440ba53e50cc6313acfd39b740dc281ee167e16a5ee922",
+        "deployment.json": "741ea6289b2a6c5e5def2bbe0aea7c7ac25613fd913fedf40d90627e3171a682",
+        "cleanup.json": "f52bfa8f30623680bd32dd542184614ecd83f5bbdeea75a0213e792f13646d51",
+        "resource-samples.jsonl": "31fa3ad214bc2835ae32327e6524b6e6ea50e469dc44360f5f321803dcf6adc0",
+        "final-health.json": "3048092bc7e6f78ce49489dc502f4022d82b4b266eef1a5b6c3a6cb6bdf29678"
+      },
+      "sourceSnapshotHashes": {
+        "run-consent-mode-probe-2026-11-04.py": "797942cbed056914ae165dbc731d030bd0e3975126ffaf18b83ba66c750b3c9e",
+        "benchmark-consent-mode-probe-2026-11-04.ts": "e28700d3e3cf23c3309258e8e9970e093a78943e53b7019182fb148cb5a8c1b4"
+      }
+    }
+  ],
+  "packagePin": {
+    "package": "pydoll-python",
+    "version": "3.0.0",
+    "wheelUrl": "https://files.pythonhosted.org/packages/bf/f2/91fe6616a9a68c82b0c4fe0a630dd843015ca8c442935ca5ccd472bae75b/pydoll_python-3.0.0-py3-none-any.whl",
+    "sha256": "9a78c597cdb5de2db17c6646253c97d74a705d5571231a3cc529b1d5fcc85435",
+    "bytes": 496934,
+    "source": "https://pypi.org/pypi/pydoll-python/3.0.0/json"
+  },
+  "packageLicense": "MIT, verified from the pinned wheel license file",
+  "excludedBootstrapAttempt": {
+    "runDirectory": "_local/anti-bot/interception-driver-lab-2026-11-04",
+    "status": "runner_parse_failure",
+    "scoredTargetRequests": 0,
+    "twoCreatedContainersRemoved": true,
+    "logSha256": "a8375b370f35ee8f30ee6d91fb7c35c2ba6e9bb19f9f487c72d36663f8e4cf9f"
+  },
+  "findings": [
+    "Pydoll and Rebrowser each matched 5/16 selected observations, with no exclusive matches: GitHub/arXiv in both rounds plus Lowes only in round one.",
+    "The four-cell Rebrowser comparison matched Lowes 0/4 in every proxy-scope/interception cell; each GitHub control passed.",
+    "On the unchanged production service, consent off and rejectNonEssential each matched 2/12, all GitHub controls. Neither retrieved the five selected persistent failures.",
+    "Lowes first-round frozen HTML marker matches did not contain the complete expected sentence in captured rendered body text; the displayed heading was shorter. The frozen grader was not changed.",
+    "Two Pydoll G2 observations failed stable capture after a 403 navigation; they remain adapter errors, not proof of a different WAF rule.",
+    "Pydoll compatibility accepts service_workers but its inspected context implementation does not enforce blocking. The driver comparison deliberately allowed service workers in both experimental profiles; it is not a production replacement."
+  ],
+  "limits": [
+    "Selected live observations are not a full-target or WAF-vendor rate, a controlled code-version gain, extraction F1 or hosted parity.",
+    "The driver comparison includes launcher and protocol differences, captured in process arguments; it does not isolate a single CDP method.",
+    "Production consent/readiness/session behavior was not ported into the driver prototype. Only the separate consent experiment used the unchanged production browser service.",
+    "Normalized HTML marker retrieval and rendered exact-marker presence are separate measures. No expected text was sent to the browser workers."
+  ],
+  "decision": "Keep the existing production driver, guarded routing and consent defaults. These experiments did not establish a repeatable coverage gain.",
+  "researchSources": [
+    "https://pydoll.tech/docs/getting-started/",
+    "https://github.com/autoscrape-labs/pydoll",
+    "https://pypi.org/pypi/pydoll-python/3.0.0/json"
+  ]
+}

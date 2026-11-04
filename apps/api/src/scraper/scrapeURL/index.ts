@@ -86,6 +86,7 @@ import {
   composeTimeoutProcessing,
   CrawlDenialError,
   ActionsNotSupportedError,
+  LocalBrowserTransportError,
 } from "../../lib/error";
 import { htmlTransform } from "./lib/removeUnwantedElements";
 import { postprocessors } from "./postprocessors";
@@ -600,6 +601,8 @@ async function buildMetaObject(
 }
 
 export type InternalOptions = {
+  /** Server-stamped absolute budget for local browser commands, preserved on redelivery. */
+  browserDeadlineAt?: number;
   teamId: string;
   crawlId?: string;
 
@@ -781,6 +784,7 @@ async function scrapeURLLoopIter(
 
     if (
       isLikelyProxyError &&
+      !meta.options.browserControls &&
       meta.options.proxy === "auto" &&
       !meta.featureFlags.has("stealthProxy")
     ) {
@@ -815,6 +819,22 @@ async function scrapeURLLoopIter(
         factors: { isLongEnough, isGoodStatusCode, hasNoPageError },
         length: engineResult.html?.trim().length ?? 0,
       });
+      if (meta.options.browserControls) {
+        const state = engineResult.browser?.interaction?.state;
+        const reason = [
+          "HUMAN_REQUIRED",
+          "VERIFICATION_REQUIRED",
+          "ACCESS_DENIED",
+          "CONTENT_NOT_READY",
+        ].includes(state)
+          ? state
+          : "CONTENT_NOT_READY";
+        throw new LocalBrowserTransportError(
+          reason,
+          "Local browser returned no usable text; inspect browser readiness or continue the retained session",
+          422,
+        );
+      }
       throw new EngineUnsuccessfulError(engine);
     }
   } finally {
@@ -985,6 +1005,7 @@ async function scrapeURLLoop(meta: Meta): Promise<ScrapeUrlResponse> {
           break;
         } catch (error) {
           if (error instanceof WrappedEngineError) {
+            if (meta.options.browserControls) throw error.error;
             if (error.engine === "x-twitter") {
               meta.logger.warn("X/Twitter scrape failed fatally.", {
                 error: error.error,
@@ -1192,6 +1213,7 @@ async function scrapeURLLoop(meta: Meta): Promise<ScrapeUrlResponse> {
         url: engineResult.url,
         statusCode: engineResult.statusCode,
         error: engineResult.error,
+        ...(engineResult.browser ? { browser: engineResult.browser } : {}),
         numPages: engineResult.pdfMetadata?.numPages,
         ...(engineResult.pdfMetadata?.totalPages !== undefined
           ? { totalPages: engineResult.pdfMetadata.totalPages }
@@ -1298,6 +1320,16 @@ export async function scrapeURL(
             );
           }
           options.profile = undefined;
+          if (options.browserControls) {
+            if (
+              options.browserControls.sessionId ||
+              options.browserControls.workflow ||
+              options.actions?.length
+            )
+              throw new Error(
+                "Safe mode does not permit local browser sessions or interactive controls",
+              );
+          }
           // Basic Auth embedded in the URL (user:pass@host) is another way to
           // authenticate; strip the userinfo so no engine can use it, and from
           // the preserved source URL so it isn't returned/persisted in metadata.

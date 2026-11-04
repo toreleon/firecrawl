@@ -30,7 +30,7 @@ type RobustFetchParams<Schema extends z.Schema<any>> = {
 // it could carry a credential (Authorization, X-Auth-*, Cookie, X-Password,
 // X-Session-Id, X-Api-Key, X-Signature, ...).
 const SENSITIVE_HEADER =
-  /auth|cookie|api[-_]?key|token|secret|passw|credential|session|signature|jwt/i;
+  /auth|cookie|api[-_]?key|token|secret|passw|credential|session|signature|jwt|handoff/i;
 
 export function redactHeaders(
   headers: Record<string, string> | undefined,
@@ -68,6 +68,8 @@ export function redactRequestBodyForLog<T>(body: T): T {
   };
   return {
     ...body,
+    ...("session_id" in body ? { session_id: "[REDACTED]" } : {}),
+    ...("sessionId" in body ? { sessionId: "[REDACTED]" } : {}),
     ...(headers !== null && typeof headers === "object"
       ? { headers: redactHeaders(headers as Record<string, string>) }
       : {}),

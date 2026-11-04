@@ -1,0 +1,103 @@
+{
+  "recordedAt": "2026-11-04T12:26:04.938307+00:00",
+  "status": "aborted-at-resource-gate",
+  "sourceCommit": "838e75b4b8396d19e334e036f474b8ecd3b4683f",
+  "completedApiResponses": 2,
+  "observedPrimaryTargetCaptures": 3,
+  "observedBrowserCaptures": 5,
+  "targetCapturesByOwner": {
+    "primary-a": [
+      "https://allegro.pl/oferta/bukiet-roz-roze-sztuczne-kwiaty-jak-zywe-prezent-walentynki-piekne-mydlane-16842279548",
+      "https://www.amazon.com/Combination-Lock-Shackle-Security-Mounting-Bicycle-Secure/dp/B08KCWFMRS",
+      "https://www.canadagoose.com/us/en/pr/macmillan-parka-2080M.html"
+    ],
+    "fallback-a": [
+      "https://www.canadagoose.com/us/en/pr/macmillan-parka-2080M.html"
+    ],
+    "fallback-b": [
+      "https://allegro.pl/oferta/bukiet-roz-roze-sztuczne-kwiaty-jak-zywe-prezent-walentynki-piekne-mydlane-16842279548"
+    ]
+  },
+  "fullRunScore": null,
+  "lastCompleteFullScore": "60/100 at parent 70c69",
+  "resourceFailure": {
+    "owner": "fallback-a",
+    "socketPressureCounter": 41,
+    "memoryLimitEvents": 0,
+    "oomEvents": 0,
+    "pidLimitEvents": 0
+  },
+  "resources": {
+    "primary-a": {
+      "samples": 34,
+      "maximumSampleGapMs": 1012,
+      "sampledMemoryPeakBytes": 846258176,
+      "eventMaxima": {
+        "memory.events:low": 0,
+        "memory.events:high": 0,
+        "memory.events:max": 0,
+        "memory.events:oom": 0,
+        "memory.events:oom_kill": 0,
+        "memory.events:oom_group_kill": 0,
+        "memory.events:sock_throttled": 0,
+        "pids.events:max": 0
+      }
+    },
+    "fallback-a": {
+      "samples": 32,
+      "maximumSampleGapMs": 1011,
+      "sampledMemoryPeakBytes": 1087082496,
+      "eventMaxima": {
+        "memory.events:low": 0,
+        "memory.events:high": 0,
+        "memory.events:max": 0,
+        "memory.events:oom": 0,
+        "memory.events:oom_kill": 0,
+        "memory.events:oom_group_kill": 0,
+        "memory.events:sock_throttled": 41,
+        "pids.events:max": 0
+      }
+    },
+    "fallback-b": {
+      "samples": 28,
+      "maximumSampleGapMs": 1012,
+      "sampledMemoryPeakBytes": 1098518528,
+      "eventMaxima": {
+        "memory.events:low": 0,
+        "memory.events:high": 0,
+        "memory.events:max": 0,
+        "memory.events:oom": 0,
+        "memory.events:oom_kill": 0,
+        "memory.events:oom_group_kill": 0,
+        "memory.events:sock_throttled": 0,
+        "pids.events:max": 0
+      }
+    }
+  },
+  "interpretation": [
+    "One page per Firefox owner did not eliminate socket pressure; do not adopt this layout as a demonstrated fix.",
+    "The partial 2-response result is not a replacement or addition to the retained full100 score.",
+    "Amazon failed at the return-to-product workflow before the pressure burst, with a native WebKit homepage-navigation interruption. This is an independently actionable workflow failure, not evidence that socket pressure caused the Amazon failure.",
+    "The 1-second collectors add a small steady process footprint. Host cgroup ancestors remain hidden. VM telemetry shows reclaim activity, but neither the triggering ancestor nor per-target latency effect is established."
+  ],
+  "cleanup": {
+    "allThreeBrowserContainersRemoved": true,
+    "taskInfrastructureStopped": true,
+    "globalPrune": false,
+    "volumesRemoved": false,
+    "newImagesBuilt": false
+  },
+  "evidenceHashes": {
+    "_local/anti-bot/single-page-firefox-full-api-harness-2026-11-04/deployment.json": "7d8af065b2372d30106e2cf64dfdacb9746bd8663b6058a9a8e6d0ba0158228d",
+    "_local/anti-bot/single-page-firefox-full-api-harness-2026-11-04/cleanup.json": "8f2ceaf2758b575c767e0de958298bcd9b80a887a0c45e56060f500fa0b8e85d",
+    "_local/anti-bot/single-page-firefox-full-api-harness-2026-11-04/primary-a-service.log": "2fb3577069e5b5c5ec93fb49f4556171c58e752845cb721eb068cd2b9c34738a",
+    "_local/anti-bot/single-page-firefox-full-api-harness-2026-11-04/fallback-a-service.log": "c071da03512f0f38968704326827c0c0e86724c158b75b9713bef7af13b76a24",
+    "_local/anti-bot/single-page-firefox-full-api-harness-2026-11-04/fallback-b-service.log": "4d6b3dc66f3583e6564bc8f3c376cdc51f953780e07c1081ebed6204203720d1",
+    "_local/anti-bot/single-page-firefox-full-api-2026-11-04/attempts.jsonl": "83d16bf1da42c2a84328c15863a0c726472281ebcde9234f80d210ac77d24628",
+    "_local/anti-bot/single-page-firefox-full-api-harness-2026-11-04/primary-a-resource-samples.jsonl": "552bb7384b6fe31c5b4be446b9e47c425a6f71801473a280d9e25e2f47b87796",
+    "_local/anti-bot/single-page-firefox-full-api-harness-2026-11-04/fallback-a-resource-samples.jsonl": "18b99e90bb108538b84b612ac2b27eb0539c0191d79b935636d27e468c0c84ff",
+    "_local/anti-bot/single-page-firefox-full-api-harness-2026-11-04/fallback-b-resource-samples.jsonl": "07d491380b81088d26fb8326fdabb3fe12e34430adfa0c91e33ec2076e62a34a"
+  },
+  "scope": "Attempted frozen full100 benchmark with one page per Firefox owner; stopped according to its predeclared zero-socket-pressure gate. An incomplete run; no aggregate success rate.",
+  "sourceInputsUnchangedDuringRun": true
+}

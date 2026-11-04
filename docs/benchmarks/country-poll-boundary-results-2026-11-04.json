@@ -1,0 +1,109 @@
+{
+  "recordedAt": "2026-11-04T11:58:34.164925+00:00",
+  "implementationParentCommit": "70c69f8538103f0eaab4b0b27119887dbdafa557",
+  "implementationSourceHashes": {
+    "helpers/workflows.ts": "31266ad1aab9fc951f224028a25813271841fe30d3716d54f45d85cacdba176b",
+    "helpers/country-budget.spec.ts": "a41c33383bc09d91776d4d28faf2203571560daceaa9dcf888ee34fa669845f0",
+    "integration/country-budget.spec.ts": "5f93bab0638ccef72b92acc9bfc062dc3ba378bc91107fb531d509e51df4ddde"
+  },
+  "scope": "Completed country-discovery reads delivered at the local window boundary no longer fail remaining caller budget. Late results are discarded, without another query or navigation. Stuck RPCs, cancellation, caller expiry and native navigation failure remain terminal. No additional public target requests.",
+  "before": {
+    "deterministicBoundaryRegression": "failed with SCRAPE_TIMEOUT while caller retained 7000ms",
+    "ownedFirefoxIntegration": "passed. Does not independently reproduce the earlier CI failure, whose original response diagnostics were absent."
+  },
+  "after": {
+    "focusedHostHelperChecks": 12,
+    "typescriptBuildExitCode": 0,
+    "nativeOrdinary": {
+      "tests": 11,
+      "pass": 11,
+      "fail": 0
+    },
+    "nativeWebkit": {
+      "tests": 2,
+      "pass": 2,
+      "fail": 0
+    },
+    "nativeReceipts": {
+      "ordinary": {
+        "imageId": "sha256:14ecc363ad49e2dd2e03b531e5ace09e209dae4923d4ddba5f70179fabc7c439",
+        "state": {
+          "Status": "exited",
+          "Running": false,
+          "Paused": false,
+          "Restarting": false,
+          "OOMKilled": false,
+          "Dead": false,
+          "Pid": 0,
+          "ExitCode": 0,
+          "Error": "",
+          "StartedAt": "2026-11-04T11:56:21.376592215Z",
+          "FinishedAt": "2026-11-04T11:57:07.054615333Z"
+        },
+        "resources": {
+          "code": 0,
+          "signal": null,
+          "resources": {
+            "memory.current": "106627072\n",
+            "memory.peak": "1204805632\n",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0\nsock_throttled 0\n",
+            "pids.events": "max 0\n"
+          }
+        },
+        "publicCaptures": 0,
+        "network": "none",
+        "concurrentBatches": 1,
+        "containerRemoved": true
+      },
+      "webkit": {
+        "imageId": "sha256:14ecc363ad49e2dd2e03b531e5ace09e209dae4923d4ddba5f70179fabc7c439",
+        "state": {
+          "Status": "exited",
+          "Running": false,
+          "Paused": false,
+          "Restarting": false,
+          "OOMKilled": false,
+          "Dead": false,
+          "Pid": 0,
+          "ExitCode": 0,
+          "Error": "",
+          "StartedAt": "2026-11-04T11:57:08.383713875Z",
+          "FinishedAt": "2026-11-04T11:57:18.258358672Z"
+        },
+        "resources": {
+          "code": 0,
+          "signal": null,
+          "resources": {
+            "memory.current": "202416128\n",
+            "memory.peak": "834527232\n",
+            "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0\nsock_throttled 0\n",
+            "pids.events": "max 0\n"
+          }
+        },
+        "publicCaptures": 0,
+        "network": "none",
+        "concurrentBatches": 1,
+        "containerRemoved": true
+      }
+    },
+    "maximumConcurrentTestBatches": 1,
+    "publicTargetRequests": 0,
+    "compiledTestFiles": "tsconfig excludes *.spec.ts; the private image builder was corrected to copy source tests and only generated runtime JS."
+  },
+  "limits": [
+    "The current 60/100 full benchmark measured parent 70c69 before this repair; it is not evidence of the new candidate coverage.",
+    "No hosted comparison or overall parity claim.",
+    "The focused native and helper tests verify the boundary contract; they do not prove this was the sole cause of the earlier CI failure."
+  ],
+  "evidenceHashes": {
+    "_local/anti-bot/country-poll-boundary-2026-11-04/boundary-before.log": "5b7a1c40da53bc91a12a4dd5f3a6d576b9b96a320e31d0966e9b299c9a6717ae",
+    "_local/anti-bot/country-poll-boundary-2026-11-04/before-native.log": "20d2e5cb58164fc16ea6824ab3f76f150f2943120058b3eff41ecb9d98eaca6f",
+    "_local/anti-bot/country-poll-boundary-2026-11-04/before-native-receipt.json": "b45977c6349143364128aaca8dd2b13977fe7b4ccbe971df092d189488832524",
+    "_local/anti-bot/country-poll-boundary-2026-11-04/focused-helpers-after.log": "722464fd44bcb4fd7e77af789d6f3acc4ea7f0eb06dff6357e979b8b27af7992",
+    "_local/anti-bot/country-poll-boundary-2026-11-04/typescript-build-after.log": "5ac71a99decf5b92dbfe798066cbe8ea317395f8f764f5a8879fd3511ca99454",
+    "_local/anti-bot/country-poll-boundary-2026-11-04/candidate-2-inputs.json": "3db596480e4afa396221c12da9ca130a7568e759f0375e126fb0056d01b4a3cf",
+    "_local/anti-bot/country-poll-boundary-2026-11-04/candidate-2-native-results.json": "83d2890df89eab887812ae36fd4e2fe157ab15c61288168be8c50030eb4fba3a",
+    "_local/anti-bot/country-poll-boundary-2026-11-04/candidate-2-native-ordinary.log": "794b5b466ff2dbe9d834218fac85a02bb57480ac93e9d9c319cfa3a6728f5c0c",
+    "_local/anti-bot/country-poll-boundary-2026-11-04/candidate-2-native-webkit.log": "c4e0fe552d330bc3bcbcc286a2e6b3c280226b677d2fbc845761260b0ac3e6f4"
+  }
+}

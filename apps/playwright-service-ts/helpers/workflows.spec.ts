@@ -1,0 +1,179 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import {
+  countryDestination,
+  validActions,
+  interactionState,
+  amazonContinuationAllowed,
+  amazonProductIdentity,
+  amazonHomepageNavigationInterruption,
+} from './workflows';
+
+test('country navigation preserves origin, product path and SKU', () => {
+  const url = 'https://www.bestbuy.com/site/product/123.p?skuId=123';
+  assert.equal(
+    countryDestination(url, url + '&intl=nosplash'),
+    url + '&intl=nosplash',
+  );
+  for (const next of [
+    'https://evil.example/site/product/123.p?skuId=123&intl=nosplash',
+    'https://www.bestbuy.com/?skuId=123&intl=nosplash',
+    url.replace('skuId=123', 'skuId=456') + '&intl=nosplash',
+  ])
+    assert.equal(countryDestination(url, next), null);
+});
+test('only the observed original-product return interrupted by its own homepage is a known identity failure', () => {
+  const product = 'https://www.amazon.com/Test/dp/B000000042';
+  const home = 'https://www.amazon.com/';
+  const interrupted = new Error(
+    `page.goto: Navigation to "${product}" is interrupted by another navigation to "${home}"\nCall log:`,
+  );
+  assert.equal(
+    amazonHomepageNavigationInterruption(interrupted, product, home),
+    true,
+  );
+  for (const [error, requested, landed] of [
+    [new Error('page.goto: net::ERR_CONNECTION_RESET'), product, home],
+    [new Error('page.goto: Timeout 30000ms exceeded'), product, home],
+    [interrupted, product.replace('B000000042', 'B000000043'), home],
+    [interrupted, product, product],
+    [interrupted, product, 'https://attacker.test/'],
+    [interrupted, product, 'https://www.amazon.com/ap/signin'],
+    [interrupted, 'not a URL', home],
+    [interrupted, product, 'not a URL'],
+  ])
+    assert.equal(
+      amazonHomepageNavigationInterruption(error, requested as string, landed as string),
+      false,
+    );
+});
+test('Amazon continuation permits only the observed answer-free GET form on the requested product', () => {
+  const url = 'https://www.amazon.com/Test/dp/B000000042';
+  const valid = {
+    action: '/errors_page/validateCaptcha',
+    method: 'get',
+    formCount: 1,
+    buttonCount: 1,
+    prompt: true,
+    shortPage: true,
+    otherControls: false,
+    inputs: [
+      { name: 'amzn', type: 'hidden' },
+      { name: 'amzn-r', type: 'hidden' },
+      { name: 'field-keywords', type: 'hidden' },
+    ],
+  };
+  assert.equal(amazonProductIdentity(url), 'B000000042');
+  assert.equal(amazonProductIdentity('not a URL'), null);
+  assert.equal(amazonContinuationAllowed(url, valid), true);
+  assert.equal(amazonProductIdentity('https://www.amazon.com/cart'), null);
+  for (const broken of [
+    { ...valid, method: 'post' },
+    { ...valid, formCount: 2 },
+    { ...valid, buttonCount: 2 },
+    { ...valid, prompt: false },
+    { ...valid, otherControls: true },
+    { ...valid, action: 'https://evil.example/errors_page/validateCaptcha' },
+    { ...valid, action: 'http://%' },
+    { ...valid, action: '/errors_page/validateCaptcha?redirect=elsewhere' },
+    {
+      ...valid,
+      inputs: valid.inputs.map((i) =>
+        i.name === 'field-keywords' ? { ...i, type: 'text' } : i,
+      ),
+    },
+  ])
+    assert.equal(amazonContinuationAllowed(url, broken), false);
+  assert.equal(
+    amazonContinuationAllowed(
+      url.replace('amazon.com', 'amazon.com.evil.example'),
+      valid,
+    ),
+    false,
+  );
+});
+test('interactive commands reject broad clicks, code execution and retry-shaped malformed inputs', () => {
+  assert.equal(validActions([{ type: 'click', selector: '#specific' }]), true);
+  assert.equal(
+    validActions([{ type: 'click', selector: 'button', all: true }]),
+    false,
+  );
+  assert.equal(
+    validActions([
+      { type: 'executeJavascript', script: 'fetch("http://private")' },
+    ]),
+    false,
+  );
+  assert.equal(
+    validActions([{ type: 'wait', milliseconds: 10, selector: 'main' }]),
+    false,
+  );
+  assert.equal(
+    interactionState(
+      'Sorry not available in your location',
+      'https://example.com',
+      false,
+      200,
+      false,
+    ),
+    'REGION_UNAVAILABLE',
+  );
+  assert.equal(
+    interactionState(
+      'Verify you are human',
+      'https://example.com',
+      true,
+      200,
+      false,
+    ),
+    'HUMAN_REQUIRED',
+  );
+});
+
+test('email-first authentication pages are identified from their final route and sign-in prompt', () => {
+  for (const path of ['/login.html?from=%2Fproduct', '/login', '/sign-in.htm'])
+    assert.equal(
+      interactionState(
+        'Sign in / Register\nEmail or phone number\nContinue',
+        `https://example.com${path}`,
+        true,
+        200,
+        false,
+      ),
+      'AUTH_REQUIRED',
+    );
+});
+
+test('authentication route hints exclude queries, fragments and partial path names', () => {
+  for (const url of [
+    'https://example.com/article?example=/accounts/login',
+    'https://example.com/article#/signin',
+    'https://example.com/articles/accounts/login-guide',
+    'https://example.com/docs/login.html',
+    'https://example.com/login.html',
+    'not a URL/accounts/login',
+  ])
+    assert.equal(
+      interactionState(
+        'Public login architecture guide',
+        url,
+        true,
+        200,
+        false,
+      ),
+      'CONTENT_READY',
+    );
+});
+
+test('established account login and sign-in routes retain authentication state', () => {
+  for (const path of [
+    '/accounts/login',
+    '/accounts/login/two-factor',
+    '/en/accounts/login/',
+    '/signin?next=/public',
+  ])
+    assert.equal(
+      interactionState('', `https://example.com${path}`, true, 200, false),
+      'AUTH_REQUIRED',
+    );
+});

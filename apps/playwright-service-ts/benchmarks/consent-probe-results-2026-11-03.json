@@ -1,0 +1,400 @@
+{
+  "status": "complete",
+  "measuredAt": "2026-11-03T12:02:36.475Z",
+  "sourceCommit": "4a363134f7d5dd50943338c4b18109d151395817",
+  "baselineSourceCommit": "38546557c78ad747144bdd81724bcdaf57131a15",
+  "scope": "100-target browser-service comparison, separate from the full API hosted comparison.",
+  "protocol": {
+    "targets": 100,
+    "rounds": 2,
+    "requests": 400,
+    "globalConcurrency": 4,
+    "limitsPerBrowser": {
+      "cpuCount": 2,
+      "memoryGiB": 3,
+      "pageCapacity": 2
+    },
+    "egressCountry": "VN",
+    "upstreamProxy": false,
+    "freshContexts": true,
+    "mediaBlocked": false,
+    "workflow": "auto",
+    "consent": "rejectNonEssential",
+    "maxAttempts": 1,
+    "expectedTextSent": false,
+    "serviceDeadlineMs": 85000,
+    "clientDeadlineMs": 90000,
+    "fixtureSha256": "a886fb57087e842c2857b89a7669e31d2fb7b98d6bd7deb60a2329f29581b76a",
+    "graderSha256": "ffd9f0d2e5996825aa77cb71b600a6667558e166d4471a084c20638bab9171d6",
+    "fallbackClassifierSha256": "3111f011045834a040e5497825cd0bf2c698a3fa8ca77a48c8479dddf2348817",
+    "images": {
+      "baseline": "sha256:d17ce6e0bfc853daef04fef2729450a8a9a89b1a30dac1d2a77c043c7e28d818",
+      "candidate": "sha256:b9efbb220e6ef7fc2625696d8d0d6887925a94a9f4f226b64906e5b115465920"
+    }
+  },
+  "profiles": {
+    "baseline": {
+      "requests": 200,
+      "uniqueTargets": 100,
+      "frontierPasses": 92,
+      "screenedPasses": 85,
+      "normalizedPasses": 87,
+      "frontierSuccessRate": 0.46,
+      "screenedSuccessRate": 0.425,
+      "normalizedSuccessRate": 0.435,
+      "successfulLatencyP50Ms": 3533,
+      "successfulLatencyP95Ms": 7452,
+      "allAttemptLatencyP95Ms": 6313,
+      "failures": {
+        "challenge": 47,
+        "network_error": 7,
+        "marker_only_in_noncontent_markup": 5,
+        "target_status_403": 34,
+        "rate_limited": 5,
+        "target_status_511": 2,
+        "target_status_417": 2,
+        "target_status_405": 2,
+        "missing_expected_marker": 8,
+        "service_error": 1,
+        "timeout": 2
+      }
+    },
+    "candidate": {
+      "requests": 200,
+      "uniqueTargets": 100,
+      "frontierPasses": 93,
+      "screenedPasses": 87,
+      "normalizedPasses": 89,
+      "frontierSuccessRate": 0.465,
+      "screenedSuccessRate": 0.435,
+      "normalizedSuccessRate": 0.445,
+      "successfulLatencyP50Ms": 3552,
+      "successfulLatencyP95Ms": 7746,
+      "allAttemptLatencyP95Ms": 8546,
+      "failures": {
+        "marker_only_in_noncontent_markup": 4,
+        "challenge": 46,
+        "target_status_403": 33,
+        "network_error": 6,
+        "rate_limited": 6,
+        "target_status_511": 2,
+        "timeout": 4,
+        "target_status_417": 2,
+        "target_status_405": 2,
+        "missing_expected_marker": 7,
+        "service_error": 1
+      }
+    }
+  },
+  "paired": {
+    "neither": 110,
+    "candidateOnly": 3,
+    "both": 86,
+    "baselineOnly": 1
+  },
+  "commonNormalizedSuccessLatency": {
+    "pairedObservations": 86,
+    "quantiles": "nearest rank",
+    "profiles": {
+      "baseline": {
+        "p50Ms": 3471,
+        "p95Ms": 7452
+      },
+      "candidate": {
+        "p50Ms": 3492,
+        "p95Ms": 7502
+      }
+    }
+  },
+  "targetCountChanges": [
+    {
+      "target": "Amazon",
+      "baseline": 0,
+      "candidate": 1,
+      "workflowSteps": [
+        {
+          "attempt": 1,
+          "type": "amazon-continue@1",
+          "outcome": "submitted-and-returned-to-product",
+          "normalizedPass": true
+        }
+      ]
+    },
+    {
+      "target": "louisvuitton",
+      "baseline": 0,
+      "candidate": 1,
+      "workflowSteps": []
+    },
+    {
+      "target": "expedia",
+      "baseline": 1,
+      "candidate": 0,
+      "workflowSteps": []
+    },
+    {
+      "target": "TikTok",
+      "baseline": 1,
+      "candidate": 2,
+      "workflowSteps": []
+    }
+  ],
+  "candidateAuxiliaryProbeTimeoutCases": [
+    {
+      "target": "Amazon",
+      "round": 1,
+      "normalizedPass": true,
+      "latencyMs": 10006,
+      "consent": {
+        "policy": "rejectNonEssential",
+        "outcome": "unresolved",
+        "version": "autoconsent-17.3.0+local-2",
+        "diagnostics": {
+          "framesScanned": 5,
+          "probeTimeouts": 1,
+          "mainFrameProbeTimeouts": 0,
+          "auxiliaryProbeTimeouts": 1,
+          "probeErrors": 0,
+          "actionErrors": 0,
+          "limited": false,
+          "durationMs": 1319
+        }
+      }
+    },
+    {
+      "target": "target",
+      "round": 1,
+      "normalizedPass": true,
+      "latencyMs": 5460,
+      "consent": {
+        "policy": "rejectNonEssential",
+        "outcome": "unresolved",
+        "version": "autoconsent-17.3.0+local-2",
+        "diagnostics": {
+          "framesScanned": 2,
+          "probeTimeouts": 1,
+          "mainFrameProbeTimeouts": 0,
+          "auxiliaryProbeTimeouts": 1,
+          "probeErrors": 0,
+          "actionErrors": 0,
+          "limited": false,
+          "durationMs": 1974
+        }
+      }
+    },
+    {
+      "target": "YouTube",
+      "round": 1,
+      "normalizedPass": true,
+      "latencyMs": 3492,
+      "consent": {
+        "policy": "rejectNonEssential",
+        "outcome": "unresolved",
+        "version": "autoconsent-17.3.0+local-2",
+        "diagnostics": {
+          "framesScanned": 3,
+          "probeTimeouts": 1,
+          "mainFrameProbeTimeouts": 0,
+          "auxiliaryProbeTimeouts": 1,
+          "probeErrors": 0,
+          "actionErrors": 0,
+          "limited": false,
+          "durationMs": 1143
+        }
+      }
+    },
+    {
+      "target": "Yahoo Finance",
+      "round": 2,
+      "normalizedPass": true,
+      "latencyMs": 5848,
+      "consent": {
+        "policy": "rejectNonEssential",
+        "outcome": "unresolved",
+        "version": "autoconsent-17.3.0+local-2",
+        "diagnostics": {
+          "framesScanned": 4,
+          "probeTimeouts": 1,
+          "mainFrameProbeTimeouts": 0,
+          "auxiliaryProbeTimeouts": 1,
+          "probeErrors": 0,
+          "actionErrors": 0,
+          "limited": false,
+          "durationMs": 2958
+        }
+      }
+    }
+  ],
+  "candidateTimeoutPhases": [
+    {
+      "target": "allegro",
+      "round": 1,
+      "phase": "navigation"
+    },
+    {
+      "target": "roblox",
+      "round": 1,
+      "phase": "navigation"
+    },
+    {
+      "target": "allegro",
+      "round": 2,
+      "phase": "navigation"
+    },
+    {
+      "target": "roblox",
+      "round": 2,
+      "phase": "navigation"
+    }
+  ],
+  "audit": {
+    "status": "complete",
+    "auditedRequests": 400,
+    "allUniquePairs": true,
+    "twoPerTargetPerProfile": true,
+    "allContentHashesMatch": true,
+    "allScoresReplay": true,
+    "allSummaryMetricsReplay": true,
+    "graderAndFallbackUnchanged": true,
+    "noOracleReadinessHint": true,
+    "historicalNormalizedSuccessesChecked": 424,
+    "historicalGateFalseRejections": 0,
+    "resourceSamples": 35,
+    "peakSampledMemoryMiB": {
+      "baseline": 1502,
+      "candidate": 1494
+    },
+    "resourceLimitEvents": 0,
+    "timingIntegrity": {
+      "valid": true,
+      "sampleIntervalMs": 1000,
+      "maximumAllowedGapMs": 10000,
+      "maximumObservedGapMs": 1002,
+      "gaps": []
+    },
+    "consentReturnedResponsesOnly": {
+      "baseline": {
+        "returned": 190,
+        "withDiagnostics": 0,
+        "framesScanned": 0,
+        "probeTimeouts": 0,
+        "mainFrameProbeTimeouts": 0,
+        "auxiliaryProbeTimeouts": 0,
+        "probeErrors": 0,
+        "actionErrors": 0,
+        "limited": 0,
+        "durationMs": 0,
+        "outcomes": {
+          "not_detected": 185,
+          "unresolved": 4,
+          "applied": 1
+        }
+      },
+      "candidate": {
+        "returned": 189,
+        "withDiagnostics": 189,
+        "framesScanned": 314,
+        "probeTimeouts": 4,
+        "mainFrameProbeTimeouts": 0,
+        "auxiliaryProbeTimeouts": 4,
+        "probeErrors": 0,
+        "actionErrors": 1,
+        "limited": 0,
+        "durationMs": 49186,
+        "outcomes": {
+          "unresolved": 9,
+          "not_detected": 178,
+          "applied": 2
+        }
+      }
+    },
+    "loading": {
+      "baseline": {
+        "observedBusy": 4,
+        "unresolvedBusy": 0,
+        "waitMs": 36427
+      },
+      "candidate": {
+        "observedBusy": 3,
+        "unresolvedBusy": 0,
+        "waitMs": 41703
+      }
+    },
+    "interactionStates": {
+      "baseline": {
+        "VERIFICATION_REQUIRED": 35,
+        "not_recorded": 10,
+        "CONTENT_READY": 107,
+        "ACCESS_DENIED": 34,
+        "HUMAN_REQUIRED": 12,
+        "REGION_UNAVAILABLE": 2
+      },
+      "candidate": {
+        "CONTENT_READY": 108,
+        "VERIFICATION_REQUIRED": 38,
+        "ACCESS_DENIED": 33,
+        "not_recorded": 11,
+        "HUMAN_REQUIRED": 8,
+        "REGION_UNAVAILABLE": 2
+      }
+    },
+    "cleanupVerified": true,
+    "networkRequests": 0
+  },
+  "verification": {
+    "browserCI": {
+      "url": "https://github.com/toreleon/firecrawl/actions/runs/41630769224",
+      "sourceCommit": "4a363134f7d5dd50943338c4b18109d151395817",
+      "build": true,
+      "helpersPassed": 50,
+      "integrationPassed": 71,
+      "productionDependencyAudit": true,
+      "retainedLogSha256": "4af9a0e6b3c862b516115d6e6bce4ab3874ae43248378ad88581ab5e80e9d75e"
+    },
+    "apiHarness": {
+      "realApiChecksPassed": 6,
+      "harnessExitCode": 0,
+      "sourcePins": {
+        "sourceFiles": {
+          "apps/api/src/lib/local-browser/controls.ts": "fa1646901a7dc0dcfc90cdb1b08fa64a32ba7450291a1a071f7cf1306706e1d2",
+          "apps/api/src/lib/local-browser/controls.test.ts": "bb499cdad7c2e029cec0a2911406d0f3e6038be97ee08a7073e7599305b18b31",
+          "apps/api/src/__tests__/snips/v2/browser-controls.test.ts": "5f22ff6fae8df2feee15d340d9efc67e41651b5318e6536395388e0e7fa7e207"
+        },
+        "compiledControlsSha256": "bbf8877e6567a0e467cf00a47e7d0cede3d16c19dea677aad559afe6f717075f",
+        "verifiedCommit": "4a363134f7d5dd50943338c4b18109d151395817"
+      },
+      "harnessLogSha256": "7a784babaefaba66f04de424c704fb05e0165ab132998d70e4209ced670dab55",
+      "coverage": [
+        "known primary CMP remains actionable despite stalled cross-origin child",
+        "unknown stalled child returns unresolved metadata and usable primary content",
+        "late pure-query results do not cause later explicit clicks",
+        "two owners, typed empty/verification failures and retained tab/handoff"
+      ],
+      "teardownNote": "Extract-worker logged AMQP Channel closing during teardown; tests and harness exited zero."
+    }
+  },
+  "excludedInitialAttempt": {
+    "sourceCommit": "91c9fe6fe38fffb2b972c9ad8bbc80392d2a248e",
+    "status": "aborted",
+    "completedRecords": 199,
+    "reason": "Initial one-second primary-frame cap failed the primary-CMP fixture in CI under load; corrected before this complete run.",
+    "auditSha256": "88d8552dda80d9a6145d722ac95217b52677222c6b742e3c638803921ce6ad43",
+    "initialCI": "https://github.com/toreleon/firecrawl/actions/runs/41627717395"
+  },
+  "localEvidence": {
+    "directory": "_local/anti-bot/consent-probe-primary-paired-full-2026-11-03",
+    "reportSha256": "f6135896f85bad5e0ebc7e90f3739b503e576156db94b2a7545487680cbc2782",
+    "auditSha256": "b42240d1959c37139a2c9fb40e3da85773e4417fcb27285d495f3c75db921da0",
+    "deploymentSha256": "5b996a8b12b4a4dc4939b3c7d8bb9fd04be40f803ef0074f5d3614584599c37a",
+    "cleanupSha256": "7e3815a3907eba0e91d8a463296e28f3f38997d747ac747c2c4e0e5da0f9a7f1"
+  },
+  "conclusion": "Normalized matches rose by two of 200, with slightly higher common-success latency. Live-site variation and the small discordant cohort do not establish an aggregate causal performance gain. The controlled fixtures prove bounded explicit CMP discovery on stalled auxiliary frames.",
+  "limits": [
+    "Historical Ashley Furniture and YouTube consent stalls did not recur in live traces; the controlled fixture reproduces a failure class, not their proven root cause.",
+    "Bounded read-only discovery does not cancel an underlying browser RPC. Expired pure-query continuations are checked before further queries and before explicit clicks.",
+    "Returned consent diagnostics describe the latest explicit pass, not every phase or all consent activity. Baseline diagnostics were unavailable, not zero.",
+    "An applied primary choice does not prove all embedded origins completed consent.",
+    "WAF labels come from the frozen fixture publisher; live rule deployments and extraction quality are not established.",
+    "Hosted infrastructure and provider retries differ; this browser-only result does not establish hosted API parity."
+  ]
+}

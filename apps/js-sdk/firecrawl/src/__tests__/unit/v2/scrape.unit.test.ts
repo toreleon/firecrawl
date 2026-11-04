@@ -27,6 +27,18 @@ function makeClient(apiKey: string) {
 }
 
 describe("v2.scrape unit", () => {
+  test("forwards an explicit stateless engine fallback policy", async () => {
+    const {client,sent}=makeClient("fc-test");
+    const browserControls={workflow:"auto" as const,engineFallback:true,maxAttempts:1 as const,navigationTimeout:30000};
+    await client.scrape("https://example.com",{browserControls});
+    expect((sent[0]!.body as any).browserControls).toEqual(browserControls);
+  });
+  test("forwards local browser controls without changing nested session/readiness values", async () => {
+    const {client,sent}=makeClient("fc-test");
+    const browserControls={waitUntil:"domcontentloaded" as const,readiness:{selector:"main",text:"Company 42",timeoutMs:3000},consent:"rejectNonEssential" as const,sessionId:"f63d36ec-882e-4b56-a663-68678c905cb6",continueSession:true};
+    await client.scrape("https://example.com",{browserControls});
+    expect((sent[0]!.body as any).browserControls).toEqual(browserControls);
+  });
   test("constructs without an API key and scrapes keyless, without an Authorization header", async () => {
     const { client, sent } = makeClient("");
     const doc = await client.scrape(" https://example.com ", { formats: ["markdown"] });

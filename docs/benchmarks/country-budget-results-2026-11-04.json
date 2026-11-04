@@ -1,0 +1,1369 @@
+{
+  "recordedAt": "2026-11-04T07:17:56.645785+00:00",
+  "sourceCommit": "f2211b46ac7a659f121fa8be8b9aaadb91fd877b",
+  "scope": "Bound Best Buy country-workflow document/link discovery and native navigation, preserve caller cancellation and confirmed-closure fallback, and forward precise failure phases through API queues. A selected four-target proxy-free cohort is separate from the earlier full-100 result.",
+  "diagnosis": {
+    "observedPriorFailure": "Best Buy received HTTP 200, exhausted the workflow deadline and skipped an alternate for insufficient remaining budget.",
+    "priorLiveReceipt": "docs/benchmarks/product-details-results-2026-11-04.json",
+    "exactPriorStalledRpcEstablished": false,
+    "confirmedCodeDefect": "The nominal five-second loop window did not bound either awaited discovery RPC. Both used the entire caller deadline; subsequent country navigation also received all remaining time.",
+    "beforeAfterReproduction": {
+      "before": {
+        "mockedBlockedRpc": true,
+        "publicTargetCalls": 0,
+        "cases": [
+          {
+            "stage": "document",
+            "elapsedMs": 7011,
+            "code": "SCRAPE_TIMEOUT",
+            "callerBudgetRemaining": false,
+            "calls": {
+              "text": 1,
+              "links": 0,
+              "navigation": 0
+            }
+          },
+          {
+            "stage": "links",
+            "elapsedMs": 7010,
+            "code": "SCRAPE_TIMEOUT",
+            "callerBudgetRemaining": false,
+            "calls": {
+              "text": 1,
+              "links": 1,
+              "navigation": 0
+            }
+          }
+        ],
+        "nativeNavigationTimeoutMs": 59999,
+        "limit": "Dependency-level reproduction on the real compiled workflow, not an actual renderer hang or measured native-navigation latency."
+      },
+      "after": {
+        "mockedBlockedRpc": true,
+        "publicTargetCalls": 0,
+        "cases": [
+          {
+            "stage": "document",
+            "elapsedMs": 5007,
+            "code": "SCRAPE_TIMEOUT",
+            "callerBudgetRemainingMs": 1993,
+            "calls": {
+              "text": 1,
+              "links": 0,
+              "navigation": 0
+            },
+            "phase": "workflow-country-text"
+          },
+          {
+            "stage": "links",
+            "elapsedMs": 5008,
+            "code": "SCRAPE_TIMEOUT",
+            "callerBudgetRemainingMs": 1992,
+            "calls": {
+              "text": 1,
+              "links": 1,
+              "navigation": 0
+            },
+            "phase": "workflow-country-links"
+          }
+        ],
+        "nativeNavigationTimeoutMs": 30000,
+        "limit": "Dependency-level reproduction on the real compiled workflow, not an actual renderer hang or measured native-navigation latency."
+      },
+      "limit": "Blocked discovery dependencies on the actual compiled workflow, with Docker networking disabled. The navigation observation is a passed native timeout parameter, not a measured browser timeout. Actual native navigation and closure are tested separately through the queued API."
+    }
+  },
+  "implementation": {
+    "sharedDiscoveryMaximumMs": 5000,
+    "nativeCountryNavigationMaximumMs": 30000,
+    "callerBudgetReserveMs": 300,
+    "failureBehavior": "A stalled discovery query or timed-out navigation fails the current browser attempt. It is not promoted to ready content. Existing opted-in distinct-engine fallback still requires matching ownership, confirmed Page closure and sufficient shared time.",
+    "lateResultGuard": "Both discovery awaits race the same local window and the caller deadline. Check budgets before/after each result; a late result cannot continue to link discovery or dispatch navigation. Await native navigation under its own timeout rather than an additional short timer.",
+    "phases": [
+      "workflow-country-text",
+      "workflow-country-links",
+      "workflow-country-navigation"
+    ],
+    "phaseForwarding": "Only these fixed phase strings are added to the existing bounded document-receipt allowlist. URL redaction and queue serialization remain in effect.",
+    "destinationGuard": "Keep the existing candidate-origin, product-path and SKU check. No country-control forcing, verification automation, support submission or default retry is added.",
+    "navigationControlLimit": "browserControls.navigationTimeout remains the initial-navigation cap. The thirty-second country-navigation maximum is a separate recipe bound.",
+    "frozenGradersUnchanged": {
+      "apps/playwright-service-ts/helpers/bot-detection.ts": "3111f011045834a040e5497825cd0bf2c698a3fa8ca77a48c8479dddf2348817",
+      "apps/playwright-service-ts/helpers/waf-benchmark.ts": "ffd9f0d2e5996825aa77cb71b600a6667558e166d4471a084c20638bab9171d6",
+      "apps/playwright-service-ts/helpers/api-benchmark.ts": "2e48cf7bc3ef5f3f691e0eff899fbb71f0d067411c504a038164347f37232c91",
+      "apps/playwright-service-ts/scripts/benchmark-api.ts": "0b42fef70efaade1e3ad4c5e2e8a6759d8ce8fe2b70cbe314bf889139e4027ed",
+      "apps/playwright-service-ts/benchmarks/frontier-2026-10-30.json": "a886fb57087e842c2857b89a7669e31d2fb7b98d6bd7deb60a2329f29581b76a"
+    }
+  },
+  "fullApiCohort": {
+    "checkedAt": "2026-11-04T07:10:22.433966+00:00",
+    "sourceCommit": "f2211b46ac7a659f121fa8be8b9aaadb91fd877b",
+    "productionRuntimeCommit": "f2211b46ac7a659f121fa8be8b9aaadb91fd877b",
+    "profile": "webkit-firefox",
+    "requests": 4,
+    "backendCaptures": 5,
+    "backendCapturesByOwner": {
+      "primary-a": 4,
+      "fallback-a": 1,
+      "fallback-b": 0
+    },
+    "normalizedPasses": 3,
+    "screenedPasses": 3,
+    "frontierPasses": 4,
+    "normalizedAndMarkdownPasses": 3,
+    "latency": {
+      "successfulP50Ms": 7208,
+      "successfulP95Ms": 39252,
+      "allAttemptsP95Ms": 39252
+    },
+    "failures": {
+      "marker_only_in_noncontent_markup": 1
+    },
+    "states": {
+      "CONTENT_READY": 4
+    },
+    "apiErrors": {},
+    "proofs": {
+      "responsesWithClosedReceipts": 4,
+      "closedAttemptReceipts": 5,
+      "contextClosedReceipts": 5,
+      "SCRAPE_TIMEOUT": 1
+    },
+    "fallback": {
+      "returned": 4,
+      "closedAttemptReceipts": 5,
+      "attempted": 1,
+      "recovered": 1,
+      "normalizedRecovered": 1
+    },
+    "fallbackSkipped": {
+      "not_needed": 3
+    },
+    "resources": {
+      "primary-a": {
+        "peakBytes": 1820405760,
+        "sampledPeakBytes": 1115901952,
+        "events": {
+          "memory.events:low": 0,
+          "memory.events:high": 0,
+          "memory.events:max": 0,
+          "memory.events:oom": 0,
+          "memory.events:oom_kill": 0,
+          "memory.events:oom_group_kill": 0,
+          "memory.events:sock_throttled": 0,
+          "pids.events:max": 0
+        }
+      },
+      "fallback-a": {
+        "peakBytes": 1449512960,
+        "sampledPeakBytes": 936194048,
+        "events": {
+          "memory.events:low": 0,
+          "memory.events:high": 0,
+          "memory.events:max": 0,
+          "memory.events:oom": 0,
+          "memory.events:oom_kill": 0,
+          "memory.events:oom_group_kill": 0,
+          "memory.events:sock_throttled": 0,
+          "pids.events:max": 0
+        }
+      },
+      "fallback-b": {
+        "peakBytes": 671428608,
+        "sampledPeakBytes": 654348288,
+        "events": {
+          "memory.events:low": 0,
+          "memory.events:high": 0,
+          "memory.events:max": 0,
+          "memory.events:oom": 0,
+          "memory.events:oom_kill": 0,
+          "memory.events:oom_group_kill": 0,
+          "memory.events:sock_throttled": 0,
+          "pids.events:max": 0
+        }
+      }
+    },
+    "pacing": {
+      "configuredReservationIntervalMs": 7000,
+      "minimumObservedDispatchGapMs": 7001,
+      "strict7000msDispatchFloorMet": true,
+      "limit": "Slot reservation precedes fetch. Observed gaps are retained; configuration is not an exact dispatch floor."
+    },
+    "timingIntegrity": {
+      "valid": true,
+      "sampleIntervalMs": 1000,
+      "maximumAllowedGapMs": 10000,
+      "maximumObservedGapMs": 1003,
+      "gaps": []
+    },
+    "replay": {
+      "status": "complete",
+      "attempts": 4,
+      "uniquePairs": true,
+      "allEvidenceHashesMatch": true,
+      "allScoresReplay": true,
+      "sourceHashesMatch": true,
+      "networkRequests": 0,
+      "lifecycleLedgerVerified": true,
+      "profileConcurrencyLimitsChecked": 1,
+      "maxObservedConcurrency": 2,
+      "maxObservedConcurrencyByProfile": {
+        "webkit-firefox": 2
+      }
+    },
+    "byTarget": [
+      {
+        "target": "Amazon",
+        "url": "https://www.amazon.com/Combination-Lock-Shackle-Security-Mounting-Bicycle-Secure/dp/B08KCWFMRS",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 7208,
+        "markdownMarkerPresent": true,
+        "markdownChars": 188791,
+        "payloadSha256": "40701a2f7026cde454320e0e97775a6875a204e751232d8987db44851e209098",
+        "browserState": "CONTENT_READY",
+        "apiErrorCode": null,
+        "selectedAttemptCleanup": [
+          {
+            "attempt": 1,
+            "pageClosed": true,
+            "contextClosed": true,
+            "cleanupFinished": true,
+            "cleanupDurationMs": 12
+          }
+        ],
+        "closedAttemptReceipts": [
+          {
+            "engine": "webkit",
+            "ownerBootId": "69c26323-ad72-4c46-8bc9-16b8cf64bda2",
+            "pageClosed": true,
+            "contextClosed": true,
+            "pageStatusCode": 200
+          }
+        ],
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "69c26323-ad72-4c46-8bc9-16b8cf64bda2",
+              "pageClosed": true,
+              "contextClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "canadagoose",
+        "url": "https://www.canadagoose.com/us/en/pr/macmillan-parka-2080M.html",
+        "normalizedPass": false,
+        "screenedPass": false,
+        "frontierPass": true,
+        "failureReason": "marker_only_in_noncontent_markup",
+        "apiStatus": 200,
+        "latencyMs": 8470,
+        "markdownMarkerPresent": false,
+        "markdownChars": 59725,
+        "payloadSha256": "cd819b0b713f01ecd555680ed6e37c00be13652a0490d91efd80f514712d9417",
+        "browserState": "CONTENT_READY",
+        "apiErrorCode": null,
+        "selectedAttemptCleanup": [
+          {
+            "attempt": 1,
+            "pageClosed": true,
+            "contextClosed": true,
+            "cleanupFinished": true,
+            "cleanupDurationMs": 4
+          }
+        ],
+        "closedAttemptReceipts": [
+          {
+            "engine": "webkit",
+            "ownerBootId": "69c26323-ad72-4c46-8bc9-16b8cf64bda2",
+            "pageClosed": true,
+            "contextClosed": true,
+            "pageStatusCode": 200
+          }
+        ],
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "69c26323-ad72-4c46-8bc9-16b8cf64bda2",
+              "pageClosed": true,
+              "contextClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "CoinMarketCap",
+        "url": "https://coinmarketcap.com/currencies/bitcoin/",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 4030,
+        "markdownMarkerPresent": true,
+        "markdownChars": 56286,
+        "payloadSha256": "a8dc5566e822b9e73204529479ca632616d3837d001ccefcdb0f8dffb160b4bc",
+        "browserState": "CONTENT_READY",
+        "apiErrorCode": null,
+        "selectedAttemptCleanup": [
+          {
+            "attempt": 1,
+            "pageClosed": true,
+            "contextClosed": true,
+            "cleanupFinished": true,
+            "cleanupDurationMs": 6
+          }
+        ],
+        "closedAttemptReceipts": [
+          {
+            "engine": "webkit",
+            "ownerBootId": "69c26323-ad72-4c46-8bc9-16b8cf64bda2",
+            "pageClosed": true,
+            "contextClosed": true,
+            "pageStatusCode": 200
+          }
+        ],
+        "engineFallback": {
+          "attempted": false,
+          "usedSecondary": false,
+          "skipped": "not_needed",
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "69c26323-ad72-4c46-8bc9-16b8cf64bda2",
+              "pageClosed": true,
+              "contextClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      },
+      {
+        "target": "Best Buy",
+        "url": "https://www.bestbuy.com/site/apple-airpods-pro-2nd-generation-with-magsafe-case-usb-c-white/6447382.p?skuId=6447382",
+        "normalizedPass": true,
+        "screenedPass": true,
+        "frontierPass": true,
+        "failureReason": null,
+        "apiStatus": 200,
+        "latencyMs": 39252,
+        "markdownMarkerPresent": true,
+        "markdownChars": 11189,
+        "payloadSha256": "8374c7bd46f6e85210b484e7079441b8d87cdf6643f910034f3cb57def47aa73",
+        "browserState": "CONTENT_READY",
+        "apiErrorCode": null,
+        "selectedAttemptCleanup": [
+          {
+            "attempt": 1,
+            "pageClosed": true,
+            "contextClosed": true,
+            "cleanupFinished": true,
+            "cleanupDurationMs": 5
+          }
+        ],
+        "closedAttemptReceipts": [
+          {
+            "engine": "webkit",
+            "ownerBootId": "69c26323-ad72-4c46-8bc9-16b8cf64bda2",
+            "pageClosed": true,
+            "contextClosed": true,
+            "errorCode": "SCRAPE_TIMEOUT",
+            "document": {
+              "phase": "navigation",
+              "rendererCrashed": false,
+              "lastResponseStatus": null,
+              "recentNavigations": [],
+              "recentFailedRequests": []
+            }
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "80d0b54b-0ed0-4ece-8223-14bb60a8b004",
+            "pageClosed": true,
+            "contextClosed": true,
+            "pageStatusCode": 200
+          }
+        ],
+        "engineFallback": {
+          "attempted": true,
+          "usedSecondary": true,
+          "recovered": true,
+          "attempts": [
+            {
+              "engine": "webkit",
+              "ownerBootId": "69c26323-ad72-4c46-8bc9-16b8cf64bda2",
+              "pageClosed": true,
+              "contextClosed": true,
+              "errorCode": "SCRAPE_TIMEOUT",
+              "document": {
+                "phase": "navigation",
+                "rendererCrashed": false,
+                "lastResponseStatus": null,
+                "recentNavigations": [],
+                "recentFailedRequests": []
+              }
+            },
+            {
+              "engine": "camoufox",
+              "ownerBootId": "80d0b54b-0ed0-4ece-8223-14bb60a8b004",
+              "pageClosed": true,
+              "contextClosed": true,
+              "pageStatusCode": 200
+            }
+          ]
+        }
+      }
+    ],
+    "comparisonLimit": "Four-target selected cohort after bounding country discovery/navigation and forwarding precise timeout phases, not a full 100-target result, paired old-code test or hosted comparison. No population coverage or standalone primary-only score is inferred.",
+    "evidenceHashes": {
+      "_local/anti-bot/country-budget-cohort-api-2026-11-04/report.json": "cb765afea663f76e852692cdbcf96a6316e9cade34d3de54587fca76969ac246",
+      "_local/anti-bot/country-budget-cohort-api-2026-11-04/score-replay-audit.json": "6cd22cb0bd71088a2f4cf447c33576e882a5bf641aecdbd7c52c7c7ec7db23d9",
+      "_local/anti-bot/country-budget-cohort-api-harness-2026-11-04/deployment.json": "f5b7b658b5ce343c202bc18b052390a8445d1892e08d591ea149fdd8cc52ede2",
+      "_local/anti-bot/country-budget-cohort-api-harness-2026-11-04/result.json": "4b04a0846a5f3b946cc3220f1c713f8450ea861e83eef5515b6e31982c59cab9",
+      "_local/anti-bot/country-budget-cohort-api-harness-2026-11-04/cleanup.json": "05dc2518504ff078f7dc4c213019d2044c1148df8a471e4cea5612fbfcd30cfa"
+    }
+  },
+  "liveWorkflowObservations": {
+    "Amazon": {
+      "apiStatus": 200,
+      "normalizedPass": true,
+      "markdownMarkerPresent": true,
+      "markdownCharacters": 188791,
+      "htmlCharacters": 2666909,
+      "readiness": {
+        "requested": false,
+        "satisfied": true,
+        "scope": "body",
+        "documentRevision": 1,
+        "automatic": {
+          "mode": "rendered-body",
+          "outcome": "ready",
+          "waitMs": 69,
+          "timeoutMs": 5000,
+          "busyCount": 0,
+          "ignoredComplementaryBusyCount": 0,
+          "maxBusyCount": 0,
+          "busyScope": "main",
+          "documentReadyState": "interactive"
+        }
+      },
+      "workflow": {
+        "id": "auto",
+        "steps": [],
+        "observations": {
+          "entryHost": "www.amazon.com"
+        }
+      },
+      "engineFallback": {
+        "attempted": false,
+        "usedSecondary": false,
+        "skipped": "not_needed",
+        "attempts": [
+          {
+            "engine": "webkit",
+            "ownerBootId": "69c26323-ad72-4c46-8bc9-16b8cf64bda2",
+            "pageClosed": true,
+            "contextClosed": true,
+            "pageStatusCode": 200
+          }
+        ]
+      },
+      "navigations": [
+        {
+          "url": "https://www.amazon.com/Combination-Lock-Shackle-Security-Mounting-Bicycle-Secure/dp/B08KCWFMRS",
+          "status": 200
+        }
+      ]
+    },
+    "canadagoose": {
+      "apiStatus": 200,
+      "normalizedPass": false,
+      "markdownMarkerPresent": false,
+      "markdownCharacters": 59725,
+      "htmlCharacters": 1707054,
+      "readiness": {
+        "requested": false,
+        "satisfied": true,
+        "scope": "body",
+        "documentRevision": 1,
+        "automatic": {
+          "mode": "rendered-body",
+          "outcome": "ready",
+          "waitMs": 46,
+          "timeoutMs": 5000,
+          "busyCount": 0,
+          "ignoredComplementaryBusyCount": 0,
+          "maxBusyCount": 0,
+          "busyScope": "main",
+          "documentReadyState": "interactive"
+        }
+      },
+      "workflow": {
+        "id": "auto",
+        "steps": [
+          {
+            "type": "product-details",
+            "outcome": "unresolved"
+          }
+        ],
+        "observations": {
+          "entryHost": "www.canadagoose.com",
+          "productDetails": {
+            "outcome": "unresolved",
+            "phase": "click",
+            "clickAttempted": true,
+            "clickCompleted": false,
+            "durationMs": 2023,
+            "candidateCount": 1,
+            "reason": "action_timeout"
+          }
+        }
+      },
+      "engineFallback": {
+        "attempted": false,
+        "usedSecondary": false,
+        "skipped": "not_needed",
+        "attempts": [
+          {
+            "engine": "webkit",
+            "ownerBootId": "69c26323-ad72-4c46-8bc9-16b8cf64bda2",
+            "pageClosed": true,
+            "contextClosed": true,
+            "pageStatusCode": 200
+          }
+        ]
+      },
+      "navigations": [
+        {
+          "url": "https://www.canadagoose.com/us/en/pr/macmillan-parka-2080M.html",
+          "status": 301
+        },
+        {
+          "url": "https://www.canadagoose.com/en-us/products/macmillan-parka-2080m",
+          "status": 200
+        }
+      ]
+    },
+    "CoinMarketCap": {
+      "apiStatus": 200,
+      "normalizedPass": true,
+      "markdownMarkerPresent": true,
+      "markdownCharacters": 56286,
+      "htmlCharacters": 687167,
+      "readiness": {
+        "requested": false,
+        "satisfied": true,
+        "scope": "body",
+        "documentRevision": 1,
+        "automatic": {
+          "mode": "rendered-body",
+          "outcome": "ready",
+          "waitMs": 84,
+          "timeoutMs": 5000,
+          "busyCount": 0,
+          "ignoredComplementaryBusyCount": 0,
+          "maxBusyCount": 0,
+          "busyScope": "body",
+          "documentReadyState": "interactive"
+        }
+      },
+      "workflow": {
+        "id": "auto",
+        "steps": [
+          {
+            "type": "coin-about@1",
+            "outcome": "scrolled-into-view"
+          }
+        ],
+        "observations": {
+          "entryHost": "coinmarketcap.com"
+        }
+      },
+      "engineFallback": {
+        "attempted": false,
+        "usedSecondary": false,
+        "skipped": "not_needed",
+        "attempts": [
+          {
+            "engine": "webkit",
+            "ownerBootId": "69c26323-ad72-4c46-8bc9-16b8cf64bda2",
+            "pageClosed": true,
+            "contextClosed": true,
+            "pageStatusCode": 200
+          }
+        ]
+      },
+      "navigations": [
+        {
+          "url": "https://coinmarketcap.com/currencies/bitcoin/",
+          "status": 200
+        }
+      ]
+    },
+    "Best Buy": {
+      "apiStatus": 200,
+      "normalizedPass": true,
+      "markdownMarkerPresent": true,
+      "markdownCharacters": 11189,
+      "htmlCharacters": 1155619,
+      "readiness": {
+        "requested": false,
+        "satisfied": true,
+        "scope": "body",
+        "documentRevision": 2,
+        "automatic": {
+          "mode": "rendered-body",
+          "outcome": "ready",
+          "waitMs": 19,
+          "timeoutMs": 5000,
+          "busyCount": 0,
+          "ignoredComplementaryBusyCount": 1,
+          "maxBusyCount": 0,
+          "busyScope": "main",
+          "documentReadyState": "interactive"
+        }
+      },
+      "workflow": {
+        "id": "auto",
+        "steps": [
+          {
+            "type": "country-selection",
+            "outcome": "navigated-original-product"
+          }
+        ],
+        "observations": {
+          "entryHost": "www.bestbuy.com",
+          "countrySelection": {
+            "observed": true,
+            "candidateCount": 9,
+            "waitMs": 863,
+            "discoveryTimeoutMs": 5000,
+            "navigationTimeoutMs": 30000
+          }
+        }
+      },
+      "engineFallback": {
+        "attempted": true,
+        "usedSecondary": true,
+        "recovered": true,
+        "attempts": [
+          {
+            "engine": "webkit",
+            "ownerBootId": "69c26323-ad72-4c46-8bc9-16b8cf64bda2",
+            "pageClosed": true,
+            "contextClosed": true,
+            "errorCode": "SCRAPE_TIMEOUT",
+            "document": {
+              "phase": "navigation",
+              "rendererCrashed": false,
+              "lastResponseStatus": null,
+              "recentNavigations": [],
+              "recentFailedRequests": []
+            }
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "80d0b54b-0ed0-4ece-8223-14bb60a8b004",
+            "pageClosed": true,
+            "contextClosed": true,
+            "pageStatusCode": 200
+          }
+        ]
+      },
+      "navigations": [
+        {
+          "url": "https://www.bestbuy.com/site/apple-airpods-pro-2nd-generation-with-magsafe-case-usb-c-white/6447382.p?skuId=6447382",
+          "status": 200
+        },
+        {
+          "url": "https://www.bestbuy.com/site/apple-airpods-pro-2nd-generation-with-magsafe-case-usb-c-white/6447382.p?skuId=6447382&intl=nosplash",
+          "status": 301
+        },
+        {
+          "url": "https://www.bestbuy.com/product/apple-airpods-pro-2-wireless-active-noise-cancelling-earbuds-with-hearing-aid-feature-white/JJGCQ88C8X?intl=nosplash",
+          "status": 200
+        }
+      ]
+    }
+  },
+  "bestBuyEpochComparison": {
+    "previous": {
+      "target": "Best Buy",
+      "url": "https://www.bestbuy.com/site/apple-airpods-pro-2nd-generation-with-magsafe-case-usb-c-white/6447382.p?skuId=6447382",
+      "normalizedPass": false,
+      "screenedPass": false,
+      "frontierPass": false,
+      "failureReason": "timeout",
+      "apiStatus": 500,
+      "latencyMs": 84539,
+      "markdownMarkerPresent": false,
+      "markdownChars": 0,
+      "payloadSha256": "d3054b63c0a8cc1046f6e1420c726087a0b674fa151704eee7a0833c3e65dce5",
+      "browserState": "not_returned",
+      "apiErrorCode": "SCRAPE_TIMEOUT",
+      "selectedAttemptCleanup": [],
+      "closedAttemptReceipts": [
+        {
+          "engine": "webkit",
+          "ownerBootId": "ecfee7d8-aebf-4325-80f9-ff025f0fe755",
+          "pageClosed": true,
+          "contextClosed": true,
+          "errorCode": "SCRAPE_TIMEOUT",
+          "document": {
+            "phase": "workflow",
+            "rendererCrashed": false,
+            "url": "https://www.bestbuy.com/site/apple-airpods-pro-2nd-generation-with-magsafe-case-usb-c-white/6447382.p",
+            "lastResponseStatus": 200,
+            "recentNavigations": [
+              {
+                "url": "https://www.bestbuy.com/site/apple-airpods-pro-2nd-generation-with-magsafe-case-usb-c-white/6447382.p",
+                "status": 200
+              }
+            ],
+            "recentFailedRequests": [
+              "Load request cancelled",
+              "Load request cancelled",
+              "Load request cancelled",
+              "Load request cancelled",
+              "Load request cancelled",
+              "Load request cancelled",
+              "Load request cancelled",
+              "Load request cancelled",
+              "Load request cancelled",
+              "Load request cancelled",
+              "Load request cancelled",
+              "Load request cancelled",
+              "Load request cancelled",
+              "Load request cancelled",
+              "Load request cancelled",
+              "Load request cancelled",
+              "Load request cancelled",
+              "Load request cancelled",
+              "Load request cancelled",
+              "Load request cancelled",
+              "Load request cancelled",
+              "Load request cancelled",
+              "Load request cancelled",
+              "Load request cancelled",
+              "Load request cancelled",
+              "Load request cancelled",
+              "Load request cancelled",
+              "Load request cancelled",
+              "Load request cancelled",
+              "unknown"
+            ]
+          }
+        }
+      ],
+      "engineFallback": {
+        "attempted": false,
+        "usedSecondary": false,
+        "skipped": "insufficient_budget",
+        "attempts": [
+          {
+            "engine": "webkit",
+            "ownerBootId": "ecfee7d8-aebf-4325-80f9-ff025f0fe755",
+            "pageClosed": true,
+            "contextClosed": true,
+            "errorCode": "SCRAPE_TIMEOUT",
+            "document": {
+              "phase": "workflow",
+              "rendererCrashed": false,
+              "url": "https://www.bestbuy.com/site/apple-airpods-pro-2nd-generation-with-magsafe-case-usb-c-white/6447382.p",
+              "lastResponseStatus": 200,
+              "recentNavigations": [
+                {
+                  "url": "https://www.bestbuy.com/site/apple-airpods-pro-2nd-generation-with-magsafe-case-usb-c-white/6447382.p",
+                  "status": 200
+                }
+              ],
+              "recentFailedRequests": [
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "Load request cancelled",
+                "unknown"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "current": {
+      "target": "Best Buy",
+      "url": "https://www.bestbuy.com/site/apple-airpods-pro-2nd-generation-with-magsafe-case-usb-c-white/6447382.p?skuId=6447382",
+      "normalizedPass": true,
+      "screenedPass": true,
+      "frontierPass": true,
+      "failureReason": null,
+      "apiStatus": 200,
+      "latencyMs": 39252,
+      "markdownMarkerPresent": true,
+      "markdownChars": 11189,
+      "payloadSha256": "8374c7bd46f6e85210b484e7079441b8d87cdf6643f910034f3cb57def47aa73",
+      "browserState": "CONTENT_READY",
+      "apiErrorCode": null,
+      "selectedAttemptCleanup": [
+        {
+          "attempt": 1,
+          "pageClosed": true,
+          "contextClosed": true,
+          "cleanupFinished": true,
+          "cleanupDurationMs": 5
+        }
+      ],
+      "closedAttemptReceipts": [
+        {
+          "engine": "webkit",
+          "ownerBootId": "69c26323-ad72-4c46-8bc9-16b8cf64bda2",
+          "pageClosed": true,
+          "contextClosed": true,
+          "errorCode": "SCRAPE_TIMEOUT",
+          "document": {
+            "phase": "navigation",
+            "rendererCrashed": false,
+            "lastResponseStatus": null,
+            "recentNavigations": [],
+            "recentFailedRequests": []
+          }
+        },
+        {
+          "engine": "camoufox",
+          "ownerBootId": "80d0b54b-0ed0-4ece-8223-14bb60a8b004",
+          "pageClosed": true,
+          "contextClosed": true,
+          "pageStatusCode": 200
+        }
+      ],
+      "engineFallback": {
+        "attempted": true,
+        "usedSecondary": true,
+        "recovered": true,
+        "attempts": [
+          {
+            "engine": "webkit",
+            "ownerBootId": "69c26323-ad72-4c46-8bc9-16b8cf64bda2",
+            "pageClosed": true,
+            "contextClosed": true,
+            "errorCode": "SCRAPE_TIMEOUT",
+            "document": {
+              "phase": "navigation",
+              "rendererCrashed": false,
+              "lastResponseStatus": null,
+              "recentNavigations": [],
+              "recentFailedRequests": []
+            }
+          },
+          {
+            "engine": "camoufox",
+            "ownerBootId": "80d0b54b-0ed0-4ece-8223-14bb60a8b004",
+            "pageClosed": true,
+            "contextClosed": true,
+            "pageStatusCode": 200
+          }
+        ]
+      }
+    },
+    "causalRecoveryFromNewWorkflowCapsEstablished": false,
+    "explanation": "The current primary failed in initial navigation under the existing cap, before the country workflow ran. Firefox then completed country navigation and matched HTML/Markdown. The new workflow bounds were not the cause of that primary failure or the observed recovery. The previous workflow timeout and current recovery are different live epochs."
+  },
+  "fresh100TargetMeasurement": false,
+  "populationCoverageGainClaim": false,
+  "lastFull100TargetMeasurement": {
+    "sourceCommit": "0d130c7c4a2e91acb2d0beb2d3f7e36a68d8f7cb",
+    "implementationByteEquivalentTo": "37df06d0849e8abae9fa79c9cf8d6580653dd275",
+    "normalizedMatches": 61,
+    "receipt": "docs/benchmarks/autotrader-full-api-results-2026-11-04.json",
+    "limit": "Predates the optional-product-details and country-budget repairs. Selected observations are not added to that aggregate."
+  },
+  "deployment": {
+    "imageId": "sha256:c4171b75361aa03edc292425982daa9ab07794205fa3aaea8e6db434ffef047b",
+    "globalHttpConcurrencyLimit": 4,
+    "aggregateBrowserMemoryLimitMiB": 6656,
+    "limitsPerOwner": {
+      "primary-a": {
+        "cpus": 2,
+        "memoryMiB": 2560,
+        "pageCapacity": 2
+      },
+      "fallback-a": {
+        "cpus": 2,
+        "memoryMiB": 2048,
+        "pageCapacity": 1
+      },
+      "fallback-b": {
+        "cpus": 2,
+        "memoryMiB": 2048,
+        "pageCapacity": 1
+      }
+    },
+    "browserRuntimeHashesPerOwner": {
+      "primary-a": {
+        "api.ts": "f55ea246626825f739f76cfb2c9342706806e42fe84e416d998966b4c8efe72e",
+        "helpers/browser.ts": "df8cea26bc7291f16c651daa1c2961e51342adc61b17836857687f62345a5a10",
+        "helpers/browser-sessions.ts": "d67253bc869f97206083c7fa7c2c2ae9d711005960c8590ad44725fb12ceb41f",
+        "helpers/cookies.ts": "94736b093cf95fe8244f52c6e8ee9925cdd39ea7cd64cf08156be05a45240dcb",
+        "helpers/get_error.ts": "1c15475f5f048c869be847c62dbfb9610cf4130ab93538db2c00dbd567d01aea",
+        "helpers/resource-policy.ts": "7c54984bc6187baf1c0ce2ff18cb50373109c8dcd961edc65b9186d5d2e2e774",
+        "helpers/webkit.ts": "93771af70a8d2a2fe126d6bcd8ef4b8794ece9add16613a220b37acaed6b2e33",
+        "helpers/scrape-control.ts": "06facddd72e027792c7f527a671b50e32bd4d5389a98a6af7720577eca66e9e0",
+        "helpers/page-cleanup.ts": "e0e798de0db771202e7663f3d34227c2937f277d9093b4c0df65425e1dbf43a4",
+        "helpers/scrape-page.ts": "3efbd20841c87e3d76b10d8fee3b436cce8c1a5e3036775c6a5904926533554d",
+        "helpers/ssrf.ts": "dd50cd35b42a39474dcef16481c8bbba308b5f5290645ca680cfb50bcf35ae14",
+        "helpers/workflows.ts": "7b3ecc725cd5d370cf09eb405d0999335a7bc686ebac1757d1019c358ca5d457",
+        "helpers/page-readiness.ts": "5b43a83d23d6c3b39ac58fd1e8dc45c65f57c7b43e7dc9f69e26ba4db976e6c8",
+        "helpers/waf-benchmark.ts": "ffd9f0d2e5996825aa77cb71b600a6667558e166d4471a084c20638bab9171d6",
+        "helpers/bot-detection.ts": "3111f011045834a040e5497825cd0bf2c698a3fa8ca77a48c8479dddf2348817",
+        "dist/api.js": "bce94b46aa5d642d6e3d8bacd5fab9e16c3ae0ce10a39f903f7bfc9a3eb8fd03",
+        "dist/helpers/browser.js": "9e2a6dd9fb0adbef04d7e6845593484dc060f0208a4c95cf7c3e631063452ddd",
+        "dist/helpers/browser-sessions.js": "715e61bf0a2fe9b43de9ab1dc733f5f775e0a92e60c5268dbe6e0b8620f9f549",
+        "dist/helpers/cookies.js": "0d7a5e0f76b861992a1b304b6acf6f70eacaaa7a09f8269d93434dcdbc23bc57",
+        "dist/helpers/get_error.js": "5edbde83afd8bceb2280455d500bdb7c3d62f5318d54c82cc01629c6681cd6a7",
+        "dist/helpers/resource-policy.js": "3c079ef3d980dde1a91090007396929a506962a57ee1cd83a9baa48fc7bce2f1",
+        "dist/helpers/webkit.js": "7700d1b1a53f29abece85053fec39abe301b22768db4989698f9e5a894a4a078",
+        "dist/helpers/scrape-control.js": "cf3862ccedf93c1f73a84471f558241d63cb5f9fb62d95881f2c3aad5fd4abfd",
+        "dist/helpers/page-cleanup.js": "89896b2084177a69e6a8d7ed26f6bd6b052e631c6692e26f84111e2d745912eb",
+        "dist/helpers/scrape-page.js": "c0d24aa97907ba97b52cf46a6a269700c504ca62680355d88a48dd6e1d78d0fb",
+        "dist/helpers/ssrf.js": "c5a7425cd6dca38a721186621e7fe1752314bb4e1cf12e6f39a49b67ea3ea87c",
+        "dist/helpers/workflows.js": "b62f3ede95b30063b49777f5e6b63658fc9f2691a57411157aec3680fa67e59f",
+        "dist/helpers/page-readiness.js": "eb9d291a95830e1d245c1221aa689d822262b9b0afd54ec85b6dcc3304e8b64f",
+        "dist/helpers/waf-benchmark.js": "4eea26db4617351a9daa9ad546c8d9d16983d2d736f5a1d435a3159fe7a96f4d",
+        "dist/helpers/bot-detection.js": "77a197cbbe0942b6106db2eb2579fc1af8dc7a167e3e959de51a89f8ed7a746e",
+        "scripts/webkit-entrypoint.sh": "b0fd23edbeae9b2ec4d4d0724af52f8fe23bb93891c8e052a708be5e76a8d60e",
+        "scripts/webkit-launcher.sh": "97f7408a15e2a714ed351c865b45294468b22da1eaa14eba1ab260d66e5ad305",
+        "docker-entrypoint.sh": "55aa3489e4db96d2b71e75fab1a1b443fd30051f33b6ebcfc98b7b672c4422ae"
+      },
+      "fallback-a": {
+        "api.ts": "f55ea246626825f739f76cfb2c9342706806e42fe84e416d998966b4c8efe72e",
+        "helpers/browser.ts": "df8cea26bc7291f16c651daa1c2961e51342adc61b17836857687f62345a5a10",
+        "helpers/browser-sessions.ts": "d67253bc869f97206083c7fa7c2c2ae9d711005960c8590ad44725fb12ceb41f",
+        "helpers/cookies.ts": "94736b093cf95fe8244f52c6e8ee9925cdd39ea7cd64cf08156be05a45240dcb",
+        "helpers/get_error.ts": "1c15475f5f048c869be847c62dbfb9610cf4130ab93538db2c00dbd567d01aea",
+        "helpers/resource-policy.ts": "7c54984bc6187baf1c0ce2ff18cb50373109c8dcd961edc65b9186d5d2e2e774",
+        "helpers/webkit.ts": "93771af70a8d2a2fe126d6bcd8ef4b8794ece9add16613a220b37acaed6b2e33",
+        "helpers/scrape-control.ts": "06facddd72e027792c7f527a671b50e32bd4d5389a98a6af7720577eca66e9e0",
+        "helpers/page-cleanup.ts": "e0e798de0db771202e7663f3d34227c2937f277d9093b4c0df65425e1dbf43a4",
+        "helpers/scrape-page.ts": "3efbd20841c87e3d76b10d8fee3b436cce8c1a5e3036775c6a5904926533554d",
+        "helpers/ssrf.ts": "dd50cd35b42a39474dcef16481c8bbba308b5f5290645ca680cfb50bcf35ae14",
+        "helpers/workflows.ts": "7b3ecc725cd5d370cf09eb405d0999335a7bc686ebac1757d1019c358ca5d457",
+        "helpers/page-readiness.ts": "5b43a83d23d6c3b39ac58fd1e8dc45c65f57c7b43e7dc9f69e26ba4db976e6c8",
+        "helpers/waf-benchmark.ts": "ffd9f0d2e5996825aa77cb71b600a6667558e166d4471a084c20638bab9171d6",
+        "helpers/bot-detection.ts": "3111f011045834a040e5497825cd0bf2c698a3fa8ca77a48c8479dddf2348817",
+        "dist/api.js": "bce94b46aa5d642d6e3d8bacd5fab9e16c3ae0ce10a39f903f7bfc9a3eb8fd03",
+        "dist/helpers/browser.js": "9e2a6dd9fb0adbef04d7e6845593484dc060f0208a4c95cf7c3e631063452ddd",
+        "dist/helpers/browser-sessions.js": "715e61bf0a2fe9b43de9ab1dc733f5f775e0a92e60c5268dbe6e0b8620f9f549",
+        "dist/helpers/cookies.js": "0d7a5e0f76b861992a1b304b6acf6f70eacaaa7a09f8269d93434dcdbc23bc57",
+        "dist/helpers/get_error.js": "5edbde83afd8bceb2280455d500bdb7c3d62f5318d54c82cc01629c6681cd6a7",
+        "dist/helpers/resource-policy.js": "3c079ef3d980dde1a91090007396929a506962a57ee1cd83a9baa48fc7bce2f1",
+        "dist/helpers/webkit.js": "7700d1b1a53f29abece85053fec39abe301b22768db4989698f9e5a894a4a078",
+        "dist/helpers/scrape-control.js": "cf3862ccedf93c1f73a84471f558241d63cb5f9fb62d95881f2c3aad5fd4abfd",
+        "dist/helpers/page-cleanup.js": "89896b2084177a69e6a8d7ed26f6bd6b052e631c6692e26f84111e2d745912eb",
+        "dist/helpers/scrape-page.js": "c0d24aa97907ba97b52cf46a6a269700c504ca62680355d88a48dd6e1d78d0fb",
+        "dist/helpers/ssrf.js": "c5a7425cd6dca38a721186621e7fe1752314bb4e1cf12e6f39a49b67ea3ea87c",
+        "dist/helpers/workflows.js": "b62f3ede95b30063b49777f5e6b63658fc9f2691a57411157aec3680fa67e59f",
+        "dist/helpers/page-readiness.js": "eb9d291a95830e1d245c1221aa689d822262b9b0afd54ec85b6dcc3304e8b64f",
+        "dist/helpers/waf-benchmark.js": "4eea26db4617351a9daa9ad546c8d9d16983d2d736f5a1d435a3159fe7a96f4d",
+        "dist/helpers/bot-detection.js": "77a197cbbe0942b6106db2eb2579fc1af8dc7a167e3e959de51a89f8ed7a746e",
+        "scripts/webkit-entrypoint.sh": "b0fd23edbeae9b2ec4d4d0724af52f8fe23bb93891c8e052a708be5e76a8d60e",
+        "scripts/webkit-launcher.sh": "97f7408a15e2a714ed351c865b45294468b22da1eaa14eba1ab260d66e5ad305",
+        "docker-entrypoint.sh": "55aa3489e4db96d2b71e75fab1a1b443fd30051f33b6ebcfc98b7b672c4422ae"
+      },
+      "fallback-b": {
+        "api.ts": "f55ea246626825f739f76cfb2c9342706806e42fe84e416d998966b4c8efe72e",
+        "helpers/browser.ts": "df8cea26bc7291f16c651daa1c2961e51342adc61b17836857687f62345a5a10",
+        "helpers/browser-sessions.ts": "d67253bc869f97206083c7fa7c2c2ae9d711005960c8590ad44725fb12ceb41f",
+        "helpers/cookies.ts": "94736b093cf95fe8244f52c6e8ee9925cdd39ea7cd64cf08156be05a45240dcb",
+        "helpers/get_error.ts": "1c15475f5f048c869be847c62dbfb9610cf4130ab93538db2c00dbd567d01aea",
+        "helpers/resource-policy.ts": "7c54984bc6187baf1c0ce2ff18cb50373109c8dcd961edc65b9186d5d2e2e774",
+        "helpers/webkit.ts": "93771af70a8d2a2fe126d6bcd8ef4b8794ece9add16613a220b37acaed6b2e33",
+        "helpers/scrape-control.ts": "06facddd72e027792c7f527a671b50e32bd4d5389a98a6af7720577eca66e9e0",
+        "helpers/page-cleanup.ts": "e0e798de0db771202e7663f3d34227c2937f277d9093b4c0df65425e1dbf43a4",
+        "helpers/scrape-page.ts": "3efbd20841c87e3d76b10d8fee3b436cce8c1a5e3036775c6a5904926533554d",
+        "helpers/ssrf.ts": "dd50cd35b42a39474dcef16481c8bbba308b5f5290645ca680cfb50bcf35ae14",
+        "helpers/workflows.ts": "7b3ecc725cd5d370cf09eb405d0999335a7bc686ebac1757d1019c358ca5d457",
+        "helpers/page-readiness.ts": "5b43a83d23d6c3b39ac58fd1e8dc45c65f57c7b43e7dc9f69e26ba4db976e6c8",
+        "helpers/waf-benchmark.ts": "ffd9f0d2e5996825aa77cb71b600a6667558e166d4471a084c20638bab9171d6",
+        "helpers/bot-detection.ts": "3111f011045834a040e5497825cd0bf2c698a3fa8ca77a48c8479dddf2348817",
+        "dist/api.js": "bce94b46aa5d642d6e3d8bacd5fab9e16c3ae0ce10a39f903f7bfc9a3eb8fd03",
+        "dist/helpers/browser.js": "9e2a6dd9fb0adbef04d7e6845593484dc060f0208a4c95cf7c3e631063452ddd",
+        "dist/helpers/browser-sessions.js": "715e61bf0a2fe9b43de9ab1dc733f5f775e0a92e60c5268dbe6e0b8620f9f549",
+        "dist/helpers/cookies.js": "0d7a5e0f76b861992a1b304b6acf6f70eacaaa7a09f8269d93434dcdbc23bc57",
+        "dist/helpers/get_error.js": "5edbde83afd8bceb2280455d500bdb7c3d62f5318d54c82cc01629c6681cd6a7",
+        "dist/helpers/resource-policy.js": "3c079ef3d980dde1a91090007396929a506962a57ee1cd83a9baa48fc7bce2f1",
+        "dist/helpers/webkit.js": "7700d1b1a53f29abece85053fec39abe301b22768db4989698f9e5a894a4a078",
+        "dist/helpers/scrape-control.js": "cf3862ccedf93c1f73a84471f558241d63cb5f9fb62d95881f2c3aad5fd4abfd",
+        "dist/helpers/page-cleanup.js": "89896b2084177a69e6a8d7ed26f6bd6b052e631c6692e26f84111e2d745912eb",
+        "dist/helpers/scrape-page.js": "c0d24aa97907ba97b52cf46a6a269700c504ca62680355d88a48dd6e1d78d0fb",
+        "dist/helpers/ssrf.js": "c5a7425cd6dca38a721186621e7fe1752314bb4e1cf12e6f39a49b67ea3ea87c",
+        "dist/helpers/workflows.js": "b62f3ede95b30063b49777f5e6b63658fc9f2691a57411157aec3680fa67e59f",
+        "dist/helpers/page-readiness.js": "eb9d291a95830e1d245c1221aa689d822262b9b0afd54ec85b6dcc3304e8b64f",
+        "dist/helpers/waf-benchmark.js": "4eea26db4617351a9daa9ad546c8d9d16983d2d736f5a1d435a3159fe7a96f4d",
+        "dist/helpers/bot-detection.js": "77a197cbbe0942b6106db2eb2579fc1af8dc7a167e3e959de51a89f8ed7a746e",
+        "scripts/webkit-entrypoint.sh": "b0fd23edbeae9b2ec4d4d0724af52f8fe23bb93891c8e052a708be5e76a8d60e",
+        "scripts/webkit-launcher.sh": "97f7408a15e2a714ed351c865b45294468b22da1eaa14eba1ab260d66e5ad305",
+        "docker-entrypoint.sh": "55aa3489e4db96d2b71e75fab1a1b443fd30051f33b6ebcfc98b7b672c4422ae"
+      }
+    },
+    "apiSourceHashes": {
+      "apps/api/src/controllers/v2/scrape.ts": "5d6f51665c80fbfc6e8968f5a18b6e2dd591fc2fa7051ed0147e3799acd05ed4",
+      "apps/api/src/lib/local-browser/store.ts": "3fc2d6c0f846112ada94f21db6965354e466a7fe0c576b2fc2082509ed22d4c4",
+      "apps/api/src/lib/error.ts": "cff0c1e7a4d35f05fb6d1c907ab3769fa610d66118d9d24be6d4508e0718ea33",
+      "apps/api/src/lib/error-serde.ts": "577afcca02649788bb52157b21b8eefa91f14581fe0353a1228ec939fe180e44",
+      "apps/api/src/config.ts": "ff0125914ec73e0ef0d49e1d3e09777f71e43f1a62fae7b9cb1c209724ddba4e",
+      "apps/api/src/controllers/v2/types.ts": "7a8553a2d1b95d4b81960d1cf366a2ff8f7048c34ccd55c3b7b6f4e11ad288a7",
+      "apps/api/src/controllers/v2/local-browser.ts": "247b0f403c6a332cb38b0ba95efef12f648ba00731133f4bcc0c51d12e0b6c48",
+      "apps/api/src/lib/local-browser/client.ts": "c33802f674d528b05f48d0f15ba0fc90cbb9519ab81c556fd69bb7977c8e9172",
+      "apps/api/src/lib/local-browser/controls.ts": "d76525c7c691460d74efb53acc54318817ddcbbdf1c184ff848989220eafd7fa",
+      "apps/api/src/scraper/scrapeURL/engines/playwright/index.ts": "b08ecf7316c656866f04be9a1e96e1b19b64bfac3a83d15d595b2cb107e550a4"
+    },
+    "apiCompiledHashes": {
+      "controllers/v2/scrape": "3a130b81176092593376b53d2da18a2bf12269f916914eb8345242fb8540f37d",
+      "lib/local-browser/store": "f0948ec39ad3595a246fa49ba73ff8e0c27094823b29e2fa3c28141797e91fb2",
+      "lib/error": "44be52ea4c884fe07a2e30021f47403611869c1c5efa8647718143a12b9770ea",
+      "lib/error-serde": "10dac52367b057ab8603113a7475fe1a14e014ae360dffac9f532f7a094140d3",
+      "config": "1aa5cec1540fa41a5cdd0c08b06b1bac1bc8ffc9532ce269de358689f43bc26e",
+      "controllers/v2/types": "862e1cdcd553037a23a4d3ca8eebfce8fd0b21da7e8e9c3662fcc6773bae0ce8",
+      "controllers/v2/local-browser": "cc944c2b23df86abe50be2d3ac2cd828cdf8bb284ce60f43c0a701d513be0ab6",
+      "lib/local-browser/client": "3d88278312582ca8abe6ee2bd7063fc37fb93892d5fe9436dca16e74ff3bfa3d",
+      "lib/local-browser/controls": "278e8a852637bd1cd83448751eb13508898d779e505b2b31ff66bd1da0318c18",
+      "scraper/scrapeURL/engines/playwright/index": "436dbbb27bcec5cfa7ee73aafaee4cffe682fc70d2e45c611afdf69c4eabf8f3"
+    },
+    "publicOwnersHaveNoFixtureAliases": true,
+    "upstreamProxy": false,
+    "hostedCalls": 0
+  },
+  "validation": {
+    "helpersPassed": 89,
+    "localBrowserParentChildChecksPassed": 7,
+    "localRealEngines": [
+      "playwright",
+      "patchright",
+      "rebrowser",
+      "camoufox",
+      "webkit"
+    ],
+    "ownedFullApiSnipsPassed": 4,
+    "fallbackAndQueueSerializationChecksPassed": 45,
+    "ownedApiHarnessTestsPassed": 49,
+    "ownedApiHarnessExitCode": 0,
+    "ownedApiCases": [
+      "Successful country selection retains the validated product destination",
+      "A real delayed document-read Promise times out inside discovery and recovers once on Firefox, retaining the phase receipt",
+      "A held native navigation times out at thirty seconds and recovers once on Firefox within a seventy-second request",
+      "Opt-out returns the confirmed closed timeout receipt without alternate dispatch"
+    ],
+    "apiTypecheckExitCode": 0,
+    "browserCi": {
+      "sourceCommit": "f2211b46ac7a659f121fa8be8b9aaadb91fd877b",
+      "runId": 41789966573,
+      "url": "https://github.com/toreleon/firecrawl/actions/runs/41789966573",
+      "jobs": [
+        {
+          "id": 126440787394,
+          "name": "browser-engines",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 41789966573,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Run pnpm install --frozen-lockfile",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Install browser dependencies for all three drivers",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Run pnpm build",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Prepare the pinned optional Firefox backend",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Resolve the owned workflow fixture locally",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Run pnpm test",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Run pnpm test:integration",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            },
+            {
+              "name": "Run pnpm audit --prod",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12
+            },
+            {
+              "name": "Post Run actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 22
+            },
+            {
+              "name": "Post Run pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 23
+            },
+            {
+              "name": "Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 24
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 25
+            }
+          ]
+        },
+        {
+          "id": 126440787605,
+          "name": "contained-webkit",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 41789966573,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Build the optional WebKit image",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Exercise the production UID boundary and HTTP/session contract",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Refuse startup without the required UID or namespace capability",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            }
+          ]
+        }
+      ],
+      "counts": {
+        "helpersPassed": 89,
+        "ordinaryIntegrationPassed": 171,
+        "ordinaryIntegrationSkipped": 6,
+        "containedWebkitPassed": 25,
+        "productionDependencyAuditPassed": true
+      }
+    },
+    "teardownLimit": "Harness commands exited zero and terminated their processes, but extract-worker teardown still logs the existing channel-closing error. Clean shutdown is not established.",
+    "broaderServerSdkWorkflowsClaimed": false
+  },
+  "requestAccounting": {
+    "publicApiRequests": 4,
+    "publicBrowserCaptures": 5,
+    "maximumPlannedCaptures": 8,
+    "clientRetries": 0,
+    "expectedTextHintsSent": false,
+    "upstreamProxy": false,
+    "hostedCalls": 0,
+    "ownedFixturesAndDependencyReproductionsSeparate": true
+  },
+  "cleanup": {
+    "taskContainersRemoved": 9,
+    "candidateImageRetained": "sha256:c4171b75361aa03edc292425982daa9ab07794205fa3aaea8e6db434ffef047b",
+    "imagesRemoved": 0,
+    "baselineImagesPreserved": true,
+    "cache": {
+      "taskRecordsRemoved": 75,
+      "baselineRecordsPreserved": 128,
+      "unrelatedNewRecordsPreserved": 0,
+      "remainingRecords": 128,
+      "dockerReportedPruneTotal": [
+        "Total:\t328.5MB"
+      ],
+      "physicalBytesFreedNotMeasured": true
+    },
+    "taskInfrastructureStopped": [
+      "autogtm-firecrawl-workflows-pg-20261103",
+      "autogtm-firecrawl-workflows-redis-20261103",
+      "autogtm-firecrawl-workflows-rabbit-20261103"
+    ],
+    "taskPortsClosed": true,
+    "volumeNamesUnchanged": true,
+    "dataVolumesPreserved": 114,
+    "volumesDeleted": 0,
+    "rawEvidenceAndBuildContextsPreserved": true,
+    "globalPruneUsed": false
+  },
+  "limits": [
+    "A fresh complete 100-target measurement on this candidate is still required. The last complete score remains 61/100 on earlier code; the historical hosted82 reference was not refreshed.",
+    "The selected result is 3/4. Best Buy matched through an existing initial-navigation timeout followed by Firefox recovery; no isolated new-workflow-cap effect on live success or latency is inferred.",
+    "Canada Goose still misses its frozen marker even though a document is returned. Markdown can contain hidden HTML; formatting or usedSecondary alone is not proof of visible expected content.",
+    "A validated country destination is a request-URL check. Server redirects and marker matches do not establish field-level identity or extraction completeness.",
+    "The new recipe bounds can fail a slow but otherwise valid selector/navigation earlier than the overall request deadline. Other phases still share the caller deadline; alternate budget is not universally guaranteed."
+  ],
+  "research": [
+    {
+      "url": "https://playwright.dev/docs/api/class-page#page-goto",
+      "use": "Use the native navigation timeout and await its completion before cleanup; keep closure proof separate from a timeout classification."
+    },
+    {
+      "url": "https://playwright.dev/docs/api/class-locator#locator-evaluate-all",
+      "use": "An awaited document/link query needs a workflow deadline as well as the outer caller deadline; an expired read must not authorize later navigation."
+    }
+  ],
+  "evidence": {
+    "retainedRawResponses": true,
+    "hashes": {
+      "_local/anti-bot/country-budget-2026-11-04/before.json": "3ab64f8b85bd0cd375477dca7965ef9eeb76cc1e51c0e9a84919472ed0370f69",
+      "_local/anti-bot/country-budget-2026-11-04/before.log": "0277e5878aa55742e0bdddd66a68589a6e18dd5e754136d7ed73065bf3e859f4",
+      "_local/anti-bot/country-budget-2026-11-04/before.mjs": "f9b1713e3b283c0f768491d0e2c996f008b73a8461db45b9e526c4bd6950b412",
+      "_local/anti-bot/country-budget-2026-11-04/after.json": "94e742970795af91948c466c4d55cb1ddc8b3295f642ad840a0f043baeff0cfe",
+      "_local/anti-bot/country-budget-2026-11-04/after.log": "f195f8a63240b491e55e1eaf9a118a6d1e6bd7bc126d52254c6dc20bb9ca076f",
+      "_local/anti-bot/country-budget-2026-11-04/after.mjs": "8d716a535d176a1c0abfc561080f253b6f966004b06e1446d397c56fd1c13908",
+      "_local/anti-bot/country-budget-2026-11-04/build-manifest.json": "5cc0e78dc89c4c38359590a96600d338a44bb1832d432d2d9c6ba3f80d68cf9c",
+      "_local/anti-bot/country-budget-2026-11-04/build-source-hashes.json": "35296352a266d0062e462f420643407327ec741c3c48e699fe47215391c40614",
+      "_local/anti-bot/country-budget-2026-11-04/helpers.log": "71bdc70c6394ad22529458016e5f0cf402fe6989c55b0c633b502ec12d46f47c",
+      "_local/anti-bot/country-budget-2026-11-04/browser-build.log": "5ac71a99decf5b92dbfe798066cbe8ea317395f8f764f5a8879fd3511ca99454",
+      "_local/anti-bot/country-budget-2026-11-04/api-typecheck.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "_local/anti-bot/country-budget-2026-11-04/webkit-integration.log": "66213ea4c86a3c3f6c9087f17f7ad5552ac7e5575ddf2685e89084a98b4bc16c",
+      "_local/anti-bot/country-budget-2026-11-04/driver-integration.log": "0b60ceb0d7291dd4ec92f49ef50a8f61cc95eb86fd10c98711e7b1a384a84cbe",
+      "_local/anti-bot/country-budget-2026-11-04/live-workflow-observations.json": "b250bccd8e0b828fc70992d700793e6fec676de2e4fea827a11ca0d49acd7e84",
+      "_local/anti-bot/country-budget-2026-11-04/ci.json": "65a8ffa66cedf02bb9da5198c44030c9953fa220a080592a0691d333937fb444",
+      "_local/anti-bot/country-budget-2026-11-04/ci-engines.log": "2515bb44842953f108df222dbab57b446b7bbdb823c4181bcdc143e45de0cc2c",
+      "_local/anti-bot/country-budget-2026-11-04/ci-webkit.log": "a7cf5a5ace9551a1ba8cac217810c9319da6469bd329a4079d47b8a834f7fc2a",
+      "_local/anti-bot/country-budget-api-harness-2026-11-04/result.json": "87753aba08f6e5c1a3ff16c3a2beccde9de6c86bc08de5f9785f3e940fc40c7a",
+      "_local/anti-bot/country-budget-api-harness-2026-11-04/deployment.json": "11036ece8709b7d836bef45eb5bded3656dfa73e7d1b488c527242a4f3192224",
+      "_local/anti-bot/country-budget-api-harness-2026-11-04/harness.log": "40a4fbc70eeab600da098902abbf14af28be0a5212a606281a5e6978ac8968fc",
+      "_local/anti-bot/country-budget-api-harness-2026-11-04/final-health.json": "d17ef46e72e7d30aec81ef712f3673fa1f6782a7727a2ae68e6f2518bc694f37",
+      "_local/anti-bot/country-budget-api-harness-2026-11-04/cleanup.json": "8d5026454d5917183fcf19277ed615946b05922db6e6f83c1ac2ede09a6efe94",
+      "_local/anti-bot/country-budget-api-harness-2026-11-04/webkit-service.log": "8505c6d98038dafd9657c8502f2b747b50f0bd7eb65e40c99f76533051c92c80",
+      "_local/anti-bot/country-budget-api-harness-2026-11-04/camoufox-service.log": "ae65ab6391daf3897bf47176fd83807b9554371d254d50199d36811efc7f5789",
+      "_local/anti-bot/country-budget-cohort-api-harness-2026-11-04/audited-results.json": "becb1f7c793c89fb29e99d5eb6b274ba3397a54c95a1f26e1c5340d29d37b7b5",
+      "_local/anti-bot/country-budget-cohort-api-harness-2026-11-04/deployment.json": "f5b7b658b5ce343c202bc18b052390a8445d1892e08d591ea149fdd8cc52ede2",
+      "_local/anti-bot/country-budget-cohort-api-harness-2026-11-04/result.json": "4b04a0846a5f3b946cc3220f1c713f8450ea861e83eef5515b6e31982c59cab9",
+      "_local/anti-bot/country-budget-cohort-api-harness-2026-11-04/final-health.json": "0c405b9ae45f847c2c2e80ec844b122667498546229bc620159185e2a05b5c60",
+      "_local/anti-bot/country-budget-cohort-api-harness-2026-11-04/cleanup.json": "05dc2518504ff078f7dc4c213019d2044c1148df8a471e4cea5612fbfcd30cfa",
+      "_local/anti-bot/country-budget-cohort-api-harness-2026-11-04/resource-samples.jsonl": "7798406667de7bf3b6fe4f84d866a279da0d1c635be3cbcf4cb9d648f52664da",
+      "_local/anti-bot/country-budget-cohort-api-harness-2026-11-04/harness.log": "5d45871e03679ae348a1ffe1dba4c30d7a66e10055e3c2b0594d711b19d3ca5b",
+      "_local/anti-bot/country-budget-cohort-api-harness-2026-11-04/primary-a-service.log": "39420acda7b820e81fef1be888190bdd35671f54329391bc3f0e19db74797ccb",
+      "_local/anti-bot/country-budget-cohort-api-harness-2026-11-04/fallback-a-service.log": "8acc5db6a36978ab5557e8aaf3457697d2245459c202571d440c7c0145f02556",
+      "_local/anti-bot/country-budget-cohort-api-harness-2026-11-04/fallback-b-service.log": "348e240b6c572c10c14e28bc7f1814cdd5e3a58ecf22c9480ad8758ee5da8a55",
+      "_local/anti-bot/country-budget-cohort-api-2026-11-04/report.json": "cb765afea663f76e852692cdbcf96a6316e9cade34d3de54587fca76969ac246",
+      "_local/anti-bot/country-budget-cohort-api-2026-11-04/attempts.jsonl": "41938a3d67b6add4300e1dbe3cce52531dfca9f1f15e277026a8786f942e090b",
+      "_local/anti-bot/country-budget-cohort-api-2026-11-04/score-replay-audit.json": "6cd22cb0bd71088a2f4cf447c33576e882a5bf641aecdbd7c52c7c7ec7db23d9",
+      "_local/anti-bot/country-budget-cleanup-2026-11-04/receipt.json": "a09259fc9046d4f4512e52b5c8798f46471a7bf995fbace9d8401f721d7ba0e3",
+      "_local/anti-bot/product-details-cohort-api-harness-2026-11-04/primary-a-service.log": "941ee44ba266057703127e8659f28007c2c361c6536e2706e09b5dda51482a1c"
+    }
+  }
+}

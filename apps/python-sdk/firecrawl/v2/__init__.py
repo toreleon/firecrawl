@@ -1,6 +1,8 @@
 from .client import FirecrawlClient
 from .client_async import AsyncFirecrawlClient
 from .types import (
+    BrowserControls,
+    BrowserReadiness,
     DiscoveredTool,
     FindToolsData,
     AlexandriaCall,
@@ -11,6 +13,8 @@ from .types import (
 )
 
 __all__ = [
+    "BrowserControls",
+    "BrowserReadiness",
     "FirecrawlClient",
     "AsyncFirecrawlClient",
     "DiscoveredTool",

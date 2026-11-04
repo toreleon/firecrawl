@@ -1,0 +1,128 @@
+{
+  "checkedAt": "2026-11-03T18:03:04.753821+00:00",
+  "sourceCommit": "c65d3df2ff0b6a13c2b4d5c4fd09f75271059463",
+  "scope": "Scoped cleanup for the fallback-owner investigation, including partial runs. Unrelated services, volumes and benchmark evidence preserved.",
+  "taskBrowserContainersRemoved": 13,
+  "browserCleanup": [
+    {
+      "run": "fallback-pool-browser-probe-2026-11-04",
+      "ownerOrContainer": "autogtm-firecrawl-pool-probe-rebrowser-20261103",
+      "oomKilled": false
+    },
+    {
+      "run": "fallback-pool-browser-probe-2026-11-04",
+      "ownerOrContainer": "autogtm-firecrawl-pool-probe-patchright-20261103",
+      "oomKilled": false
+    },
+    {
+      "run": "fallback-pool-browser-probe-2026-11-04",
+      "ownerOrContainer": "autogtm-firecrawl-pool-probe-camoufox-20261103",
+      "oomKilled": false
+    },
+    {
+      "run": "fallback-pool-pressure-aware-probe-2026-11-04",
+      "ownerOrContainer": "autogtm-firecrawl-pool-pressure-rebrowser-20261103",
+      "oomKilled": false
+    },
+    {
+      "run": "fallback-pool-pressure-aware-probe-2026-11-04",
+      "ownerOrContainer": "autogtm-firecrawl-pool-pressure-patchright-20261103",
+      "oomKilled": false
+    },
+    {
+      "run": "fallback-pool-pressure-aware-probe-2026-11-04",
+      "ownerOrContainer": "autogtm-firecrawl-pool-pressure-camoufox-20261103",
+      "oomKilled": false
+    },
+    {
+      "run": "fallback-pool-full-api-harness-2026-11-04",
+      "ownerOrContainer": "primary-a",
+      "oomKilled": false
+    },
+    {
+      "run": "fallback-pool-full-api-harness-2026-11-04",
+      "ownerOrContainer": "primary-b",
+      "oomKilled": true
+    },
+    {
+      "run": "fallback-pool-full-api-harness-2026-11-04",
+      "ownerOrContainer": "fallback-a",
+      "oomKilled": false
+    },
+    {
+      "run": "fallback-pool-full-api-harness-2026-11-04",
+      "ownerOrContainer": "fallback-b",
+      "oomKilled": false
+    },
+    {
+      "run": "fallback-pool-bounded-api-harness-2026-11-04",
+      "ownerOrContainer": "primary-a",
+      "oomKilled": false
+    },
+    {
+      "run": "fallback-pool-bounded-api-harness-2026-11-04",
+      "ownerOrContainer": "fallback-a",
+      "oomKilled": false
+    },
+    {
+      "run": "fallback-pool-bounded-api-harness-2026-11-04",
+      "ownerOrContainer": "fallback-b",
+      "oomKilled": false
+    }
+  ],
+  "taskInfrastructureStopped": [
+    "autogtm-firecrawl-workflows-pg-20261103",
+    "autogtm-firecrawl-workflows-redis-20261103",
+    "autogtm-firecrawl-workflows-rabbit-20261103"
+  ],
+  "unrelatedRunningServicesPreserved": [
+    "lead-data-postgres",
+    "lead-data-redis",
+    "lead-data-web",
+    "opengtm-agent-runtime-1",
+    "opengtm-agent-test-pg",
+    "opengtm-api-go-1",
+    "opengtm-browser-1",
+    "opengtm-scheduler-go-1",
+    "opengtm-worker-go-1"
+  ],
+  "historicalBrowserImageTagsRemoved": [
+    {
+      "tag": "autogtm/firecrawl-browser:runtime-shells-final-2026-11-03",
+      "id": "sha256:b65d2734ca857d6f068944ed4959b2dc697d493a6bf3d27efcdfe29682c9ba9e"
+    },
+    {
+      "tag": "autogtm/firecrawl-browser:camoufox-compact-2026-11-03",
+      "id": "sha256:30a3d3a0988726a9724e88623e28290faac94f10d8bd03cab818aa8e1cdb8ba0"
+    },
+    {
+      "tag": "autogtm/firecrawl-browser:complementary-readiness-2026-11-03",
+      "id": "sha256:8d4106b10c7161aef316b411985bc874cb0f15e0d94a067cf1c1fd849d302c00"
+    }
+  ],
+  "currentBrowserImageRetained": "sha256:4cf1c1eb4550e82504a0f11af5817e2a95143bc96e3b83f081400764e51a8244",
+  "buildCache": {
+    "recordsBefore": 65,
+    "reportedSizeBefore": "5.29GB",
+    "recordsAfter": 0,
+    "reportedSizeAfter": "0B",
+    "selection": "Exact IDs created in the exclusive eight Firecrawl browser-build window; no global prune. All 38 remaining listed image IDs matched the initial inventory after historical tag removal.",
+    "physicalBytesFreedNotMeasured": true,
+    "metadataSha256": "6c1888c062627d856db6be52a42cf72b915a5bd8e6841b516b5ed48fcfb66bcd"
+  },
+  "dockerSystemDfAfter": "TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE\nImages          51        10        28.92GB   18.23GB (63%)\nContainers      13        9         360.4kB   28.67kB (7%)\nLocal Volumes   114       5         6.324GB   6.151GB (97%)\nBuild Cache     0         0         0B        0B\n",
+  "hostDiskAfter": "Filesystem      Size    Used   Avail Capacity iused ifree %iused  Mounted on\n/dev/disk3s5   460Gi   310Gi   126Gi    72%    5.4M  1.3G    0%   /System/Volumes/Data\n",
+  "dataVolumesDeleted": 0,
+  "dataVolumeCountAfter": 114,
+  "globalPruneUsed": false,
+  "newBrowserImageBuilt": false,
+  "hostedCalls": 0,
+  "evidenceHashes": {
+    "_local/anti-bot/fallback-pool-browser-probe-2026-11-04/cleanup.json": "ecaafa6ab164746a6de92f9eaab864310375515ebf78af123842e0e864f1c3ad",
+    "_local/anti-bot/fallback-pool-pressure-aware-probe-2026-11-04/cleanup.json": "f6ef89f7865eeb8c194ea9f8468f0de88c4524fa97e520c47b13620037fb3803",
+    "_local/anti-bot/fallback-pool-full-api-harness-2026-11-04/cleanup.json": "7c05a77e3c25e43af7464b650cab6a6ab140275471bb3eaab2014830528f25df",
+    "_local/anti-bot/fallback-pool-bounded-api-harness-2026-11-04/cleanup.json": "c3a86b03cb2b31252a969fc757750b0b367987d2652ae293c78fb4e7146f775d",
+    "_local/anti-bot/fallback-pool-build-cache-cleanup-2026-11-04.json": "6c1888c062627d856db6be52a42cf72b915a5bd8e6841b516b5ed48fcfb66bcd",
+    "_local/anti-bot/fallback-pool-docker-image-cleanup-2026-11-04.json": "daeb63ba723f34367125e026b94de18431dee9b41f58ae86cea78788bac2e6f5"
+  }
+}

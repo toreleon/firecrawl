@@ -1,0 +1,2235 @@
+{
+  "recordedAt": "2026-11-04T02:38:41.335475+00:00",
+  "sourceCommit": "ac870a06f5d7147f24f2d85a0eca08b33926c742",
+  "scope": "Experimental browser-service bundles. No tracked production runtime changes, full-API integration or new 100-target result in this experiment.",
+  "conclusion": "Contained WebKit is a candidate for opt-in integration: five of five matched Saks visits retrieved the expected rendered product content, versus zero of five for each existing engine. The earlier 16-target engine comparison was tied at three successes per engine. A default-UA WebKit visit succeeded at Saks in the UA experiment, motivating the matched replication. This selected-site result does not establish aggregate coverage or hosted parity.",
+  "requestAccounting": {
+    "publicTargetRpcs": 120,
+    "completedExperimentRpcs": 117,
+    "abortedTlsControlRpcs": 3,
+    "automaticClientRetries": 0,
+    "hostedCalls": 0,
+    "upstreamProxies": false,
+    "maxHttpWorkers": 3,
+    "perOwnerConcurrency": 1,
+    "ancillaryRequests": "Separate geolocation checks and one Node TLS diagnostic are not benchmark RPCs. All guard/RTC/TLS fixtures were locally owned; native macOS WebKit visited no public benchmark targets."
+  },
+  "method": {
+    "fixture": "apps/playwright-service-ts/benchmarks/frontier-2026-10-30.json",
+    "fixtureSha256": "a886fb57087e842c2857b89a7669e31d2fb7b98d6bd7deb60a2329f29581b76a",
+    "expectedTextSentToBrowser": false,
+    "pageJavascriptEnabled": true,
+    "freshContextPerRequest": true,
+    "directEgressCountry": "VN",
+    "navigationWait": "domcontentloaded",
+    "navigationAndServiceTimeoutMs": 30000,
+    "clientTimeoutMs": 35000,
+    "readinessTimeoutMs": 5000,
+    "maxServiceAttempts": 1,
+    "consent": "rejectNonEssential",
+    "workflow": "auto",
+    "resourcesPerOwner": {
+      "cpuQuota": 2,
+      "memoryLimitBytes": 2147483648,
+      "pageSlots": 1
+    },
+    "saksReplication": "Five independent fresh-context visits per engine, rotating engine order, a fifteen-second wait before each matched batch, GitHub controls before and after. Deliberate measurements are not automatic retries."
+  },
+  "runtime": {
+    "platform": "Linux ARM64 headful",
+    "nodeVersion": "22.23.4",
+    "playwrightVersion": "1.64.1",
+    "chromiumVersion": "156.0.8078.4",
+    "camoufoxVersion": "158.0.1-beta.41",
+    "webkitVersion": "27.2",
+    "webkitRevision": "2370",
+    "productionBaseImage": "sha256:5003f3d1d7e3f39bfd86cd1e567d9ce95d484fa7a1fefda6b1fda2ce453cfe9a",
+    "candidateImage": "sha256:8ea3f82561c9f886f247b1cfc523b6eceb4e9f2266dbbdc7ffb68641509a1e47",
+    "candidateTag": "autogtm/firecrawl-browser:webkit-ca-probe-2026-11-04",
+    "runtime26FilesMatchCheckout": true,
+    "privateBootstrapOnly": true
+  },
+  "networkBoundary": {
+    "requiredLocalSsrfFilter": "Local filtering proxy validates target destinations and DNS; it does not provide upstream egress rotation.",
+    "experimentalWebkit": "Trusted root service with NET_ADMIN confined to its owned container namespace. Browser drops to UID 1000, effective capabilities zero and NoNewPrivs=1. Container-local IPv4/IPv6 UID policy permits only TCP to the local filter port; the browser cannot configure those rules.",
+    "ownedFixtureResults": {
+      "httpAndHttpsAllowedThroughFilter": true,
+      "privateHttpAndHttpsRejected": true,
+      "javascriptExecuted": true,
+      "uncontainedStunUdpPackets": 3,
+      "uncontainedTurnTcpConnections": 1,
+      "containedStunUdpPackets": 0,
+      "containedTurnTcpConnections": 0,
+      "remainingContexts": 0,
+      "publicTargetRequests": 0
+    },
+    "limits": "The owned test exercised IPv4 transports; an IPv6 reject rule was installed but no actual IPv6 packet negative test is claimed. The native macOS sandbox wrapper failed owned loopback/RTC containment and was not used for public targets. An earlier WebSocket proxy-hop assertion was inconclusive, not evidence of a private endpoint leak. Least-privilege deployment and child-environment isolation still require production design and tests."
+  },
+  "tlsRepair": {
+    "initialControl": "The initial three GitHub control calls stopped the run: Chromium and Firefox passed; WebKit rejected the certificate. The system CA bundle was absent.",
+    "repair": "Installed the standard ca-certificates package. TLS verification remains enabled; no ignoreHTTPSErrors bypass.",
+    "ownedNegativeContract": {
+      "untrustedCertificateRejected": true,
+      "ignoreHTTPSErrors": false,
+      "systemCaBundleBytes": 222073,
+      "proxyChecks": 2,
+      "httpRequestsAtFixture": 0,
+      "contextsRemaining": 0,
+      "externalTargetRequests": 0,
+      "error": "Error: page.goto: Unacceptable TLS certificate\nCall log:\n  - navigating to \"https://fixture.test:41069/\", waiting until \"domcontentloaded\"\n"
+    },
+    "limits": "The missing CA bundle was a defect of this new prototype image. It does not explain the historical Chromium/Firefox benchmark failures."
+  },
+  "experiments": {
+    "engineComparison": {
+      "requests": 48,
+      "byProfile": {
+        "chromium": {
+          "requests": 16,
+          "uniqueTargets": 16,
+          "frontierPasses": 2,
+          "screenedPasses": 2,
+          "normalizedPasses": 3,
+          "frontierSuccessRate": 0.125,
+          "screenedSuccessRate": 0.125,
+          "normalizedSuccessRate": 0.1875,
+          "successfulLatencyP50Ms": 2236,
+          "successfulLatencyP95Ms": 3358,
+          "allAttemptLatencyP95Ms": 30021,
+          "failures": {
+            "missing_expected_marker": 1,
+            "challenge": 5,
+            "timeout": 2,
+            "target_status_403": 4,
+            "network_error": 2
+          }
+        },
+        "firefox": {
+          "requests": 16,
+          "uniqueTargets": 16,
+          "frontierPasses": 2,
+          "screenedPasses": 2,
+          "normalizedPasses": 3,
+          "frontierSuccessRate": 0.125,
+          "screenedSuccessRate": 0.125,
+          "normalizedSuccessRate": 0.1875,
+          "successfulLatencyP50Ms": 2528,
+          "successfulLatencyP95Ms": 3629,
+          "allAttemptLatencyP95Ms": 30114,
+          "failures": {
+            "missing_expected_marker": 1,
+            "challenge": 5,
+            "timeout": 2,
+            "target_status_403": 4,
+            "network_error": 2
+          }
+        },
+        "webkit": {
+          "requests": 16,
+          "uniqueTargets": 16,
+          "frontierPasses": 2,
+          "screenedPasses": 2,
+          "normalizedPasses": 3,
+          "frontierSuccessRate": 0.125,
+          "screenedSuccessRate": 0.125,
+          "normalizedSuccessRate": 0.1875,
+          "successfulLatencyP50Ms": 3180,
+          "successfulLatencyP95Ms": 3277,
+          "allAttemptLatencyP95Ms": 30018,
+          "failures": {
+            "missing_expected_marker": 1,
+            "challenge": 5,
+            "target_status_403": 5,
+            "service_error": 2,
+            "timeout": 1
+          }
+        }
+      },
+      "byTarget": [
+        {
+          "target": "github",
+          "profiles": {
+            "chromium": {
+              "observations": 1,
+              "normalizedPasses": 1,
+              "renderedExactPasses": 1,
+              "failures": []
+            },
+            "firefox": {
+              "observations": 1,
+              "normalizedPasses": 1,
+              "renderedExactPasses": 1,
+              "failures": []
+            },
+            "webkit": {
+              "observations": 1,
+              "normalizedPasses": 1,
+              "renderedExactPasses": 1,
+              "failures": []
+            }
+          }
+        },
+        {
+          "target": "arxiv",
+          "profiles": {
+            "chromium": {
+              "observations": 1,
+              "normalizedPasses": 1,
+              "renderedExactPasses": 1,
+              "failures": []
+            },
+            "firefox": {
+              "observations": 1,
+              "normalizedPasses": 1,
+              "renderedExactPasses": 1,
+              "failures": []
+            },
+            "webkit": {
+              "observations": 1,
+              "normalizedPasses": 1,
+              "renderedExactPasses": 1,
+              "failures": []
+            }
+          }
+        },
+        {
+          "target": "allegro",
+          "profiles": {
+            "chromium": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "challenge"
+              ]
+            },
+            "firefox": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "challenge"
+              ]
+            },
+            "webkit": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "challenge"
+              ]
+            }
+          }
+        },
+        {
+          "target": "canadagoose",
+          "profiles": {
+            "chromium": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "timeout"
+              ]
+            },
+            "firefox": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "timeout"
+              ]
+            },
+            "webkit": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "target_status_403"
+              ]
+            }
+          }
+        },
+        {
+          "target": "lowes",
+          "profiles": {
+            "chromium": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "target_status_403"
+              ]
+            },
+            "firefox": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "target_status_403"
+              ]
+            },
+            "webkit": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "target_status_403"
+              ]
+            }
+          }
+        },
+        {
+          "target": "safeway",
+          "profiles": {
+            "chromium": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "target_status_403"
+              ]
+            },
+            "firefox": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "target_status_403"
+              ]
+            },
+            "webkit": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "target_status_403"
+              ]
+            }
+          }
+        },
+        {
+          "target": "saksfifthavenue",
+          "profiles": {
+            "chromium": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "network_error"
+              ]
+            },
+            "firefox": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "network_error"
+              ]
+            },
+            "webkit": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "service_error"
+              ]
+            }
+          }
+        },
+        {
+          "target": "neimanmarcus",
+          "profiles": {
+            "chromium": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "network_error"
+              ]
+            },
+            "firefox": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "network_error"
+              ]
+            },
+            "webkit": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "service_error"
+              ]
+            }
+          }
+        },
+        {
+          "target": "g2",
+          "profiles": {
+            "chromium": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "challenge"
+              ]
+            },
+            "firefox": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "challenge"
+              ]
+            },
+            "webkit": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "challenge"
+              ]
+            }
+          }
+        },
+        {
+          "target": "macys",
+          "profiles": {
+            "chromium": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "target_status_403"
+              ]
+            },
+            "firefox": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "target_status_403"
+              ]
+            },
+            "webkit": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "target_status_403"
+              ]
+            }
+          }
+        },
+        {
+          "target": "homedepot",
+          "profiles": {
+            "chromium": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "target_status_403"
+              ]
+            },
+            "firefox": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "target_status_403"
+              ]
+            },
+            "webkit": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "target_status_403"
+              ]
+            }
+          }
+        },
+        {
+          "target": "crunchbase",
+          "profiles": {
+            "chromium": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "challenge"
+              ]
+            },
+            "firefox": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "challenge"
+              ]
+            },
+            "webkit": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "challenge"
+              ]
+            }
+          }
+        },
+        {
+          "target": "verizon",
+          "profiles": {
+            "chromium": {
+              "observations": 1,
+              "normalizedPasses": 1,
+              "renderedExactPasses": 1,
+              "failures": []
+            },
+            "firefox": {
+              "observations": 1,
+              "normalizedPasses": 1,
+              "renderedExactPasses": 1,
+              "failures": []
+            },
+            "webkit": {
+              "observations": 1,
+              "normalizedPasses": 1,
+              "renderedExactPasses": 1,
+              "failures": []
+            }
+          }
+        },
+        {
+          "target": "roblox",
+          "profiles": {
+            "chromium": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "timeout"
+              ]
+            },
+            "firefox": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "timeout"
+              ]
+            },
+            "webkit": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "timeout"
+              ]
+            }
+          }
+        },
+        {
+          "target": "Capterra",
+          "profiles": {
+            "chromium": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "challenge"
+              ]
+            },
+            "firefox": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "challenge"
+              ]
+            },
+            "webkit": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "challenge"
+              ]
+            }
+          }
+        },
+        {
+          "target": "stackoverflow",
+          "profiles": {
+            "chromium": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "challenge"
+              ]
+            },
+            "firefox": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "challenge"
+              ]
+            },
+            "webkit": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "challenge"
+              ]
+            }
+          }
+        }
+      ],
+      "resources": {
+        "chromium": {
+          "peakMemoryBytes": 1100763136,
+          "sampledPeakMemoryBytes": 650170368,
+          "finalMemoryEvents": {
+            "low": 0,
+            "high": 0,
+            "max": 0,
+            "oom": 0,
+            "oom_kill": 0,
+            "oom_group_kill": 0,
+            "sock_throttled": 0
+          }
+        },
+        "firefox": {
+          "peakMemoryBytes": 2124484608,
+          "sampledPeakMemoryBytes": 2023211008,
+          "finalMemoryEvents": {
+            "low": 0,
+            "high": 0,
+            "max": 0,
+            "oom": 0,
+            "oom_kill": 0,
+            "oom_group_kill": 0,
+            "sock_throttled": 0
+          }
+        },
+        "webkit": {
+          "peakMemoryBytes": 1098964992,
+          "sampledPeakMemoryBytes": 789696512,
+          "finalMemoryEvents": {
+            "low": 0,
+            "high": 0,
+            "max": 0,
+            "oom": 0,
+            "oom_kill": 0,
+            "oom_group_kill": 0,
+            "sock_throttled": 0
+          }
+        }
+      },
+      "pacing": {
+        "chromium": {
+          "configuredReservationIntervalMs": 7000,
+          "minimumObservedDispatchGapMs": 7001,
+          "strict7000msDispatchFloorMet": true,
+          "belowConfiguredInterval": []
+        },
+        "firefox": {
+          "configuredReservationIntervalMs": 7000,
+          "minimumObservedDispatchGapMs": 6991,
+          "strict7000msDispatchFloorMet": false,
+          "belowConfiguredInterval": [
+            {
+              "target": "arxiv",
+              "attempt": 1,
+              "gapMs": 6991
+            }
+          ]
+        },
+        "webkit": {
+          "configuredReservationIntervalMs": 7000,
+          "minimumObservedDispatchGapMs": 6994,
+          "strict7000msDispatchFloorMet": false,
+          "belowConfiguredInterval": [
+            {
+              "target": "arxiv",
+              "attempt": 1,
+              "gapMs": 6994
+            }
+          ]
+        }
+      },
+      "pacingLimit": "The reused pacer reserves slots before the caller starts fetch; configuration is not an exact dispatch floor. Observed deviations are recorded without relabelling the source or timestamps.",
+      "hashesAndScoresReplayed": 48,
+      "timingIntegrity": {
+        "valid": true,
+        "sampleIntervalMs": 1000,
+        "maximumAllowedGapMs": 10000,
+        "maximumObservedGapMs": 1003,
+        "gaps": []
+      },
+      "closedAttemptProofs": 48,
+      "peakHttpConcurrency": 3,
+      "controls": {
+        "wait_until": "domcontentloaded",
+        "navigation_timeout": 30000,
+        "workflow": "auto",
+        "consent": "rejectNonEssential",
+        "max_attempts": 1,
+        "readiness_timeout": 5000
+      },
+      "scope": "Three headful Linux ARM64 browser-service bundles on one image, each with 2 CPU / 2 GiB and one page slot. Chromium/Firefox keep their existing policies; experimental WebKit uses a separate browser UID with container-local network filtering, a root trusted service and NET_ADMIN in that owned namespace. Page scripts stay enabled. This is a selected-target browser-service experiment, not a full API result or a production deployment.",
+      "localEvidence": "_local/anti-bot/webkit-engines-2026-11-04",
+      "reportSha256": "74618b4d19ab43cca7a5c42ae19970d920b11ea6aacd4845dd80dcfc68f05cd8",
+      "startedAt": "2026-11-04T01:58:29.849Z",
+      "finishedAt": "2026-11-04T02:00:51.735Z",
+      "backendDispatches": {
+        "chromium": {
+          "dispatches": 16,
+          "userAgentOverrideContexts": 0
+        },
+        "firefox": {
+          "dispatches": 16,
+          "userAgentOverrideContexts": 0
+        },
+        "webkit": {
+          "dispatches": 16,
+          "userAgentOverrideContexts": 0
+        }
+      },
+      "sourceSnapshotHashes": {
+        "_local/anti-bot/webkit-engines-2026-11-04/source-snapshot/benchmark-webkit-engines-2026-11-04.ts": "a37e9a7d0a29362dbf39bb0aca1ff166004326be6efcb2078ea19a4d48c779b2",
+        "_local/anti-bot/webkit-engines-2026-11-04/source-snapshot/run-webkit-engines-2026-11-04.py": "74a4508ce15ef13d424efde44ece125b593577ded53708d7dbffc99ea7f2158a",
+        "_local/anti-bot/webkit-engines-2026-11-04/source-snapshot/webkit-contained-owner-wrapper-2026-11-04.cjs": "6acb40ca3d0a0d3e9fe8744340009ce4ae54b6437953061e15c72817d20bae90",
+        "_local/anti-bot/webkit-engines-2026-11-04/source-snapshot/webkit-linux-guard-launcher-2026-11-04.sh": "4d09cc6f5d52fa4e96d9e1238d57ba9889f5823afafb2db16541285575d55549"
+      }
+    },
+    "userAgentComparison": {
+      "requests": 48,
+      "byProfile": {
+        "default": {
+          "requests": 16,
+          "uniqueTargets": 16,
+          "frontierPasses": 3,
+          "screenedPasses": 3,
+          "normalizedPasses": 4,
+          "frontierSuccessRate": 0.1875,
+          "screenedSuccessRate": 0.1875,
+          "normalizedSuccessRate": 0.25,
+          "successfulLatencyP50Ms": 3674,
+          "successfulLatencyP95Ms": 3921,
+          "allAttemptLatencyP95Ms": 30022,
+          "failures": {
+            "missing_expected_marker": 1,
+            "service_error": 2,
+            "target_status_403": 5,
+            "challenge": 4,
+            "timeout": 1
+          }
+        },
+        "linux": {
+          "requests": 16,
+          "uniqueTargets": 16,
+          "frontierPasses": 2,
+          "screenedPasses": 2,
+          "normalizedPasses": 3,
+          "frontierSuccessRate": 0.125,
+          "screenedSuccessRate": 0.125,
+          "normalizedSuccessRate": 0.1875,
+          "successfulLatencyP50Ms": 3339,
+          "successfulLatencyP95Ms": 3754,
+          "allAttemptLatencyP95Ms": 30145,
+          "failures": {
+            "missing_expected_marker": 1,
+            "challenge": 7,
+            "target_status_403": 4,
+            "service_error": 1,
+            "timeout": 1
+          }
+        },
+        "gtk": {
+          "requests": 16,
+          "uniqueTargets": 16,
+          "frontierPasses": 2,
+          "screenedPasses": 2,
+          "normalizedPasses": 3,
+          "frontierSuccessRate": 0.125,
+          "screenedSuccessRate": 0.125,
+          "normalizedSuccessRate": 0.1875,
+          "successfulLatencyP50Ms": 3236,
+          "successfulLatencyP95Ms": 3716,
+          "allAttemptLatencyP95Ms": 30154,
+          "failures": {
+            "missing_expected_marker": 1,
+            "challenge": 6,
+            "target_status_403": 5,
+            "service_error": 1,
+            "timeout": 1
+          }
+        }
+      },
+      "byTarget": [
+        {
+          "target": "github",
+          "profiles": {
+            "default": {
+              "observations": 1,
+              "normalizedPasses": 1,
+              "renderedExactPasses": 1,
+              "failures": []
+            },
+            "linux": {
+              "observations": 1,
+              "normalizedPasses": 1,
+              "renderedExactPasses": 1,
+              "failures": []
+            },
+            "gtk": {
+              "observations": 1,
+              "normalizedPasses": 1,
+              "renderedExactPasses": 1,
+              "failures": []
+            }
+          }
+        },
+        {
+          "target": "arxiv",
+          "profiles": {
+            "default": {
+              "observations": 1,
+              "normalizedPasses": 1,
+              "renderedExactPasses": 1,
+              "failures": []
+            },
+            "linux": {
+              "observations": 1,
+              "normalizedPasses": 1,
+              "renderedExactPasses": 1,
+              "failures": []
+            },
+            "gtk": {
+              "observations": 1,
+              "normalizedPasses": 1,
+              "renderedExactPasses": 1,
+              "failures": []
+            }
+          }
+        },
+        {
+          "target": "allegro",
+          "profiles": {
+            "default": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "service_error"
+              ]
+            },
+            "linux": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "challenge"
+              ]
+            },
+            "gtk": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "challenge"
+              ]
+            }
+          }
+        },
+        {
+          "target": "canadagoose",
+          "profiles": {
+            "default": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "target_status_403"
+              ]
+            },
+            "linux": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "challenge"
+              ]
+            },
+            "gtk": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "target_status_403"
+              ]
+            }
+          }
+        },
+        {
+          "target": "lowes",
+          "profiles": {
+            "default": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "target_status_403"
+              ]
+            },
+            "linux": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "target_status_403"
+              ]
+            },
+            "gtk": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "target_status_403"
+              ]
+            }
+          }
+        },
+        {
+          "target": "safeway",
+          "profiles": {
+            "default": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "target_status_403"
+              ]
+            },
+            "linux": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "target_status_403"
+              ]
+            },
+            "gtk": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "target_status_403"
+              ]
+            }
+          }
+        },
+        {
+          "target": "saksfifthavenue",
+          "profiles": {
+            "default": {
+              "observations": 1,
+              "normalizedPasses": 1,
+              "renderedExactPasses": 1,
+              "failures": []
+            },
+            "linux": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "challenge"
+              ]
+            },
+            "gtk": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "challenge"
+              ]
+            }
+          }
+        },
+        {
+          "target": "neimanmarcus",
+          "profiles": {
+            "default": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "service_error"
+              ]
+            },
+            "linux": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "service_error"
+              ]
+            },
+            "gtk": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "service_error"
+              ]
+            }
+          }
+        },
+        {
+          "target": "g2",
+          "profiles": {
+            "default": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "challenge"
+              ]
+            },
+            "linux": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "challenge"
+              ]
+            },
+            "gtk": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "challenge"
+              ]
+            }
+          }
+        },
+        {
+          "target": "macys",
+          "profiles": {
+            "default": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "target_status_403"
+              ]
+            },
+            "linux": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "target_status_403"
+              ]
+            },
+            "gtk": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "target_status_403"
+              ]
+            }
+          }
+        },
+        {
+          "target": "homedepot",
+          "profiles": {
+            "default": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "target_status_403"
+              ]
+            },
+            "linux": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "target_status_403"
+              ]
+            },
+            "gtk": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "target_status_403"
+              ]
+            }
+          }
+        },
+        {
+          "target": "crunchbase",
+          "profiles": {
+            "default": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "challenge"
+              ]
+            },
+            "linux": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "challenge"
+              ]
+            },
+            "gtk": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "challenge"
+              ]
+            }
+          }
+        },
+        {
+          "target": "verizon",
+          "profiles": {
+            "default": {
+              "observations": 1,
+              "normalizedPasses": 1,
+              "renderedExactPasses": 1,
+              "failures": []
+            },
+            "linux": {
+              "observations": 1,
+              "normalizedPasses": 1,
+              "renderedExactPasses": 1,
+              "failures": []
+            },
+            "gtk": {
+              "observations": 1,
+              "normalizedPasses": 1,
+              "renderedExactPasses": 1,
+              "failures": []
+            }
+          }
+        },
+        {
+          "target": "roblox",
+          "profiles": {
+            "default": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "timeout"
+              ]
+            },
+            "linux": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "timeout"
+              ]
+            },
+            "gtk": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "timeout"
+              ]
+            }
+          }
+        },
+        {
+          "target": "Capterra",
+          "profiles": {
+            "default": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "challenge"
+              ]
+            },
+            "linux": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "challenge"
+              ]
+            },
+            "gtk": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "challenge"
+              ]
+            }
+          }
+        },
+        {
+          "target": "stackoverflow",
+          "profiles": {
+            "default": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "challenge"
+              ]
+            },
+            "linux": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "challenge"
+              ]
+            },
+            "gtk": {
+              "observations": 1,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "challenge"
+              ]
+            }
+          }
+        }
+      ],
+      "resources": {
+        "default": {
+          "peakMemoryBytes": 1025601536,
+          "sampledPeakMemoryBytes": 775217152,
+          "finalMemoryEvents": {
+            "low": 0,
+            "high": 0,
+            "max": 0,
+            "oom": 0,
+            "oom_kill": 0,
+            "oom_group_kill": 0,
+            "sock_throttled": 0
+          }
+        },
+        "linux": {
+          "peakMemoryBytes": 1007878144,
+          "sampledPeakMemoryBytes": 747159552,
+          "finalMemoryEvents": {
+            "low": 0,
+            "high": 0,
+            "max": 0,
+            "oom": 0,
+            "oom_kill": 0,
+            "oom_group_kill": 0,
+            "sock_throttled": 0
+          }
+        },
+        "gtk": {
+          "peakMemoryBytes": 968536064,
+          "sampledPeakMemoryBytes": 730337280,
+          "finalMemoryEvents": {
+            "low": 0,
+            "high": 0,
+            "max": 0,
+            "oom": 0,
+            "oom_kill": 0,
+            "oom_group_kill": 0,
+            "sock_throttled": 0
+          }
+        }
+      },
+      "pacing": {
+        "default": {
+          "configuredReservationIntervalMs": 7000,
+          "minimumObservedDispatchGapMs": 7000,
+          "strict7000msDispatchFloorMet": true,
+          "belowConfiguredInterval": []
+        },
+        "linux": {
+          "configuredReservationIntervalMs": 7000,
+          "minimumObservedDispatchGapMs": 6992,
+          "strict7000msDispatchFloorMet": false,
+          "belowConfiguredInterval": [
+            {
+              "target": "arxiv",
+              "attempt": 1,
+              "gapMs": 6992
+            }
+          ]
+        },
+        "gtk": {
+          "configuredReservationIntervalMs": 7000,
+          "minimumObservedDispatchGapMs": 6994,
+          "strict7000msDispatchFloorMet": false,
+          "belowConfiguredInterval": [
+            {
+              "target": "arxiv",
+              "attempt": 1,
+              "gapMs": 6994
+            }
+          ]
+        }
+      },
+      "pacingLimit": "The reused pacer reserves slots before the caller starts fetch; configuration is not an exact dispatch floor. Observed deviations are recorded without relabelling the source or timestamps.",
+      "hashesAndScoresReplayed": 48,
+      "timingIntegrity": {
+        "valid": true,
+        "sampleIntervalMs": 1000,
+        "maximumAllowedGapMs": 10000,
+        "maximumObservedGapMs": 1004,
+        "gaps": []
+      },
+      "closedAttemptProofs": 48,
+      "peakHttpConcurrency": 3,
+      "controls": {
+        "wait_until": "domcontentloaded",
+        "navigation_timeout": 30000,
+        "workflow": "auto",
+        "consent": "rejectNonEssential",
+        "max_attempts": 1,
+        "readiness_timeout": 5000
+      },
+      "scope": "Three contained headful Linux ARM64 WebKit workers on the same image with the same quotas and controls. Only the caller User-Agent differs: Playwright default macOS description, matching Linux platform with the reported engine version, and the pinned upstream GLib standard Version/60.5 string. Page and worker identities are checked before targets. This is an identity-bundle browser-service ablation, not a full API result or production deployment.",
+      "localEvidence": "_local/anti-bot/webkit-ua-2026-11-04",
+      "reportSha256": "1c20a39d69a9cf61c1a60297c194a1b7b827d7cbf7bbff11c1fea58a55e8a0ff",
+      "startedAt": "2026-11-04T02:06:12.287Z",
+      "finishedAt": "2026-11-04T02:08:31.470Z",
+      "backendDispatches": {
+        "default": {
+          "dispatches": 16,
+          "userAgentOverrideContexts": 0
+        },
+        "linux": {
+          "dispatches": 16,
+          "userAgentOverrideContexts": 17
+        },
+        "gtk": {
+          "dispatches": 16,
+          "userAgentOverrideContexts": 17
+        }
+      },
+      "sourceSnapshotHashes": {
+        "_local/anti-bot/webkit-ua-2026-11-04/source-snapshot/benchmark-webkit-ua-2026-11-04.ts": "9fdb078aa3ee067b82cb2982a08743b4bf5cf1436fb2041e9aa1cbad1cacab6e",
+        "_local/anti-bot/webkit-ua-2026-11-04/source-snapshot/run-webkit-ua-2026-11-04.py": "05048e12119f565ac35c2d64ed203e2d0e103d4468f7088240c61c4af5fc6e61",
+        "_local/anti-bot/webkit-ua-2026-11-04/source-snapshot/webkit-linux-guard-launcher-2026-11-04.sh": "4d09cc6f5d52fa4e96d9e1238d57ba9889f5823afafb2db16541285575d55549",
+        "_local/anti-bot/webkit-ua-2026-11-04/source-snapshot/webkit-ua-owner-wrapper-2026-11-04.cjs": "bcca3c6c4b917be6a899e21cd198bd20a21c0b7afa91fde30a445a23738e172c",
+        "_local/anti-bot/webkit-ua-2026-11-04/source-snapshot/webkit-ua-values-2026-11-04.json": "8ab1235ec3c12b8585b342c7ffef3341f5ab8cdbf28281ec3259c08a34300b8b"
+      },
+      "userAgentValues": {
+        "default": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Safari/605.1.15",
+        "linux": "Mozilla/5.0 (X11; Linux aarch64) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Safari/605.1.15",
+        "gtk": "Mozilla/5.0 (X11; Linux aarch64) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/60.5 Safari/605.1.15"
+      }
+    },
+    "saksReplication": {
+      "requests": 21,
+      "byProfile": {
+        "chromium": {
+          "requests": 7,
+          "uniqueTargets": 2,
+          "frontierPasses": 2,
+          "screenedPasses": 2,
+          "normalizedPasses": 2,
+          "frontierSuccessRate": 0.2857142857142857,
+          "screenedSuccessRate": 0.2857142857142857,
+          "normalizedSuccessRate": 0.2857142857142857,
+          "successfulLatencyP50Ms": 2161,
+          "successfulLatencyP95Ms": 2313,
+          "allAttemptLatencyP95Ms": 2313,
+          "failures": {
+            "challenge": 5
+          }
+        },
+        "firefox": {
+          "requests": 7,
+          "uniqueTargets": 2,
+          "frontierPasses": 2,
+          "screenedPasses": 2,
+          "normalizedPasses": 2,
+          "frontierSuccessRate": 0.2857142857142857,
+          "screenedSuccessRate": 0.2857142857142857,
+          "normalizedSuccessRate": 0.2857142857142857,
+          "successfulLatencyP50Ms": 2554,
+          "successfulLatencyP95Ms": 2618,
+          "allAttemptLatencyP95Ms": 4227,
+          "failures": {
+            "challenge": 5
+          }
+        },
+        "webkit": {
+          "requests": 7,
+          "uniqueTargets": 2,
+          "frontierPasses": 7,
+          "screenedPasses": 7,
+          "normalizedPasses": 7,
+          "frontierSuccessRate": 1,
+          "screenedSuccessRate": 1,
+          "normalizedSuccessRate": 1,
+          "successfulLatencyP50Ms": 3056,
+          "successfulLatencyP95Ms": 4191,
+          "allAttemptLatencyP95Ms": 4191,
+          "failures": {}
+        }
+      },
+      "byTarget": [
+        {
+          "target": "github",
+          "profiles": {
+            "chromium": {
+              "observations": 2,
+              "normalizedPasses": 2,
+              "renderedExactPasses": 2,
+              "failures": []
+            },
+            "firefox": {
+              "observations": 2,
+              "normalizedPasses": 2,
+              "renderedExactPasses": 2,
+              "failures": []
+            },
+            "webkit": {
+              "observations": 2,
+              "normalizedPasses": 2,
+              "renderedExactPasses": 2,
+              "failures": []
+            }
+          }
+        },
+        {
+          "target": "saksfifthavenue",
+          "profiles": {
+            "chromium": {
+              "observations": 5,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "challenge",
+                "challenge",
+                "challenge",
+                "challenge",
+                "challenge"
+              ]
+            },
+            "firefox": {
+              "observations": 5,
+              "normalizedPasses": 0,
+              "renderedExactPasses": 0,
+              "failures": [
+                "challenge",
+                "challenge",
+                "challenge",
+                "challenge",
+                "challenge"
+              ]
+            },
+            "webkit": {
+              "observations": 5,
+              "normalizedPasses": 5,
+              "renderedExactPasses": 5,
+              "failures": []
+            }
+          }
+        }
+      ],
+      "resources": {
+        "chromium": {
+          "peakMemoryBytes": 646819840,
+          "sampledPeakMemoryBytes": 502362112,
+          "finalMemoryEvents": {
+            "low": 0,
+            "high": 0,
+            "max": 0,
+            "oom": 0,
+            "oom_kill": 0,
+            "oom_group_kill": 0,
+            "sock_throttled": 0
+          }
+        },
+        "firefox": {
+          "peakMemoryBytes": 1246978048,
+          "sampledPeakMemoryBytes": 1078841344,
+          "finalMemoryEvents": {
+            "low": 0,
+            "high": 0,
+            "max": 0,
+            "oom": 0,
+            "oom_kill": 0,
+            "oom_group_kill": 0,
+            "sock_throttled": 0
+          }
+        },
+        "webkit": {
+          "peakMemoryBytes": 847876096,
+          "sampledPeakMemoryBytes": 654696448,
+          "finalMemoryEvents": {
+            "low": 0,
+            "high": 0,
+            "max": 0,
+            "oom": 0,
+            "oom_kill": 0,
+            "oom_group_kill": 0,
+            "sock_throttled": 0
+          }
+        }
+      },
+      "pacing": {
+        "chromium": {
+          "configuredReservationIntervalMs": 7000,
+          "minimumObservedDispatchGapMs": 6999,
+          "strict7000msDispatchFloorMet": false,
+          "belowConfiguredInterval": [
+            {
+              "target": "github",
+              "attempt": 2,
+              "gapMs": 6999
+            }
+          ]
+        },
+        "firefox": {
+          "configuredReservationIntervalMs": 7000,
+          "minimumObservedDispatchGapMs": 6999,
+          "strict7000msDispatchFloorMet": false,
+          "belowConfiguredInterval": [
+            {
+              "target": "github",
+              "attempt": 2,
+              "gapMs": 6999
+            }
+          ]
+        },
+        "webkit": {
+          "configuredReservationIntervalMs": 7000,
+          "minimumObservedDispatchGapMs": 7001,
+          "strict7000msDispatchFloorMet": true,
+          "belowConfiguredInterval": []
+        }
+      },
+      "pacingLimit": "The reused pacer reserves slots before the caller starts fetch; configuration is not an exact dispatch floor. Observed deviations are recorded without relabelling the source or timestamps.",
+      "hashesAndScoresReplayed": 21,
+      "timingIntegrity": {
+        "valid": true,
+        "sampleIntervalMs": 1000,
+        "maximumAllowedGapMs": 10000,
+        "maximumObservedGapMs": 1003,
+        "gaps": []
+      },
+      "closedAttemptProofs": 21,
+      "peakHttpConcurrency": 3,
+      "controls": {
+        "wait_until": "domcontentloaded",
+        "navigation_timeout": 30000,
+        "workflow": "auto",
+        "consent": "rejectNonEssential",
+        "max_attempts": 1,
+        "readiness_timeout": 5000
+      },
+      "scope": "Matched Chromium/Firefox/contained-WebKit replication of the single Saks recovery. Five independent fresh-context visits to Saks and a GitHub control before and after, per engine; fifteen-second between-batch wait before Saks, seven-second per-profile minimum pacing, three HTTP workers and no client retries. Source, image, TLS verification and containment match the preceding browser-service experiment. Repeated visits are deliberate measurement rounds, not automatic request retries. Not a full API or 100-target result.",
+      "localEvidence": "_local/anti-bot/webkit-saks-replication-2026-11-04",
+      "reportSha256": "a7dce070035c8f7e08a1abd75745b43d663a2b0ad15be4cafa3205821f473832",
+      "startedAt": "2026-11-04T02:14:55.044Z",
+      "finishedAt": "2026-11-04T02:16:38.192Z",
+      "backendDispatches": {
+        "chromium": {
+          "dispatches": 7,
+          "userAgentOverrideContexts": 0
+        },
+        "firefox": {
+          "dispatches": 7,
+          "userAgentOverrideContexts": 0
+        },
+        "webkit": {
+          "dispatches": 7,
+          "userAgentOverrideContexts": 0
+        }
+      },
+      "sourceSnapshotHashes": {
+        "_local/anti-bot/webkit-saks-replication-2026-11-04/source-snapshot/benchmark-webkit-saks-replication-2026-11-04.ts": "87856d55a01f1aebc008078fdab59a0665a3f77af44d9421cb1e1735c57780d5",
+        "_local/anti-bot/webkit-saks-replication-2026-11-04/source-snapshot/run-webkit-saks-replication-2026-11-04.py": "33217d98d539bc35e3e32aad812b7b99584236e3b54d79d391ca76512bf85f8e",
+        "_local/anti-bot/webkit-saks-replication-2026-11-04/source-snapshot/webkit-contained-owner-wrapper-2026-11-04.cjs": "6acb40ca3d0a0d3e9fe8744340009ce4ae54b6437953061e15c72817d20bae90",
+        "_local/anti-bot/webkit-saks-replication-2026-11-04/source-snapshot/webkit-linux-guard-launcher-2026-11-04.sh": "4d09cc6f5d52fa4e96d9e1238d57ba9889f5823afafb2db16541285575d55549"
+      },
+      "saksObservations": [
+        {
+          "profile": "chromium",
+          "attempt": 1,
+          "startedAt": "2026-11-04T02:15:13.185Z",
+          "latencyMs": 1487,
+          "normalizedPass": false,
+          "renderedExactMarkerPresent": false,
+          "renderedTextChars": 0,
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "closedAttemptProof": true,
+          "failureReason": "challenge",
+          "evidenceSha256": "6f12390251c5c9c60ccb91655a3cc96cb2d39657af2affeb70fb3a3318703611"
+        },
+        {
+          "profile": "webkit",
+          "attempt": 1,
+          "startedAt": "2026-11-04T02:15:13.184Z",
+          "latencyMs": 3056,
+          "normalizedPass": true,
+          "renderedExactMarkerPresent": true,
+          "renderedTextChars": 2050,
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "closedAttemptProof": true,
+          "failureReason": null,
+          "evidenceSha256": "aa6372093633f2ba33d1ac9ea560da6324fc47378a8d2ddbe6e473e61b1e9319"
+        },
+        {
+          "profile": "firefox",
+          "attempt": 1,
+          "startedAt": "2026-11-04T02:15:13.182Z",
+          "latencyMs": 3586,
+          "normalizedPass": false,
+          "renderedExactMarkerPresent": false,
+          "renderedTextChars": 0,
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "closedAttemptProof": true,
+          "failureReason": "challenge",
+          "evidenceSha256": "0ddbbd029a01f0f0d5c87b1ddae0fb1f15d28ad30bc599df7b403f067a9b6e07"
+        },
+        {
+          "profile": "firefox",
+          "attempt": 2,
+          "startedAt": "2026-11-04T02:15:31.773Z",
+          "latencyMs": 1942,
+          "normalizedPass": false,
+          "renderedExactMarkerPresent": false,
+          "renderedTextChars": 0,
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "closedAttemptProof": true,
+          "failureReason": "challenge",
+          "evidenceSha256": "abe9b9b0e1998875528b80d7e3ece459ba94f186118f4f3ada2da3e897f196f4"
+        },
+        {
+          "profile": "chromium",
+          "attempt": 2,
+          "startedAt": "2026-11-04T02:15:31.772Z",
+          "latencyMs": 2028,
+          "normalizedPass": false,
+          "renderedExactMarkerPresent": false,
+          "renderedTextChars": 0,
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "closedAttemptProof": true,
+          "failureReason": "challenge",
+          "evidenceSha256": "4b132bb9f6618549a8c7e55105e590aa2d76dfc400aabf076dcafab611e43592"
+        },
+        {
+          "profile": "webkit",
+          "attempt": 2,
+          "startedAt": "2026-11-04T02:15:31.771Z",
+          "latencyMs": 4191,
+          "normalizedPass": true,
+          "renderedExactMarkerPresent": true,
+          "renderedTextChars": 2050,
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "closedAttemptProof": true,
+          "failureReason": null,
+          "evidenceSha256": "20ac2f3135fbadcfeeee4f7aaaedc453917044d149dcf013123732a729cd0102"
+        },
+        {
+          "profile": "chromium",
+          "attempt": 3,
+          "startedAt": "2026-11-04T02:15:50.973Z",
+          "latencyMs": 1443,
+          "normalizedPass": false,
+          "renderedExactMarkerPresent": false,
+          "renderedTextChars": 0,
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "closedAttemptProof": true,
+          "failureReason": "challenge",
+          "evidenceSha256": "a59a69c35c01b28ed6e98108a62b071fd68f99f8eff36858500b6404489c02a5"
+        },
+        {
+          "profile": "webkit",
+          "attempt": 3,
+          "startedAt": "2026-11-04T02:15:50.976Z",
+          "latencyMs": 2868,
+          "normalizedPass": true,
+          "renderedExactMarkerPresent": true,
+          "renderedTextChars": 2050,
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "closedAttemptProof": true,
+          "failureReason": null,
+          "evidenceSha256": "39b7c5a9db5d64597b347b37e2809a47d2d38448c5f7eb6b7fe8d061bb3aab22"
+        },
+        {
+          "profile": "firefox",
+          "attempt": 3,
+          "startedAt": "2026-11-04T02:15:50.975Z",
+          "latencyMs": 4227,
+          "normalizedPass": false,
+          "renderedExactMarkerPresent": false,
+          "renderedTextChars": 0,
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "closedAttemptProof": true,
+          "failureReason": "challenge",
+          "evidenceSha256": "ef535155b41ac0bfb65289afa8cea6888607f63d44b7cfd3dc3e1c33cf823482"
+        },
+        {
+          "profile": "chromium",
+          "attempt": 4,
+          "startedAt": "2026-11-04T02:16:10.206Z",
+          "latencyMs": 1574,
+          "normalizedPass": false,
+          "renderedExactMarkerPresent": false,
+          "renderedTextChars": 0,
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "closedAttemptProof": true,
+          "failureReason": "challenge",
+          "evidenceSha256": "0394e49e6adc7c4ff4eace2bfe006132b74fb27a3f34696365967aab42b3f031"
+        },
+        {
+          "profile": "webkit",
+          "attempt": 4,
+          "startedAt": "2026-11-04T02:16:10.206Z",
+          "latencyMs": 2898,
+          "normalizedPass": true,
+          "renderedExactMarkerPresent": true,
+          "renderedTextChars": 2050,
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "closedAttemptProof": true,
+          "failureReason": null,
+          "evidenceSha256": "b264a12a27a554806ce85ea8ae03cb8534fa71baf6f58658248e7284204dbd1e"
+        },
+        {
+          "profile": "firefox",
+          "attempt": 4,
+          "startedAt": "2026-11-04T02:16:10.206Z",
+          "latencyMs": 3184,
+          "normalizedPass": false,
+          "renderedExactMarkerPresent": false,
+          "renderedTextChars": 0,
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "closedAttemptProof": true,
+          "failureReason": "challenge",
+          "evidenceSha256": "0fff4e64172daf54ca83d0ab9ee8ba42b2bcb326358f21b5b5e2f2bc36f13c05"
+        },
+        {
+          "profile": "chromium",
+          "attempt": 5,
+          "startedAt": "2026-11-04T02:16:28.392Z",
+          "latencyMs": 1452,
+          "normalizedPass": false,
+          "renderedExactMarkerPresent": false,
+          "renderedTextChars": 0,
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "closedAttemptProof": true,
+          "failureReason": "challenge",
+          "evidenceSha256": "f5d81e0bda0f77fd69f9a0ce5c00ca24eb3f48ac6ccc4504b9608b7368142516"
+        },
+        {
+          "profile": "firefox",
+          "attempt": 5,
+          "startedAt": "2026-11-04T02:16:28.392Z",
+          "latencyMs": 2996,
+          "normalizedPass": false,
+          "renderedExactMarkerPresent": false,
+          "renderedTextChars": 0,
+          "apiStatus": 200,
+          "pageStatus": 403,
+          "closedAttemptProof": true,
+          "failureReason": "challenge",
+          "evidenceSha256": "943c75eb4383a2392791cb2d76b8e7ae5582a4c9f1dce28df6d913dea3c0bc0e"
+        },
+        {
+          "profile": "webkit",
+          "attempt": 5,
+          "startedAt": "2026-11-04T02:16:28.391Z",
+          "latencyMs": 3071,
+          "normalizedPass": true,
+          "renderedExactMarkerPresent": true,
+          "renderedTextChars": 2085,
+          "apiStatus": 200,
+          "pageStatus": 200,
+          "closedAttemptProof": true,
+          "failureReason": null,
+          "evidenceSha256": "cca48fd919cda38e6cbc457438ab2bd2e925159f47652b5f7acd6c3ae31eb84a"
+        }
+      ]
+    }
+  },
+  "comparisonLimits": [
+    "Browser-service experiments are not full Firecrawl API runs.",
+    "Only sixteen selected targets plus matched Saks replication; no extrapolation to the frozen hundred.",
+    "Time, rate effects, shared host load, browser identity and engine-specific containment remain confounders. The engine bundles differ in more than one variable.",
+    "The configured seven-second pacer reserves a slot before fetch. Minimum observed gaps by profile were 6991-7001 ms; it is not a verified exact seven-second dispatch floor. Raw deviations are retained.",
+    "UA/platform edits did not establish an improvement. Default WebKit UA describes macOS while the runtime platform is Linux; the Linux and pinned-upstream GLib formats each scored three of sixteen.",
+    "No hosted calls were made. The last full100 primary/fallback scores remain 46/56; the historical hosted reference remains 82 and was not refreshed."
+  ],
+  "integrationPending": [
+    "Explicit WebKit engine configuration and launch-port plumbing in the production service.",
+    "A deployment network boundary that preserves SSRF/RTC containment, isolates browser child environment and limits trusted privileges.",
+    "Full API routing, fallback/session compatibility, focused happy/failure tests, then a bounded proxy-free hundred-target evaluation."
+  ],
+  "sourceResearch": [
+    {
+      "url": "https://playwright.dev/docs/browsers",
+      "finding": "Playwright WebKit is a patched upstream build, not installed Safari."
+    },
+    {
+      "url": "https://github.com/microsoft/playwright/blob/v1.64.1/browser_patches/webkit/UPSTREAM_CONFIG.sh",
+      "gitBlob": "5b92483d98f87fbe631dc9462369209b957be742",
+      "webkitUpstreamCommit": "56453fdfe0b0ca6258c23e6453b34f70b885d13f"
+    },
+    {
+      "url": "https://github.com/WebKit/WebKit/blob/56453fdfe0b0ca6258c23e6453b34f70b885d13f/Source/WebCore/platform/glib/UserAgentGLib.cpp",
+      "gitBlob": "582eb782daf448344d2bf0cd3f248d9e9db9283d",
+      "finding": "Pinned upstream GLib format uses uname platform and Version/60.5. This is not proof of Playwright default UA."
+    },
+    {
+      "url": "https://github.com/WebKit/WebKit/blob/56453fdfe0b0ca6258c23e6453b34f70b885d13f/Source/cmake/OptionsGTK.cmake",
+      "gitBlob": "1db95887eeda425cf0b402f50f16f00ace4acb1f",
+      "finding": "Build options alone cannot establish the installed binary RTC behavior; owned transport probes measured it."
+    }
+  ],
+  "cleanup": {
+    "checkedAt": "2026-11-04T02:36:45.699078+00:00",
+    "taskContainersRemoved": 24,
+    "recordedContainers": [
+      {
+        "receipt": "_local/anti-bot/webkit-engines-preflight-initial-2026-11-04/cleanup.json",
+        "name": "autogtm-firecrawl-webkit-chromium-20261104",
+        "state": {
+          "Status": "exited",
+          "Running": false,
+          "Paused": false,
+          "Restarting": false,
+          "OOMKilled": false,
+          "Dead": false,
+          "Pid": 0,
+          "ExitCode": 143,
+          "Error": "",
+          "StartedAt": "2026-11-04T01:46:00.67988018Z",
+          "FinishedAt": "2026-11-04T01:47:02.808106959Z"
+        },
+        "imageId": "sha256:522c80e932f21f975ff517c73b99e9ddffd9255a52470c3db27e2f5ab5504388",
+        "removedAfterReceipt": true
+      },
+      {
+        "receipt": "_local/anti-bot/webkit-engines-preflight-initial-2026-11-04/cleanup.json",
+        "name": "autogtm-firecrawl-webkit-firefox-20261104",
+        "state": {
+          "Status": "exited",
+          "Running": false,
+          "Paused": false,
+          "Restarting": false,
+          "OOMKilled": false,
+          "Dead": false,
+          "Pid": 0,
+          "ExitCode": 1,
+          "Error": "",
+          "StartedAt": "2026-11-04T01:46:02.484159417Z",
+          "FinishedAt": "2026-11-04T01:46:05.817526543Z"
+        },
+        "imageId": "sha256:522c80e932f21f975ff517c73b99e9ddffd9255a52470c3db27e2f5ab5504388",
+        "removedAfterReceipt": true
+      },
+      {
+        "receipt": "_local/anti-bot/webkit-engines-preflight-process-check-2026-11-04/cleanup.json",
+        "name": "autogtm-firecrawl-webkit-chromium-20261104",
+        "state": {
+          "Status": "exited",
+          "Running": false,
+          "Paused": false,
+          "Restarting": false,
+          "OOMKilled": false,
+          "Dead": false,
+          "Pid": 0,
+          "ExitCode": 143,
+          "Error": "",
+          "StartedAt": "2026-11-04T01:49:02.215728208Z",
+          "FinishedAt": "2026-11-04T01:49:11.962030046Z"
+        },
+        "imageId": "sha256:522c80e932f21f975ff517c73b99e9ddffd9255a52470c3db27e2f5ab5504388",
+        "removedAfterReceipt": true
+      },
+      {
+        "receipt": "_local/anti-bot/webkit-engines-preflight-process-check-2026-11-04/cleanup.json",
+        "name": "autogtm-firecrawl-webkit-firefox-20261104",
+        "state": {
+          "Status": "exited",
+          "Running": false,
+          "Paused": false,
+          "Restarting": false,
+          "OOMKilled": false,
+          "Dead": false,
+          "Pid": 0,
+          "ExitCode": 143,
+          "Error": "",
+          "StartedAt": "2026-11-04T01:49:03.975546251Z",
+          "FinishedAt": "2026-11-04T01:49:12.168783755Z"
+        },
+        "imageId": "sha256:522c80e932f21f975ff517c73b99e9ddffd9255a52470c3db27e2f5ab5504388",
+        "removedAfterReceipt": true
+      },
+      {
+        "receipt": "_local/anti-bot/webkit-engines-preflight-process-check-2026-11-04/cleanup.json",
+        "name": "autogtm-firecrawl-webkit-contained-20261104",
+        "state": {
+          "Status": "exited",
+          "Running": false,
+          "Paused": false,
+          "Restarting": false,
+          "OOMKilled": false,
+          "Dead": false,
+          "Pid": 0,
+          "ExitCode": 143,
+          "Error": "",
+          "StartedAt": "2026-11-04T01:49:09.566126295Z",
+          "FinishedAt": "2026-11-04T01:49:12.36136863Z"
+        },
+        "imageId": "sha256:522c80e932f21f975ff517c73b99e9ddffd9255a52470c3db27e2f5ab5504388",
+        "removedAfterReceipt": true
+      },
+      {
+        "receipt": "_local/anti-bot/webkit-engines-control-tls-failure-2026-11-04/cleanup.json",
+        "name": "autogtm-firecrawl-webkit-chromium-20261104",
+        "state": {
+          "Status": "exited",
+          "Running": false,
+          "Paused": false,
+          "Restarting": false,
+          "OOMKilled": false,
+          "Dead": false,
+          "Pid": 0,
+          "ExitCode": 143,
+          "Error": "",
+          "StartedAt": "2026-11-04T01:51:30.433870888Z",
+          "FinishedAt": "2026-11-04T01:51:50.33810855Z"
+        },
+        "imageId": "sha256:522c80e932f21f975ff517c73b99e9ddffd9255a52470c3db27e2f5ab5504388",
+        "removedAfterReceipt": true
+      },
+      {
+        "receipt": "_local/anti-bot/webkit-engines-control-tls-failure-2026-11-04/cleanup.json",
+        "name": "autogtm-firecrawl-webkit-firefox-20261104",
+        "state": {
+          "Status": "exited",
+          "Running": false,
+          "Paused": false,
+          "Restarting": false,
+          "OOMKilled": false,
+          "Dead": false,
+          "Pid": 0,
+          "ExitCode": 143,
+          "Error": "",
+          "StartedAt": "2026-11-04T01:51:32.228151292Z",
+          "FinishedAt": "2026-11-04T01:51:50.558207759Z"
+        },
+        "imageId": "sha256:522c80e932f21f975ff517c73b99e9ddffd9255a52470c3db27e2f5ab5504388",
+        "removedAfterReceipt": true
+      },
+      {
+        "receipt": "_local/anti-bot/webkit-engines-control-tls-failure-2026-11-04/cleanup.json",
+        "name": "autogtm-firecrawl-webkit-contained-20261104",
+        "state": {
+          "Status": "exited",
+          "Running": false,
+          "Paused": false,
+          "Restarting": false,
+          "OOMKilled": false,
+          "Dead": false,
+          "Pid": 0,
+          "ExitCode": 143,
+          "Error": "",
+          "StartedAt": "2026-11-04T01:51:37.144214336Z",
+          "FinishedAt": "2026-11-04T01:51:50.756712259Z"
+        },
+        "imageId": "sha256:522c80e932f21f975ff517c73b99e9ddffd9255a52470c3db27e2f5ab5504388",
+        "removedAfterReceipt": true
+      },
+      {
+        "receipt": "_local/anti-bot/webkit-engines-2026-11-04/cleanup.json",
+        "name": "autogtm-firecrawl-webkit-chromium-20261104",
+        "state": {
+          "Status": "exited",
+          "Running": false,
+          "Paused": false,
+          "Restarting": false,
+          "OOMKilled": false,
+          "Dead": false,
+          "Pid": 0,
+          "ExitCode": 143,
+          "Error": "",
+          "StartedAt": "2026-11-04T01:58:19.8740423Z",
+          "FinishedAt": "2026-11-04T02:00:52.812702801Z"
+        },
+        "imageId": "sha256:8ea3f82561c9f886f247b1cfc523b6eceb4e9f2266dbbdc7ffb68641509a1e47",
+        "removedAfterReceipt": true
+      },
+      {
+        "receipt": "_local/anti-bot/webkit-engines-2026-11-04/cleanup.json",
+        "name": "autogtm-firecrawl-webkit-firefox-20261104",
+        "state": {
+          "Status": "exited",
+          "Running": false,
+          "Paused": false,
+          "Restarting": false,
+          "OOMKilled": false,
+          "Dead": false,
+          "Pid": 0,
+          "ExitCode": 143,
+          "Error": "",
+          "StartedAt": "2026-11-04T01:58:21.737234009Z",
+          "FinishedAt": "2026-11-04T02:00:53.028546885Z"
+        },
+        "imageId": "sha256:8ea3f82561c9f886f247b1cfc523b6eceb4e9f2266dbbdc7ffb68641509a1e47",
+        "removedAfterReceipt": true
+      },
+      {
+        "receipt": "_local/anti-bot/webkit-engines-2026-11-04/cleanup.json",
+        "name": "autogtm-firecrawl-webkit-contained-20261104",
+        "state": {
+          "Status": "exited",
+          "Running": false,
+          "Paused": false,
+          "Restarting": false,
+          "OOMKilled": false,
+          "Dead": false,
+          "Pid": 0,
+          "ExitCode": 143,
+          "Error": "",
+          "StartedAt": "2026-11-04T01:58:26.656846303Z",
+          "FinishedAt": "2026-11-04T02:00:53.237701343Z"
+        },
+        "imageId": "sha256:8ea3f82561c9f886f247b1cfc523b6eceb4e9f2266dbbdc7ffb68641509a1e47",
+        "removedAfterReceipt": true
+      },
+      {
+        "receipt": "_local/anti-bot/webkit-ua-2026-11-04/cleanup.json",
+        "name": "autogtm-firecrawl-webkit-ua-default-20261104",
+        "state": {
+          "Status": "exited",
+          "Running": false,
+          "Paused": false,
+          "Restarting": false,
+          "OOMKilled": false,
+          "Dead": false,
+          "Pid": 0,
+          "ExitCode": 143,
+          "Error": "",
+          "StartedAt": "2026-11-04T02:06:02.542575417Z",
+          "FinishedAt": "2026-11-04T02:08:35.171537793Z"
+        },
+        "imageId": "sha256:8ea3f82561c9f886f247b1cfc523b6eceb4e9f2266dbbdc7ffb68641509a1e47",
+        "removedAfterReceipt": true
+      },
+      {
+        "receipt": "_local/anti-bot/webkit-ua-2026-11-04/cleanup.json",
+        "name": "autogtm-firecrawl-webkit-ua-linux-20261104",
+        "state": {
+          "Status": "exited",
+          "Running": false,
+          "Paused": false,
+          "Restarting": false,
+          "OOMKilled": false,
+          "Dead": false,
+          "Pid": 0,
+          "ExitCode": 143,
+          "Error": "",
+          "StartedAt": "2026-11-04T02:06:05.459103376Z",
+          "FinishedAt": "2026-11-04T02:08:35.373234543Z"
+        },
+        "imageId": "sha256:8ea3f82561c9f886f247b1cfc523b6eceb4e9f2266dbbdc7ffb68641509a1e47",
+        "removedAfterReceipt": true
+      },
+      {
+        "receipt": "_local/anti-bot/webkit-ua-2026-11-04/cleanup.json",
+        "name": "autogtm-firecrawl-webkit-ua-gtk-20261104",
+        "state": {
+          "Status": "exited",
+          "Running": false,
+          "Paused": false,
+          "Restarting": false,
+          "OOMKilled": false,
+          "Dead": false,
+          "Pid": 0,
+          "ExitCode": 143,
+          "Error": "",
+          "StartedAt": "2026-11-04T02:06:08.380677169Z",
+          "FinishedAt": "2026-11-04T02:08:35.596275376Z"
+        },
+        "imageId": "sha256:8ea3f82561c9f886f247b1cfc523b6eceb4e9f2266dbbdc7ffb68641509a1e47",
+        "removedAfterReceipt": true
+      },
+      {
+        "receipt": "_local/anti-bot/webkit-saks-replication-2026-11-04/cleanup.json",
+        "name": "autogtm-firecrawl-webkit-saks-chromium-20261104",
+        "state": {
+          "Status": "exited",
+          "Running": false,
+          "Paused": false,
+          "Restarting": false,
+          "OOMKilled": false,
+          "Dead": false,
+          "Pid": 0,
+          "ExitCode": 143,
+          "Error": "",
+          "StartedAt": "2026-11-04T02:14:44.682391339Z",
+          "FinishedAt": "2026-11-04T02:16:47.328520049Z"
+        },
+        "imageId": "sha256:8ea3f82561c9f886f247b1cfc523b6eceb4e9f2266dbbdc7ffb68641509a1e47",
+        "removedAfterReceipt": true
+      },
+      {
+        "receipt": "_local/anti-bot/webkit-saks-replication-2026-11-04/cleanup.json",
+        "name": "autogtm-firecrawl-webkit-saks-firefox-20261104",
+        "state": {
+          "Status": "exited",
+          "Running": false,
+          "Paused": false,
+          "Restarting": false,
+          "OOMKilled": false,
+          "Dead": false,
+          "Pid": 0,
+          "ExitCode": 143,
+          "Error": "",
+          "StartedAt": "2026-11-04T02:14:46.722653798Z",
+          "FinishedAt": "2026-11-04T02:16:47.54055909Z"
+        },
+        "imageId": "sha256:8ea3f82561c9f886f247b1cfc523b6eceb4e9f2266dbbdc7ffb68641509a1e47",
+        "removedAfterReceipt": true
+      },
+      {
+        "receipt": "_local/anti-bot/webkit-saks-replication-2026-11-04/cleanup.json",
+        "name": "autogtm-firecrawl-webkit-saks-contained-20261104",
+        "state": {
+          "Status": "exited",
+          "Running": false,
+          "Paused": false,
+          "Restarting": false,
+          "OOMKilled": false,
+          "Dead": false,
+          "Pid": 0,
+          "ExitCode": 143,
+          "Error": "",
+          "StartedAt": "2026-11-04T02:14:51.644975717Z",
+          "FinishedAt": "2026-11-04T02:16:47.745528382Z"
+        },
+        "imageId": "sha256:8ea3f82561c9f886f247b1cfc523b6eceb4e9f2266dbbdc7ffb68641509a1e47",
+        "removedAfterReceipt": true
+      }
+    ],
+    "autoRemovedContainerNamesVerifiedAbsent": [
+      "autogtm-firecrawl-webkit-guard-20261104",
+      "autogtm-firecrawl-webkit-rtc-20261104",
+      "autogtm-firecrawl-webkit-toolchain-check-20261104",
+      "autogtm-firecrawl-webkit-contained-guard-20261104",
+      "autogtm-firecrawl-webkit-tls-inspect-20261104",
+      "autogtm-firecrawl-webkit-ca-contract-20261104",
+      "autogtm-firecrawl-webkit-integrity-20261104"
+    ],
+    "obsoleteTaskImagesRemoved": {
+      "autogtm/firecrawl-browser:webkit-probe-2026-11-04": "sha256:220fac02f16ffb2971b07beca7cf234d27f96bb322af5b2e973df1d40e287224",
+      "autogtm/firecrawl-browser:webkit-contained-probe-2026-11-04": "sha256:522c80e932f21f975ff517c73b99e9ddffd9255a52470c3db27e2f5ab5504388"
+    },
+    "candidateImageRetained": "sha256:8ea3f82561c9f886f247b1cfc523b6eceb4e9f2266dbbdc7ffb68641509a1e47",
+    "productionImageRetained": "sha256:5003f3d1d7e3f39bfd86cd1e567d9ce95d484fa7a1fefda6b1fda2ce453cfe9a",
+    "otherImageIdsPreserved": true,
+    "cache": {
+      "taskRecordsRemoved": 29,
+      "baselineRecordsPreserved": 128,
+      "unrelatedNewRecordsPreserved": 0,
+      "remainingRecords": 128,
+      "dockerReportedPruneTotal": [
+        "Total:\t696MB"
+      ],
+      "physicalBytesFreedNotMeasured": true
+    },
+    "cacheOwnership": "Exact build windows with no overlapping build, baseline inventory and parent-chain checks; exact ID preview before pruning.",
+    "unusedNativeRuntimeRemoved": {
+      "path": "/Users/tore/code/AutoGTM/firecrawl/_local/anti-bot/webkit-runtime-2026-11-04",
+      "logicalBytes": 302570601,
+      "threeExecutableHashesRetained": true,
+      "ownedProcessesBeforeDeletion": 0,
+      "sharedBrowserCacheUntouched": true
+    },
+    "unrelatedRunningServicesPreserved": [
+      "0ac91d914d82 opengtm-api-go-1",
+      "df8e48267599 opengtm-scheduler-go-1",
+      "3a44acdcd0b8 opengtm-worker-go-1",
+      "7b59d2a38ebf opengtm-agent-runtime-1",
+      "ed7059dea011 opengtm-agent-test-pg",
+      "691c9af86ab2 lead-data-web",
+      "5d4757f06df0 lead-data-postgres",
+      "3e8ffc5fbed8 opengtm-browser-1",
+      "ee62bd903703 lead-data-redis"
+    ],
+    "dataVolumesPreserved": 114,
+    "dataVolumesDeleted": 0,
+    "volumeNamesUnchanged": true,
+    "taskInfrastructureStopped": [
+      "autogtm-firecrawl-workflows-pg-20261103",
+      "autogtm-firecrawl-workflows-redis-20261103",
+      "autogtm-firecrawl-workflows-rabbit-20261103"
+    ],
+    "rawEvidenceAndBuildContextsPreserved": true,
+    "globalPruneUsed": false,
+    "evidenceHashes": {
+      "_local/anti-bot/webkit-engines-preflight-initial-2026-11-04/cleanup.json": "edc367a273a815bca9b21dca113d3000f94a0d05af1849bb9d3e6663f6248a90",
+      "_local/anti-bot/webkit-engines-preflight-process-check-2026-11-04/cleanup.json": "3884d0693369b1ffe1db1662974e45bdb3a97e01a6b24b7ca486bb8f9e5b1f2d",
+      "_local/anti-bot/webkit-engines-control-tls-failure-2026-11-04/cleanup.json": "b03df629e6e7ebb66c81850b92a6837a2d42431443abf52eb9c76e407cceff24",
+      "_local/anti-bot/webkit-engines-2026-11-04/cleanup.json": "e32d25c86549b73accc4b0c6e2dd44bd21b80bb6440391df3b3572df9acef1cd",
+      "_local/anti-bot/webkit-ua-2026-11-04/cleanup.json": "6075db95e196adc9d2ecaf1323a6e7194c7d05ba4a5743c375899da272619db0",
+      "_local/anti-bot/webkit-saks-replication-2026-11-04/cleanup.json": "54f67347e5cc6c36d3877ab9ce9ffb7c0c82fb57067e80fa9ffebcc6c54d63c6",
+      "_local/anti-bot/webkit-image-integrity-2026-11-04.json": "99514c6fe8b1dc5e58591b4f3210b78704a5d378ef8877a908be9cd17f591ccc",
+      "_local/anti-bot/webkit-mac-runtime-hashes-2026-11-04.json": "5be72afd941edf9c88e7f885c529d6218e881e4e678c82e0f3db82bc35d2edd6",
+      "_local/anti-bot/webkit-cleanup-2026-11-04/preflight.json": "6d1fb8828e45ca015afaa9a78950dfbda76e073531afc3c88d056d5cc6484fac",
+      "_local/anti-bot/webkit-cleanup-2026-11-04/cache-result.json": "b163ccb51aad4e6d5c91df120a817c9406a8c88507d4fc31429c17a4b2c83d6f"
+    },
+    "systemDfAfter": "TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE\nImages          57        10        29.68GB   12.04GB (40%)\nContainers      13        9         360.4kB   28.67kB (7%)\nLocal Volumes   114       5         6.326GB   6.151GB (97%)\nBuild Cache     128       0         5.644GB   2.716GB\n",
+    "hostDiskAfter": "Filesystem      Size    Used   Avail Capacity iused ifree %iused  Mounted on\n/dev/disk3s5   460Gi   317Gi   119Gi    73%    5.4M  1.2G    0%   /System/Volumes/Data\n"
+  },
+  "evidence": {
+    "localRoot": "_local/anti-bot",
+    "rawPayloadsRetained": true,
+    "publicHtmlBodiesPublished": false,
+    "sha256": {
+      "_local/anti-bot/webkit-experiment-audit-2026-11-04.json": "787ed9ff07c643264733bc719e12f7a462f23022382a0c0cb6b357b3cb2fcf11",
+      "_local/anti-bot/linux-webkit-contained-guard-2026-11-04.log": "7d28b0679b6dce92e5f3ac43fbc4bb8b0b94baa04e48ef3909230e71ad033f9e",
+      "_local/anti-bot/native-webkit-sandbox-2026-11-04.json": "fa2eb574e1dbcd79d383b50e631528242c810bfb6aee552303fc55cb756d5e31",
+      "_local/anti-bot/webkit-ca-contract-2026-11-04.log": "5bb603ebeba9414899520f273d4100d030081d74579ce532e47aa666182123b0",
+      "_local/anti-bot/webkit-image-integrity-2026-11-04.json": "99514c6fe8b1dc5e58591b4f3210b78704a5d378ef8877a908be9cd17f591ccc",
+      "_local/anti-bot/webkit-engines-control-tls-failure-2026-11-04/terminal-status.json": "463d768c05a405d8d099181ebe0ac73a45870fd8dfb354d7ff913748db35e297",
+      "_local/anti-bot/webkit-cleanup-2026-11-04/receipt.json": "9570c20e0e771f2f511f6a7169a7adb55e5d72f3c07f345e1a2d76f49ce56e17"
+    }
+  }
+}

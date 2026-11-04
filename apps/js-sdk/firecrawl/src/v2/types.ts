@@ -251,7 +251,20 @@ export interface PdfPageBlocks {
   items: PdfBlockItem[];
 }
 
+export interface BrowserControls {
+  waitUntil?: "load" | "domcontentloaded";
+  /** Initial navigation cap in milliseconds; the scrape deadline still bounds all phases. */
+  navigationTimeout?: number;
+  readiness?: {selector?: string; text?: string; scope?: "body" | "title"; timeoutMs?: number};
+  consent?: "off" | "rejectNonEssential" | "acceptAll";
+  workflow?: "none" | "auto" | "bestbuy-us@1" | "product-details@1";
+  maxAttempts?: 1 | 2 | 3;
+  engineFallback?: boolean;
+  sessionId?: string;
+  continueSession?: boolean;
+}
 export interface ScrapeOptions {
+  browserControls?: BrowserControls;
   formats?: FormatOption[];
   headers?: Record<string, string>;
   includeTags?: string[];
@@ -652,6 +665,7 @@ export interface MenuProfile {
 }
 
 export interface DocumentMetadata {
+  browser?: {readiness?: Record<string,unknown>; interaction?: Record<string,unknown>; diagnostics?: Record<string,unknown>; errorCode?: string; sessionId?: string};
   // Common metadata fields
   title?: string;
   description?: string;

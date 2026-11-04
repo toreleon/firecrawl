@@ -1,0 +1,860 @@
+{
+  "sourceCommit": "f8d479fa709917cd6fec09049f6b4197ab24ea21",
+  "scope": "Optional initial-navigation cap through browser service, full v2 API and JS/Python SDKs; focused regression evidence and selected pre-change triage. No hosted calls or upstream proxies.",
+  "feature": {
+    "apiField": "browserControls.navigationTimeout",
+    "browserField": "navigation_timeout",
+    "units": "milliseconds",
+    "minimum": 100,
+    "maximum": 120000,
+    "default": "omitted; previous overall-deadline navigation behavior retained",
+    "deadline": "Initial goto, including HTTP redirects to waitUntil; bounded by the original scrape deadline. Later readiness/consent/workflow budgets are unchanged. Each explicitly selected backend receives the same cap.",
+    "capability": "navigationTimeout: true; unsupported stateless owners are skipped before dispatch, retained-session ownership is checked."
+  },
+  "verification": {
+    "apiBuildPassed": true,
+    "apiClientContractChecksPassed": 32,
+    "jsSdkSerializationChecksPassed": 5,
+    "jsSdkBuildPassed": true,
+    "pythonSdkRequestChecksPassed": 16,
+    "nativeRebrowserIntegration": {
+      "tapChecksPassed": 7,
+      "functionalCases": 5
+    },
+    "linuxContainerIntegration": {
+      "tapChecksPassed": 13,
+      "functionalCasesPerEngine": 5,
+      "engines": [
+        "rebrowser",
+        "camoufox"
+      ],
+      "imageId": "sha256:464401ac076ef7b541178f4baf61a61952dca6e4b331ea1368a168e23b69f737",
+      "cleanup": {
+        "name": "autogtm-firecrawl-navigation-timeout-tests-20261104",
+        "imageId": "sha256:464401ac076ef7b541178f4baf61a61952dca6e4b331ea1368a168e23b69f737",
+        "state": {
+          "Status": "exited",
+          "Running": false,
+          "Paused": false,
+          "Restarting": false,
+          "OOMKilled": false,
+          "Dead": false,
+          "Pid": 0,
+          "ExitCode": 0,
+          "Error": "",
+          "StartedAt": "2026-11-03T18:16:54.223187179Z",
+          "FinishedAt": "2026-11-03T18:17:02.942963252Z"
+        },
+        "removedAfterReceipt": true
+      }
+    },
+    "fullApiHarness": {
+      "vitestCasesPassed": 3,
+      "skippedUnrelatedCases": 8,
+      "scope": "Real API, queue, PostgreSQL ownership, two native Chromium browser owners and one Linux Firefox owner; local HTTP fixtures. Covers capped initial navigation, post-commit hydration, omission preserving the budget, invalid field rejection, typed-timeout alternate recovery and retained-session continuation/deletion.",
+      "recordedParentCommit": "99c5a69b896feb68d181c6ed80d43dd632243a46",
+      "recordedUncommittedImplementation": true,
+      "sourceFileHashesMatchCommittedImplementation": true,
+      "sourceHashes": {
+        "sourceFiles": {
+          "apps/api/src/config.ts": "ff0125914ec73e0ef0d49e1d3e09777f71e43f1a62fae7b9cb1c209724ddba4e",
+          "apps/api/src/controllers/v2/types.ts": "8412c9b8e28d55f2ee8819b4ce53323e1cded94402e0bf2a2365d95f25de03b7",
+          "apps/api/src/controllers/v2/local-browser.ts": "a39de56910d964c19fe56b5bb01badb9341907969da72b29746f12b56cce30a0",
+          "apps/api/src/lib/local-browser/client.ts": "55257cea66586e7b94228298905e966c66600d0ce075e5273696d33f9ccb244a",
+          "apps/api/src/lib/local-browser/controls.ts": "d76525c7c691460d74efb53acc54318817ddcbbdf1c184ff848989220eafd7fa",
+          "apps/api/src/lib/local-browser/controls.test.ts": "37093219d0f05227e716ec7ef46f75e7d41e774395be6a7febb43b76f32c7489",
+          "apps/api/src/lib/local-browser/fallback.test.ts": "5c05c825da5de588fbc15a82d06ab22c26f0a32e0be4ec9d0b466d5ea9f2c842",
+          "apps/api/src/__tests__/snips/v2/browser-controls.test.ts": "39d267533a537b9bd66ce407c6a0b6586dd894fda34137d844a15c4640546207",
+          "apps/playwright-service-ts/api.ts": "dbb929d53e24c9b8fe57c112c0507f139b271e20597221d1b368dc30334d6e90",
+          "apps/playwright-service-ts/helpers/page-readiness.ts": "5a4dafabdc24401a2a83b44a49c97a894495229baa4877f2b059dda1007d8daa",
+          "apps/playwright-service-ts/helpers/scrape-page.ts": "82a452e2d699cda231e72bccfd64b6d49769dab8194ce911435c5fcedb8f8630",
+          "apps/playwright-service-ts/helpers/workflows.ts": "2f829da96d5525bc05aee2290a3a138dc60d0dc31ff9745ab25c1e647104347a"
+        },
+        "compiledControlsSha256": "278e8a852637bd1cd83448751eb13508898d779e505b2b31ff66bd1da0318c18"
+      },
+      "fixtureTestsSha256": "39d267533a537b9bd66ce407c6a0b6586dd894fda34137d844a15c4640546207"
+    },
+    "failureFirst": {
+      "beforeBehavior": "The unimplemented phase cap was ignored: a slow target returned 200 and invalid caps were accepted. The test failed.",
+      "testContractCorrection": "The new test initially expected 408; it was corrected to the existing browser-service timeout status 500 while retaining SCRAPE_TIMEOUT. Production error-status mapping was not changed."
+    },
+    "logSha256": {
+      "navigation-timeout-api-build-2026-11-04.log": "5ac71a99decf5b92dbfe798066cbe8ea317395f8f764f5a8879fd3511ca99454",
+      "navigation-timeout-api-unit-2026-11-04.log": "d31bb1d9e78cfaeac5ba606a861dc41a19f0c0c9f9b640f07190ae365434fb0b",
+      "navigation-timeout-browser-build-2026-11-04.log": "5ac71a99decf5b92dbfe798066cbe8ea317395f8f764f5a8879fd3511ca99454",
+      "navigation-timeout-browser-2026-11-04.log": "ed4931b5f9410f5d3d32defbe08f47e7827718a719b630c67d7a2030ba5365a9",
+      "navigation-timeout-js-sdk-2026-11-04.log": "daeaeb6651774bd988b12a57c029b5029f0a396d5ffbda53cc4fc1dcb23fa8b8",
+      "navigation-timeout-js-sdk-build-2026-11-04.log": "9d0f3db0f883adfaaaa080966c688584f1b973de923cb861ebb753e2f9372b4e",
+      "navigation-timeout-python-sdk-2026-11-04.log": "ebf06d6cd42446a82164fca3fc7ae5047abbef4cf2e46a8bfc2f2619b6ab7b97",
+      "navigation-timeout-failure-first-2026-11-04.log": "db95ec608c7cfe5c8713d236cac09ec1f3cad6b3c49e50dab6318db038728d09"
+    },
+    "containerLogSha256": "38710ae35254a80e7eb50462aff7cac5a9b4178473d1a2c72bad2121b88e772a",
+    "apiHarnessLogSha256": "70b368a8e609b135dd0691e8db77a786281e05c9f680e8bbe4af39afe55c9094",
+    "browserCI": {
+      "sourceCommit": "f8d479fa709917cd6fec09049f6b4197ab24ea21",
+      "url": "https://github.com/toreleon/firecrawl/actions/runs/41692590578",
+      "helperChecksPassed": 60,
+      "integrationChecksPassed": 110,
+      "productionDependencyAuditPassed": true
+    }
+  },
+  "preChangeCaptureTriage": {
+    "sourceCommit": "99c5a69b896feb68d181c6ed80d43dd632243a46",
+    "browserProductionSourceCommit": "02f47b3151e2b19b910ca5994ebc73c0f1d462cc",
+    "imageId": "sha256:4cf1c1eb4550e82504a0f11af5817e2a95143bc96e3b83f081400764e51a8244",
+    "observations": 16,
+    "scoresAndPayloadHashesReplayed": 16,
+    "globalConcurrency": 2,
+    "perOwnerConcurrency": 1,
+    "serviceTimeoutMs": 30000,
+    "clientTimeoutMs": 35000,
+    "expectedMarkerSent": false,
+    "upstreamProxy": false,
+    "hostedCalls": 0,
+    "timingIntegrity": {
+      "valid": true,
+      "sampleIntervalMs": 1000,
+      "maximumAllowedGapMs": 10000,
+      "maximumObservedGapMs": 1003,
+      "gaps": []
+    },
+    "findings": [
+      "Fresh Firefox retrieved eBay on all four observations: two at 5000ms readiness and two at 15000ms. Chromium returned target 403 on all four. No coverage gain from the longer readiness setting.",
+      "Saks: Chromium 403, Firefox NS_ERROR_NET_RESET before a document committed. Neiman Marcus: both engines 403 in this probe. LinkedIn: both engines reset/closed before a document committed. GitHub control passed on both engines.",
+      "The earlier eBay CONTENT_NOT_READY outcome was not reproduced. No longer default readiness window, transport retry, or content promotion was added."
+    ],
+    "attempts": [
+      {
+        "target": "ebay",
+        "profile": "chromium",
+        "engine": "rebrowser",
+        "attempt": 1,
+        "readinessTimeoutMs": 5000,
+        "startedAt": "2026-11-03T18:07:23.762Z",
+        "latencyMs": 2832,
+        "url": "https://www.ebay.com/itm/227305215584",
+        "evidenceFile": "evidence/001.json",
+        "evidenceSha256": "3ff4260524c6e8c00c07d145c7d6b1f2d774b4398ff89fb74b0905d5bcca2199",
+        "frontierPass": false,
+        "screenedPass": false,
+        "normalizedPass": false,
+        "serviceAttemptCount": 1,
+        "failureReason": "target_status_403",
+        "apiStatus": 200,
+        "pageStatus": 403,
+        "rawMarkerPresent": false,
+        "textMarkerPresent": false,
+        "pageError": "Forbidden",
+        "landedUrl": "https://www.ebay.com/itm/227305215584",
+        "title": "Error Page | eBay",
+        "contentBytes": 1871,
+        "contentSha256": "7a868296bf7dce36a823bde4c33ab345375ae30fc702e6542fad4baa7ead3ddb",
+        "serviceErrorCode": null,
+        "navigationAttempts": [
+          {
+            "attempt": 1,
+            "budgetMs": 29797,
+            "status": 403,
+            "durationMs": 2632,
+            "pageClosed": true
+          }
+        ]
+      },
+      {
+        "target": "ebay",
+        "profile": "firefox",
+        "engine": "camoufox",
+        "attempt": 1,
+        "readinessTimeoutMs": 5000,
+        "startedAt": "2026-11-03T18:07:23.770Z",
+        "latencyMs": 4729,
+        "url": "https://www.ebay.com/itm/227305215584",
+        "evidenceFile": "evidence/002.json",
+        "evidenceSha256": "f4064ae3e0c94e83faf200c528b0ebc3e92e52c6126db1826247025db6ac5e64",
+        "frontierPass": true,
+        "screenedPass": true,
+        "normalizedPass": true,
+        "serviceAttemptCount": 1,
+        "apiStatus": 200,
+        "pageStatus": 200,
+        "rawMarkerPresent": true,
+        "textMarkerPresent": true,
+        "landedUrl": "https://www.ebay.com/itm/227305215584",
+        "title": "PNY GeForce RTX 4090 XLR8 Epic-X RGB OC 24GB GDDR6X GPU - Gaming Graphic Cards | eBay",
+        "contentBytes": 12316,
+        "contentSha256": "084cf073a182e6af92ebf3a173a6014db724a38296524513646ab9d86341549e",
+        "serviceErrorCode": null,
+        "navigationAttempts": [
+          {
+            "attempt": 1,
+            "budgetMs": 29742,
+            "status": 200,
+            "durationMs": 4544,
+            "pageClosed": true
+          }
+        ]
+      },
+      {
+        "target": "ebay",
+        "profile": "chromium",
+        "engine": "rebrowser",
+        "attempt": 1,
+        "readinessTimeoutMs": 15000,
+        "startedAt": "2026-11-03T18:07:28.501Z",
+        "latencyMs": 1117,
+        "url": "https://www.ebay.com/itm/227305215584",
+        "evidenceFile": "evidence/003.json",
+        "evidenceSha256": "1def49fe48af2020031b1cb4aab575c72d977f37ea4656dac05d2d5d9d27308f",
+        "frontierPass": false,
+        "screenedPass": false,
+        "normalizedPass": false,
+        "serviceAttemptCount": 1,
+        "failureReason": "target_status_403",
+        "apiStatus": 200,
+        "pageStatus": 403,
+        "rawMarkerPresent": false,
+        "textMarkerPresent": false,
+        "pageError": "Forbidden",
+        "landedUrl": "https://www.ebay.com/itm/227305215584",
+        "title": "Error Page | eBay",
+        "contentBytes": 1871,
+        "contentSha256": "4fed7d05b230aabea04f2bfd3ecda3027965edfa93c1bd9f629f7600f6eec2f0",
+        "serviceErrorCode": null,
+        "navigationAttempts": [
+          {
+            "attempt": 1,
+            "budgetMs": 29910,
+            "status": 403,
+            "durationMs": 1056,
+            "pageClosed": true
+          }
+        ]
+      },
+      {
+        "target": "ebay",
+        "profile": "firefox",
+        "engine": "camoufox",
+        "attempt": 1,
+        "readinessTimeoutMs": 15000,
+        "startedAt": "2026-11-03T18:07:28.501Z",
+        "latencyMs": 5097,
+        "url": "https://www.ebay.com/itm/227305215584",
+        "evidenceFile": "evidence/004.json",
+        "evidenceSha256": "b63a9d4ff85db85669cb957b39e753630e21bb9e51cd8dc807b7ef6a728bf0dc",
+        "frontierPass": true,
+        "screenedPass": true,
+        "normalizedPass": true,
+        "serviceAttemptCount": 1,
+        "apiStatus": 200,
+        "pageStatus": 200,
+        "rawMarkerPresent": true,
+        "textMarkerPresent": true,
+        "landedUrl": "https://www.ebay.com/itm/227305215584",
+        "title": "PNY GeForce RTX 4090 XLR8 Epic-X RGB OC 24GB GDDR6X GPU - Gaming Graphic Cards | eBay",
+        "contentBytes": 12316,
+        "contentSha256": "084cf073a182e6af92ebf3a173a6014db724a38296524513646ab9d86341549e",
+        "serviceErrorCode": null,
+        "navigationAttempts": [
+          {
+            "attempt": 1,
+            "budgetMs": 29789,
+            "status": 200,
+            "durationMs": 5019,
+            "pageClosed": true
+          }
+        ]
+      },
+      {
+        "target": "ebay",
+        "profile": "chromium",
+        "engine": "rebrowser",
+        "attempt": 2,
+        "readinessTimeoutMs": 15000,
+        "startedAt": "2026-11-03T18:07:33.600Z",
+        "latencyMs": 866,
+        "url": "https://www.ebay.com/itm/227305215584",
+        "evidenceFile": "evidence/005.json",
+        "evidenceSha256": "e4d208818c0556b28aaa5c1afbbf3966a9a7e3b7267a68dd668f7d1916002b1f",
+        "frontierPass": false,
+        "screenedPass": false,
+        "normalizedPass": false,
+        "serviceAttemptCount": 1,
+        "failureReason": "target_status_403",
+        "apiStatus": 200,
+        "pageStatus": 403,
+        "rawMarkerPresent": false,
+        "textMarkerPresent": false,
+        "pageError": "Forbidden",
+        "landedUrl": "https://www.ebay.com/itm/227305215584",
+        "title": "Error Page | eBay",
+        "contentBytes": 1871,
+        "contentSha256": "c9bcf029cf87d00171a6d548b8e6015d32c349561a3d31d386044efe2cf9f6d7",
+        "serviceErrorCode": null,
+        "navigationAttempts": [
+          {
+            "attempt": 1,
+            "budgetMs": 29922,
+            "status": 403,
+            "durationMs": 817,
+            "pageClosed": true
+          }
+        ]
+      },
+      {
+        "target": "ebay",
+        "profile": "firefox",
+        "engine": "camoufox",
+        "attempt": 2,
+        "readinessTimeoutMs": 15000,
+        "startedAt": "2026-11-03T18:07:33.601Z",
+        "latencyMs": 4680,
+        "url": "https://www.ebay.com/itm/227305215584",
+        "evidenceFile": "evidence/006.json",
+        "evidenceSha256": "b10092c9bc78744a4bbadb2944d964a7ea4de13284882487407c7c975f05e7ce",
+        "frontierPass": true,
+        "screenedPass": true,
+        "normalizedPass": true,
+        "serviceAttemptCount": 1,
+        "apiStatus": 200,
+        "pageStatus": 200,
+        "rawMarkerPresent": true,
+        "textMarkerPresent": true,
+        "landedUrl": "https://www.ebay.com/itm/227305215584",
+        "title": "PNY GeForce RTX 4090 XLR8 Epic-X RGB OC 24GB GDDR6X GPU - Gaming Graphic Cards | eBay",
+        "contentBytes": 12316,
+        "contentSha256": "084cf073a182e6af92ebf3a173a6014db724a38296524513646ab9d86341549e",
+        "serviceErrorCode": null,
+        "navigationAttempts": [
+          {
+            "attempt": 1,
+            "budgetMs": 29788,
+            "status": 200,
+            "durationMs": 4575,
+            "pageClosed": true
+          }
+        ]
+      },
+      {
+        "target": "ebay",
+        "profile": "chromium",
+        "engine": "rebrowser",
+        "attempt": 2,
+        "readinessTimeoutMs": 5000,
+        "startedAt": "2026-11-03T18:07:38.281Z",
+        "latencyMs": 1092,
+        "url": "https://www.ebay.com/itm/227305215584",
+        "evidenceFile": "evidence/007.json",
+        "evidenceSha256": "cb2dea1dd483ad91bec41218500a3afb98fc62fb7e765dc66be0cd1983239a09",
+        "frontierPass": false,
+        "screenedPass": false,
+        "normalizedPass": false,
+        "serviceAttemptCount": 1,
+        "failureReason": "target_status_403",
+        "apiStatus": 200,
+        "pageStatus": 403,
+        "rawMarkerPresent": false,
+        "textMarkerPresent": false,
+        "pageError": "Forbidden",
+        "landedUrl": "https://www.ebay.com/itm/227305215584",
+        "title": "Error Page | eBay",
+        "contentBytes": 1871,
+        "contentSha256": "f6c08fd356eae3ebb0b3fa056333df03b733edf8d34932bd4ea638e3a00283f8",
+        "serviceErrorCode": null,
+        "navigationAttempts": [
+          {
+            "attempt": 1,
+            "budgetMs": 29923,
+            "status": 403,
+            "durationMs": 1038,
+            "pageClosed": true
+          }
+        ]
+      },
+      {
+        "target": "ebay",
+        "profile": "firefox",
+        "engine": "camoufox",
+        "attempt": 2,
+        "readinessTimeoutMs": 5000,
+        "startedAt": "2026-11-03T18:07:38.282Z",
+        "latencyMs": 6396,
+        "url": "https://www.ebay.com/itm/227305215584",
+        "evidenceFile": "evidence/008.json",
+        "evidenceSha256": "e504bcabef8a4745f9615b85d8e61b71c9c36810ffe81f495b304f4135a05037",
+        "frontierPass": true,
+        "screenedPass": true,
+        "normalizedPass": true,
+        "serviceAttemptCount": 1,
+        "apiStatus": 200,
+        "pageStatus": 200,
+        "rawMarkerPresent": true,
+        "textMarkerPresent": true,
+        "landedUrl": "https://www.ebay.com/itm/227305215584",
+        "title": "PNY GeForce RTX 4090 XLR8 Epic-X RGB OC 24GB GDDR6X GPU - Gaming Graphic Cards | eBay",
+        "contentBytes": 725945,
+        "contentSha256": "14054188878705be16d5ad7c515ba63a81221afbf1a8185099e6d4c461d28456",
+        "serviceErrorCode": null,
+        "navigationAttempts": [
+          {
+            "attempt": 1,
+            "budgetMs": 29776,
+            "status": 200,
+            "durationMs": 6288,
+            "pageClosed": true
+          }
+        ]
+      },
+      {
+        "target": "saksfifthavenue",
+        "profile": "chromium",
+        "engine": "rebrowser",
+        "attempt": 1,
+        "readinessTimeoutMs": 5000,
+        "startedAt": "2026-11-03T18:07:44.684Z",
+        "latencyMs": 1631,
+        "url": "https://www.saksfifthavenue.com/product/loewe-striped-slim-zip-front-top-0400026423433.html",
+        "evidenceFile": "evidence/009.json",
+        "evidenceSha256": "5e89f6d0ea38306306d72dacbac84802d1d182bd70726a47ac446cbf52c0db86",
+        "frontierPass": false,
+        "screenedPass": false,
+        "normalizedPass": false,
+        "serviceAttemptCount": 1,
+        "failureReason": "challenge",
+        "apiStatus": 200,
+        "pageStatus": 403,
+        "rawMarkerPresent": false,
+        "textMarkerPresent": false,
+        "pageError": "Bot protection challenge remains (datadome): DataDome challenge bootstrap document",
+        "landedUrl": "https://www.saksfifthavenue.com/product/loewe-striped-slim-zip-front-top-0400026423433.html",
+        "title": "saksfifthavenue.com",
+        "contentBytes": 1545,
+        "contentSha256": "84af4d5186e291608d84a6981804f9b3ab291eb156268e2920f62e3f13addb02",
+        "serviceErrorCode": null,
+        "navigationAttempts": [
+          {
+            "attempt": 1,
+            "budgetMs": 29898,
+            "status": 403,
+            "durationMs": 1553,
+            "pageClosed": true
+          }
+        ]
+      },
+      {
+        "target": "saksfifthavenue",
+        "profile": "firefox",
+        "engine": "camoufox",
+        "attempt": 1,
+        "readinessTimeoutMs": 5000,
+        "startedAt": "2026-11-03T18:07:44.684Z",
+        "latencyMs": 10666,
+        "url": "https://www.saksfifthavenue.com/product/loewe-striped-slim-zip-front-top-0400026423433.html",
+        "evidenceFile": "evidence/010.json",
+        "evidenceSha256": "8cce3ec615b9d01e4cde65c6bdcf16b925f826afb877bdd41c132ec046510877",
+        "frontierPass": false,
+        "screenedPass": false,
+        "normalizedPass": false,
+        "serviceAttemptCount": 1,
+        "failureReason": "network_error",
+        "apiStatus": 500,
+        "pageStatus": null,
+        "rawMarkerPresent": false,
+        "textMarkerPresent": false,
+        "contentBytes": 0,
+        "contentSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "serviceErrorCode": "NETWORK_ERROR",
+        "navigationAttempts": [
+          {
+            "attempt": 1,
+            "budgetMs": 29832,
+            "errorCode": "NETWORK_ERROR",
+            "networkErrorCode": "NS_ERROR_NET_RESET",
+            "document": {
+              "phase": "navigation",
+              "url": "about:blank",
+              "lastResponseStatus": null,
+              "recentNavigations": [],
+              "recentFailedRequests": [
+                "NS_ERROR_NET_RESET"
+              ]
+            },
+            "durationMs": 10580,
+            "pageClosed": true
+          }
+        ]
+      },
+      {
+        "target": "neimanmarcus",
+        "profile": "chromium",
+        "engine": "rebrowser",
+        "attempt": 1,
+        "readinessTimeoutMs": 5000,
+        "startedAt": "2026-11-03T18:07:55.350Z",
+        "latencyMs": 1019,
+        "url": "https://www.neimanmarcus.com/p/gorski-reversible-toscana-lamb-shearling-jacket-prod282500173",
+        "evidenceFile": "evidence/011.json",
+        "evidenceSha256": "ebdbdefd050bbd94678ed97a082b877c40835815b7e6eeeeec00efff6b36b740",
+        "frontierPass": false,
+        "screenedPass": false,
+        "normalizedPass": false,
+        "serviceAttemptCount": 1,
+        "failureReason": "challenge",
+        "apiStatus": 200,
+        "pageStatus": 403,
+        "rawMarkerPresent": false,
+        "textMarkerPresent": false,
+        "pageError": "Bot protection challenge remains (datadome): DataDome challenge bootstrap document",
+        "landedUrl": "https://www.neimanmarcus.com/p/gorski-reversible-toscana-lamb-shearling-jacket-prod282500173",
+        "title": "neimanmarcus.com",
+        "contentBytes": 1561,
+        "contentSha256": "48d7d275b0f99941e1b4e655c53f457dc4fc7df13abda56e34898fbfd5b1b993",
+        "serviceErrorCode": null,
+        "navigationAttempts": [
+          {
+            "attempt": 1,
+            "budgetMs": 29889,
+            "status": 403,
+            "durationMs": 937,
+            "pageClosed": true
+          }
+        ]
+      },
+      {
+        "target": "neimanmarcus",
+        "profile": "firefox",
+        "engine": "camoufox",
+        "attempt": 1,
+        "readinessTimeoutMs": 5000,
+        "startedAt": "2026-11-03T18:07:55.351Z",
+        "latencyMs": 1924,
+        "url": "https://www.neimanmarcus.com/p/gorski-reversible-toscana-lamb-shearling-jacket-prod282500173",
+        "evidenceFile": "evidence/012.json",
+        "evidenceSha256": "bc5179e54831ac1430573b30e335f72afd814f392e7da4951917e5667cd44cbe",
+        "frontierPass": false,
+        "screenedPass": false,
+        "normalizedPass": false,
+        "serviceAttemptCount": 1,
+        "failureReason": "challenge",
+        "apiStatus": 200,
+        "pageStatus": 403,
+        "rawMarkerPresent": false,
+        "textMarkerPresent": false,
+        "pageError": "Bot protection challenge remains (datadome): DataDome challenge bootstrap document",
+        "landedUrl": "https://www.neimanmarcus.com/p/gorski-reversible-toscana-lamb-shearling-jacket-prod282500173",
+        "title": "neimanmarcus.com",
+        "contentBytes": 1561,
+        "contentSha256": "1412badad58657f0bc1670dc9ba69f3a68b7c0d7bea848351a67ad028c827b64",
+        "serviceErrorCode": null,
+        "navigationAttempts": [
+          {
+            "attempt": 1,
+            "budgetMs": 29827,
+            "status": 403,
+            "durationMs": 1845,
+            "pageClosed": true
+          }
+        ]
+      },
+      {
+        "target": "LinkedIn",
+        "profile": "chromium",
+        "engine": "rebrowser",
+        "attempt": 1,
+        "readinessTimeoutMs": 5000,
+        "startedAt": "2026-11-03T18:07:57.275Z",
+        "latencyMs": 246,
+        "url": "https://www.linkedin.com/company/microsoft/",
+        "evidenceFile": "evidence/013.json",
+        "evidenceSha256": "c35de1329ff9ba78aba1285302ce2c35b57fde02104394fd477667e5f2cf685b",
+        "frontierPass": false,
+        "screenedPass": false,
+        "normalizedPass": false,
+        "serviceAttemptCount": 1,
+        "failureReason": "network_error",
+        "apiStatus": 500,
+        "pageStatus": null,
+        "rawMarkerPresent": false,
+        "textMarkerPresent": false,
+        "contentBytes": 0,
+        "contentSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "serviceErrorCode": "NETWORK_ERROR",
+        "navigationAttempts": [
+          {
+            "attempt": 1,
+            "budgetMs": 29902,
+            "errorCode": "NETWORK_ERROR",
+            "networkErrorCode": "ERR_CONNECTION_CLOSED",
+            "document": {
+              "phase": "navigation",
+              "url": "about:blank",
+              "lastResponseStatus": null,
+              "recentNavigations": [],
+              "recentFailedRequests": [
+                "net::ERR_CONNECTION_CLOSED"
+              ]
+            },
+            "durationMs": 169,
+            "pageClosed": true
+          }
+        ]
+      },
+      {
+        "target": "LinkedIn",
+        "profile": "firefox",
+        "engine": "camoufox",
+        "attempt": 1,
+        "readinessTimeoutMs": 5000,
+        "startedAt": "2026-11-03T18:07:57.276Z",
+        "latencyMs": 880,
+        "url": "https://www.linkedin.com/company/microsoft/",
+        "evidenceFile": "evidence/014.json",
+        "evidenceSha256": "81476bb86d6d92d0b0e42864c3720a0555f716510a2ece80a64314d4c7afd21f",
+        "frontierPass": false,
+        "screenedPass": false,
+        "normalizedPass": false,
+        "serviceAttemptCount": 1,
+        "failureReason": "network_error",
+        "apiStatus": 500,
+        "pageStatus": null,
+        "rawMarkerPresent": false,
+        "textMarkerPresent": false,
+        "contentBytes": 0,
+        "contentSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "serviceErrorCode": "NETWORK_ERROR",
+        "navigationAttempts": [
+          {
+            "attempt": 1,
+            "budgetMs": 29839,
+            "errorCode": "NETWORK_ERROR",
+            "networkErrorCode": "NS_ERROR_NET_RESET",
+            "document": {
+              "phase": "navigation",
+              "url": "about:blank",
+              "lastResponseStatus": null,
+              "recentNavigations": [],
+              "recentFailedRequests": [
+                "NS_ERROR_NET_RESET"
+              ]
+            },
+            "durationMs": 807,
+            "pageClosed": true
+          }
+        ]
+      },
+      {
+        "target": "github",
+        "profile": "chromium",
+        "engine": "rebrowser",
+        "attempt": 1,
+        "readinessTimeoutMs": 5000,
+        "startedAt": "2026-11-03T18:07:58.156Z",
+        "latencyMs": 1997,
+        "url": "https://github.com/facebook/react",
+        "evidenceFile": "evidence/015.json",
+        "evidenceSha256": "0b5aa5442809ac3bb7de9ee72a63278806bbce224f9818a69ae69de4a5710271",
+        "frontierPass": true,
+        "screenedPass": true,
+        "normalizedPass": true,
+        "serviceAttemptCount": 1,
+        "apiStatus": 200,
+        "pageStatus": 200,
+        "rawMarkerPresent": true,
+        "textMarkerPresent": true,
+        "landedUrl": "https://github.com/react/react",
+        "title": "GitHub - react/react: The library for web and native user interfaces. \u00b7 GitHub",
+        "contentBytes": 333005,
+        "contentSha256": "2a29424047ca6c8ef1208fd3f53cb1140439931739c26fbc32376e7c548e3745",
+        "serviceErrorCode": null,
+        "navigationAttempts": [
+          {
+            "attempt": 1,
+            "budgetMs": 29906,
+            "status": 200,
+            "durationMs": 1919,
+            "pageClosed": true
+          }
+        ]
+      },
+      {
+        "target": "github",
+        "profile": "firefox",
+        "engine": "camoufox",
+        "attempt": 1,
+        "readinessTimeoutMs": 5000,
+        "startedAt": "2026-11-03T18:07:58.156Z",
+        "latencyMs": 2223,
+        "url": "https://github.com/facebook/react",
+        "evidenceFile": "evidence/016.json",
+        "evidenceSha256": "331e0fc8662c00ddbe531d0aa1dc26f010d863154cd27ff4b00a4104c60c2ec9",
+        "frontierPass": true,
+        "screenedPass": true,
+        "normalizedPass": true,
+        "serviceAttemptCount": 1,
+        "apiStatus": 200,
+        "pageStatus": 200,
+        "rawMarkerPresent": true,
+        "textMarkerPresent": true,
+        "landedUrl": "https://github.com/react/react",
+        "title": "GitHub - react/react: The library for web and native user interfaces. \u00b7 GitHub",
+        "contentBytes": 332925,
+        "contentSha256": "97b6c1ca80b20ffee1847feec7636490e108bba12d560dcd5dabf3b191b8e987",
+        "serviceErrorCode": null,
+        "navigationAttempts": [
+          {
+            "attempt": 1,
+            "budgetMs": 29846,
+            "status": 200,
+            "durationMs": 2150,
+            "pageClosed": true
+          }
+        ]
+      }
+    ],
+    "resources": {
+      "peakSampledMemoryMiB": {
+        "autogtm-firecrawl-capture-triage-chromium-20261104": 531,
+        "autogtm-firecrawl-capture-triage-firefox-20261104": 2477
+      },
+      "maximumObservedEventCounters": {
+        "autogtm-firecrawl-capture-triage-chromium-20261104": {
+          "memory.events:low": 0,
+          "memory.events:high": 0,
+          "memory.events:max": 0,
+          "memory.events:oom": 0,
+          "memory.events:oom_kill": 0,
+          "memory.events:oom_group_kill": 0,
+          "memory.events:sock_throttled": 0,
+          "pids.events:max": 0
+        },
+        "autogtm-firecrawl-capture-triage-firefox-20261104": {
+          "memory.events:low": 0,
+          "memory.events:high": 0,
+          "memory.events:max": 0,
+          "memory.events:oom": 0,
+          "memory.events:oom_kill": 0,
+          "memory.events:oom_group_kill": 0,
+          "memory.events:sock_throttled": 0,
+          "pids.events:max": 0
+        }
+      },
+      "finalHealth": {
+        "autogtm-firecrawl-capture-triage-chromium-20261104": {
+          "status": "healthy",
+          "browserEngine": "rebrowser",
+          "headless": false,
+          "maxConcurrentPages": 1,
+          "activePages": 0,
+          "browserSessions": 0,
+          "blockAds": true,
+          "blockMedia": false,
+          "ownerBootId": "cb180eef-b2d4-4f09-a0e0-91c36639c0f8",
+          "capabilities": {
+            "version": 1,
+            "readiness": true,
+            "actions": [
+              "click",
+              "wait",
+              "write",
+              "press",
+              "scroll",
+              "scrape"
+            ],
+            "workflows": [
+              "none",
+              "auto",
+              "bestbuy-us@1",
+              "product-details@1"
+            ],
+            "consent": true,
+            "retainedPages": true,
+            "fencedSessions": true,
+            "pageScopedHandoff": true
+          },
+          "serviceWorkers": "block"
+        },
+        "autogtm-firecrawl-capture-triage-firefox-20261104": {
+          "status": "healthy",
+          "browserEngine": "camoufox",
+          "headless": false,
+          "maxConcurrentPages": 1,
+          "activePages": 0,
+          "browserSessions": 0,
+          "blockAds": true,
+          "blockMedia": false,
+          "ownerBootId": "b5891c9a-8d44-4643-8536-1f6d2918318c",
+          "capabilities": {
+            "version": 1,
+            "readiness": true,
+            "actions": [
+              "click",
+              "wait",
+              "write",
+              "press",
+              "scroll",
+              "scrape"
+            ],
+            "workflows": [
+              "none",
+              "auto",
+              "bestbuy-us@1",
+              "product-details@1"
+            ],
+            "consent": true,
+            "retainedPages": true,
+            "fencedSessions": true,
+            "pageScopedHandoff": true
+          },
+          "serviceWorkers": "block"
+        }
+      },
+      "cleanup": {
+        "autogtm-firecrawl-capture-triage-chromium-20261104": {
+          "image": "sha256:4cf1c1eb4550e82504a0f11af5817e2a95143bc96e3b83f081400764e51a8244",
+          "state": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 143,
+            "Error": "",
+            "StartedAt": "2026-11-03T18:07:17.713214634Z",
+            "FinishedAt": "2026-11-03T18:08:09.678758255Z"
+          },
+          "removed": true
+        },
+        "autogtm-firecrawl-capture-triage-firefox-20261104": {
+          "image": "sha256:4cf1c1eb4550e82504a0f11af5817e2a95143bc96e3b83f081400764e51a8244",
+          "state": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 143,
+            "Error": "",
+            "StartedAt": "2026-11-03T18:07:19.473153302Z",
+            "FinishedAt": "2026-11-03T18:08:09.871104047Z"
+          },
+          "removed": true
+        }
+      }
+    },
+    "artifactHashes": {
+      "report.json": "0909b83edbbeafbf31ff5b663f7bc12f5fcb9acc348731e5c92c26c01705f8d8",
+      "score-replay-audit.json": "58ff7135c57250fe762a3f7301bc43b2ca74da5d47078a350b600db12dce2cdf",
+      "deployment.json": "b91a721ab0aa33496a2ed0b29f3b577cdec6a882ccd3fed37503721a610955a6",
+      "cleanup.json": "92390f84d33ef30a9c10b609a281870bd651283f10831e1fb8162b393b4edc2b"
+    }
+  },
+  "limits": [
+    "A caller-selected cap can reject a legitimately slow initial document. It is opt-in and does not establish broader site access.",
+    "Focused controlled fixtures prove phase and forwarding behavior, not public-site coverage or hosted parity.",
+    "The 16 selected browser observations are separate pre-change evidence, not a full-target rate or a matched code-version comparison.",
+    "The implementation retains the original request deadline and at-most-one-alternate completion/cleanup guards; no CAPTCHA answer handling was introduced."
+  ]
+}

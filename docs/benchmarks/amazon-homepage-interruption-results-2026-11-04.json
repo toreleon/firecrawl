@@ -1,0 +1,94 @@
+{
+  "recordedAt": "2026-11-04T12:30:34.990989+00:00",
+  "implementationParentCommit": "838e75b4b8396d19e334e036f474b8ecd3b4683f",
+  "scope": "Recognize the observed WebKit original-product return interrupted by navigation to its own Amazon homepage as the existing WORKFLOW_NAVIGATION_MISMATCH. No additional click or native navigation is added. The existing API can choose one distinct-engine stateless alternate after Page closure, matching owner boot and remaining-budget checks.",
+  "liveTrigger": {
+    "sourceCommit": "838e75b4b8396d19e334e036f474b8ecd3b4683f",
+    "partialRun": "single-page-firefox-full-api-2026-11-04",
+    "observedError": "page.goto: Navigation to the requested Amazon product is interrupted by another navigation to https://www.amazon.com/",
+    "stage": "workflow return-to-product",
+    "classificationBefore": "BROWSER_ERROR, not eligible for the completed-error alternate path",
+    "relationToPressure": "Amazon completed with this error at about 12:13:48 UTC. The first sampled Firefox socket-pressure increment was at 12:13:54.894 UTC; it is not evidence of pressure causing the Amazon failure."
+  },
+  "implementationSourceHashes": {
+    "apps/playwright-service-ts/helpers/workflows.ts": "d4f90904078223e97efbe83ad49cbd4b564db88f4823940e6c97c941551db476",
+    "apps/playwright-service-ts/helpers/workflows.spec.ts": "188f5023a3b7ec100fb4cb430aab150f02296e926ecc3d6c96faa7690eec11d1",
+    "apps/playwright-service-ts/integration/homepage-interruption.spec.ts": "5f9d6d04ffef94fd48dbc620a3a81e7ce5470786fab5478b28718d0100491a52",
+    ".github/workflows/test-browser-engines.yml": "f320d7909a7f42c344d81f06d7831bf38b0a05cd8644f27a005f32b01dc81a34"
+  },
+  "ownedNativeBefore": {
+    "at": "2026-11-04T12:25:07.851643+00:00",
+    "imageId": "sha256:14ecc363ad49e2dd2e03b531e5ace09e209dae4923d4ddba5f70179fabc7c439",
+    "exitCode": 1,
+    "nativeInterruptionObserved": true,
+    "resources": [
+      {
+        "code": 1,
+        "signal": null,
+        "resources": {
+          "memory.peak": "804642816\n",
+          "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0\nsock_throttled 0\n",
+          "pids.events": "max 0\n"
+        }
+      }
+    ],
+    "publicTargetRequests": 0
+  },
+  "ownedNativeAfter": {
+    "at": "2026-11-04T12:28:10.502135+00:00",
+    "imageId": "sha256:4dd2f44f6136227fc88bd429c9ccf5559e63d358639da9ea0ec4de7912ef2573",
+    "exitCode": 0,
+    "nativeInterruptionObserved": false,
+    "resources": [
+      {
+        "code": 0,
+        "signal": null,
+        "resources": {
+          "memory.peak": "625127424\n",
+          "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0\nsock_throttled 0\n",
+          "pids.events": "max 0\n"
+        }
+      }
+    ],
+    "publicTargetRequests": 0
+  },
+  "verification": {
+    "focusedHelperChecks": 7,
+    "typescriptBuildExitCode": 0,
+    "nativeWebkitChecksPassed": 3,
+    "nativeWebkitScenarios": [
+      "overlapping homepage reload returns typed identity failure",
+      "normal original-product return succeeds"
+    ],
+    "originalProductRequestsPerScenario": 2,
+    "continuationSubmissionsPerScenario": 1,
+    "contextsClosedPerScenario": true,
+    "apiProtocolHarness": {
+      "exitCode": 0,
+      "scope": "Real API/queue/worker path with two controlled HTTP browser-protocol fixtures; not real browser or public-site evidence.",
+      "fixtureModes": 7,
+      "networkRequestsToPublicTargets": 0,
+      "upstreamProxy": false
+    },
+    "apiProtocolQualification": "Real API/queue/worker path with controlled HTTP browser-protocol fixtures; not native-browser/API end-to-end or public-site recovery evidence."
+  },
+  "limits": [
+    "No full100 candidate measurement or live recovery rate is established by the native fixture.",
+    "Generic browser errors, transport errors, timeouts, other origins, authentication paths and unmatched requested URLs retain their original error behavior.",
+    "The first native attempt stopped at a missing listening SSRF filter in the fixture. It was corrected with a real denying filter, retaining containment and offline routing, before the failure-first reproduction.",
+    "Existing extract-worker channel-closing teardown failure appeared in the protocol harness; all harness processes terminated, but clean application shutdown is not claimed."
+  ],
+  "evidenceHashes": {
+    "_local/anti-bot/amazon-homepage-interruption-2026-11-04/before-native.json": "4f17a8394e89b1a539415fe705b9596cbf5fce3f89555a7d838834a61ba8d8db",
+    "_local/anti-bot/amazon-homepage-interruption-2026-11-04/before-fixture-fixed.json": "69cb78477c5f65248c6b70b023cbf59bd9e21dd900fb83d6d61ee8df926133d6",
+    "_local/anti-bot/amazon-homepage-interruption-2026-11-04/before-fixture-fixed.log": "27d9fd47d27922791c5f0e50543abc91525242fd16cad831d0399312ba39c3e9",
+    "_local/anti-bot/amazon-homepage-interruption-2026-11-04/candidate-1.json": "824e3cd94bd95ba939575ff7142bf5dcc1fd6d550710d7bf8583778089b2134c",
+    "_local/anti-bot/amazon-homepage-interruption-2026-11-04/candidate-1.log": "88146a34c0a8d338e0573fe0531fe48b9730f1b143fe458ef9e3392944d95ed9",
+    "_local/anti-bot/amazon-homepage-interruption-2026-11-04/focused-helpers.log": "b7c531603af9e4772b6494ddee4898adc3af7c410cc7f89795c50d076e681b13",
+    "_local/anti-bot/amazon-homepage-interruption-2026-11-04/build.log": "5ac71a99decf5b92dbfe798066cbe8ea317395f8f764f5a8879fd3511ca99454",
+    "_local/anti-bot/amazon-homepage-interruption-2026-11-04/candidate-1-inputs.json": "a5fd5f2d6f095a90bb81cdd7db21012a88cdef6ae17be9304aad655a03125d06",
+    "_local/anti-bot/homepage-identity-protocol-harness-2026-11-04/result.json": "91cfef3fa28804111ff81d299c50842f8735d8edc591bbdc26285b7909c4bcc5",
+    "_local/anti-bot/homepage-identity-protocol-harness-2026-11-04/source-hashes.json": "0683708c9d86bdf2c6c3a867bf1171b5fd467d8868d1deeecfea7f6507f88011",
+    "_local/anti-bot/single-page-firefox-audit-2026-11-04/aborted-run-audit.json": "a15656ff3ff4b8a7e7c4cdb833fbea280e97c5dbc0040afdd33050b5381d8a48"
+  }
+}

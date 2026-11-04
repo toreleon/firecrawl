@@ -1,0 +1,30 @@
+{
+  "checkedAt": "2026-11-03T15:15:32.119729+00:00",
+  "taskBrowserContainersRemoved": true,
+  "retainedCurrentImage": "autogtm/firecrawl-browser:amazon-gecko-2026-11-03",
+  "remainingTaskInfrastructure": [
+    {
+      "name": "autogtm-firecrawl-workflows-rabbit-20261103",
+      "state": "exited"
+    },
+    {
+      "name": "autogtm-firecrawl-workflows-redis-20261103",
+      "state": "exited"
+    },
+    {
+      "name": "autogtm-firecrawl-workflows-pg-20261103",
+      "state": "exited"
+    }
+  ],
+  "unrelatedRunningServicesUntouched": 9,
+  "globalPruneUsed": false,
+  "volumesRemoved": 0,
+  "reportedImageUsage": "28.92GB",
+  "dockerSummary": "TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE\nImages          54        10        28.92GB   11.29GB (39%)\nContainers      13        9         360.4kB   28.67kB (7%)\nLocal Volumes   114       5         6.323GB   6.151GB (97%)\nBuild Cache     53        0         5.288GB   54.02MB\n",
+  "temporaryHostedKeyAbsent": true,
+  "cleanupEvidenceHashes": {
+    "_local/anti-bot/amazon-continuation-current-probe-2026-11-03/cleanup.json": "51ab2a538e10f39cd49d0be389eb95ac760856bb3b40ff0a254bf713d57c2c33",
+    "_local/anti-bot/amazon-commit-paired-2026-11-03/cleanup.json": "e5a8ce64066a7a09cf4cc314320bec0ddbfc55c25d069544d680c2351f48f86b",
+    "_local/anti-bot/amazon-gecko-full-api-harness-2026-11-03/cleanup.json": "92ac2db0bdff51491f3ba735cba06f3d19071f956985ccd7617e3e1322975c1d"
+  }
+}

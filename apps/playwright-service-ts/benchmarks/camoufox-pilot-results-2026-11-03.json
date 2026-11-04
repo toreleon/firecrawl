@@ -1,0 +1,256 @@
+{
+  "status": "complete",
+  "startedAt": "2026-11-03T13:00:28.992Z",
+  "scope": "Isolated compiled factory prototype, not the integrated production source. Selected 20 targets, two fresh attempts per profile; no hosted requests.",
+  "sourceCommit": "c6a24330678840ab8c8eb4afbb0722025a50123a",
+  "baselineSourceCommit": "8daec7135a5ec057b51ef8614c355322b8225420",
+  "prototype": {
+    "checkedAt": "2026-11-03T12:53:54.420850+00:00",
+    "release": {
+      "tag_name": "v158.0.1-beta.41",
+      "published_at": "2026-10-29T22:14:10Z",
+      "target_commitish": "c3ad3bf2c3c6e93225aa6587246c8b70f9314664",
+      "html_url": "https://github.com/daijro/camoufox/releases/tag/v158.0.1-beta.41",
+      "prerelease": false
+    },
+    "assets": [
+      {
+        "id": 690066541,
+        "name": "camoufox-158.0.1-beta.41-lin.arm64.zip",
+        "size": 1297503606,
+        "digest": "sha256:60e25f6eb95e13d9ec655bc02913d51057e669cb31542e6ace9d2190ab5380af",
+        "browser_download_url": "https://github.com/daijro/camoufox/releases/download/v158.0.1-beta.41/camoufox-158.0.1-beta.41-lin.arm64.zip"
+      },
+      {
+        "id": 690069836,
+        "name": "manifest.json",
+        "size": 395,
+        "digest": "sha256:c7472b036a84811364fd46688c92310ce5dbf86fd057c707651317b4840a1342",
+        "browser_download_url": "https://github.com/daijro/camoufox/releases/download/v158.0.1-beta.41/manifest.json"
+      }
+    ],
+    "packageVersion": "0.5.9",
+    "playwrightCoreVersion": "1.62.0",
+    "browserPin": "158.0.1-beta.41",
+    "baseImageId": "sha256:8d4106b10c7161aef316b411985bc874cb0f15e0d94a067cf1c1fd849d302c00",
+    "package": {
+      "name": "camoufox",
+      "version": "0.5.9",
+      "gitHead": null,
+      "license": "MIT",
+      "peerDependencies": {
+        "playwright-core": "<1.63"
+      },
+      "engines": {
+        "node": ">= 22.15"
+      },
+      "distIntegrity": "sha512-DxtuJhEb2ZI9Fv42irJhypMuf51X0BMVM5hM/+hBBj34E/YRL8AWyU7cpgTmlLfsyHZ2FFNTj01O9cGiACIyvQ==",
+      "publishedAt": "2026-11-01T06:23:39.269Z"
+    },
+    "overlaySha256": "e9ee591c8f6b5206d1dc50e9b7fc1d7afdb8bcc06480e4e3f4e77332e551b3f4",
+    "lockfileSha256": "3bb3b6dee5b67e43ca8c2ed1109eb5ece08eb92559a2ff9b469ae1c97bb5b699",
+    "contractProbeSha256": "f7004588ab9a0d0f99d6c90913bab3074ed0a84c8a46850ea2fb57010f475c70",
+    "contractResultsSha256": "78132363e880e51fb5fc019fd3192a737116408f79a6a3565ff030790b990568",
+    "productionDependenciesChanged": false
+  },
+  "protocol": {
+    "targets": 20,
+    "rounds": 2,
+    "requests": 80,
+    "globalHttpConcurrency": 4,
+    "pageCapacityPerOwner": 2,
+    "cpuCountPerOwner": 2,
+    "memoryGiBPerOwner": 3,
+    "egressCountry": "VN",
+    "upstreamProxy": false,
+    "headless": false,
+    "mediaBlocked": false,
+    "freshContexts": true,
+    "consent": "rejectNonEssential",
+    "workflow": "auto",
+    "maxAttempts": 1,
+    "expectedMarkerSent": false,
+    "serviceDeadlineMs": 85000,
+    "clientDeadlineMs": 90000,
+    "fixtureSha256": "a886fb57087e842c2857b89a7669e31d2fb7b98d6bd7deb60a2329f29581b76a",
+    "graderSha256": "ffd9f0d2e5996825aa77cb71b600a6667558e166d4471a084c20638bab9171d6",
+    "fallbackClassifierSha256": "3111f011045834a040e5497825cd0bf2c698a3fa8ca77a48c8479dddf2348817"
+  },
+  "profiles": {
+    "baseline": {
+      "imageId": "sha256:8d4106b10c7161aef316b411985bc874cb0f15e0d94a067cf1c1fd849d302c00",
+      "metrics": {
+        "requests": 40,
+        "uniqueTargets": 20,
+        "frontierPasses": 5,
+        "screenedPasses": 5,
+        "normalizedPasses": 7,
+        "frontierSuccessRate": 0.125,
+        "screenedSuccessRate": 0.125,
+        "normalizedSuccessRate": 0.175,
+        "successfulLatencyP50Ms": 5357,
+        "successfulLatencyP95Ms": 44027,
+        "allAttemptLatencyP95Ms": 85010,
+        "failures": {
+          "network_error": 5,
+          "challenge": 15,
+          "target_status_403": 7,
+          "missing_expected_marker": 3,
+          "target_status_405": 2,
+          "timeout": 3
+        }
+      }
+    },
+    "candidate": {
+      "imageId": "sha256:f0ab4f50a7248504702bb2332a3ce526f38d0bf673cc3c6deb8dbffeb5870c60",
+      "metrics": {
+        "requests": 40,
+        "uniqueTargets": 20,
+        "frontierPasses": 8,
+        "screenedPasses": 8,
+        "normalizedPasses": 10,
+        "frontierSuccessRate": 0.2,
+        "screenedSuccessRate": 0.2,
+        "normalizedSuccessRate": 0.25,
+        "successfulLatencyP50Ms": 3304,
+        "successfulLatencyP95Ms": 9260,
+        "allAttemptLatencyP95Ms": 9260,
+        "failures": {
+          "challenge": 17,
+          "target_status_403": 4,
+          "missing_expected_marker": 4,
+          "target_status_406": 2,
+          "target_status_405": 2,
+          "timeout": 2,
+          "service_error": 1
+        }
+      }
+    }
+  },
+  "pairedNormalizedMatches": {
+    "both": 5,
+    "baselineOnly": 2,
+    "candidateOnly": 5,
+    "neither": 28
+  },
+  "commonNormalizedSuccessLatency": {
+    "pairedObservations": 5,
+    "quantiles": "nearest rank",
+    "profiles": {
+      "baseline": {
+        "p50Ms": 2549,
+        "p95Ms": 44027
+      },
+      "candidate": {
+        "p50Ms": 1976,
+        "p95Ms": 9260
+      }
+    }
+  },
+  "targetCountChanges": [
+    {
+      "target": "Amazon",
+      "baseline": 0,
+      "candidate": 2,
+      "workflowSteps": []
+    },
+    {
+      "target": "indeed",
+      "baseline": 0,
+      "candidate": 2,
+      "workflowSteps": []
+    },
+    {
+      "target": "Google Search",
+      "baseline": 0,
+      "candidate": 1,
+      "workflowSteps": []
+    },
+    {
+      "target": "Zoopla",
+      "baseline": 2,
+      "candidate": 0,
+      "workflowSteps": []
+    }
+  ],
+  "audit": {
+    "status": "complete",
+    "auditedRequests": 80,
+    "allUniquePairs": true,
+    "twoPerTargetPerProfile": true,
+    "allContentHashesMatch": true,
+    "allScoresReplay": true,
+    "allSummaryMetricsReplay": true,
+    "graderAndFallbackUnchanged": true,
+    "noOracleReadinessHint": true,
+    "resourceSamples": 16,
+    "peakSampledMemoryMiB": {
+      "baseline": 815,
+      "candidate": 1834
+    },
+    "resourceLimitEvents": 0,
+    "timingIntegrity": {
+      "valid": true,
+      "sampleIntervalMs": 1000,
+      "maximumAllowedGapMs": 10000,
+      "maximumObservedGapMs": 1005,
+      "gaps": []
+    },
+    "cleanupVerified": true,
+    "networkRequests": 0
+  },
+  "consentReturnedResponsesOnly": {
+    "baseline": {
+      "returned": 32,
+      "withDiagnostics": 32,
+      "framesScanned": 44,
+      "probeTimeouts": 0,
+      "mainFrameProbeTimeouts": 0,
+      "auxiliaryProbeTimeouts": 0,
+      "probeErrors": 0,
+      "actionErrors": 0,
+      "limited": 0,
+      "durationMs": 4336,
+      "outcomes": {
+        "not_detected": 32
+      }
+    },
+    "candidate": {
+      "returned": 37,
+      "withDiagnostics": 37,
+      "framesScanned": 55,
+      "probeTimeouts": 1,
+      "mainFrameProbeTimeouts": 0,
+      "auxiliaryProbeTimeouts": 1,
+      "probeErrors": 0,
+      "actionErrors": 0,
+      "limited": 0,
+      "durationMs": 19653,
+      "outcomes": {
+        "not_detected": 36,
+        "unresolved": 1
+      }
+    }
+  },
+  "excludedStartupAbort": {
+    "directory": "_local/anti-bot/camoufox-pilot-2026-11-03",
+    "dispatchedScrapes": 0,
+    "reason": "Launcher observed run directory before attempts log creation; failed before dispatch. Corrected launcher waited for log; failed run excluded."
+  },
+  "localEvidence": {
+    "directory": "_local/anti-bot/camoufox-pilot-corrected-2026-11-03",
+    "hashes": {
+      "report.json": "91b04d4e2f0e7722923891bb889ddaf5e2e9f9a5808cf5e77300ee0992310493",
+      "run-audit.json": "640f4289963b064da3450a2e80661c4109b3c49a0f9ef301904383fa06a04514",
+      "deployment-profile.json": "aef4365456b691f944fc6a5ab3a9595545fed590d57ae08e176e182bbef0f8a8",
+      "cleanup.json": "ae17f1a0d1156b38f0dbc718f9a2f3a8f9ffd87511eb8b786203c1c2f3e96b4c"
+    }
+  },
+  "conclusion": "Camoufox added Amazon 2/2, Indeed 2/2 and Google Search 1/2, but lost Zoopla 2/2. This supports an optional complementary engine experiment, not changing the default browser or claiming whole-dataset parity.",
+  "limits": [
+    "Targets were selected from observed failures with several positive controls, not a representative sample.",
+    "Paired live outcomes do not isolate browser effects from target or temporal variation.",
+    "Normalized marker checks are not extraction F1 or proof of a live WAF vendor.",
+    "The prototype factory overlay is explicitly pinned; production integration has separate compatibility and full API evidence."
+  ]
+}

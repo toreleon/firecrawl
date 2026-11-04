@@ -1,0 +1,35 @@
+{
+  "checkedAt": "2026-11-03T16:11:39.180865+00:00",
+  "taskBrowserContainersRemoved": true,
+  "obsoleteTaskImageTagsRemoved": [
+    "autogtm/firecrawl-browser:passive-verification-2026-11-03",
+    "autogtm/firecrawl-browser:identity-fallback-2026-11-03"
+  ],
+  "retainedCurrentImage": "autogtm/firecrawl-browser:passive-verification-final-2026-11-03",
+  "currentImageId": "sha256:4cf1c1eb4550e82504a0f11af5817e2a95143bc96e3b83f081400764e51a8244",
+  "remainingTaskInfrastructure": [
+    {
+      "name": "autogtm-firecrawl-workflows-rabbit-20261103",
+      "state": "exited"
+    },
+    {
+      "name": "autogtm-firecrawl-workflows-redis-20261103",
+      "state": "exited"
+    },
+    {
+      "name": "autogtm-firecrawl-workflows-pg-20261103",
+      "state": "exited"
+    }
+  ],
+  "unrelatedRunningServicesUntouched": 9,
+  "volumesRemoved": 0,
+  "globalPruneUsed": false,
+  "dockerSummary": "TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE\nImages          54        10        28.92GB   11.29GB (39%)\nContainers      13        9         360.4kB   28.67kB (7%)\nLocal Volumes   114       5         6.324GB   6.151GB (97%)\nBuild Cache     65        0         5.29GB    56.37MB\n",
+  "temporaryHostedKeyAbsent": true,
+  "localEvidenceHash": "705100b744a6299edb7462784951e383fcbb1c6dc74c6c9897a08ad6ccbf5e83",
+  "benchmarkCleanupEvidenceHashes": {
+    "_local/anti-bot/passive-verification-full-api-harness-2026-11-03/cleanup.json": "0cbf295949c0b9009100761d56668a1f8d3ac9d9d8b5cb0568ddcde22e7994ea",
+    "_local/anti-bot/passive-verification-final-paired-2026-11-03/cleanup.json": "7eea0bd7fbadd75640ca36228af80532f3a2d2265b7077b4a7eb5f7a444e4922",
+    "_local/anti-bot/passive-wait-pilot-2026-11-03/cleanup.json": "71bbb291f8a3063f047e25929ac4bbe3b3cf9e426b681c4ad6fd1995e8dad750"
+  }
+}

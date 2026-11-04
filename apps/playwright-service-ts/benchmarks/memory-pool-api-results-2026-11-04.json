@@ -1,0 +1,1303 @@
+{
+  "status": "complete",
+  "checkedAt": "2026-11-04T00:59:10.765Z",
+  "sourceCommit": "c87e7d7bd7cd36ccafa9436f60f2daa92b830651",
+  "productionBrowserSourceCommit": "70ff6e17a562a0d4bafe83c4946f1e52d0ca0dee",
+  "imageId": "sha256:5003f3d1d7e3f39bfd86cd1e567d9ce95d484fa7a1fefda6b1fda2ce453cfe9a",
+  "fixtureHash": "a886fb57087e842c2857b89a7669e31d2fb7b98d6bd7deb60a2329f29581b76a",
+  "logicalApiRequests": 80,
+  "uniqueTargets": 20,
+  "grouped": {
+    "separate": {
+      "requests": 40,
+      "uniqueTargets": 20,
+      "frontierPasses": 17,
+      "screenedPasses": 14,
+      "normalizedPasses": 16,
+      "frontierSuccessRate": 0.425,
+      "screenedSuccessRate": 0.35,
+      "normalizedSuccessRate": 0.4,
+      "successfulLatencyP50Ms": 2499,
+      "successfulLatencyP95Ms": 5849,
+      "allAttemptLatencyP95Ms": 20931,
+      "failures": {
+        "marker_only_in_noncontent_markup": 1,
+        "content_not_ready": 2,
+        "missing_expected_marker": 4,
+        "timeout": 3,
+        "target_status_403": 9,
+        "challenge": 6,
+        "rate_limited": 1
+      }
+    },
+    "pooled": {
+      "requests": 40,
+      "uniqueTargets": 20,
+      "frontierPasses": 17,
+      "screenedPasses": 15,
+      "normalizedPasses": 17,
+      "frontierSuccessRate": 0.425,
+      "screenedSuccessRate": 0.375,
+      "normalizedSuccessRate": 0.425,
+      "successfulLatencyP50Ms": 3964,
+      "successfulLatencyP95Ms": 15357,
+      "allAttemptLatencyP95Ms": 23185,
+      "failures": {
+        "missing_expected_marker": 4,
+        "challenge": 6,
+        "target_status_403": 8,
+        "network_error": 2,
+        "marker_only_in_noncontent_markup": 2,
+        "timeout": 2,
+        "rate_limited": 1
+      }
+    }
+  },
+  "phases": {
+    "a1": {
+      "topology": "separate",
+      "summary": {
+        "requests": 20,
+        "uniqueTargets": 20,
+        "frontierPasses": 10,
+        "screenedPasses": 8,
+        "normalizedPasses": 9,
+        "frontierSuccessRate": 0.5,
+        "screenedSuccessRate": 0.4,
+        "normalizedSuccessRate": 0.45,
+        "successfulLatencyP50Ms": 2171,
+        "successfulLatencyP95Ms": 5849,
+        "allAttemptLatencyP95Ms": 20931,
+        "failures": {
+          "marker_only_in_noncontent_markup": 1,
+          "content_not_ready": 1,
+          "missing_expected_marker": 2,
+          "timeout": 1,
+          "target_status_403": 4,
+          "challenge": 3
+        }
+      },
+      "wallDurationMs": 159889,
+      "backendDispatches": {
+        "primary": 20,
+        "alternates": 13,
+        "byRole": {
+          "primary-a": 20,
+          "fallback-a": 6,
+          "fallback-b": 7
+        }
+      },
+      "returnedFallbackDiagnostics": 19,
+      "recoveredFromReturnedDiagnostics": 4,
+      "resources": {
+        "autogtm-firecrawl-memory-pool-a1-primary-20261104": {
+          "roles": [
+            "primary-a"
+          ],
+          "peakMemoryBytes": 1150087168,
+          "sampledPeakMemoryBytes": 1066278912,
+          "finalMemoryEvents": {
+            "low": 0,
+            "high": 0,
+            "max": 0,
+            "oom": 0,
+            "oom_kill": 0,
+            "oom_group_kill": 0,
+            "sock_throttled": 671
+          },
+          "finalCpuStat": {
+            "usage_usec": 48426395,
+            "user_usec": 39393498,
+            "system_usec": 9032897,
+            "nice_usec": 0,
+            "nr_periods": 981,
+            "nr_throttled": 73,
+            "throttled_usec": 5616890,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "minDockerVmAvailableKiB": 3742632
+        },
+        "autogtm-firecrawl-memory-pool-a1-firefox-a-20261104": {
+          "roles": [
+            "fallback-a"
+          ],
+          "peakMemoryBytes": 2147483648,
+          "sampledPeakMemoryBytes": 2109325312,
+          "finalMemoryEvents": {
+            "low": 0,
+            "high": 0,
+            "max": 1542,
+            "oom": 0,
+            "oom_kill": 0,
+            "oom_group_kill": 0,
+            "sock_throttled": 134
+          },
+          "finalCpuStat": {
+            "usage_usec": 22449293,
+            "user_usec": 19083175,
+            "system_usec": 3366118,
+            "nice_usec": 0,
+            "nr_periods": 706,
+            "nr_throttled": 10,
+            "throttled_usec": 1034435,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "minDockerVmAvailableKiB": 3731636
+        },
+        "autogtm-firecrawl-memory-pool-a1-firefox-b-20261104": {
+          "roles": [
+            "fallback-b"
+          ],
+          "peakMemoryBytes": 1703321600,
+          "sampledPeakMemoryBytes": 1651716096,
+          "finalMemoryEvents": {
+            "low": 0,
+            "high": 0,
+            "max": 0,
+            "oom": 0,
+            "oom_kill": 0,
+            "oom_group_kill": 0,
+            "sock_throttled": 84
+          },
+          "finalCpuStat": {
+            "usage_usec": 37502066,
+            "user_usec": 33004981,
+            "system_usec": 4497085,
+            "nice_usec": 0,
+            "nr_periods": 668,
+            "nr_throttled": 31,
+            "throttled_usec": 2593284,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "minDockerVmAvailableKiB": 3719760
+        }
+      },
+      "sourceHashesVerifiedAtOwners": true,
+      "sourceUnchanged": true,
+      "timingValid": true,
+      "hashesAndScoresReplayed": 20,
+      "containersRemoved": 3
+    },
+    "b1": {
+      "topology": "pooled",
+      "summary": {
+        "requests": 20,
+        "uniqueTargets": 20,
+        "frontierPasses": 9,
+        "screenedPasses": 8,
+        "normalizedPasses": 9,
+        "frontierSuccessRate": 0.45,
+        "screenedSuccessRate": 0.4,
+        "normalizedSuccessRate": 0.45,
+        "successfulLatencyP50Ms": 3964,
+        "successfulLatencyP95Ms": 15357,
+        "allAttemptLatencyP95Ms": 15357,
+        "failures": {
+          "missing_expected_marker": 2,
+          "challenge": 3,
+          "target_status_403": 4,
+          "network_error": 1,
+          "marker_only_in_noncontent_markup": 1,
+          "timeout": 1
+        }
+      },
+      "wallDurationMs": 179859,
+      "backendDispatches": {
+        "primary": 20,
+        "alternates": 14,
+        "byRole": {
+          "primary-a": 20,
+          "fallback-a": 7,
+          "fallback-b": 7
+        }
+      },
+      "returnedFallbackDiagnostics": 18,
+      "recoveredFromReturnedDiagnostics": 4,
+      "resources": {
+        "autogtm-firecrawl-memory-pool-b1-20261104": {
+          "roles": [
+            "primary-a",
+            "fallback-a",
+            "fallback-b"
+          ],
+          "peakMemoryBytes": 4059049984,
+          "sampledPeakMemoryBytes": 3686445056,
+          "finalMemoryEvents": {
+            "low": 0,
+            "high": 0,
+            "max": 0,
+            "oom": 0,
+            "oom_kill": 0,
+            "oom_group_kill": 0,
+            "sock_throttled": 0
+          },
+          "finalCpuStat": {
+            "usage_usec": 103015485,
+            "user_usec": 87591271,
+            "system_usec": 15424214,
+            "nice_usec": 0,
+            "nr_periods": 1688,
+            "nr_throttled": 0,
+            "throttled_usec": 0,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "minDockerVmAvailableKiB": 3401932
+        }
+      },
+      "sourceHashesVerifiedAtOwners": true,
+      "sourceUnchanged": true,
+      "timingValid": true,
+      "hashesAndScoresReplayed": 20,
+      "containersRemoved": 1
+    },
+    "b2": {
+      "topology": "pooled",
+      "summary": {
+        "requests": 20,
+        "uniqueTargets": 20,
+        "frontierPasses": 8,
+        "screenedPasses": 7,
+        "normalizedPasses": 8,
+        "frontierSuccessRate": 0.4,
+        "screenedSuccessRate": 0.35,
+        "normalizedSuccessRate": 0.4,
+        "successfulLatencyP50Ms": 3960,
+        "successfulLatencyP95Ms": 9494,
+        "allAttemptLatencyP95Ms": 23185,
+        "failures": {
+          "marker_only_in_noncontent_markup": 1,
+          "network_error": 1,
+          "missing_expected_marker": 2,
+          "target_status_403": 4,
+          "timeout": 1,
+          "challenge": 3,
+          "rate_limited": 1
+        }
+      },
+      "wallDurationMs": 152723,
+      "backendDispatches": {
+        "primary": 20,
+        "alternates": 13,
+        "byRole": {
+          "primary-a": 20,
+          "fallback-a": 7,
+          "fallback-b": 6
+        }
+      },
+      "returnedFallbackDiagnostics": 18,
+      "recoveredFromReturnedDiagnostics": 3,
+      "resources": {
+        "autogtm-firecrawl-memory-pool-b2-20261104": {
+          "roles": [
+            "primary-a",
+            "fallback-a",
+            "fallback-b"
+          ],
+          "peakMemoryBytes": 3894984704,
+          "sampledPeakMemoryBytes": 3754045440,
+          "finalMemoryEvents": {
+            "low": 0,
+            "high": 0,
+            "max": 0,
+            "oom": 0,
+            "oom_kill": 0,
+            "oom_group_kill": 0,
+            "sock_throttled": 0
+          },
+          "finalCpuStat": {
+            "usage_usec": 104155740,
+            "user_usec": 88776570,
+            "system_usec": 15379169,
+            "nice_usec": 1000,
+            "nr_periods": 1437,
+            "nr_throttled": 0,
+            "throttled_usec": 0,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "minDockerVmAvailableKiB": 3662192
+        }
+      },
+      "sourceHashesVerifiedAtOwners": true,
+      "sourceUnchanged": true,
+      "timingValid": true,
+      "hashesAndScoresReplayed": 20,
+      "containersRemoved": 1
+    },
+    "a2": {
+      "topology": "separate",
+      "summary": {
+        "requests": 20,
+        "uniqueTargets": 20,
+        "frontierPasses": 7,
+        "screenedPasses": 6,
+        "normalizedPasses": 7,
+        "frontierSuccessRate": 0.35,
+        "screenedSuccessRate": 0.3,
+        "normalizedSuccessRate": 0.35,
+        "successfulLatencyP50Ms": 2499,
+        "successfulLatencyP95Ms": 4257,
+        "allAttemptLatencyP95Ms": 17223,
+        "failures": {
+          "missing_expected_marker": 2,
+          "rate_limited": 1,
+          "challenge": 3,
+          "target_status_403": 5,
+          "content_not_ready": 1,
+          "timeout": 2
+        }
+      },
+      "wallDurationMs": 179963,
+      "backendDispatches": {
+        "primary": 20,
+        "alternates": 14,
+        "byRole": {
+          "primary-a": 20,
+          "fallback-a": 7,
+          "fallback-b": 7
+        }
+      },
+      "returnedFallbackDiagnostics": 18,
+      "recoveredFromReturnedDiagnostics": 3,
+      "resources": {
+        "autogtm-firecrawl-memory-pool-a2-primary-20261104": {
+          "roles": [
+            "primary-a"
+          ],
+          "peakMemoryBytes": 1286082560,
+          "sampledPeakMemoryBytes": 1280081920,
+          "finalMemoryEvents": {
+            "low": 0,
+            "high": 0,
+            "max": 0,
+            "oom": 0,
+            "oom_kill": 0,
+            "oom_group_kill": 0,
+            "sock_throttled": 0
+          },
+          "finalCpuStat": {
+            "usage_usec": 45641584,
+            "user_usec": 37485920,
+            "system_usec": 8155664,
+            "nice_usec": 0,
+            "nr_periods": 945,
+            "nr_throttled": 73,
+            "throttled_usec": 6744564,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "minDockerVmAvailableKiB": 3068192
+        },
+        "autogtm-firecrawl-memory-pool-a2-firefox-a-20261104": {
+          "roles": [
+            "fallback-a"
+          ],
+          "peakMemoryBytes": 1544880128,
+          "sampledPeakMemoryBytes": 1360257024,
+          "finalMemoryEvents": {
+            "low": 0,
+            "high": 0,
+            "max": 0,
+            "oom": 0,
+            "oom_kill": 0,
+            "oom_group_kill": 0,
+            "sock_throttled": 0
+          },
+          "finalCpuStat": {
+            "usage_usec": 33060721,
+            "user_usec": 29063042,
+            "system_usec": 3997678,
+            "nice_usec": 0,
+            "nr_periods": 919,
+            "nr_throttled": 22,
+            "throttled_usec": 2298849,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "minDockerVmAvailableKiB": 3099440
+        },
+        "autogtm-firecrawl-memory-pool-a2-firefox-b-20261104": {
+          "roles": [
+            "fallback-b"
+          ],
+          "peakMemoryBytes": 1860706304,
+          "sampledPeakMemoryBytes": 1832120320,
+          "finalMemoryEvents": {
+            "low": 0,
+            "high": 0,
+            "max": 0,
+            "oom": 0,
+            "oom_kill": 0,
+            "oom_group_kill": 0,
+            "sock_throttled": 344
+          },
+          "finalCpuStat": {
+            "usage_usec": 37384492,
+            "user_usec": 33619257,
+            "system_usec": 3765235,
+            "nice_usec": 0,
+            "nr_periods": 651,
+            "nr_throttled": 42,
+            "throttled_usec": 3898903,
+            "nr_bursts": 0,
+            "burst_usec": 0
+          },
+          "minDockerVmAvailableKiB": 3102732
+        }
+      },
+      "sourceHashesVerifiedAtOwners": true,
+      "sourceUnchanged": true,
+      "timingValid": true,
+      "hashesAndScoresReplayed": 20,
+      "containersRemoved": 3
+    }
+  },
+  "matchedPairs": [
+    {
+      "separatePhase": "a1",
+      "pooledPhase": "b1",
+      "outcomes": {
+        "both": 8,
+        "pooledOnly": 1,
+        "separateOnly": 1,
+        "neither": 10
+      }
+    },
+    {
+      "separatePhase": "a2",
+      "pooledPhase": "b2",
+      "outcomes": {
+        "both": 6,
+        "pooledOnly": 2,
+        "separateOnly": 1,
+        "neither": 11
+      }
+    }
+  ],
+  "commonSuccessLatency": {
+    "targets": [
+      "verizon",
+      "marketwatch",
+      "Zoopla",
+      "indeed",
+      "github",
+      "arxiv"
+    ],
+    "profiles": {
+      "separate": {
+        "requests": 12,
+        "uniqueTargets": 6,
+        "frontierPasses": 10,
+        "screenedPasses": 10,
+        "normalizedPasses": 12,
+        "frontierSuccessRate": 0.8333333333333334,
+        "screenedSuccessRate": 0.8333333333333334,
+        "normalizedSuccessRate": 1,
+        "successfulLatencyP50Ms": 3750,
+        "successfulLatencyP95Ms": 5849,
+        "allAttemptLatencyP95Ms": 5849,
+        "failures": {
+          "missing_expected_marker": 2
+        }
+      },
+      "pooled": {
+        "requests": 12,
+        "uniqueTargets": 6,
+        "frontierPasses": 10,
+        "screenedPasses": 10,
+        "normalizedPasses": 12,
+        "frontierSuccessRate": 0.8333333333333334,
+        "screenedSuccessRate": 0.8333333333333334,
+        "normalizedSuccessRate": 1,
+        "successfulLatencyP50Ms": 3724,
+        "successfulLatencyP95Ms": 5571,
+        "allAttemptLatencyP95Ms": 5571,
+        "failures": {
+          "missing_expected_marker": 2
+        }
+      }
+    }
+  },
+  "byTarget": [
+    {
+      "target": "canadagoose",
+      "phases": {
+        "a1": {
+          "normalizedPass": false,
+          "failureReason": "marker_only_in_noncontent_markup",
+          "latencyMs": 4731,
+          "markdownMarkerPresent": false
+        },
+        "b1": {
+          "normalizedPass": false,
+          "failureReason": "marker_only_in_noncontent_markup",
+          "latencyMs": 3740,
+          "markdownMarkerPresent": false
+        },
+        "b2": {
+          "normalizedPass": false,
+          "failureReason": "marker_only_in_noncontent_markup",
+          "latencyMs": 3806,
+          "markdownMarkerPresent": false
+        },
+        "a2": {
+          "normalizedPass": false,
+          "failureReason": "timeout",
+          "latencyMs": 15431,
+          "markdownMarkerPresent": false
+        }
+      }
+    },
+    {
+      "target": "verizon",
+      "phases": {
+        "a1": {
+          "normalizedPass": true,
+          "failureReason": null,
+          "latencyMs": 1890,
+          "markdownMarkerPresent": true
+        },
+        "b1": {
+          "normalizedPass": true,
+          "failureReason": null,
+          "latencyMs": 1481,
+          "markdownMarkerPresent": true
+        },
+        "b2": {
+          "normalizedPass": true,
+          "failureReason": null,
+          "latencyMs": 1612,
+          "markdownMarkerPresent": true
+        },
+        "a2": {
+          "normalizedPass": true,
+          "failureReason": null,
+          "latencyMs": 1662,
+          "markdownMarkerPresent": true
+        }
+      }
+    },
+    {
+      "target": "LinkedIn",
+      "phases": {
+        "a1": {
+          "normalizedPass": true,
+          "failureReason": null,
+          "latencyMs": 2019,
+          "markdownMarkerPresent": true
+        },
+        "b1": {
+          "normalizedPass": false,
+          "failureReason": "network_error",
+          "latencyMs": 1240,
+          "markdownMarkerPresent": false
+        },
+        "b2": {
+          "normalizedPass": false,
+          "failureReason": "network_error",
+          "latencyMs": 1328,
+          "markdownMarkerPresent": false
+        },
+        "a2": {
+          "normalizedPass": true,
+          "failureReason": null,
+          "latencyMs": 2006,
+          "markdownMarkerPresent": true
+        }
+      }
+    },
+    {
+      "target": "Amazon",
+      "phases": {
+        "a1": {
+          "normalizedPass": false,
+          "failureReason": "content_not_ready",
+          "latencyMs": 20187,
+          "markdownMarkerPresent": false
+        },
+        "b1": {
+          "normalizedPass": true,
+          "failureReason": null,
+          "latencyMs": 15357,
+          "markdownMarkerPresent": true
+        },
+        "b2": {
+          "normalizedPass": true,
+          "failureReason": null,
+          "latencyMs": 9494,
+          "markdownMarkerPresent": true
+        },
+        "a2": {
+          "normalizedPass": false,
+          "failureReason": "content_not_ready",
+          "latencyMs": 17223,
+          "markdownMarkerPresent": false
+        }
+      }
+    },
+    {
+      "target": "temu",
+      "phases": {
+        "a1": {
+          "normalizedPass": false,
+          "failureReason": "missing_expected_marker",
+          "latencyMs": 6992,
+          "markdownMarkerPresent": false
+        },
+        "b1": {
+          "normalizedPass": false,
+          "failureReason": "missing_expected_marker",
+          "latencyMs": 7572,
+          "markdownMarkerPresent": false
+        },
+        "b2": {
+          "normalizedPass": false,
+          "failureReason": "missing_expected_marker",
+          "latencyMs": 8004,
+          "markdownMarkerPresent": false
+        },
+        "a2": {
+          "normalizedPass": false,
+          "failureReason": "missing_expected_marker",
+          "latencyMs": 4087,
+          "markdownMarkerPresent": false
+        }
+      }
+    },
+    {
+      "target": "roblox",
+      "phases": {
+        "a1": {
+          "normalizedPass": false,
+          "failureReason": "timeout",
+          "latencyMs": 60944,
+          "markdownMarkerPresent": false
+        },
+        "b1": {
+          "normalizedPass": false,
+          "failureReason": "timeout",
+          "latencyMs": 60672,
+          "markdownMarkerPresent": false
+        },
+        "b2": {
+          "normalizedPass": false,
+          "failureReason": "timeout",
+          "latencyMs": 60712,
+          "markdownMarkerPresent": false
+        },
+        "a2": {
+          "normalizedPass": false,
+          "failureReason": "timeout",
+          "latencyMs": 60806,
+          "markdownMarkerPresent": false
+        }
+      }
+    },
+    {
+      "target": "lowes",
+      "phases": {
+        "a1": {
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "latencyMs": 20931,
+          "markdownMarkerPresent": false
+        },
+        "b1": {
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "latencyMs": 2140,
+          "markdownMarkerPresent": false
+        },
+        "b2": {
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "latencyMs": 4564,
+          "markdownMarkerPresent": false
+        },
+        "a2": {
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "latencyMs": 4247,
+          "markdownMarkerPresent": false
+        }
+      }
+    },
+    {
+      "target": "crunchbase",
+      "phases": {
+        "a1": {
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "latencyMs": 2187,
+          "markdownMarkerPresent": false
+        },
+        "b1": {
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "latencyMs": 1884,
+          "markdownMarkerPresent": false
+        },
+        "b2": {
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "latencyMs": 23185,
+          "markdownMarkerPresent": false
+        },
+        "a2": {
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "latencyMs": 2107,
+          "markdownMarkerPresent": false
+        }
+      }
+    },
+    {
+      "target": "g2",
+      "phases": {
+        "a1": {
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "latencyMs": 3575,
+          "markdownMarkerPresent": false
+        },
+        "b1": {
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "latencyMs": 4283,
+          "markdownMarkerPresent": false
+        },
+        "b2": {
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "latencyMs": 4470,
+          "markdownMarkerPresent": false
+        },
+        "a2": {
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "latencyMs": 4404,
+          "markdownMarkerPresent": false
+        }
+      }
+    },
+    {
+      "target": "homedepot",
+      "phases": {
+        "a1": {
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "latencyMs": 1908,
+          "markdownMarkerPresent": false
+        },
+        "b1": {
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "latencyMs": 1691,
+          "markdownMarkerPresent": false
+        },
+        "b2": {
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "latencyMs": 1699,
+          "markdownMarkerPresent": false
+        },
+        "a2": {
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "latencyMs": 1801,
+          "markdownMarkerPresent": false
+        }
+      }
+    },
+    {
+      "target": "macys",
+      "phases": {
+        "a1": {
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "latencyMs": 4175,
+          "markdownMarkerPresent": false
+        },
+        "b1": {
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "latencyMs": 4109,
+          "markdownMarkerPresent": false
+        },
+        "b2": {
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "latencyMs": 4038,
+          "markdownMarkerPresent": false
+        },
+        "a2": {
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "latencyMs": 4059,
+          "markdownMarkerPresent": false
+        }
+      }
+    },
+    {
+      "target": "Apartments.com",
+      "phases": {
+        "a1": {
+          "normalizedPass": true,
+          "failureReason": null,
+          "latencyMs": 5758,
+          "markdownMarkerPresent": true
+        },
+        "b1": {
+          "normalizedPass": true,
+          "failureReason": null,
+          "latencyMs": 5089,
+          "markdownMarkerPresent": true
+        },
+        "b2": {
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "latencyMs": 3287,
+          "markdownMarkerPresent": false
+        },
+        "a2": {
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "latencyMs": 2366,
+          "markdownMarkerPresent": false
+        }
+      }
+    },
+    {
+      "target": "ebay",
+      "phases": {
+        "a1": {
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "latencyMs": 2417,
+          "markdownMarkerPresent": false
+        },
+        "b1": {
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "latencyMs": 2661,
+          "markdownMarkerPresent": false
+        },
+        "b2": {
+          "normalizedPass": true,
+          "failureReason": null,
+          "latencyMs": 4847,
+          "markdownMarkerPresent": true
+        },
+        "a2": {
+          "normalizedPass": false,
+          "failureReason": "target_status_403",
+          "latencyMs": 2552,
+          "markdownMarkerPresent": false
+        }
+      }
+    },
+    {
+      "target": "marketwatch",
+      "phases": {
+        "a1": {
+          "normalizedPass": true,
+          "failureReason": null,
+          "latencyMs": 5849,
+          "markdownMarkerPresent": false
+        },
+        "b1": {
+          "normalizedPass": true,
+          "failureReason": null,
+          "latencyMs": 5011,
+          "markdownMarkerPresent": false
+        },
+        "b2": {
+          "normalizedPass": true,
+          "failureReason": null,
+          "latencyMs": 5530,
+          "markdownMarkerPresent": false
+        },
+        "a2": {
+          "normalizedPass": true,
+          "failureReason": null,
+          "latencyMs": 4257,
+          "markdownMarkerPresent": false
+        }
+      }
+    },
+    {
+      "target": "Zoopla",
+      "phases": {
+        "a1": {
+          "normalizedPass": true,
+          "failureReason": null,
+          "latencyMs": 4877,
+          "markdownMarkerPresent": true
+        },
+        "b1": {
+          "normalizedPass": true,
+          "failureReason": null,
+          "latencyMs": 5571,
+          "markdownMarkerPresent": true
+        },
+        "b2": {
+          "normalizedPass": true,
+          "failureReason": null,
+          "latencyMs": 3724,
+          "markdownMarkerPresent": true
+        },
+        "a2": {
+          "normalizedPass": true,
+          "failureReason": null,
+          "latencyMs": 4047,
+          "markdownMarkerPresent": true
+        }
+      }
+    },
+    {
+      "target": "goodrx",
+      "phases": {
+        "a1": {
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "latencyMs": 2143,
+          "markdownMarkerPresent": false
+        },
+        "b1": {
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "latencyMs": 2113,
+          "markdownMarkerPresent": false
+        },
+        "b2": {
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "latencyMs": 2084,
+          "markdownMarkerPresent": false
+        },
+        "a2": {
+          "normalizedPass": false,
+          "failureReason": "challenge",
+          "latencyMs": 2087,
+          "markdownMarkerPresent": false
+        }
+      }
+    },
+    {
+      "target": "Google Search",
+      "phases": {
+        "a1": {
+          "normalizedPass": true,
+          "failureReason": null,
+          "latencyMs": 1501,
+          "markdownMarkerPresent": true
+        },
+        "b1": {
+          "normalizedPass": true,
+          "failureReason": null,
+          "latencyMs": 1272,
+          "markdownMarkerPresent": true
+        },
+        "b2": {
+          "normalizedPass": false,
+          "failureReason": "rate_limited",
+          "latencyMs": 3626,
+          "markdownMarkerPresent": true
+        },
+        "a2": {
+          "normalizedPass": false,
+          "failureReason": "rate_limited",
+          "latencyMs": 3947,
+          "markdownMarkerPresent": true
+        }
+      }
+    },
+    {
+      "target": "indeed",
+      "phases": {
+        "a1": {
+          "normalizedPass": true,
+          "failureReason": null,
+          "latencyMs": 4108,
+          "markdownMarkerPresent": true
+        },
+        "b1": {
+          "normalizedPass": true,
+          "failureReason": null,
+          "latencyMs": 3964,
+          "markdownMarkerPresent": true
+        },
+        "b2": {
+          "normalizedPass": true,
+          "failureReason": null,
+          "latencyMs": 3960,
+          "markdownMarkerPresent": true
+        },
+        "a2": {
+          "normalizedPass": true,
+          "failureReason": null,
+          "latencyMs": 3750,
+          "markdownMarkerPresent": true
+        }
+      }
+    },
+    {
+      "target": "github",
+      "phases": {
+        "a1": {
+          "normalizedPass": true,
+          "failureReason": null,
+          "latencyMs": 2171,
+          "markdownMarkerPresent": true
+        },
+        "b1": {
+          "normalizedPass": true,
+          "failureReason": null,
+          "latencyMs": 2028,
+          "markdownMarkerPresent": true
+        },
+        "b2": {
+          "normalizedPass": true,
+          "failureReason": null,
+          "latencyMs": 2059,
+          "markdownMarkerPresent": true
+        },
+        "a2": {
+          "normalizedPass": true,
+          "failureReason": null,
+          "latencyMs": 2499,
+          "markdownMarkerPresent": true
+        }
+      }
+    },
+    {
+      "target": "arxiv",
+      "phases": {
+        "a1": {
+          "normalizedPass": true,
+          "failureReason": "missing_expected_marker",
+          "latencyMs": 768,
+          "markdownMarkerPresent": true
+        },
+        "b1": {
+          "normalizedPass": true,
+          "failureReason": "missing_expected_marker",
+          "latencyMs": 830,
+          "markdownMarkerPresent": true
+        },
+        "b2": {
+          "normalizedPass": true,
+          "failureReason": "missing_expected_marker",
+          "latencyMs": 808,
+          "markdownMarkerPresent": true
+        },
+        "a2": {
+          "normalizedPass": true,
+          "failureReason": "missing_expected_marker",
+          "latencyMs": 980,
+          "markdownMarkerPresent": true
+        }
+      }
+    }
+  ],
+  "scope": "Selected-target full API topology experiment, ABBA phase order with fresh owners and alternating target order. Same aggregate 6 CPUs/6656 MiB, page capacities 2+1+1, 7-second pacing and two HTTP workers. Pooled phases share CPU/memory and Xvfb, but preserve three processes and boot IDs. No upstream proxies, retries, hints or hosted calls. These 40 observations per topology repeat 20 targets twice and are not a new 100-target score.",
+  "limits": [
+    "One ABBA sequence does not isolate every time, identity, target-rate or shared-host effect.",
+    "Shared CPU/memory/display/failure-domain changes are evaluated together; this is not an isolated RAM effect.",
+    "Per-phase kernel counters describe the deployment and do not prove a specific site failure was caused by memory or socket pressure."
+  ],
+  "hostActivity": {
+    "a1": {
+      "buildHistorySnapshotUnchanged": true,
+      "before": "2026-11-04T00:45:29.949103+00:00",
+      "after": "2026-11-04T00:48:39.782657+00:00"
+    },
+    "b1": {
+      "buildHistorySnapshotUnchanged": true,
+      "before": "2026-11-04T00:48:42.398190+00:00",
+      "after": "2026-11-04T00:52:06.936548+00:00"
+    },
+    "b2": {
+      "buildHistorySnapshotUnchanged": true,
+      "before": "2026-11-04T00:52:09.155372+00:00",
+      "after": "2026-11-04T00:55:03.816145+00:00"
+    },
+    "a2": {
+      "buildHistorySnapshotUnchanged": true,
+      "before": "2026-11-04T00:55:05.959143+00:00",
+      "after": "2026-11-04T00:58:34.729255+00:00"
+    }
+  },
+  "cleanup": {
+    "checkedAt": "2026-11-04T01:02:21.517588+00:00",
+    "taskContainersRemoved": [
+      "autogtm-firecrawl-memory-pool-a1-primary-20261104",
+      "autogtm-firecrawl-memory-pool-a1-firefox-a-20261104",
+      "autogtm-firecrawl-memory-pool-a1-firefox-b-20261104",
+      "autogtm-firecrawl-memory-pool-b1-20261104",
+      "autogtm-firecrawl-memory-pool-b2-20261104",
+      "autogtm-firecrawl-memory-pool-a2-primary-20261104",
+      "autogtm-firecrawl-memory-pool-a2-firefox-a-20261104",
+      "autogtm-firecrawl-memory-pool-a2-firefox-b-20261104",
+      "autogtm-firecrawl-pressure-review-20261104",
+      "autogtm-firecrawl-pressure-sampler-check-20261104",
+      "autogtm-firecrawl-auth-document-contract-20261104"
+    ],
+    "count": 11,
+    "phaseContainers": 8,
+    "autoRemovedSamplerContainers": 2,
+    "autoRemovedLinuxContractContainer": 1,
+    "taskInfrastructureStopped": [
+      "autogtm-firecrawl-workflows-pg-20261103",
+      "autogtm-firecrawl-workflows-redis-20261103",
+      "autogtm-firecrawl-workflows-rabbit-20261103"
+    ],
+    "unrelatedRunningServicesPreserved": [
+      "0ac91d914d82 opengtm-api-go-1",
+      "df8e48267599 opengtm-scheduler-go-1",
+      "3a44acdcd0b8 opengtm-worker-go-1",
+      "7b59d2a38ebf opengtm-agent-runtime-1",
+      "ed7059dea011 opengtm-agent-test-pg",
+      "691c9af86ab2 lead-data-web",
+      "5d4757f06df0 lead-data-postgres",
+      "3e8ffc5fbed8 opengtm-browser-1",
+      "ee62bd903703 lead-data-redis"
+    ],
+    "dataVolumeCount": 114,
+    "volumeNamesUnchanged": true,
+    "dataVolumesDeleted": 0,
+    "imageBuilds": 0,
+    "imagesRemoved": 0,
+    "cachePrunes": 0,
+    "globalPruneUsed": false,
+    "reusableBenchmarkImageRetained": "sha256:5003f3d1d7e3f39bfd86cd1e567d9ce95d484fa7a1fefda6b1fda2ce453cfe9a",
+    "taskPortsClosed": true,
+    "rawEvidenceRetained": true
+  },
+  "adoptionDecision": {
+    "adoptPooledOwners": false,
+    "reason": "One extra normalized success across 40 repeated observations, no consistent pairwise advantage, and worse all-attempt p95 do not establish a retrieval or tail-latency improvement. Shared CPU/memory/display/failure domains are not being introduced into the production deployment."
+  },
+  "latestFull100Reference": {
+    "receipt": "primary-text-full-api-results-2026-11-04.json",
+    "sourceCommit": "70ff6e17a562a0d4bafe83c4946f1e52d0ca0dee",
+    "primaryNormalizedMatches": 46,
+    "fallbackNormalizedMatches": 56,
+    "rerunThisTurn": false,
+    "hostedReferenceNormalizedMatches": 82,
+    "hostedRerunThisTurn": false,
+    "limits": "The 80 selected-target calls predate the authentication-state repair. They are not a new full-100 score or hosted parity result."
+  },
+  "implementationVerification": {
+    "sourceCommit": "8160af325fb03825cf9a35db42f5fd0619abffd8",
+    "appliedAfterTopologyExperiment": true,
+    "scope": "Classify rendered email-first login pages at dedicated root authentication paths, and constrain established route hints to final URL pathname segments. Query/fragment examples and partial login-guide names no longer cause false authentication states. No automated login, additional target requests, proxy, response content mutation or benchmark metric changes.",
+    "sameFourRegressionCasesBefore": {
+      "passed": 1,
+      "failed": 3
+    },
+    "sameFourRegressionCasesAfter": {
+      "passed": 4,
+      "failed": 0
+    },
+    "nativeFocusedChecks": {
+      "passed": 13,
+      "failed": 0
+    },
+    "linuxNode22FocusedChecks": {
+      "passed": 19,
+      "failed": 0,
+      "engines": [
+        "rebrowser",
+        "camoufox"
+      ],
+      "mode": "Existing pinned image with read-only source/test binds; browser service runs the patched TypeScript source. Not a newly built production image."
+    },
+    "browserCI": {
+      "sourceCommit": "8160af325fb03825cf9a35db42f5fd0619abffd8",
+      "runtimeByteEquivalentTo": "30244c3ab8c5f8005d488b3e39f8cc1a225b92fb",
+      "runId": 41751982029,
+      "jobId": 126318997409,
+      "conclusion": "success",
+      "helperChecksPassed": 63,
+      "integrationChecksPassed": 142,
+      "buildPassed": true,
+      "productionDependencyAuditPassed": true,
+      "testFileConcurrency": 2,
+      "logSha256": "ed4ecc73aa1fd43a52b9e7855b0617bfe1d082eec1cd31e86fec1bcda4ad8296",
+      "url": "https://github.com/toreleon/firecrawl/actions/runs/41751982029",
+      "limits": "Broader server/SDK jobs are separate and not verified passed. A passing bounded-concurrency run does not isolate the cause of the earlier page-close failure."
+    },
+    "limits": "Owned-fixture and classification verification; no claim of additional live target coverage from this repair. Counts overlap the same contracts and are not unique combined cases.",
+    "runtimeSourceCommit": "30244c3ab8c5f8005d488b3e39f8cc1a225b92fb",
+    "subsequentChanges": "Test-only: integration test-file concurrency explicitly bounded at two; failed page-close proof includes diagnostics. No production cleanup timeout or classification assertion was relaxed.",
+    "initialBrowserCI": {
+      "sourceCommit": "30244c3ab8c5f8005d488b3e39f8cc1a225b92fb",
+      "runId": 41751057748,
+      "jobId": 126315955666,
+      "conclusion": "failure",
+      "helperChecksPassed": 63,
+      "integrationChecksPassed": 139,
+      "integrationChecksFailedIncludingParents": 3,
+      "failedLeafChecks": 1,
+      "failure": "One new Camoufox fixture request returned pageClosed=false; all authentication-state assertions passed. Root cause was not isolated. Concurrent browser load is a hypothesis; bounded file concurrency is evaluated by the following run.",
+      "logSha256": "ed7510550edcb398db932d16e2aea6e32cbdb3a31473f94fa35928d0341847fc"
+    },
+    "productionRuntimeByteEquivalentToAuthenticationRepair": true
+  },
+  "researchSources": [
+    {
+      "url": "https://github.com/torvalds/linux/blob/v7.0/include/net/sock.h",
+      "localSha256": "2973ed4665cfee2712a851a5bd977140ea34aa63b659f4e335a1e3044591c9d8",
+      "supports": "The upstream v7.0 socket-pressure check traverses cgroup ancestors and charges sock_throttled to the socket cgroup; not proof of the exact cause of an individual deployment event.",
+      "gitBlobSha1": "6c9a83016e9551ed2e2a0d7edf32300b8a4327e7",
+      "githubConnectorShaMatched": true
+    },
+    {
+      "url": "https://github.com/torvalds/linux/blob/v7.0/mm/vmpressure.c",
+      "localSha256": "c1aba40349788aaf9ae1f1e3f14eebaf41db61bc8d94b52c051b2ab8f4a55069",
+      "supports": "Upstream reclaim efficiency can set a temporary socket-pressure marker.",
+      "gitBlobSha1": "3fbb86996c4d26b2c6c1192f5b7719b629945471",
+      "githubConnectorShaMatched": true
+    },
+    {
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/URL/pathname",
+      "supports": "URL pathname excludes query parameters."
+    }
+  ],
+  "localEvidence": {
+    "directory": "_local/anti-bot/memory-pool-abba-2026-11-04",
+    "sha256": {
+      "_local/anti-bot/memory-pool-abba-2026-11-04/audit.json": "fb07d1da43e17e4c81f7985a70d6c0d4b02406b0267b63f013709c58bcb27ba0",
+      "_local/anti-bot/memory-pool-abba-2026-11-04/plan.json": "fbf3084899dd96c57632de5ed7c0c6eea1b1d6e13c40c395cac8fc0b0a203600",
+      "_local/anti-bot/memory-pool-abba-2026-11-04/cleanup.json": "7ecb2daa8cac8a5eb3c4d0b55efc542cf341c52d0825576b29bf1b8c7a3d5de7",
+      "_local/anti-bot/memory-pool-abba-2026-11-04/host-activity.json": "895b90a4b51c5df40bafd5307971f78b64060e2f25a3b53b193c95e1903d8841",
+      "_local/anti-bot/auth-document-native-2026-11-04.log": "ac4eccde15878b2e8bec10ce3cad8216725a16feb2796e130b8cbbb34a349618",
+      "_local/anti-bot/auth-document-linux-2026-11-04.log": "2cdf379cef9a05b7d9a24c4ba5b0491049477c41b8f815b362e3fae72d7a368b",
+      "_local/anti-bot/login-state-before-2026-11-04.log": "1da201f55a7e8a63735e0cce0854ba44dc9a9f6ef7030ed9e4de0b093ed87200",
+      "_local/anti-bot/login-state-after-2026-11-04.log": "100bf666b465f396f99ffb555154083064458f53a1625e9f09b462813e10327b",
+      "_local/anti-bot/memory-pool-a1-2026-11-04/report.json": "e6c77551c08715fe9805555ea3689293f7d94b925fa815d9d129b186a13df060",
+      "_local/anti-bot/memory-pool-a1-harness-2026-11-04/deployment.json": "de73855a65571024b31994856ffeb9641043549551f7dfadcb80f9f3c662a032",
+      "_local/anti-bot/memory-pool-a1-harness-2026-11-04/resource-samples.jsonl": "968a2b0d3df11a16b76f4aadc280059f9cf52ddff8067297a41b65906510a25d",
+      "_local/anti-bot/memory-pool-a1-harness-2026-11-04/cleanup.json": "8236577ffb9c51a93266b194de4949400c31b35b38f0403286c7e17b3bd91cda",
+      "_local/anti-bot/memory-pool-b1-2026-11-04/report.json": "976ed203929eddd6d2d6f535de5462324e47e1438519a16d5249c4cc165daf06",
+      "_local/anti-bot/memory-pool-b1-harness-2026-11-04/deployment.json": "809d51d7b0b6afbf7934f96996ebc9cf8e5f26565dd0d449869d59b3f5766e99",
+      "_local/anti-bot/memory-pool-b1-harness-2026-11-04/resource-samples.jsonl": "6cb9f35cdf68138a0b7a890f56bc48242b33b384f1647b2e6cdc9b426aae6196",
+      "_local/anti-bot/memory-pool-b1-harness-2026-11-04/cleanup.json": "7fd4ce10fa04919ea9cccacecef1222d57ae851de7301848285802a1557cf3a2",
+      "_local/anti-bot/memory-pool-b2-2026-11-04/report.json": "f925362b15d71fbc9d84b07dcdb0b8a00f4ec57d8c56bf288f2b65aa2199c098",
+      "_local/anti-bot/memory-pool-b2-harness-2026-11-04/deployment.json": "49ec9d1a94263347c5b08b247426e91af5c44ad50195c927369d3ad0b07e4819",
+      "_local/anti-bot/memory-pool-b2-harness-2026-11-04/resource-samples.jsonl": "58d81761204b44f50e64ee9190cd1bc0c15929891e8f56ef9e5453e0583016f0",
+      "_local/anti-bot/memory-pool-b2-harness-2026-11-04/cleanup.json": "e32ab664e87ffb00f52e8ac637957def2aa8d1f6e3b294ea13e2495d0999fda5",
+      "_local/anti-bot/memory-pool-a2-2026-11-04/report.json": "acbe742e18d7b7c733f3923bee05bf2389853aed911ab03f759fb30b75928d2a",
+      "_local/anti-bot/memory-pool-a2-harness-2026-11-04/deployment.json": "4fe8c3877a8670839b244b23af342d715b2d64a32d20e4efa995e9101e8d4b69",
+      "_local/anti-bot/memory-pool-a2-harness-2026-11-04/resource-samples.jsonl": "787426a1fb8287b197282657729c19595706f7710641bda563e929f328f0c75e",
+      "_local/anti-bot/memory-pool-a2-harness-2026-11-04/cleanup.json": "59b5e7832cab3318802dd3f58ac296928b920e5c2b8e3abe09ef0f20580760de",
+      "_local/anti-bot/auth-document-browser-ci-2026-11-04.log": "ed4ecc73aa1fd43a52b9e7855b0617bfe1d082eec1cd31e86fec1bcda4ad8296",
+      "_local/anti-bot/auth-document-browser-ci-initial-2026-11-04.log": "ed7510550edcb398db932d16e2aea6e32cbdb3a31473f94fa35928d0341847fc"
+    }
+  }
+}

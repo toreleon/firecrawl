@@ -1,0 +1,31 @@
+{
+  "checkedAt": "2026-11-03T15:44:47.233228+00:00",
+  "taskBrowserContainersRemoved": true,
+  "obsoleteImageTagRemoved": "autogtm/firecrawl-browser:amazon-gecko-2026-11-03",
+  "retainedCurrentImage": "autogtm/firecrawl-browser:identity-fallback-2026-11-03",
+  "remainingTaskInfrastructure": [
+    {
+      "name": "autogtm-firecrawl-workflows-rabbit-20261103",
+      "state": "exited"
+    },
+    {
+      "name": "autogtm-firecrawl-workflows-redis-20261103",
+      "state": "exited"
+    },
+    {
+      "name": "autogtm-firecrawl-workflows-pg-20261103",
+      "state": "exited"
+    }
+  ],
+  "unrelatedRunningServicesUntouched": 9,
+  "volumesRemoved": 0,
+  "globalPruneUsed": false,
+  "reportedImageUsage": "28.92GB",
+  "dockerSummary": "TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE\nImages          54        10        28.92GB   11.29GB (39%)\nContainers      13        9         360.4kB   28.67kB (7%)\nLocal Volumes   114       5         6.324GB   6.151GB (97%)\nBuild Cache     58        0         5.289GB   54.84MB\n",
+  "temporaryHostedKeyAbsent": true,
+  "cleanupEvidenceHashes": {
+    "_local/anti-bot/identity-fallback-amazon-api-harness-2026-11-03/cleanup.json": "4849428923716ab03b94cfcfe3d5f7dee4baff4c7c5051c46092a969761fb65c",
+    "_local/anti-bot/identity-fallback-full-api-harness-2026-11-03/cleanup.json": "22f8cee4ac2488698abaeda127e365e257c60063f4dfd5cd2324d7b44e5c8f32",
+    "_local/anti-bot/identity-fallback-api-harness-2026-11-03/browser-cleanup.json": "4fa7565d4b9f455db3a6e5656f5a9dba1f7e4440b37abcb861c64c4b47faea70"
+  }
+}
