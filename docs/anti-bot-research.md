@@ -3764,3 +3764,83 @@ cache or volume was removed and no build/global prune ran. Baseline images,
 and raw evidence remain.
 
 [Full result, per-target failures, closure receipts, source equivalence, deployment hashes and cleanup](benchmarks/autotrader-full-api-results-2026-11-04.json).
+
+## Optional product-details failure preserves an honest document capture
+
+Runtime implementation: `ab395427de66c45dc9c497975183abd34e62d025`. Final fixture-validation source: `8366a132c7c8f3fa2e161cb31c03851bde7fe572`;
+production helpers/API inputs are byte-equivalent between these commits. The
+saved complete 61/100 run supplied an exact diagnosis: Canada Goose reached
+HTTP 200 on both engines, then `locator.click` timed out after two seconds.
+WebKit repeatedly reported the Details button outside the viewport; Firefox
+was still waiting for its locator. A failing optional recipe discarded an
+otherwise retrievable document. `isVisible` alone does not establish all native
+[actionability requirements](https://playwright.dev/docs/actionability).
+
+An offline before/after reproduction uses the same owned HTML and same click
+budget on the same browser family, with Docker networking disabled. Before the
+repair it throws `SCRAPE_TIMEOUT` despite the public body being present. After
+it returns that body with an unresolved optional step. Both runs record zero
+native clicks; no force or retry was used. This proves a functional change,
+not a live-site latency gain.
+
+The recipe now bounds read-only discovery and confirmation to one second each,
+checks each awaited result before another RPC and awaits the native click's own
+two-second limit. Only observed expansion after a completed click reports
+`expanded`. Incomplete optional work stays explicit in workflow observations
+and step metadata while capture continues. Global expiry/cancellation and
+non-timeout browser failures stay terminal. Explicit required-content readiness
+still fails when the content is hidden; a best-effort step cannot satisfy it.
+
+A fresh proxy-free full-API cohort retained the existing controls, deadlines,
+pacing and 6,656-MiB browser cap with a four-worker limit. It made four API
+requests and five browser captures, with no client retries, expected-text hints,
+upstream proxies or hosted calls.
+
+| Selected target | Observation | Frozen normalized marker |
+| --- | --- | --- |
+| Canada Goose | HTTP 200 document and 57,054 Markdown characters; optional discovery reports `probe_timeout`, without claiming expansion. | Missing; marker only in noncontent markup. |
+| Amazon | Requested product captured. | Match. |
+| CoinMarketCap | Public overview captured. | Match. |
+| Best Buy | Primary workflow used the deadline after HTTP 200; alternate skipped for insufficient budget. | Missing. |
+
+The selected result is 2/4, not a population rate or a new aggregate. The last
+complete result remains 61/100 on earlier code, with a historical hosted82
+reference from another live epoch. Document recovery and frozen-marker success
+are distinct outcomes. All four score/hash/lifecycle replays passed, all five
+Page/context-close receipts validated, and owners ended with zero pages/sessions.
+No OOM, memory-limit, PID-limit or socket-throttling events were observed.
+Best Buy's full workflow timeout is the next investigation: bound its discovery
+and navigation stages without weakening original-product identity or closure
+requirements. The current diagnostic establishes the workflow phase, not the
+exact stalled RPC.
+
+Validation passed 85 helpers, seven native parent/child checks across all five
+engines, API type checking and three owned full-API snips via `pnpm harness`.
+The API checks establish confirmed expansion, unresolved optional work with a
+preserved document, and an explicit hidden-content requirement that stays
+unresolved after one alternate. An initial assertion incorrectly assumed
+Markdown excludes hidden markup; two initial cases failed. The corrected checks
+use actual hidden state, click counters and readiness, and all three pass.
+Markdown formatting can retain hidden text; substring presence does not prove
+visibility or expansion. The failed source and logs remain in evidence.
+
+The first ordinary CI attempt also lacked the fixture alias and returned
+`Not Found`. Its four browser captures against an unverified alias are separate
+from the scored VN cohort. Final tests refuse to launch a browser unless the
+alias resolves only to loopback, and CI configures that alias. Both local native
+fixture checks were rerun with the corrected precondition. [Final browser CI](https://github.com/toreleon/firecrawl/actions/runs/41786748106)
+passes 85 helpers, 166 ordinary integration checks (six optional skips),
+production dependency audit and 23 contained WebKit checks. These replace the
+failed fixture-validation attempt; broader server/SDK workflows are not claimed.
+Harness teardown still logs the existing extract-worker channel-closing error,
+so clean shutdown remains unproven despite zero harness exit and terminated
+processes.
+
+Scoped cleanup removed 13 task containers and
+68 exact task cache records (Docker-reported
+328.3 MB), preserving the reusable runtime image, baseline images, 128 baseline
+cache records, nine unrelated services, all 114 volumes and raw evidence. Task
+infrastructure is stopped and ports are closed. No global prune or image/volume
+removal ran.
+
+[Selected document recovery, unchanged frozen grades, paired fixture, source/image hashes, validation and cleanup](benchmarks/product-details-results-2026-11-04.json).

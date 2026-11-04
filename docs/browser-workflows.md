@@ -283,6 +283,23 @@ choice proves consent completion across every embedded origin.
 The current recipes select the original Best Buy product's US destination and
 expand an observed Canada Goose details control. `auto` also scrolls an observed
 CoinMarketCap About section into view to trigger public, viewport-based hydration.
+Canada Goose's product-details expansion is optional. Discovery and expansion
+confirmation each have a one-second read-only probe budget; one native click
+has at most two seconds, within the caller's deadline. No forced or repeated
+click is added. A completed click reports `expanded` only after observing
+`aria-expanded="true"`. An unfinished probe, click or confirmation instead
+records `steps[].outcome: "unresolved"` and a reason under
+`observations.productDetails`, then allows a current document capture. Caller
+expiry/cancellation and non-timeout browser failures remain terminal. Expired
+read-only probes cannot queue a later click. Native click timeout does not prove
+that no action happened; `clickCompleted` records driver completion, not content
+completeness.
+
+Body readiness may be satisfied while an optional step is unresolved. Use explicit
+readiness when a caller requires expanded content; that requirement remains
+unsatisfied if the content is hidden. Markdown conversion may include hidden
+HTML text and is not proof of visible content or successful expansion.
+
 For Amazon.com product URLs, `auto` can submit the observed one-button GET
 continuation form when it has exactly the three known hidden inputs and no
 answer-entry controls or iframe. Hidden values remain unchanged. It submits at most once
