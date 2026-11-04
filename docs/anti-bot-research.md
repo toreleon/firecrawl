@@ -3844,3 +3844,88 @@ infrastructure is stopped and ports are closed. No global prune or image/volume
 removal ran.
 
 [Selected document recovery, unchanged frozen grades, paired fixture, source/image hashes, validation and cleanup](benchmarks/product-details-results-2026-11-04.json).
+
+## Bounded country workflow stages and queued timeout receipts
+
+Implementation and measured checkout: `f2211b46ac7a659f121fa8be8b9aaadb91fd877b`. The preceding selected run
+received HTTP 200 for Best Buy, then exhausted the primary workflow deadline
+and skipped an alternate for insufficient budget. Its diagnostic established
+the workflow phase, but did not identify the exact stalled RPC. Source review
+found that the nominal five-second discovery window bounded only the loop:
+its document and link queries used the whole caller deadline, as did later
+country navigation.
+
+The shared discovery deadline now bounds both awaited RPCs. Budgets are checked
+before and after results, so an expired query cannot continue to another query
+or dispatch navigation. Country navigation uses a native 30-second maximum
+within the remaining caller deadline. It fails before capture if unfinished;
+Page-close proof remains mandatory before any opt-in alternate. The existing
+candidate origin/path/SKU check is unchanged. Initial `navigationTimeout`
+semantics and the frozen graders are unchanged. See the
+[native navigation contract](https://playwright.dev/docs/api/class-page#page-goto).
+
+A dependency-level before/after reproduction runs the actual compiled workflow
+with deliberately stalled reads and Docker networking disabled. Either query
+previously used the full seven-second caller budget; after the repair it fails
+at about five seconds with about two seconds left. Late values cannot issue a
+query or navigation. A separate one-minute caller demonstration changes the
+native timeout argument from nearly 60 seconds to 30 seconds. These are
+workflow/dependency observations, not measured real-renderer or site latency.
+
+Four owned queued-API cases then exercise real browsers: successful country
+selection, a delayed document-read Promise, a held navigation response and
+opt-out. A stalled document query returns a closed timeout receipt and recovers
+once on Firefox. A held native navigation hits the 30-second cap and recovers
+once on Firefox in about 35.44 seconds total under a 70-second API deadline.
+Opt-out returns the closed failure without replay. Three fixed failure phases
+survive API queue serialization: `workflow-country-text`,
+`workflow-country-links` and `workflow-country-navigation`. Credential/query
+redaction and unknown-field exclusion remain covered.
+
+The fresh selected direct-VN cohort used four API requests, five browser
+captures, a four-worker cap and unchanged controls/deadlines/pacing/resource
+limits. No client retry, expected-text hint, upstream proxy or hosted call was
+used. Public owners explicitly had no owned-fixture DNS aliases.
+
+| Selected target | Frozen normalized/Markdown marker | Observation |
+| --- | --- | --- |
+| Amazon | Match | Primary capture. |
+| Canada Goose | Missing | Document returned; frozen marker remains only in noncontent markup. |
+| Best Buy | Match | Existing initial-navigation cap timed out on WebKit, followed by one Firefox recovery. |
+| CoinMarketCap | Match | Primary capture. |
+
+Best Buy completed in 39.25 seconds. Its successful Firefox attempt discovered
+nine candidate links, selected the validated country destination and followed a
+server redirect from the legacy product route to a canonical product route.
+Those redirects are retained in evidence; a marker match is not field-level SKU
+identity proof. The current primary failed in initial navigation before the
+country workflow ran. Therefore this observation does not isolate a live
+recovery or latency benefit from the new country bounds. The previous workflow
+timeout and current recovery belong to different epochs. The controlled API
+cases establish the new bounds and fallback behavior independently.
+
+All four scores/payload hashes/lifecycle records replayed. All five Page/context
+closure receipts validated; final owners had zero pages/sessions and no observed
+OOM, memory-limit, PID-limit or socket-throttling events. The selected 3/4 result
+is not a population rate. The last full result remains 61/100 on earlier code;
+the historical hosted82 reference was not refreshed and comparable performance
+remains unproven. A fresh full 100-target run is required for aggregate claims.
+
+Validation passed 89 helpers, seven local native parent/child checks across all
+five engines, API type checking, 45 fallback/serialization checks and four owned
+full-API snips via `pnpm harness` (49 API-side tests total).
+[Fresh browser CI](https://github.com/toreleon/firecrawl/actions/runs/41789966573) passed 89 helpers, 171 ordinary integration checks
+(six optional skips), production dependency audit and 25 contained WebKit checks.
+Owned fixture tests require loopback DNS before launching a browser; fixture
+aliases are configured only for those test owners. Broader server/SDK workflows
+are not claimed. Harness teardown still logs the existing extract-worker
+channel-closing error despite zero harness exit and terminated processes;
+clean shutdown remains unproven.
+
+Scoped cleanup removed 9 task containers and
+75 exact task cache records (Docker-reported
+328.5 MB), preserving the reusable image, baseline images/cache, nine unrelated
+services, all 114 volumes and raw evidence. Task infrastructure is stopped and
+ports are closed; no global prune or image/volume removal ran.
+
+[Country-budget implementation, paired dependency evidence, owned API/native checks, selected result and cleanup](benchmarks/country-budget-results-2026-11-04.json).

@@ -214,6 +214,23 @@ continuing a retained tab performs no initial navigation. A deliberately short
 cap can fail a slow document even when the overall deadline has time left. Omit
 the control to preserve the existing navigation budget.
 
+Best Buy's country recipe separately bounds its combined document/link discovery
+to five seconds, including time spent awaiting either browser query. Expired
+read results cannot trigger a later link query or navigation. A validated
+country destination must still preserve the requested origin, product path and
+SKU. The native country navigation has its own 30-second maximum, within the
+caller deadline. It is awaited under that native timeout; unfinished navigation
+fails the browser attempt before capture. The initial `navigationTimeout`
+control keeps its existing meaning.
+
+Failure receipts distinguish `workflow-country-text`, `workflow-country-links`
+and `workflow-country-navigation`. The API forwards these fixed phase values
+through queued errors while retaining URL redaction and bounded diagnostics.
+The original deadline/cancellation still wins. One opted-in alternate can run
+only after the existing ownership, Page-close and remaining-time checks pass;
+these recipe bounds do not guarantee alternate budget after every other phase.
+A slow but otherwise valid selector or navigation may now fail earlier.
+
 With `engineFallback: true`, each engine receives the same navigation cap. A
 confirmed closed-page navigation timeout can therefore leave time for one
 alternate engine, subject to the existing shared deadline and completion guards.
