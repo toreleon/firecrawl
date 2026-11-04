@@ -3239,3 +3239,97 @@ were already absent, so no explicit image removal was needed. Thirty exact task
 cache records were pruned (Docker-reported 1.017 GB); all 128 baseline cache
 records, working image `032721e8…`, prior images, nine unrelated services, all
 114 volumes and raw evidence were preserved. No global prune was used.
+
+### Blob resources, navigation termination and a controlled follow-up (November 4)
+
+The [repair receipt](benchmarks/webkit-resource-api-results-2026-11-04.json)
+records two fixes at `46e27e429`. Non-navigation blob resources with an HTTP/HTTPS
+origin now use that origin for the existing private-destination and ad checks,
+then resolve in the browser's store. Worker network requests retain the
+destination filter and UID policy. Top-level blob input/navigation, opaque/file
+origins and private origins remain blocked. The [File API model](https://w3c.github.io/FileAPI/#url-model)
+distinguishes browser-store resolution from an outbound network connection.
+Only the exact WebKit `page.goto: Connection terminated unexpectedly` first line
+is now typed as `NETWORK_ERROR` / `WEBKIT_CONNECTION_TERMINATED`. Existing
+closure/owner guards can then permit bounded fallback. Certificate errors,
+other TLS termination, page crashes and evaluation exceptions are not covered
+by that mapping.
+
+Before the repair, the owned blob worker never became ready and a real
+navigation termination was classified as `BROWSER_ERROR`. Top-level blob
+rejection and certificate rejection already passed. All four leaf cases now
+pass, along with the existing WebKit containment checks: fourteen parent/child
+checks in total. Fifteen focused native helper checks passed. The initial
+transport fixture required HTTP/2 and failed at ALPN before receiving a request;
+it was repaired to accept HTTP/1.1 and HTTP/2 before the EOF regression. The
+observed wording alone does not establish a public target's HTTP version.
+Three full API snips passed through `pnpm harness`, exercising actual blob
+rendering, one WebKit-to-Firefox recovery after EOF, opt-out, certificate
+rejection and forbidden top-level blob input. An explicit TLS exception reaches
+the EOF path only for that owned self-signed fixture; the negative test and all
+public benchmark requests retain certificate verification. The harness again
+logged the separate extract-worker channel-closing error during shutdown while
+returning zero and terminating its processes; clean worker shutdown is unproven.
+
+[CI on the measured source](https://github.com/toreleon/firecrawl/actions/runs/41768035733)
+passed build, 67 helper checks, 146 ordinary integration checks and the production
+dependency audit. The ordinary suite skips three optional WebKit parents; the
+separate Docker job passes all fourteen WebKit checks. Blob rendering is also
+covered on Playwright, Patchright, Rebrowser and Camoufox. The local final image's
+compiled runtime is byte-equivalent to the image used for owned and full API
+checks; only source formatting and additional fixture coverage followed those
+checks. Measured source/compiled hashes were verified on every benchmark owner.
+Broader server/SDK jobs are not verified here.
+
+The fresh full API WebKit/Firefox policy produced **53/100 normalized matches**,
+52 screened matches and 50 matches also containing the supplementary Markdown
+marker. Successful-request p50/p95 were 4.95/8.37 seconds; all-request p95 was
+9.13 seconds. It made 100 API requests and 153 captures: 100 WebKit and 53 Firefox.
+Four HTTP workers, the same controls/deadlines, seven-second reservation pacing,
+one API request per target, direct VN egress and the 6,656-MiB browser cap were
+retained. There were no client retries, expected-text hints, upstream proxies or
+hosted calls. All hundred hashes/scores replayed. Ninety-six responses returned
+fallback diagnostics with 148 closed-attempt proofs; four lacked diagnostics.
+Backend logs show 53 alternate dispatches and 52 returned alternate receipts.
+Thirteen internally accepted recoveries included twelve frozen-text matches.
+Final owners were healthy with zero pages/sessions; OOM, memory-boundary,
+socket-throttling and PID-limit counters were zero. The minimum observed dispatch
+gap was 6.999 seconds, preserving the known reservation-versus-dispatch limit.
+
+The previous policy scored 56. Saks now passed on WebKit without fallback, while
+Louis Vuitton, Google Search, Best Buy and Zoopla failed after earlier successes.
+Louis Vuitton changed from primary success to denials on both engines. Best Buy
+lost a primary success; Google and Zoopla lost prior Firefox recoveries. These
+are observed stage changes, not proof that the two repairs caused the drop.
+The primary log recorded one connection termination, and Allegro returned a
+primary `NETWORK_ERROR` receipt without a normalized recovery. Blocked blob
+request logs fell from 32 in the prior full run to zero, but American Airlines
+still failed the content-marker check. Returned fallback receipts do not retain
+all primary network aliases/document diagnostics, limiting finer attribution.
+
+A further **twenty direct browser-service captures** compared the previous and
+repaired WebKit images on ten identical targets. Selection took GitHub/arXiv
+controls, the five full-run disagreements, then prior failure cases to fill ten.
+Each image had two CPU quota, 2 GiB, one page slot, the production UID policy and
+identical request controls. Two workers alternated dispatch order; contexts were
+fresh and no client retries or proxies were used. All twenty payload hashes,
+scores, owner identities, closed attempts and backend dispatches replayed.
+Both variants passed **3/10**, on exactly the same targets (GitHub, arXiv, Saks),
+and had the same failure outcomes on the other seven. All four normalized
+control observations passed. No OOM or PID-limit events occurred.
+
+This small selected comparison did not reproduce a primary WebKit outcome
+regression. It does not rule out regressions elsewhere or compare Firefox
+fallback, and its 30-second service deadline differs from the full API deadline.
+It is not a powered causal test or another population score. The full result
+remains 53/100; the previous 56 and hosted 82 remain separately dated references.
+The combined public-capture count was **173**, within the 200-capture limit.
+Neither the owned fixes nor this diagnostic cohort establish a coverage gain.
+
+Cleanup removed eleven task containers, the intermediate `633c8e8a…` image and
+33 exact task cache records (Docker-reported 328.5 MB). Working image
+`9a711a26…`, prior images, all 128 baseline cache records, nine unrelated services,
+all 114 volumes and raw evidence were preserved. Task infrastructure is stopped
+and task ports are closed; no global prune was used. Next work is controlled
+renderer-crash/TLS-termination investigation and preserving primary diagnostics
+through API receipts before making further recovery claims.
