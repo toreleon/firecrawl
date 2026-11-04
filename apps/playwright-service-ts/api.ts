@@ -128,7 +128,7 @@ const buildUpstreamProxyUrl = (): string | undefined => {
 
 const startSSRFProxy = async (): Promise<number> => {
   const server = new Server({
-    port: 0,
+    port: browserConfig.filterPort ?? 0,
     host: '127.0.0.1',
     prepareRequestFunction: ssrfPrepareRequest({
       allowLocal: ALLOW_LOCAL_WEBHOOKS,
@@ -179,7 +179,7 @@ let browserLaunch: Promise<Browser> | undefined;
 
 const initializeBrowser = async () => {
   if (browser?.isConnected()) return;
-  browserLaunch ??= launchBrowser(browserConfig);
+  browserLaunch ??= launchBrowser(browserConfig, { ssrfProxyPort });
   try {
     browser = await browserLaunch;
   } finally {

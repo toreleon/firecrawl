@@ -2,7 +2,15 @@ import {
   chromium as playwrightChromium,
   Browser,
   LaunchOptions,
+  webkit,
 } from 'playwright';
+import path from 'node:path';
+import {
+  assertWebkitContainment,
+  BROWSER_SERVICE_ROOT,
+  webkitChildEnvironment,
+  webkitFilterPort,
+} from './webkit';
 import { chromium as patchrightChromium } from 'patchright';
 import { chromium as rebrowserChromium } from 'rebrowser-playwright';
 
@@ -10,7 +18,8 @@ export type BrowserEngine =
   | 'patchright'
   | 'rebrowser'
   | 'playwright'
-  | 'camoufox';
+  | 'camoufox'
+  | 'webkit';
 export const CAMOUFOX_BROWSER_BUILD = 'official/158.0.1-beta.41';
 
 export const browserConfiguration = (env: NodeJS.ProcessEnv = process.env) => {
@@ -19,29 +28,36 @@ export const browserConfiguration = (env: NodeJS.ProcessEnv = process.env) => {
     engine !== 'patchright' &&
     engine !== 'playwright' &&
     engine !== 'rebrowser' &&
-    engine !== 'camoufox'
+    engine !== 'camoufox' &&
+    engine !== 'webkit'
   ) {
     throw new Error(
-      'BROWSER_ENGINE must be patchright, rebrowser, playwright or camoufox',
+      'BROWSER_ENGINE must be patchright, rebrowser, playwright, camoufox or webkit',
     );
   }
   const headless = env.BROWSER_HEADLESS ?? 'true';
   if (headless !== 'true' && headless !== 'false') {
     throw new Error('BROWSER_HEADLESS must be true or false');
   }
-  if (engine === 'camoufox' && env.BROWSER_CHANNEL)
+  if ((engine === 'camoufox' || engine === 'webkit') && env.BROWSER_CHANNEL)
     throw new Error(
-      'BROWSER_CHANNEL is a Chromium option and cannot be used with Camoufox',
+      'BROWSER_CHANNEL is a Chromium option and cannot be used with this engine',
     );
   return {
     engine: engine as BrowserEngine,
+    filterPort:
+      engine === 'webkit'
+        ? webkitFilterPort(env.BROWSER_FILTER_PORT)
+        : undefined,
     launchOptions: {
       // Use full Chromium's new headless mode rather than chrome-headless-shell.
       channel:
-        engine === 'camoufox' ? undefined : env.BROWSER_CHANNEL || 'chromium',
+        engine === 'camoufox' || engine === 'webkit'
+          ? undefined
+          : env.BROWSER_CHANNEL || 'chromium',
       headless: headless === 'true',
       args:
-        engine === 'camoufox'
+        engine === 'camoufox' || engine === 'webkit'
           ? []
           : [
               '--no-sandbox',
@@ -58,7 +74,22 @@ export const browserConfiguration = (env: NodeJS.ProcessEnv = process.env) => {
 
 export const launchBrowser = async (
   configuration = browserConfiguration(),
+  network?: { ssrfProxyPort: number },
 ): Promise<Browser> => {
+  if (configuration.engine === 'webkit') {
+    if (!network || network.ssrfProxyPort !== configuration.filterPort)
+      throw new Error('WebKit requires its configured listening SSRF filter');
+    assertWebkitContainment(network.ssrfProxyPort);
+    return webkit.launch({
+      headless: configuration.launchOptions.headless,
+      executablePath: path.join(
+        BROWSER_SERVICE_ROOT,
+        'scripts',
+        'webkit-launcher.sh',
+      ),
+      env: webkitChildEnvironment(webkit.executablePath()),
+    });
+  }
   if (configuration.engine === 'camoufox') {
     const { Camoufox, findInstalledVersion } = await import('camoufox');
     if (!findInstalledVersion(CAMOUFOX_BROWSER_BUILD))

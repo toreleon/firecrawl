@@ -11,6 +11,7 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN pnpm install --frozen-lockfile
 
 COPY . .
+ARG INSTALL_WEBKIT=false
 
 ENV PLAYWRIGHT_BROWSERS_PATH=/usr/local/share/playwright
 
@@ -18,6 +19,11 @@ ENV PLAYWRIGHT_BROWSERS_PATH=/usr/local/share/playwright
 RUN node node_modules/playwright/cli.js install chromium --with-deps
 RUN pnpm exec patchright install chromium
 RUN node node_modules/rebrowser-playwright/cli.js install chromium
+RUN if [ "$INSTALL_WEBKIT" = "true" ]; then \
+      node node_modules/playwright/cli.js install webkit --with-deps \
+      && apt-get update && apt-get install -y --no-install-recommends ca-certificates iptables \
+      && rm -rf /var/lib/apt/lists/*; \
+    fi
 
 # Headful Chromium under a private virtual display avoids headless-only signals.
 # install --with-deps above supplies Xvfb; xvfb-run also needs xauth.
@@ -36,7 +42,10 @@ RUN if [ "$INSTALL_CAMOUFOX" = "true" ]; then \
       node node_modules/playwright-core/cli.js install-deps firefox; \
     fi
 
-RUN chown -R node:node /usr/src/app \
+RUN if [ "$INSTALL_WEBKIT" = "true" ]; then \
+      chown -R root:root /usr/src/app; \
+    else chown -R node:node /usr/src/app; fi \
+  && chmod 755 /usr/src/app/scripts/webkit-launcher.sh \
   && chmod -R a+rX /usr/local/share/playwright
 RUN mkdir -p /usr/local/share/browser-cache \
   && chown -R node:node /usr/local/share/browser-cache

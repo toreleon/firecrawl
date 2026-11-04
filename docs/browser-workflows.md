@@ -67,6 +67,36 @@ Chromium launch arguments and uses the host OS identity, with WebRTC and alterna
 DNS disabled. The existing filtering proxy checks every destination, including
 localhost; it is not an upstream egress proxy.
 
+WebKit is another opt-in owner. Build with `--build-arg INSTALL_WEBKIT=true`,
+then run that image in a **dedicated Docker network namespace**, with
+`--user root --cap-add=NET_ADMIN`, `BROWSER_ENGINE=webkit` and `BROWSER_CHANNEL`
+empty. Use the image's ordinary entrypoint. Do not use host networking, a shared
+network namespace or host filesystem mounts for this owner. The entrypoint
+installs container-local IPv4/IPv6 UID rules and drops NET_ADMIN/NET_RAW before
+starting the API. The trusted service remains root with a restricted capability
+set for browser UID changes and cleanup; the browser runs as UID 1000 with no
+capabilities and NoNewPrivs. Application files and the installed binary must be
+root-owned. Its child environment contains only the executable path, fixed PATH
+and display/locale settings, excluding service credentials and loader overrides.
+The privilege-drop behavior follows [setpriv](https://man7.org/linux/man-pages/man1/setpriv.1.html).
+
+`BROWSER_FILTER_PORT` defaults to `3004`; set the same unprivileged TCP port for
+startup and the service, and keep it distinct from `PORT`. The browser can send
+TCP only to the destination filter on that loopback port; all other IPv4/IPv6
+traffic, including direct RTC transport, is rejected. A missing policy, missing
+capability, mismatched port or unsafe file ownership fails startup. Do not
+publish the filter port. Leave `ALLOW_LOCAL_WEBHOOKS` disabled for public-target
+operation. Standard CA certificates are installed and TLS verification remains
+enabled. The owned integration tests explicitly enable private fixture access;
+they are not public benchmark runs.
+
+A WebKit owner can replace a member of the primary or alternate URL lists below;
+the existing distinct-engine/boot, closed-page and one-alternate rules still
+apply. A heterogeneous alternate list uses the existing round-robin selection;
+it does not try every engine. WebKit is an upstream Playwright build, not
+installed Safari. The selected-site prototype result does not establish an
+overall coverage gain; a fresh full-API benchmark is still required.
+
 Configure a separate internal owner pool on the API and workers:
 
 ```dotenv

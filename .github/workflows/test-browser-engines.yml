@@ -48,3 +48,28 @@ jobs:
         env:
           TEST_CAMOUFOX: 'true'
       - run: pnpm audit --prod
+
+  contained-webkit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - name: Build the optional WebKit image
+        run: docker build --build-arg INSTALL_WEBKIT=true --tag firecrawl-webkit-test apps/playwright-service-ts
+      - name: Exercise the production UID boundary and HTTP/session contract
+        run: |
+          docker run --rm --init --user root --cap-add=NET_ADMIN --cpus=2 --memory=3g \
+            --add-host webkit-fixture.test:127.0.0.1 \
+            -e BROWSER_ENGINE=webkit -e BROWSER_HEADLESS=true -e TEST_WEBKIT=true \
+            --entrypoint sh firecrawl-webkit-test scripts/webkit-entrypoint.sh \
+            node --import tsx --test --test-concurrency=1 integration/webkit.spec.ts
+      - name: Refuse startup without the required UID or namespace capability
+        run: |
+          if docker run --rm --network none --user node -e BROWSER_ENGINE=webkit firecrawl-webkit-test; then
+            echo 'WebKit unexpectedly started as the browser UID' >&2
+            exit 1
+          fi
+          if docker run --rm --network none --user root -e BROWSER_ENGINE=webkit firecrawl-webkit-test; then
+            echo 'WebKit unexpectedly started without NET_ADMIN' >&2
+            exit 1
+          fi
